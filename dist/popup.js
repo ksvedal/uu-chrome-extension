@@ -1,20 +1,8 @@
 "use strict";
 //---------------------------------------------------------------------------------------------//
 //This file is used to create the popup window that appears when the extension icon is clicked.//
-//Not everything in this file is useful for the extension.                                     //
+//It has a random border and a picture                                                         //
 //---------------------------------------------------------------------------------------------//
-// Testing
-function updateTime() {
-    const timeElement = document.getElementById('time');
-    if (timeElement) {
-        const currentTime = new Date().toLocaleTimeString();
-        timeElement.textContent = 'Current time: ' + currentTime;
-    }
-}
-// Update the time and appearance every second
-setInterval(updateTime, 1000);
-// Call the updateTime function once when the popup window loads
-updateTime();
 function updateImageBorderColor() {
     const imageFrame = document.getElementById('image-frame');
     if (imageFrame) {
@@ -28,9 +16,6 @@ function updateImageBorderColor() {
         imageFrame.style.borderColor = nextColor;
     }
 }
-// Update the image border color every second -Not useful right 
-//setInterval(updateImageBorderColor, 1000);
-// Call the updateImageBorderColor function once when the popup window loads
 updateImageBorderColor();
 const imageFolder = 'images/';
 function updateImage() {
@@ -43,6 +28,4 @@ function updateImage() {
         imageElement.src = imageUrl;
     }
 }
-// Update the image every second -Not useful right now
-//setInterval(updateImage, 1000);
 updateImage();
