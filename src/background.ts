@@ -1,4 +1,9 @@
-// No JavaScript code is required for this simple example.
+/**
+ * Dette kan helt sikkert fjernes(?)
+ */
+function polling() {
+  // console.log("polling");
+  setTimeout(polling, 1000 * 30);
+}
 
-//Testing
-console.log("Background loaded")
+polling();
