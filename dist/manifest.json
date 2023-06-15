@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Website Analysis Extension",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action_handlers": {
+    "default": {
+      "type": "popup"
+    }
+  }
+}   

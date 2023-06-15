@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Popup Extension</title>
+  <style>
+    body {
+      width: 300px;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    #image-frame {
+        width: 200px;
+        height: 200px;
+        border-width: 6px;
+        border-style: solid;
+        border-color: red; /* Start color */
+
+        background-color: transparent; /* Remove background color */
+    }
+
+  </style>
+</head>
+<body>
+    <div id="image-frame">
+        <img id="image" src="" style="width: 200px; height: 200px;" />
+        <script src="popup.js"></script>
+    </div>
+</body>
+</html>
