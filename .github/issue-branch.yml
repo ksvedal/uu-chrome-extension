@@ -1,2 +1,6 @@
 branchName: '${issue.number}-${issue.title}'
 autoCloseIssue: true
+gitSafeReplacementChar: '-'
+branches:
+  - label: antibranch
+    skip: true
