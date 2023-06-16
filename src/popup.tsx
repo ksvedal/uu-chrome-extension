@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import './style/popup.css';
 
 const Popup = () => {
   const [count, setCount] = useState(0);
@@ -50,7 +51,6 @@ const Popup = () => {
     });
   };
 
-
   const getButtons = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0];
@@ -75,18 +75,24 @@ const Popup = () => {
 
   return (
     <>
-      <ul style={{ minWidth: "700px" }}>
-        <li>Current URL: {currentURL}</li>
-        <li>Current Time: {new Date().toLocaleTimeString()}</li>
-      </ul>
-      <button
-        onClick={() => setCount(count + 1)}
-        style={{ marginRight: "5px" }}
-      >
-        count up
-      </button>
-      <button onClick={changeBackground}>change background</button>
-      <button onClick={hightlightButtons}>Ny funksjon</button>
+      <div className={"content"}>
+        <p>Current URL: {currentURL}</p>
+        <p>Current Time: <p className={"pink bold"}> {new Date().toLocaleTimeString()} </p> </p>
+      </div>
+
+      <div className={"bottom"}>
+        <button onClick={() => setCount(count + 1)}>
+          count up
+        </button>
+
+        <button onClick={changeBackground}>
+          change background
+        </button>
+
+        <button onClick={hightlightButtons}>
+          Ny funksjon
+        </button>
+      </div>
 
     </>
   );
