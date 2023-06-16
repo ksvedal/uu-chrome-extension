@@ -77,7 +77,7 @@ const Popup = () => {
     <>
       <div className={"content"}>
         <p>Current URL: {currentURL}</p>
-        <p>Current Time: <p className={"pink"}> {new Date().toLocaleTimeString()} </p> </p>
+        <p>Current Time: <p className={"pink bold"}> {new Date().toLocaleTimeString()} </p> </p>
       </div>
 
       <div className={"bottom"}>
