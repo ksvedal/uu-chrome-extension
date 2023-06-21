@@ -73,6 +73,42 @@ const Popup = () => {
     });
   };
 
+  const getImages = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0];
+      if (activeTab?.id) {
+        chrome.tabs.sendMessage(
+          activeTab.id, {
+          action: "getLabels" 
+        }, (response) => {
+          if (response && response.image) {
+            console.log(response.image);
+          }else{
+            console.log(response);
+          }
+        });
+      }
+    });
+  };
+
+  const hightlightImages = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      const tab = tabs[0];
+      if (tab.id) {
+        chrome.tabs.sendMessage(
+          tab.id,
+          {
+            action: "highlightImages",
+            color: "#FFFF33",
+          },
+          (msg) => {
+            console.log("result message:", msg);
+          }
+        );
+      }
+    });
+  };
+
   return (
     <>
       <div className={"content"}>
@@ -82,15 +118,19 @@ const Popup = () => {
 
       <div className={"bottom"}>
         <button onClick={() => setCount(count + 1)}>
-          count up
+          Count up
         </button>
 
         <button onClick={changeBackground}>
-          change background
+          Change background
         </button>
 
         <button onClick={hightlightButtons}>
-          Ny funksjon
+          Highlight buttons
+        </button>
+
+        <button onClick={hightlightImages}>
+          Highlight images
         </button>
       </div>
 
