@@ -118,19 +118,19 @@ const Popup = () => {
 
       <div className={"bottom"}>
         <button onClick={() => setCount(count + 1)}>
-          count up
+          Count up
         </button>
 
         <button onClick={changeBackground}>
-          change background
+          Change background
         </button>
 
         <button onClick={hightlightButtons}>
-          highlight buttons
+          Highlight buttons
         </button>
 
         <button onClick={hightlightImages}>
-          highlight images
+          Highlight images
         </button>
       </div>
 

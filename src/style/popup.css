@@ -28,6 +28,11 @@ button {
     border-radius: 8px;
 }
 
+button:hover {
+    background-color: #151b80;
+    cursor: pointer;
+}
+
 .bottom {
     margin: 0;
     background-color: #f4f5f6;
