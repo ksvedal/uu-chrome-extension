@@ -7,6 +7,7 @@ function handleMessage(message: any, sender:any, sendResponse:any) {
   const buttonsSelector = "[role='button'], button, a, input[type='button'], input[type='submit'], span[role='button']";
   const _page : PageInteractor = new PageInteractor();
   const _scan : WebsiteScanner = new WebsiteScanner();
+
   if (message.action === "checkButtonsAltText") {
     const buttons = Array.from(document.querySelectorAll(buttonsSelector)) as HTMLElement[];
     buttons.forEach((button) => {
@@ -29,9 +30,7 @@ function handleMessage(message: any, sender:any, sendResponse:any) {
 
     } else if (message.action === "highlightButtons") {
       _page.highlightElements(_scan.getButtons());
-
       sendResponse({message: "Buttons highlighted"});
-
     } else if (message.action === "changeButtonsColor") {
         const color = message.color;
         const buttons = Array.from(

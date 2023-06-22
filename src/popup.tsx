@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import Select from "react-select";
 import { createRoot } from "react-dom/client";
-import './style/popup.css';
+import "./style/popup.css";
 
 const Popup = () => {
   const [count, setCount] = useState(0);
   const [currentURL, setCurrentURL] = useState<string>();
+  const [selectedColor, setSelectedColor] = useState<string>(""); // Default color
+
 
   useEffect(() => {
     chrome.action.setBadgeText({ text: count.toString() });
@@ -16,124 +19,83 @@ const Popup = () => {
     });
   }, []);
 
-  const changeBackground = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            color: "#555555",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
+  // Reusable callback function
+const handleResponse = (response:any) => {
+  if (response && response.buttons) {
+    console.log(response.buttons);
+  } else if (response && response.images) {
+    console.log(response.images);
+  } else {
+    console.log(response);
+  }
+};
+
+/*
+  * The functions below send messages to content script
+  * @param {object} message - The message to be sent to the content script
+  * @param {function} callback - The callback function to handle the response
+  * @returns {void} */
+
+/* Highlight buttons */
+
+const highlightButtons = () => {
+  sendMessageToActiveTab({ action: "highlightButtons", color: "#FF0000" }, handleResponse);
+};
+
+const checkButtonsAltText = () => {
+  sendMessageToActiveTab({ action: "checkButtonsAltText" }, handleResponse);
+};
+
+const changeButtonsColor = (color: string) => {
+  sendMessageToActiveTab({ action: "changeButtonsColor", color: color }, handleResponse);
+
   };
+  
+  const colorOptions = [
+    { value: "", label: "Select Color" }, // Default title option
+    { value: "red", label: "Red" },
+    { value: "yellow", label: "Yellow" },
+    { value: "blue", label: "Blue" },
+    { value: "green", label: "Green" },
+    { value: "orange", label: "Orange" },
+    { value: "pink", label: "Pink" },
+  ];
 
-  const hightlightButtons = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            action: "highlightButtons",
-            color: "#FF0000",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
-  };
-
-  const getButtons = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTab = tabs[0];
-
-      if (activeTab?.id) {
-        chrome.tabs.sendMessage(
-          activeTab.id, {
-          action: "getButtons" 
-        }, (response) => {
-
-          if (response && response.buttons) {
-
-            console.log(response.buttons);
-          }else{
-            console.log(response);
-
-          }
-        });
-      }
-    });
-  };
-
-  const getImages = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTab = tabs[0];
-      if (activeTab?.id) {
-        chrome.tabs.sendMessage(
-          activeTab.id, {
-          action: "getLabels" 
-        }, (response) => {
-          if (response && response.image) {
-            console.log(response.image);
-          }else{
-            console.log(response);
-          }
-        });
-      }
-    });
-  };
-
-  const hightlightImages = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            action: "highlightImages",
-            color: "#FFFF33",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
-  };
+const sendMessageToActiveTab = (message:any, callback:any) => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+    if (activeTab?.id) {
+      chrome.tabs.sendMessage(activeTab.id, message, callback);
+    }
+  });
+};
 
   return (
     <>
       <div className={"content"}>
         <p>Current URL: {currentURL}</p>
-        <p>Current Time: <p className={"pink bold"}> {new Date().toLocaleTimeString()} </p> </p>
+        <p>
+          Current Time:{" "}
+          <p className={"pink bold"}> {new Date().toLocaleTimeString()} </p>{" "}
+        </p>
       </div>
 
       <div className={"bottom"}>
-        <button onClick={() => setCount(count + 1)}>
-          Count up
-        </button>
+        
+        <button onClick={highlightButtons}>Highlight buttons</button>
 
-        <button onClick={changeBackground}>
-          Change background
-        </button>
+        <button onClick={checkButtonsAltText}>Check alternative text of buttons</button>
 
-        <button onClick={hightlightButtons}>
-          Highlight buttons
-        </button>
+        <Select
+          options={colorOptions}
+          value={colorOptions.find((option) => option.value === selectedColor)}
+          onChange={(selectedOption) => setSelectedColor(selectedOption?.value || "")}
+        />
 
-        <button onClick={hightlightImages}>
-          Highlight images
+        <button onClick={() => changeButtonsColor(selectedColor)}>
+          Change color for the buttons
         </button>
       </div>
-
     </>
   );
 };
