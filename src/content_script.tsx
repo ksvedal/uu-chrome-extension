@@ -21,15 +21,35 @@ function handleMessage(message: any, sender:any, sendResponse:any) {
         // Handle the button with alternative text
       }
     });
-    sendResponse({ message: "Button alternative text checked" });
-  } else if (message.action === "highlightButtons") {
-    const color = message.color;
-    const buttons = Array.from(document.querySelectorAll(buttonsSelector)) as HTMLElement[];
-    buttons.forEach((button) => {
-      button.style.cssText += `border: 5px solid ${color} !important;`;
-    });
-    sendResponse({ message: "Buttons highlighted" });
-  } else {
-    sendResponse({ message: "Unknown action" });
-  }
+    sendResponse({message: "Button alternative text checked"});
+
+    } else if (message.action === "highlightButtons") {
+      const color = message.color;
+      const buttons = Array.from(document.querySelectorAll(buttonsSelector)) as HTMLElement[];
+
+      buttons.forEach((button) => {
+        button.style.cssText += `
+        background-color: ${color} !important; 
+        border-radius: 10px;
+      `;
+      });
+
+      sendResponse({message: "Buttons highlighted"});
+
+    } else if (message.action === "changeButtonsColor") {
+        const color = message.color;
+        const buttons = Array.from(
+          document.querySelectorAll(
+              buttonsSelector
+          )
+        ) as HTMLElement[];
+        buttons.forEach((button) => {
+          button.style.backgroundColor = color;
+        });
+        sendResponse({message: "Buttons color changed"});
+
+    } else {
+        sendResponse({message: "Unknown action"});
+    }
+
 }
