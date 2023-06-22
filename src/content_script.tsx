@@ -1,7 +1,12 @@
+import { PageInteractor } from './PageTools/page_interactor';
+import { WebsiteScanner } from './PageTools/website_scanner';
+
 chrome.runtime.onMessage.addListener(handleMessage);
 
 function handleMessage(message: any, sender:any, sendResponse:any) {
   const buttonsSelector = "[role='button'], button, a, input[type='button'], input[type='submit'], span[role='button']";
+  const _page : PageInteractor = new PageInteractor();
+  const _scan : WebsiteScanner = new WebsiteScanner();
 
   if (message.action === "checkButtonsAltText") {
     const buttons = Array.from(document.querySelectorAll(buttonsSelector)) as HTMLElement[];
@@ -24,18 +29,8 @@ function handleMessage(message: any, sender:any, sendResponse:any) {
     sendResponse({message: "Button alternative text checked"});
 
     } else if (message.action === "highlightButtons") {
-      const color = message.color;
-      const buttons = Array.from(document.querySelectorAll(buttonsSelector)) as HTMLElement[];
-
-      buttons.forEach((button) => {
-        button.style.cssText += `
-        background-color: ${color} !important; 
-        border-radius: 10px;
-      `;
-      });
-
+      _page.highlightElements(_scan.getButtons());
       sendResponse({message: "Buttons highlighted"});
-
     } else if (message.action === "changeButtonsColor") {
         const color = message.color;
         const buttons = Array.from(
@@ -51,5 +46,4 @@ function handleMessage(message: any, sender:any, sendResponse:any) {
     } else {
         sendResponse({message: "Unknown action"});
     }
-
 }
