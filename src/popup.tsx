@@ -34,22 +34,37 @@ const handleResponse = (response:any) => {
   * The functions below send messages to content script
   * @param {object} message - The message to be sent to the content script
   * @param {function} callback - The callback function to handle the response
-  * @returns {void} */
+  * @returns {void} 
+*/
 
-/* Highlight buttons */
+
+/** 
+ * Highlights all buttons in red 
+ * @returns {void} 
+**/
 
 const highlightButtons = () => {
   sendMessageToActiveTab({ action: "highlightButtons", color: "#FF0000" }, handleResponse);
 };
 
+/** 
+ * Checks alternative text of all buttons.
+  If the button has alt text, the border will be blue.
+  Otherwise the border will be red. 
+ * @returns {void}
+**/
 const checkButtonsAltText = () => {
   sendMessageToActiveTab({ action: "checkButtonsAltText" }, handleResponse);
 };
 
+/**
+ * Changes the color of all buttons to given color
+ * @param {string} color - The color to be changed
+ * @returns {void}
+ * */
 const changeButtonsColor = (color: string) => {
   sendMessageToActiveTab({ action: "changeButtonsColor", color: color }, handleResponse);
-
-  };
+};
   
   const colorOptions = [
     { value: "", label: "Select Color" }, // Default title option
@@ -81,7 +96,7 @@ const sendMessageToActiveTab = (message:any, callback:any) => {
       </div>
 
       <div className={"bottom"}>
-        
+
         <button onClick={highlightButtons}>Highlight buttons</button>
 
         <button onClick={checkButtonsAltText}>Check alternative text of buttons</button>
