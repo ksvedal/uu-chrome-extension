@@ -103,8 +103,45 @@ const Popup = () => {
     { value: "orange", label: "Orange" },
     { value: "pink", label: "Pink" },
   ];
+  const getImages = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0];
+      if (activeTab?.id) {
+        chrome.tabs.sendMessage(
+          activeTab.id, {
+          action: "getLabels" 
+        }, (response) => {
+          if (response && response.image) {
+            console.log(response.image);
+          }else{
+            console.log(response);
+          }
+        });
+      }
+    });
+  };
+
+  const hightlightImages = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      const tab = tabs[0];
+      if (tab.id) {
+        chrome.tabs.sendMessage(
+          tab.id,
+          {
+            action: "highlightImages",
+            color: "#FFFF33",
+          },
+          (msg) => {
+            console.log("result message:", msg);
+          }
+        );
+      }
+    });
+  };
 
   return (
+    
+
     <>
       <div className={"content"}>
         <p>Current URL: {currentURL}</p>
@@ -129,7 +166,7 @@ const Popup = () => {
 
         <button onClick={() => changeButtonsColor(selectedColor)}>
           Change color for the buttons
-        </button>
+          </button>
       </div>
     </>
   );
