@@ -30,42 +30,27 @@ const handleResponse = (response:any) => {
   }
 };
 
-const sendMessage = (message:any, callback:any) => {
-  sendMessageToActiveTab(message, callback);
-};
+/*
+  * The functions below send messages to content script
+  * @param {object} message - The message to be sent to the content script
+  * @param {function} callback - The callback function to handle the response
+  * @returns {void} */
 
+/* Highlight buttons */
 
 const highlightButtons = () => {
-  sendMessage({ action: "highlightButtons", color: "#FF0000" }, handleResponse);
+  sendMessageToActiveTab({ action: "highlightButtons", color: "#FF0000" }, handleResponse);
 };
 
-  const checkButtonsAltText = () => {
-    sendMessage({ action: "checkButtonsAltText" }, handleResponse);
-  };
+const checkButtonsAltText = () => {
+  sendMessageToActiveTab({ action: "checkButtonsAltText" }, handleResponse);
+};
 
-  const changeButtonsColor = (color: string) => {
-    sendMessage({ action: "changeButtonsColor", color: color }, handleResponse);
+const changeButtonsColor = (color: string) => {
+  sendMessageToActiveTab({ action: "changeButtonsColor", color: color }, handleResponse);
 
   };
-/*
-  const changeButtonsColor = (color: string) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            action: "changeButtonsColor",
-            color: color,
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
-  };
-  */
+  
   const colorOptions = [
     { value: "", label: "Select Color" }, // Default title option
     { value: "red", label: "Red" },
@@ -76,14 +61,14 @@ const highlightButtons = () => {
     { value: "pink", label: "Pink" },
   ];
 
-  const sendMessageToActiveTab = (message:any , callback:any) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTab = tabs[0];
-      if (activeTab?.id) {
-        chrome.tabs.sendMessage(activeTab.id, message, callback);
-      }
-    });
-  };
+const sendMessageToActiveTab = (message:any, callback:any) => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+    if (activeTab?.id) {
+      chrome.tabs.sendMessage(activeTab.id, message, callback);
+    }
+  });
+};
 
   return (
     <>
@@ -96,7 +81,7 @@ const highlightButtons = () => {
       </div>
 
       <div className={"bottom"}>
-
+        
         <button onClick={highlightButtons}>Highlight buttons</button>
 
         <button onClick={checkButtonsAltText}>Check alternative text of buttons</button>
