@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import './style/popup.css';
+import "./style/popup.css";
 
 const Popup = () => {
   const [count, setCount] = useState(0);
@@ -16,95 +16,35 @@ const Popup = () => {
     });
   }, []);
 
-  const changeBackground = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            color: "#555555",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
-  };
+  // Reusable callback function
+const handleResponse = (response:any) => {
+  if (response && response.buttons) {
+    console.log(response.buttons);
+  } else if (response && response.images) {
+    console.log(response.images);
+  } else {
+    console.log(response);
+  }
+};
 
-  const hightlightButtons = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            action: "highlightButtons",
-            color: "#FF0000",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
-  };
+const sendMessage = (message:any, callback:any) => {
+  sendMessageToActiveTab(message, callback);
+};
 
-  const getButtons = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTab = tabs[0];
 
-      if (activeTab?.id) {
-        chrome.tabs.sendMessage(
-          activeTab.id, {
-          action: "getButtons" 
-        }, (response) => {
+const highlightButtons = () => {
+  sendMessage({ action: "highlightButtons", color: "#FF0000" }, handleResponse);
+};
 
-          if (response && response.buttons) {
+const checkButtonsAltText = () => {
+  sendMessage({ action: "checkButtonsAltText" }, handleResponse);
+};
 
-            console.log(response.buttons);
-          }else{
-            console.log(response);
-
-          }
-        });
-      }
-    });
-  };
-
-  const getImages = () => {
+  const sendMessageToActiveTab = (message:any , callback:any) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0];
       if (activeTab?.id) {
-        chrome.tabs.sendMessage(
-          activeTab.id, {
-          action: "getLabels" 
-        }, (response) => {
-          if (response && response.image) {
-            console.log(response.image);
-          }else{
-            console.log(response);
-          }
-        });
-      }
-    });
-  };
-
-  const hightlightImages = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            action: "highlightImages",
-            color: "#FFFF33",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
+        chrome.tabs.sendMessage(activeTab.id, message, callback);
       }
     });
   };
@@ -113,27 +53,18 @@ const Popup = () => {
     <>
       <div className={"content"}>
         <p>Current URL: {currentURL}</p>
-        <p>Current Time: <p className={"pink bold"}> {new Date().toLocaleTimeString()} </p> </p>
+        <p>
+          Current Time:{" "}
+          <p className={"pink bold"}> {new Date().toLocaleTimeString()} </p>{" "}
+        </p>
       </div>
 
       <div className={"bottom"}>
-        <button onClick={() => setCount(count + 1)}>
-          Count up
-        </button>
+        
+        <button onClick={highlightButtons}>Highlight buttons</button>
 
-        <button onClick={changeBackground}>
-          Change background
-        </button>
-
-        <button onClick={hightlightButtons}>
-          Highlight buttons
-        </button>
-
-        <button onClick={hightlightImages}>
-          Highlight images
-        </button>
+        <button onClick={checkButtonsAltText}>Check alternative text of buttons</button>
       </div>
-
     </>
   );
 };
