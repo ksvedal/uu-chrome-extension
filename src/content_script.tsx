@@ -1,5 +1,5 @@
-import { PageInteractor } from './page_interactor';
-import { WebsiteScanner } from './website_scanner';
+import { PageInteractor } from './PageTools/page_interactor';
+import { WebsiteScanner } from './PageTools/website_scanner';
 
 chrome.runtime.onMessage.addListener(handleMessage);
 
