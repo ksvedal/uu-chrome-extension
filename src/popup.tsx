@@ -39,10 +39,15 @@ const highlightButtons = () => {
   sendMessage({ action: "highlightButtons", color: "#FF0000" }, handleResponse);
 };
 
-const checkButtonsAltText = () => {
-  sendMessage({ action: "checkButtonsAltText" }, handleResponse);
-};
+  const checkButtonsAltText = () => {
+    sendMessage({ action: "checkButtonsAltText" }, handleResponse);
+  };
 
+  const changeButtonsColor = (color: string) => {
+    sendMessage({ action: "changeButtonsColor", color: color }, handleResponse);
+
+  };
+/*
   const changeButtonsColor = (color: string) => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const tab = tabs[0];
@@ -60,9 +65,7 @@ const checkButtonsAltText = () => {
       }
     });
   };
-
-
-
+  */
   const colorOptions = [
     { value: "", label: "Select Color" }, // Default title option
     { value: "red", label: "Red" },
@@ -106,7 +109,7 @@ const checkButtonsAltText = () => {
 
         <button onClick={() => changeButtonsColor(selectedColor)}>
           Change color for the buttons
-          </button>
+        </button>
       </div>
     </>
   );
