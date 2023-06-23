@@ -7,6 +7,7 @@ const Popup = () => {
   const [count, setCount] = useState(0);
   const [currentURL, setCurrentURL] = useState<string>();
   const [selectedColor, setSelectedColor] = useState<string>(""); // Default color
+  const [noAltTextCount, setNoAltTextCount] = useState<number>(0);
 
 
   useEffect(() => {
@@ -18,12 +19,31 @@ const Popup = () => {
       setCurrentURL(tabs[0].url);
     });
   }, []);
-  
-    /** 
-      * Reusable callback function
-      *  @param {object} response - The response from the content script
-      *  @returns {void}
-    **/
+
+  useEffect(() =>{
+    chrome.runtime.onMessage.addListener(handleMessage);
+
+    chrome.storage.local.get("noAltTextCount", (result)=>{
+      const countAltText = result.noAltTextCount || 0;
+      setNoAltTextCount(countAltText)
+    });
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []);
+
+  const handleMessage = (message: any) => {
+    if (message.action === "noAltTextCountUpdated"){
+      const count = message.count || 0;
+      setNoAltTextCount(count)
+    }
+  }
+
+  /**
+   * Reusable callback function
+   *  @param {object} response - The response from the content script
+   *  @returns {void}
+   **/
   const handleResponse = (response:any) => {
     if (response && response.buttons) {
       console.log(response.buttons);
@@ -38,26 +58,27 @@ const Popup = () => {
     * The functions below send messages to content script
     * @param {object} message - The message to be sent to the content script
     * @param {function} callback - The callback function to handle the response
-    * @returns {void} 
+    * @returns {void}
   */
 
 
-  /** 
-   * Highlights all buttons in red 
-   * @returns {void} 
+  /**
+   * Highlights all buttons in red
+   * @returns {void}
   **/
 
   const highlightButtons = () => {
     sendMessageToActiveTab({ action: "highlightButtons", color: "#FF0000" }, handleResponse);
   };
 
-  /** 
+  /**
    * Checks alternative text of all buttons.
     If the button has alt text, the border will be blue.
-    Otherwise the border will be red. 
+    Otherwise the border will be red.
   * @returns {void}
   **/
   const checkButtonsAltText = () => {
+    localStorage.clear();
     sendMessageToActiveTab({ action: "checkButtonsAltText" }, handleResponse);
   };
 
@@ -69,7 +90,7 @@ const Popup = () => {
   const changeButtonsColor = (color: string) => {
     sendMessageToActiveTab({ action: "changeButtonsColor", color: color }, handleResponse);
   };
-    
+
   /*
     * The options for the color select
     * @type {object[]}
@@ -86,8 +107,8 @@ const Popup = () => {
 
     /**
      * Sends a message to the active tab
-     * @param message 
-     * @param callback 
+     * @param message
+     * @param callback
      */
   const sendMessageToActiveTab = (message:any, callback:any) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -113,6 +134,8 @@ const Popup = () => {
         <button onClick={highlightButtons}>Highlight buttons</button>
 
         <button onClick={checkButtonsAltText}>Check alternative text of buttons</button>
+
+        <p>Antall knapper uten alt text: {noAltTextCount}</p>
 
         <Select
           options={colorOptions}
