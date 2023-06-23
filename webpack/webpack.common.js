@@ -10,6 +10,7 @@ module.exports = {
       background: path.join(srcDir, 'background.ts'),
       content_script: path.join(srcDir, 'content_script.tsx'),
       sidebar: path.join(srcDir, 'Sidebar/Sidebar.tsx'),
+      open_sidepanel: path.join(srcDir, 'open_sidepanel.js'),
     },
     output: {
         path: path.join(__dirname, "../dist/js"),

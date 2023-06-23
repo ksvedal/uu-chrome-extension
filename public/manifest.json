@@ -15,7 +15,7 @@
   },
 
   "side_panel": {
-    "default_path": "popup.html"
+    "default_path": "sidebar.html"
   },
 
   "content_scripts": [
@@ -26,7 +26,7 @@
   ],
 
   "background": {
-    "service_worker": "js/background.js"
+    "service_worker": "js/open_sidepanel.js"
   },
 
   "permissions": [
