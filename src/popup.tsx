@@ -7,6 +7,7 @@ const Popup = () => {
   const [count, setCount] = useState(0);
   const [currentURL, setCurrentURL] = useState<string>();
   const [selectedColor, setSelectedColor] = useState<string>(""); // Default color
+  const [noAltTextCount, setNoAltTextCount] = useState<number>(0);
 
 
   useEffect(() => {
@@ -18,6 +19,26 @@ const Popup = () => {
       setCurrentURL(tabs[0].url);
     });
   }, []);
+
+  useEffect(() =>{
+    chrome.runtime.onMessage.addListener(handleMessage);
+
+    chrome.storage.local.get("noAltTextCount", (result)=>{
+      const countAltText = result.noAltTextCount || 0;
+      setNoAltTextCount(countAltText)
+    });
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []);
+
+  const handleMessage = (message: any) => {
+    if (message.action === "noAltTextCountUpdated"){
+      const count = message.count || 0;
+      setNoAltTextCount(count)
+    }
+  }
+
 
   // Reusable callback function
 const handleResponse = (response:any) => {
@@ -40,6 +61,7 @@ const highlightButtons = () => {
 };
 
   const checkButtonsAltText = () => {
+    localStorage.clear();
     sendMessage({ action: "checkButtonsAltText" }, handleResponse);
   };
 
@@ -47,6 +69,8 @@ const highlightButtons = () => {
     sendMessage({ action: "changeButtonsColor", color: color }, handleResponse);
 
   };
+
+  
 /*
   const changeButtonsColor = (color: string) => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -93,6 +117,7 @@ const highlightButtons = () => {
           Current Time:{" "}
           <p className={"pink bold"}> {new Date().toLocaleTimeString()} </p>{" "}
         </p>
+        <p></p>
       </div>
 
       <div className={"bottom"}>
@@ -100,6 +125,7 @@ const highlightButtons = () => {
         <button onClick={highlightButtons}>Highlight buttons</button>
 
         <button onClick={checkButtonsAltText}>Check alternative text of buttons</button>
+        <p>Antall knapper uten alt text: {noAltTextCount}</p>
 
         <Select
           options={colorOptions}
