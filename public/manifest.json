@@ -11,7 +11,11 @@
 
   "action": {
     "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_title": "Open Chrome Extension"
+  },
+
+  "side_panel": {
+    "default_path": "popup.html"
   },
 
   "content_scripts": [
@@ -28,7 +32,8 @@
   "permissions": [
     "storage",
     "activeTab",
-    "tabs"
+    "tabs",
+    "sidePanel"
   ],
 
   "host_permissions": [
