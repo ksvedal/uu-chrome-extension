@@ -135,6 +135,8 @@ const Popup = () => {
 
         <button onClick={checkButtonsAltText}>Check alternative text of buttons</button>
 
+        <p>Antall knapper uten alt text: {noAltTextCount}</p>
+
         <Select
           options={colorOptions}
           value={colorOptions.find((option) => option.value === selectedColor)}
