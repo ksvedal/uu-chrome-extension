@@ -17,9 +17,6 @@
   "side_panel": {
     "default_path": "popup.html"
   },
-  "side_panel" : 
-    {"default_path": "sidebar.html"},
-
 
   "content_scripts": [
       {
