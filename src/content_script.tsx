@@ -3,11 +3,20 @@ import { WebsiteScanner } from './PageTools/website_scanner';
 
 chrome.runtime.onMessage.addListener(handleMessage);
 
+/**
+ * handles the message from popup.tsx
+ * @param message 
+ * @param sender 
+ * @param sendResponse 
+ */
 function handleMessage(message: any, sender:any, sendResponse:any) {
   const buttonsSelector = "[role='button'], button, a, input[type='button'], input[type='submit'], span[role='button']";
   const _page : PageInteractor = new PageInteractor();
   const _scan : WebsiteScanner = new WebsiteScanner();
 
+  /*
+    Compares different actions and calls the appropriate function
+  */
   if (message.action === "checkButtonsAltText") {
     const buttons = Array.from(document.querySelectorAll(buttonsSelector)) as HTMLElement[];
     buttons.forEach((button) => {
