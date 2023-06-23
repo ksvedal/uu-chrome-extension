@@ -1,0 +1,32 @@
+.toggle-button {
+    transition: 0.3s all ease-in-out;
+    background-color: #ddd;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .toggle-button.pressed {
+    background-color: #aaa;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .regular-button {
+    background-color: #ddd;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  
+  .collapsible-item {
+    margin-bottom: 10px;
+  }
+  
+  .item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  
