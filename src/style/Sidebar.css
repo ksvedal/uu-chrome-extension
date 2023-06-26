@@ -1,8 +1,24 @@
 body {
-  background-color: #292a2d;
-  color: white;
+  background-color: white;
+  color: rgb(0, 0, 0);
 }
 
+
+.item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding-left: 10px;
+  text-decoration-color: black;
+}
+
+.item-content {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Highlight button */
 .toggle-button {
   color: white;
   transition: 0.3s all ease-in-out;
@@ -20,31 +36,51 @@ body {
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   }
   
-  .regular-button {
-    color: white;
-    background-color: #f3a540;
-    padding: 10px;
-    border: solid 2px #f3a540;
-    border-radius: 2px;
-    margin: 10px;
-    cursor:pointer;
-  }
+/* Jump-to-button */
+.regular-button {
+  color: rgb(255, 255, 255);
+  background-color: #f3a540;
+  padding: 10px;
+  border: solid 2px #f3a540;
+  border-radius: 2px;
+  margin: 10px;
+  cursor:pointer;
+}
   
-  .collapsible-item {
-    margin-bottom: 10px;
-    background-color: #35363a;
-  }
+/* Parent collapsable */
+.collapsible-item {
+  margin-bottom: 10px;
+  background-color: #f0f0f0;
+}
+
+.collapsible-item .item-header.pressed {
+  background-color: #919191;
+}
   
-  .item-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    margin-left: 10px;
+  /* Child collabsable */
+  .collapsible-item-child {
+    background-color: white;
   }
 
-  .item-content {
-    padding-left: 10px;
-    padding-right: 10px;
+  .collapsible-item-child:hover {
+    background-color: whitesmoke;
   }
-  
+
+
+/* Parent arrow-button */
+  .item-header span.arrow-button {
+    color: black;
+    font-size: 35px;
+  }
+
+  .item-header span.arrow-button.pressed {
+    color: rgb(190, 190, 190);
+  }
+
+  /* Child arrow-button */
+  .collapsible-item-child span.arrow-button {
+    color: black;
+    font-size: 30px;
+    padding-left: 20px;
+  }
+
