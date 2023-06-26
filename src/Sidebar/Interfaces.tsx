@@ -6,6 +6,7 @@ export interface ToggleButtonProps {
 }
 
 export interface RegularButtonProps {
+  text: string;
   onClick: () => void;
 }
 

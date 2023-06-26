@@ -1,5 +1,6 @@
 import { PageInteractor } from './PageTools/page_interactor';
 import { WebsiteScanner } from './PageTools/website_scanner';
+import { ElementType } from './Sidebar/Interfaces';
 
 chrome.runtime.onMessage.addListener(handleMessage);
 
@@ -9,10 +10,10 @@ chrome.runtime.onMessage.addListener(handleMessage);
  * @param sender 
  * @param sendResponse 
  */
-function handleMessage(message: any, sender:any, sendResponse:any) {
+function handleMessage(message: any, sender: any, sendResponse: any) {
   const buttonsSelector = "[role='button'], button, a, input[type='button'], input[type='submit'], span[role='button']";
-  const _page : PageInteractor = new PageInteractor();
-  const _scan : WebsiteScanner = new WebsiteScanner();
+  const _page: PageInteractor = new PageInteractor();
+  const _scan: WebsiteScanner = new WebsiteScanner();
 
   /*
     Compares different actions and calls the appropriate function
@@ -38,29 +39,32 @@ function handleMessage(message: any, sender:any, sendResponse:any) {
       }
     });
     console.log("Antall knapper uten alt tekst:", noAltTextCount);
-    chrome.storage.local.set({noAltTextCount: noAltTextCount} as {noAltTextCount: number},
-      ()=> {
-        chrome.runtime.sendMessage({action: "noAltTextCountUpdated", count: noAltTextCount})
+    chrome.storage.local.set({ noAltTextCount: noAltTextCount } as { noAltTextCount: number },
+      () => {
+        chrome.runtime.sendMessage({ action: "noAltTextCountUpdated", count: noAltTextCount })
       })
-    sendResponse({message: "Button alternative text checked"});
-  
-    
-    } else if (message.action === "highlightButtons") {
-      _page.highlightElements(_scan.getButtons());
-      sendResponse({message: "Buttons highlighted"});
-    } else if (message.action === "changeButtonsColor") {
-        const color = message.color;
-        const buttons = Array.from(
-          document.querySelectorAll(
-              buttonsSelector
-          )
-        ) as HTMLElement[];
-        buttons.forEach((button) => {
-          button.style.backgroundColor = color;
-        });
-        sendResponse({message: "Buttons color changed"});
+    sendResponse({ message: "Button alternative text checked" });
 
-    } else {
-        sendResponse({message: "Unknown action"});
-    }
+
+  } else if (message.action === "highlightButtons") {
+    _page.highlightElements(_scan.getButtons());
+    sendResponse({ message: "Buttons highlighted" });
+  } else if (message === "scanPage") {
+    //Sends a list of ElementType containing all the elementObjects on the page
+    sendResponse(_scan.scanPage());
+  } else if (message.action === "changeButtonsColor") {
+    const color = message.color;
+    const buttons = Array.from(
+      document.querySelectorAll(
+        buttonsSelector
+      )
+    ) as HTMLElement[];
+    buttons.forEach((button) => {
+      button.style.backgroundColor = color;
+    });
+    sendResponse({ message: "Buttons color changed" });
+
+  } else {
+    sendResponse({ message: "Unknown action" });
+  }
 }

@@ -9,10 +9,10 @@ export const ToggleButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggle 
   );
 };
 
-export const RegularButton: React.FC<RegularButtonProps> = ({ onClick }) => {
+export const RegularButton: React.FC<RegularButtonProps> = ({ onClick , text}) => {
   return (
     <button className='regular-button' onClick={(e) => { e.stopPropagation(); onClick(); }}>
-      Jump to
+      {text}
     </button>
   );
 };

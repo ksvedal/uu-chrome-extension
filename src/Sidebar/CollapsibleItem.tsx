@@ -15,6 +15,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       <div className='item-header' onClick={() => setIsExpanded(!isExpanded)}>
         <CollapsibleArrowButton isExpanded={isExpanded} /> {type.name}
         <ToggleButton isChecked={isChecked} onToggle={toggleCheck} />
+        <p>{type.nodes.length}</p>
       </div>
       {isExpanded && children}
     </div>
@@ -34,7 +35,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       <div className='item-header' onClick={() => setIsExpanded(!isExpanded)}>
         <CollapsibleArrowButton isExpanded={isExpanded} /> {object.title}
         <ToggleButton isChecked={isChecked} onToggle={toggleCheck} />
-        <RegularButton onClick={() => console.log('Regular button clicked')} />
+        <RegularButton text="Jump to" onClick={() => console.log('Regular button clicked')} />
       </div>
       {isExpanded && children}
     </div>
