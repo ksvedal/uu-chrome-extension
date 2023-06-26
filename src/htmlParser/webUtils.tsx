@@ -1,4 +1,4 @@
-import { ElementObject, ElementType } from "../Sidebar/Interfaces";
+import { ElementObject, ElementType } from "../sidebar/interfaces";
 
 export class WebUtils {
 

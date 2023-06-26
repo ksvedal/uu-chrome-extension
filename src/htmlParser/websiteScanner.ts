@@ -1,5 +1,5 @@
-import { ElementType } from "../Sidebar/Interfaces";
-import { WebUtils } from "./web_utils";
+import { ElementType } from "../sidebar/interfaces";
+import { WebUtils } from "./webUtils";
 
 /**
  * Fetches different types of elements from the page

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementType, ElementObject } from "./Interfaces";
-import { ToggleButton, RegularButton, CollapsibleArrowButton } from "./Buttons";
+import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementType, ElementObject } from "./interfaces";
+import { ToggleButton, RegularButton, CollapsibleArrowButton } from "./buttons";
 
 export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, children }) => {
   const [isExpanded, setIsExpanded] = useState(false);

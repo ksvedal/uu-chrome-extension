@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { CollapsibleItemType, CollapsibleItemElement } from './CollapsibleItem';
+import { CollapsibleItemType, CollapsibleItemElement } from './collapsibleItem';
 import { createRoot } from "react-dom/client";
-import "../style/Sidebar.css";
-import { ElementType } from "./Interfaces";
-import { RegularButton } from './Buttons';
-import { WebsiteScanner } from '../PageTools/website_scanner';
-
-
-
+import "../style/sidebar.css";
+import { ElementType } from "./interfaces";
+import { RegularButton } from './buttons';
+import { WebsiteScanner } from '../htmlParser/websiteScanner';
 
 const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
