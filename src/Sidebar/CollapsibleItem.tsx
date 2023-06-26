@@ -36,7 +36,9 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
         <ToggleButton isChecked={isChecked} onToggle={toggleCheck} />
         <RegularButton onClick={() => console.log('Regular button clicked')} />
       </div>
-      {isExpanded && children}
+      <div className={"item-content"}>
+        {isExpanded && children}
+      </div>
     </div>
   );
 };
