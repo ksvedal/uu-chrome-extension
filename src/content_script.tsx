@@ -1,5 +1,6 @@
 import { PageInteractor } from './PageTools/page_interactor';
 import { WebsiteScanner } from './PageTools/website_scanner';
+import { ElementType } from './Sidebar/Interfaces';
 
 chrome.runtime.onMessage.addListener(handleMessage);
 
@@ -48,7 +49,10 @@ function handleMessage(message: any, sender:any, sendResponse:any) {
     } else if (message.action === "highlightButtons") {
       _page.highlightElements(_scan.getButtons());
       sendResponse({message: "Buttons highlighted"});
-    } else if (message.action === "changeButtonsColor") {
+    } else if(message === "scanPage"){
+      //Sends a list of ElementType containing all the elementObjects on the page
+      sendResponse(_scan.scanPage());
+    }else if (message.action === "changeButtonsColor") {
         const color = message.color;
         const buttons = Array.from(
           document.querySelectorAll(
