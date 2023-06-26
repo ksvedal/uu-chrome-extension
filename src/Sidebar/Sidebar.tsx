@@ -14,7 +14,7 @@ const Sidebar: React.FC = () => {
   const _scan : WebsiteScanner = new WebsiteScanner();
 
   const fetchData = () => {
-    _scan.testFunction((response: ElementType[]) => {
+    _scan.scanPageMessage((response: ElementType[]) => {
       setScanPage(response); // update the state with the response data
     });
   };
