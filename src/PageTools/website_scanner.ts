@@ -16,6 +16,15 @@ export class WebsiteScanner {
         });
     }
 
+    public getWebsiteURL(callback: (response: string) => void): void {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const activeTab = tabs[0];
+            if (activeTab?.url) {
+                callback(activeTab.url)
+            }
+        });
+    }
+
     /**
      * Scans for every type we want.
      * To expand, create a new getElement and push it to results
