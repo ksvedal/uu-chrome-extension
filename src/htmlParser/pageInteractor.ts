@@ -23,17 +23,15 @@ export class PageInteractor {
                 this.addStyleToElement(element);
             }
         }
-        console.log("highlighted " + elements.length + " elements");
     } 
 
     public handleHighlightSingle(message: HighlightMessage): void {
         const element = document.querySelector(message.element.selector) as HTMLElement;
         if (message.isChecked) {
-            console.log("Unhighlighter fordi isChecked")
             this.removeStyleFromElement(element);
         } else {
-            console.log("Highlighter fordi !isChecked")
             this.addStyleToElement(element);
+            this.focusAndScroll(message.element.selector);
         }
     }
 
