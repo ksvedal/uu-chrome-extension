@@ -6,6 +6,25 @@ import { WebUtils } from "./webUtils";
  */
 export class WebsiteScanner {
     private buttonsSelector = "button, input[type='submit'], input[type='button'], [role='button']";
+
+    public scanPageMessage(callback: (response: ElementType[]) => void) {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const activeTab = tabs[0];
+            if (activeTab?.id) {
+                chrome.tabs.sendMessage(activeTab.id, "scanPage", callback);
+            }
+        });
+    }
+
+    public getWebsiteURL(callback: (response: string) => void): void {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const activeTab = tabs[0];
+            if (activeTab?.url) {
+                callback(activeTab.url)
+            }
+        });
+    }
+
     /**
      * Scans for every type we want.
      * To expand, create a new getElement and push it to results
@@ -13,11 +32,12 @@ export class WebsiteScanner {
      */
     public scanPage(): ElementType[] {
         let results: ElementType[] = [];
-        results.push(WebUtils.toType(this.getButtons(), "Buttons", this.buttonsSelector));
+        results.push(WebUtils.toType(this.getButtons(), "Button", this.buttonsSelector));
         return results;
     }
 
     public getButtons(): NodeListOf<HTMLElement> {
-        return document.querySelectorAll(this.buttonsSelector) as NodeListOf<HTMLElement>;
+        const buttonsSelector = "button, input[type='submit'], input[type='button'], [role='button']";
+        return document.querySelectorAll(buttonsSelector) as NodeListOf<HTMLElement>;
     }
 }
