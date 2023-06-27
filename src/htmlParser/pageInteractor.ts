@@ -1,4 +1,4 @@
-import { HighlightAllMessage, HighlightMessage } from "../MessageObjects/message";
+import { HighlightAllMessage, HighlightMessage } from "../messageObjects/message";
 
 /**
  * This class is responsible for interacting with the page
@@ -23,7 +23,6 @@ export class PageInteractor {
                 this.addStyleToElement(element);
             }
         }
-        
         console.log("highlighted " + elements.length + " elements");
     } 
 

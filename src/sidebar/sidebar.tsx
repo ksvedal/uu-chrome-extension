@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import "../style/sidebar.css";
 import { ElementObject, ElementType } from "./interfaces";
 import { RegularButton } from './buttons';
-import { MessageSender } from '../MessageObjects/messageSender';
+import { MessageSender } from '../messageObjects/messageSender';
 
 
 const Sidebar: React.FC = () => {
@@ -17,7 +17,6 @@ const Sidebar: React.FC = () => {
       setScanPage(response); // update the state with the response data
     });
   };
-
 
   return (
     <div className='App'>

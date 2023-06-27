@@ -14,7 +14,6 @@ export interface CollapsibleArrowProps {
   isExpanded: boolean;
 }
 
-
 /**
  * Interface for the CollapsibleItemType
  * Type will be the type of element that is displayed

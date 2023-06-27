@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface } from "./interfaces";
 import { ToggleButton, RegularButton, CollapsibleArrowButton } from "./buttons";
-import { MessageSender } from "../MessageObjects/messageSender";
-const messageGuy = new MessageSender();
+import { MessageSender } from "../messageObjects/messageSender";
+const messageSender = new MessageSender();
 
 export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, children }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -14,7 +14,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   //Vi heller gjøre dette til en egen message highlightAll for en type
   //Bruker bare selector som ble brukt til å lage typen
   const highlightAll = () => {
-      messageGuy.highlightAllWithType(type, isChecked);
+    messageSender.highlightAllWithType(type, isChecked);
   };
   return (
     <div className='collapsible-item'>
@@ -30,29 +30,23 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
 export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> = ({object, children, highlightedElement, setHighlightedElement}) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  //const [isChecked, setIsChecked] = useState(false);
-
- /*   const toggleCheck = () => {
-    messageGuy.highlightSingleMessage2(object, isChecked); 
-    setIsChecked(!isChecked);
-  };  */
+ 
   const toggleCheck = () => {
     // Check if this is the currently highlighted element and unhighlight it.
     if (highlightedElement === object) {
-      messageGuy.highlightSingleMessage(object, true); 
+      messageSender.highlightSingleMessage(object, true); 
       setHighlightedElement(null);
     } else {
       // Unhighlight the previously highlighted element, if there is one.
       if (highlightedElement) {
-        messageGuy.highlightSingleMessage(highlightedElement, true); 
+        messageSender.highlightSingleMessage(highlightedElement, true); 
       }
       // Highlight the newly selected element.
-      messageGuy.highlightSingleMessage(object, false); 
+      messageSender.highlightSingleMessage(object, false); 
       setHighlightedElement(object);
     }
   };
   
-
   return (
     <div className='collapsible-item'>
       <div className='item-header' onClick={() => setIsExpanded(!isExpanded)}>

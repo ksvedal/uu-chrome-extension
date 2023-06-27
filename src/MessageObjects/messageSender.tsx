@@ -13,20 +13,6 @@ export class MessageSender{
         return true;
     }
 
-
-    /* public highlightSingleMessage(element: ElementObject){
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            if (tabs[0].id) {
-              console.log("Kjører med en tab id");
-              chrome.tabs.sendMessage(tabs[0].id, new HighlightMessage(element), (msg) => {console.log("Result message: " + msg)});
-               }else{
-                console.log("No tab id");
-                 }
-              });
-              return true;
-    } */
-
-
     public highlightSingleMessage(element: ElementObject, isChecked : boolean){
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             if (tabs[0]?.id) {
@@ -62,8 +48,4 @@ export class MessageSender{
         });
         return true;
     }   
-    
-
-
-    
 }

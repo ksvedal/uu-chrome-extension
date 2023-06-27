@@ -1,4 +1,4 @@
-import { HighlightAllMessage, HighlightMessage, Message, ScanPageMessage } from './MessageObjects/message';
+import { HighlightAllMessage, HighlightMessage, Message, ScanPageMessage } from './messageObjects/message';
 import { PageInteractor } from './htmlParser/pageInteractor';
 import { WebsiteScanner } from './htmlParser/websiteScanner';
 import { ElementType } from './sidebar/interfaces';
@@ -56,10 +56,7 @@ function handleMessage(message: Message, sender: any, sendResponse: any) {
       })
     sendResponse({ message: "Button alternative text checked" });
 
-  } else if (message.action === "highlightButtons") {
-    _page.highlightElements(_scan.getButtons());
-    sendResponse({ message: "Buttons highlighted" });
-  } else if (message === "scanPage") {
+  }  else if (message.action === "scanPage") {
     //Sends a list of ElementType containing all the elementObjects on the page
     let result: ElementType[] = _scan.scanPage();
     sendResponse(result);
