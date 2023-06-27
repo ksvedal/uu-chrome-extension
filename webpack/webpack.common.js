@@ -7,10 +7,9 @@ module.exports = {
     entry: {
       popup: path.join(srcDir, 'popup.tsx'),
       options: path.join(srcDir, 'options.tsx'),
-      background: path.join(srcDir, 'background.ts'),
-      content_script: path.join(srcDir, 'content_script.tsx'),
-      sidebar: path.join(srcDir, 'Sidebar/Sidebar.tsx'),
-      open_sidepanel: path.join(srcDir, 'open_sidepanel.js'),
+      content_script: path.join(srcDir, 'contentScript.tsx'),
+      sidebar: path.join(srcDir, 'sidebar/sidebar.tsx'),
+      open_sidepanel: path.join(srcDir, 'openSidepanel.js'),
     },
     output: {
         path: path.join(__dirname, "../dist/js"),

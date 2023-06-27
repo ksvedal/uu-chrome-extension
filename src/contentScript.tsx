@@ -1,6 +1,6 @@
-import { PageInteractor } from './PageTools/page_interactor';
-import { WebsiteScanner } from './PageTools/website_scanner';
-import { ElementType } from './Sidebar/Interfaces';
+import { PageInteractor } from './htmlParser/pageInteractor';
+import { WebsiteScanner } from './htmlParser/websiteScanner';
+import { ElementType } from './sidebar/interfaces';
 
 chrome.runtime.onMessage.addListener(handleMessage);
 
@@ -44,7 +44,6 @@ function handleMessage(message: any, sender: any, sendResponse: any) {
         chrome.runtime.sendMessage({ action: "noAltTextCountUpdated", count: noAltTextCount })
       })
     sendResponse({ message: "Button alternative text checked" });
-
 
   } else if (message.action === "highlightButtons") {
     _page.highlightElements(_scan.getButtons());
