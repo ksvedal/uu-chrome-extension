@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { CollapsibleItemType, CollapsibleItemElement } from './collapsibleItem';
 import { createRoot } from "react-dom/client";
-import "../style/Sidebar.css";
+import "../style/sidebar.css";
 import { ElementObject, ElementType } from "./interfaces";
 import { RegularButton } from './buttons';
 import { MessageSender } from '../MessageObjects/messageSender';
-
-
 
 
 const Sidebar: React.FC = () => {
