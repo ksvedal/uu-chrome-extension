@@ -1,8 +1,19 @@
+import { HighlightAllMessage, HighlightMessage, Message, ScanPageMessage } from './messageObjects/message';
 import { PageInteractor } from './htmlParser/pageInteractor';
 import { WebsiteScanner } from './htmlParser/websiteScanner';
 import { ElementType } from './sidebar/interfaces';
 
 chrome.runtime.onMessage.addListener(handleMessage);
+//This is used in page_interactor to add and remove the style
+const styleElement: HTMLStyleElement = document.createElement('style');
+// Add CSS rules to the style element
+styleElement.textContent = `
+    .highlight {
+        border: 5px solid #FF0000 !important;
+    }
+`;
+// Append the style element to the head of the documentto
+document.head.append(styleElement);
 
 /**
  * handles the message from popup.tsx
@@ -10,8 +21,7 @@ chrome.runtime.onMessage.addListener(handleMessage);
  * @param sender 
  * @param sendResponse 
  */
-function handleMessage(message: any, sender: any, sendResponse: any) {
-  const buttonsSelector = "[role='button'], button, a, input[type='button'], input[type='submit'], span[role='button']";
+function handleMessage(message: Message, sender: any, sendResponse: any) {
   const _page: PageInteractor = new PageInteractor();
   const _scan: WebsiteScanner = new WebsiteScanner();
 
@@ -19,6 +29,7 @@ function handleMessage(message: any, sender: any, sendResponse: any) {
     Compares different actions and calls the appropriate function
   */
   if (message.action === "checkButtonsAltText") {
+    const buttonsSelector = "button, input[type='submit'], input[type='button'], [role='button']";
     const buttons = Array.from(document.querySelectorAll(buttonsSelector)) as HTMLElement[];
     let noAltTextCount = 0;
 
@@ -45,25 +56,18 @@ function handleMessage(message: any, sender: any, sendResponse: any) {
       })
     sendResponse({ message: "Button alternative text checked" });
 
-  } else if (message.action === "highlightButtons") {
-    _page.highlightElements(_scan.getButtons());
-    sendResponse({ message: "Buttons highlighted" });
-  } else if (message === "scanPage") {
+  }  else if (message.action === "scanPage") {
     //Sends a list of ElementType containing all the elementObjects on the page
-    sendResponse(_scan.scanPage());
-  } else if (message.action === "changeButtonsColor") {
-    const color = message.color;
-    const buttons = Array.from(
-      document.querySelectorAll(
-        buttonsSelector
-      )
-    ) as HTMLElement[];
-    buttons.forEach((button) => {
-      button.style.backgroundColor = color;
-    });
-    sendResponse({ message: "Buttons color changed" });
-
+    let result: ElementType[] = _scan.scanPage();
+    sendResponse(result);
+  } else if (message.action === "highlightElement") {
+    _page.handleHighlightSingle((message as HighlightMessage));
+    sendResponse({ message: "HighlightSingle response" });
+  } else if (message.action === "highlightAllElements") {
+    _page.highlightElements((message as HighlightAllMessage));
+    sendResponse({message: "Highlighted all with type"})
   } else {
     sendResponse({ message: "Unknown action" });
   }
+  return true; //Keeps the message channel open
 }
