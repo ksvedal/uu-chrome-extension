@@ -60,7 +60,7 @@ body {
   
 }
 .collapsible-item:hover {
-  background-color: whitesmoke;
+  background-color: rgb(240, 240, 240);
   color: black;
 }
 
