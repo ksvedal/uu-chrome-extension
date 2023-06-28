@@ -13,11 +13,13 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   return (
     <div className='collapsible-item'>
       <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-        <CollapsibleArrowButton isExpanded={isExpanded} /> {type.name}
-        <div className='totalButtons'>{type.nodes.length}</div>
+        <CollapsibleArrowButton isExpanded={isExpanded} /> 
+        <div className='totalButtons'>{type.name + 's:'} {type.nodes.length}</div>
         <ToggleButton isChecked={isChecked} onToggle={toggleCheck} />
       </div>
-      {isExpanded && children}
+        <div className="collapsible-item-children">
+          {isExpanded && children}
+        </div>
     </div>
   );
 };

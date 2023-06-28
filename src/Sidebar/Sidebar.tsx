@@ -27,7 +27,7 @@ const Sidebar: React.FC = () => {
       <RegularButton text="Scan page" onClick={fetchData} /> 
 
       {/* This is the non-collapsible space */}
-      <div style={{ height: '150px', backgroundColor: '#f5f5f5' }}>
+      <div style={{ height: '150px'}}>
         <p>Site: https://www.nrk.no</p>
         <p>HTML Element: 500</p>
         <p>Overall: Grade: F</p>

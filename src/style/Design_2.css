@@ -113,3 +113,75 @@
   box-shadow: none;
 }
 /* ----------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* Styling the item header */
+.item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Styling the pressed item header */
+.item-header.pressed {
+    background-color: #e9ecef;
+  }
+
+  /* Styling the arrow button */
+.arrow-button {
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+  }
+  
+/* Styling the arrow button when pressed */
+.item-header.pressed .arrow-button {
+    transform: rotate(90deg);
+  }
+
+/* Styling the arrow child */
+.collapsible-item-child .arrow-button {
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+.collapsible-item-child .arrow-button.item-header.pressed {
+  transform: rotate(90deg);
+}
+
+  /* Styling the toggle button */
+.toggle-button {
+    background-color: #4a7749;
+    border: none;
+    color: #b1b1b1;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .toggle-button:hover {
+    background-color: #3b993a;
+    color: white;
+  }
+  
+
