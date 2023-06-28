@@ -29,11 +29,11 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className='App'>
-      <TabIcon></TabIcon>
       <RegularButton text="Scan page" onClick={fetchData} /> 
 
       {/* This is the non-collapsible space */}
       <div style={{ height: '150px', backgroundColor: '#f5f5f5' }}>
+        <TabIcon></TabIcon>
         <p>Site: {websiteURL} </p>
         <button className='headline-button' onClick={(e) => { e.stopPropagation();}}>
           Åpen som tabell
