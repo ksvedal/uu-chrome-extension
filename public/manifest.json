@@ -26,7 +26,7 @@
   ],
 
   "background": {
-    "service_worker": "js/open_sidepanel.js" 
+    "service_worker": "js/open_sidepanel.js"
   },
 
   "permissions": [
