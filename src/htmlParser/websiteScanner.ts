@@ -7,15 +7,6 @@ import { WebUtils } from "./webUtils";
 export class WebsiteScanner {
     private buttonsSelector = "button, input[type='submit'], input[type='button'], [role='button']";
 
-    public scanPageMessage(callback: (response: ElementType[]) => void) {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const activeTab = tabs[0];
-            if (activeTab?.id) {
-                chrome.tabs.sendMessage(activeTab.id, "scanPage", callback);
-            }
-        });
-    }
-
     public getWebsiteURL(callback: (response: string) => void): void {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const activeTab = tabs[0];
