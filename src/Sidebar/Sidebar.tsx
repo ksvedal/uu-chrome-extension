@@ -11,6 +11,7 @@ import { WebsiteScanner } from '../PageTools/website_scanner';
 
 const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
+  const [websiteURL, setWebsiteURL] = useState<string>("");
   const _scan : WebsiteScanner = new WebsiteScanner();
 
 
@@ -18,6 +19,12 @@ const Sidebar: React.FC = () => {
     _scan.scanPageMessage((response: ElementType[]) => {
       setScanPage(response); // update the state with the response data
     });
+
+    _scan.getWebsiteURL((url: string) => {
+      setWebsiteURL(url); // update the state with the response data
+    });
+
+
   };
 
 
@@ -27,10 +34,8 @@ const Sidebar: React.FC = () => {
       <RegularButton text="Scan page" onClick={fetchData} /> 
 
       {/* This is the non-collapsible space */}
-      <div style={{ height: '150px'}}>
-        <p>Site: https://www.nrk.no</p>
-        <p>HTML Element: 500</p>
-        <p>Overall: Grade: F</p>
+      <div style={{ height: '150px', backgroundColor: '#f5f5f5' }}>
+        <p>Site: {websiteURL} </p>
         <button className='headline-button' onClick={(e) => { e.stopPropagation();}}>
           Åpen som tabell
         </button>
