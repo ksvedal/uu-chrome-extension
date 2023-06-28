@@ -1,5 +1,5 @@
 import React from "react";
-import { ToggleButtonProps, RegularButtonProps, CollapsibleArrowProps } from "./Interfaces";
+import { ToggleButtonProps, RegularButtonProps, CollapsibleArrowProps } from "./interfaces";
 
 export const ToggleButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggle }) => {
   return (

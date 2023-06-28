@@ -1,32 +1,30 @@
 import React, { useState } from 'react';
-import { CollapsibleItemType, CollapsibleItemElement } from './CollapsibleItem';
+import { CollapsibleItemType, CollapsibleItemElement } from './collapsibleItem';
 import { createRoot } from "react-dom/client";
-import "../style/Sidebar.css";
-import { ElementType } from "./Interfaces";
-import { RegularButton } from './Buttons';
-import { WebsiteScanner } from '../PageTools/website_scanner';
-
-
+import "../style/sidebar.css";
+import { ElementObject, ElementType } from "./interfaces";
+import { RegularButton } from './buttons';
+import { MessageSender } from '../messageObjects/messageSender';
+import { WebsiteScanner } from '../htmlParser/websiteScanner';
 
 
 const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
+  const [highlightedElement, setHighlightedElement] = useState<ElementObject | null>(null);
   const [websiteURL, setWebsiteURL] = useState<string>("");
+  const _message : MessageSender = new MessageSender();
   const _scan : WebsiteScanner = new WebsiteScanner();
 
 
   const fetchData = () => {
-    _scan.scanPageMessage((response: ElementType[]) => {
+    _message.scanPageMessage((response: ElementType[]) => {
       setScanPage(response); // update the state with the response data
     });
 
     _scan.getWebsiteURL((url: string) => {
       setWebsiteURL(url); // update the state with the response data
     });
-
-
   };
-
 
   return (
     <div className='App'>
@@ -51,8 +49,10 @@ const Sidebar: React.FC = () => {
         {item.nodes.map((item, index) =>
           <CollapsibleItemElement 
           key={index} 
-          object={item}>
-            {item.html}
+          object={item}
+          highlightedElement={highlightedElement}
+          setHighlightedElement={setHighlightedElement}>
+            {item.htmlString}
           </CollapsibleItemElement>
         )}
       </CollapsibleItemType>)}

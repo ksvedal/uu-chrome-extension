@@ -1,20 +1,11 @@
-import { ElementType } from "../Sidebar/Interfaces";
-import { WebUtils } from "./web_utils";
+import { ElementType } from "../sidebar/interfaces";
+import { WebUtils } from "./webUtils";
 
 /**
  * Fetches different types of elements from the page
  */
 export class WebsiteScanner {
-
-
-    public scanPageMessage(callback: (response: ElementType[]) => void) {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const activeTab = tabs[0];
-            if (activeTab?.id) {
-                chrome.tabs.sendMessage(activeTab.id, "scanPage", callback);
-            }
-        });
-    }
+    private buttonsSelector = "button, input[type='submit'], input[type='button'], [role='button']";
 
     public getWebsiteURL(callback: (response: string) => void): void {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -32,7 +23,7 @@ export class WebsiteScanner {
      */
     public scanPage(): ElementType[] {
         let results: ElementType[] = [];
-        results.push(WebUtils.toType(this.getButtons(), "Button"));
+        results.push(WebUtils.toType(this.getButtons(), "Button", this.buttonsSelector));
         return results;
     }
 
