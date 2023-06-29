@@ -1,11 +1,31 @@
 import { ElementType } from "../sidebar/interfaces";
+import { ElementSelector, ButtonSelector, ImageSelector, LinkSelector, MenuItems, Headings } from "./elementSelector";
 import { WebUtils } from "./webUtils";
 
 /**
  * Fetches different types of elements from the page
  */
 export class WebsiteScanner {
-    private buttonsSelector = "button, input[type='submit'], input[type='button'], [role='button']";
+    //private buttonsSelector = "button, input[type='submit'], input[type='button'], [role='button']";
+    private selectors: { [key: string]: ElementSelector } = {
+        "Button": new ButtonSelector(),
+        "Image": new ImageSelector(),
+        "Link": new LinkSelector(),
+        "Headings": new Headings(),
+        "MenuItems": new MenuItems()
+    };
+
+    /**
+    * Scans for every type we want.
+    * @returns 
+    */
+    public scanPage(): ElementType[] {
+        let results: ElementType[] = [];
+        for (let key in this.selectors) {
+            results.push(WebUtils.toType(this.selectors[key].getElements(), key, this.selectors[key].selector));
+        }
+        return results;
+    }
 
     public getWebsiteURL(callback: (response: string) => void): void {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -14,21 +34,5 @@ export class WebsiteScanner {
                 callback(activeTab.url)
             }
         });
-    }
-
-    /**
-     * Scans for every type we want.
-     * To expand, create a new getElement and push it to results
-     * @returns 
-     */
-    public scanPage(): ElementType[] {
-        let results: ElementType[] = [];
-        results.push(WebUtils.toType(this.getButtons(), "Button", this.buttonsSelector));
-        return results;
-    }
-
-    public getButtons(): NodeListOf<HTMLElement> {
-        const buttonsSelector = "button, input[type='submit'], input[type='button'], [role='button']";
-        return document.querySelectorAll(buttonsSelector) as NodeListOf<HTMLElement>;
     }
 }
