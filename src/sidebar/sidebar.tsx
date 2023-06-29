@@ -9,13 +9,13 @@ import TabIcon from './tabIcon';
 import { WebsiteScanner } from '../htmlParser/websiteScanner';
 
 
+
 const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
   const [highlightedElement, setHighlightedElement] = useState<ElementObject | null>(null);
   const [websiteURL, setWebsiteURL] = useState<string>("");
   const _message : MessageSender = new MessageSender();
   const _scan : WebsiteScanner = new WebsiteScanner();
-
 
   const fetchData = () => {
     _message.scanPageMessage((response: ElementType[]) => {
@@ -27,6 +27,15 @@ const Sidebar: React.FC = () => {
     });
   };
 
+
+  const openInNewTab = () => {
+   const htmlFilePath = chrome.runtime.getURL('htmlTableBar.html');
+    console.log(htmlFilePath);
+    chrome.tabs.create({ url: htmlFilePath });
+
+  };
+  
+
   return (
     <div className='App'>
       <RegularButton text="Scan page" onClick={fetchData} /> 
@@ -35,7 +44,8 @@ const Sidebar: React.FC = () => {
       <div style={{ height: '150px', backgroundColor: '#f5f5f5' }}>
         <TabIcon></TabIcon>
         <p>Site: {websiteURL} </p>
-        <button className='headline-button' onClick={(e) => { e.stopPropagation();}}>
+        {/*<button className='headline-button' onClick={() => openInNewTab('./htmlTableBar')}>*/}
+        <button className='headline-button' onClick={openInNewTab}>
           Åpen som tabell
         </button>
 
@@ -69,3 +79,4 @@ root.render(
     <Sidebar />
   </React.StrictMode>
 );
+

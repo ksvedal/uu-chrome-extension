@@ -10,6 +10,7 @@ module.exports = {
         content_script: path.join(srcDir, 'contentScript.tsx'),
         sidebar: path.join(srcDir, 'sidebar/sidebar.tsx'),
         open_sidepanel: path.join(srcDir, 'openSidepanel.js'),
+        htmlTableBar: path.join(srcDir, 'htmlTableBar/htmlTableBar.tsx')
     },
     output: {
         path: path.join(__dirname, "../dist/js"),
