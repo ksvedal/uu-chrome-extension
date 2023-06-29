@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 export interface ToggleButtonProps {
   isChecked: boolean;
   onToggle: () => void;
+  text: string;
 }
 
 export interface RegularButtonProps {
@@ -14,33 +15,30 @@ export interface CollapsibleArrowProps {
   isExpanded: boolean;
 }
 
-/**
- * Interface for the CollapsibleItemType
- * Type will be the type of element that is displayed
- */
 export interface CollapsibleItemTypeInterface {
   type: ElementType;
   children?: ReactNode;
+  isAllHighlighted: boolean;
+  setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>;
 }
 
-/**
- * Interface for the CollapsibleItemElement
- * Object will be the element that is displayed
- * for example one button on the page
- */
 export interface CollapsibleItemElementInterface {
+  type: ElementType;
   object: ElementObject;
   children?: ReactNode;
   highlightedElement: ElementObject | null;
+  isAllHighlighted: boolean;
   setHighlightedElement: React.Dispatch<React.SetStateAction<ElementObject | null>>;
+  setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
  * Interface for an elementType
  * Example: Button, Header, Image, Link, etc.
  */
-export interface ElementType{
-  name : string;
+export interface ElementType {
+  name: string;
   nodes: ElementObject[];
   selector: string;
 }
@@ -53,7 +51,7 @@ export interface ElementType{
  *          Or just type + index
  * html is the html code for the element as a string
  */
-export interface ElementObject{
+export interface ElementObject {
   title: string;
   htmlString: string;
   //html: HTMLElement;

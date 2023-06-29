@@ -12,8 +12,24 @@ export class HighlightMessage implements Message {
     action: string = "highlightElement";
 }
 
+export class HighlightAndRemovePreviousMessage implements Message {
+    constructor(public newElement: ElementObject, public previousElement: ElementObject) {
+        this.newElement = newElement;
+        this.previousElement = previousElement;
+    }
+    action: string = "highlightAndRemovePrevious";
+}
+
+export class UnhighlightAllAndHighlightSingleMessage implements Message {
+    constructor(public element: ElementObject, public elementType: ElementType) {
+        this.element = element;
+        this.elementType = elementType;
+    }
+    action: string = "unhighlightAllAndHighlightSingle";
+}
+
 export class HighlightAllMessage implements Message {
-    constructor(public type: ElementType, public isChecked: boolean){
+    constructor(public type: ElementType, public isChecked: boolean) {
         this.type = type;
         this.isChecked = isChecked;
     }
