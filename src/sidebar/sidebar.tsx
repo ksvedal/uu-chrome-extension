@@ -41,15 +41,7 @@ const Sidebar: React.FC = () => {
       <RegularButton text="Scan page" onClick={fetchData} /> 
 
       {/* This is the non-collapsible space */}
-      <div style={{ height: '150px', backgroundColor: '#f5f5f5' }}>
-        <TabIcon></TabIcon>
-        <p>Site: {websiteURL} </p>
-        {/*<button className='headline-button' onClick={() => openInNewTab('./htmlTableBar')}>*/}
-        <button className='headline-button' onClick={openInNewTab}>
-          Åpen som tabell
-        </button>
-
-      </div>
+      
 
       {/*for each element in ScanPage, creates a collapse menu with other nodes*/}
       {scanPage.map((item, index) => 
