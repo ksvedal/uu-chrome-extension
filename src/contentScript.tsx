@@ -21,7 +21,10 @@ document.head.append(styleElement);
  * @param sender 
  * @param sendResponse 
  */
-function handleMessage(message: Message, sender: any, sendResponse: any) {
+function handleMessage(
+  message: {action: string},
+  sender: chrome.runtime.MessageSender,
+  sendResponse: (response: ElementType[] | { message: string } ) => void) {
   try {
     const _page: PageInteractor = new PageInteractor();
     const _scan: WebsiteScanner = new WebsiteScanner();
@@ -60,6 +63,4 @@ function handleMessage(message: Message, sender: any, sendResponse: any) {
     sendResponse({ message: `Error: ${errorMessage}` });
     return true; //Keeps the message channel open
   }
-
 }
-
