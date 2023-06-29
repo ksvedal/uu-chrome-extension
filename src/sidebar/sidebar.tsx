@@ -8,12 +8,14 @@ import { MessageSender } from '../messageObjects/messageSender';
 import { WebsiteScanner } from '../htmlParser/websiteScanner';
 
 
+
 const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
   const [highlightedElement, setHighlightedElement] = useState<ElementObject | null>(null);
   const [websiteURL, setWebsiteURL] = useState<string>("");
   const _message : MessageSender = new MessageSender();
   const _scan : WebsiteScanner = new WebsiteScanner();
+  const [isClicked, setIsClicked] = useState(false);
 
 
   const fetchData = () => {
@@ -28,16 +30,28 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className='App'>
+      <div className='header-field'>
+        <div className='extension-logo'>
+          <img src="./scan.png" alt="Extension Logo"/>
+        </div>
+        <div className='extension-text'> <p>Button Seeker</p></div>
+      </div>
 
-      <RegularButton text="Scan page" onClick={fetchData} /> 
+      
+      <div className="scan-page-button">
+      <div className='welcome-text'>
+        <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
+      </div>
+        <RegularButton isClicked={isClicked} text="SCAN PAGE" onClick={fetchData} /> 
+      </div>
+    
 
       {/* This is the non-collapsible space */}
-      <div style={{ height: '150px', backgroundColor: '#f5f5f5' }}>
-        <p>Site: {websiteURL} </p>
+      <div className='headline'>
+        <p>Website: {websiteURL} </p>
         <button className='headline-button' onClick={(e) => { e.stopPropagation();}}>
-          Åpen som tabell
+          Open as table
         </button>
-
       </div>
 
       {/*for each element in ScanPage, creates a collapse menu with other nodes*/}

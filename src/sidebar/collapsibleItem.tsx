@@ -17,14 +17,25 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     messageSender.highlightAllWithType(type, isChecked);
   };
   return (
-    <div className='collapsible-item'>
-      <div className='item-header' onClick={() => setIsExpanded(!isExpanded)}>
-        <CollapsibleArrowButton isExpanded={isExpanded} /> {type.name}
-        <ToggleButton isChecked={isChecked} onToggle={toggleCheck} />
-        <p>{type.nodes.length}</p>
+      <div className='collapsible-item'>
+        <div className="collapsible-item-parent">
+          <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
+            <CollapsibleArrowButton isExpanded={isExpanded} />
+            <div className="buttons-text">
+              {type.name + 's'}
+            </div>
+            <ToggleButton isChecked={isChecked} onToggle={toggleCheck} />
+            <div className="total-buttons">
+            <p>{type.nodes.length}</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div className="collapsible-item children">
+        {isExpanded && children}
+        </div>
       </div>
-      {isExpanded && children}
-    </div>
   );
 };
 
@@ -48,13 +59,15 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   };
   
   return (
-    <div className='collapsible-item'>
-      <div className='item-header' onClick={() => setIsExpanded(!isExpanded)}>
-        <CollapsibleArrowButton isExpanded={isExpanded} /> {object.title}
-        <ToggleButton isChecked={highlightedElement === object} onToggle={toggleCheck} />
-        {/*<RegularButton text="Jump to" onClick={() => console.log('Regular button clicked')} />*/}
+    <div className="collapsible-item-child">
+      <div className='collapsible-item'>
+        <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
+          <CollapsibleArrowButton isExpanded={isExpanded} /> {object.title}
+          <ToggleButton isChecked={highlightedElement === object} onToggle={toggleCheck} />
+          {/*<RegularButton text="Jump to" onClick={() => console.log('Regular button clicked')} />*/}
+        </div>
+        {isExpanded && children}
       </div>
-      {isExpanded && children}
     </div>
   );
 };

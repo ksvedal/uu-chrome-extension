@@ -1,0 +1,103 @@
+/* --------------------------------------------------------------
+| Design 3
+-------------------------------------------------------------- */
+
+/* Header Field
+---------------------------------------------- */
+.header-field {
+    display: flex;
+    border-bottom: 2px solid rgb(190, 190, 190);
+}
+
+.header-field .extension-text p {
+    color: #0F69EF;
+    font-size: 36px;
+    font-family: Zen Old Mincho;
+    letter-spacing: 2.16px;
+    margin-bottom: 15px;
+}
+
+.header-field .extension-logo {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.header-field .extension-logo img {
+    display: block;
+    width: 60px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+/* Scan-page button
+---------------------------------------------- */
+.scan-page-button {
+    margin: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.scan-page-button button {
+    width: 145px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #000;
+    background: #94227D;
+    color: #FFF;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+}
+
+
+/* Headline 
+---------------------------------------------- */
+.headline {
+    display: flex;
+    background-color: #94227d17;
+    padding: 20px;
+    height: 60px;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgb(170, 170, 170);
+    margin-left: 20px;
+}
+
+.headline .headline-button {
+    width: 145px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #000;
+    background: #94227d;
+    color: #FFF;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+}
+
+
+/* Collapsible content 
+---------------------------------------------- */
+
+    /* Parent collapsible */
+    .collapsible-item {
+        background-color: white;
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .collapsible-item-parent .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin-left: 20px;
+        border: 1px solid rgb(170, 170, 170);
+    }
+
+    .collapsible-item-parent .arrow-button {
+        font-size: 30px;
+    }
+

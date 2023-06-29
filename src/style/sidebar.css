@@ -1,115 +1,174 @@
-/* ------------------------------------------------------------------------------- */
-/* Design 2  */
-/* ------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------
+| Design 3
+-------------------------------------------------------------- */
 
-/* ----------------------------------------------------- */
-/* Scan-page button */
-.regular-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-/* ----------------------------------------------------- */
-/* Parent collapsable */
-/* ----------------------------------------------------- */
-.collapsible-item {
-  margin-bottom: 10px;
-  background-color: rgb(245, 245, 245);
-  color: rgb(155, 155, 155);
-  font-size: 15px;
-  margin-top: 10px;
-}
-
-/* Styling the item header */
-.item-header {
+/* Header Field
+---------------------------------------------- */
+.header-field {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: #ffffff;
-  transition: background-color 0.3s ease;
-  margin-bottom: 20px;
+  border-bottom: 2px solid rgb(190, 190, 190);
 }
 
-.collapsible-item .item-header:hover {
-  color: black;
-  box-shadow: 0px 4px 10px 0px rgb(158, 158, 158);
+.header-field .extension-text p {
+  color: #0F69EF;
+  font-size: 36px;
+  font-family: Zen Old Mincho;
+  letter-spacing: 2.16px;
+  margin-bottom: 15px;
 }
 
-.collapsible-item .item-header.pressed {
-  color: black;
-  box-shadow: 0px 4px 10px 0px rgb(158, 158, 158);
-}
-
-  /* Styling the arrow button */
-.arrow-button {
+.header-field .extension-logo {
+  margin-left: 20px;
   margin-right: 10px;
-  font-weight: bold;
-  font-size: 30px;
-  transition: transform 0.3s ease;
 }
 
-/* Styling the arrow button when pressed */
-.item-header.pressed .arrow-button {
-  transform: rotate(90deg);
-  color: black;
+.header-field .extension-logo img {
+  display: block;
+  width: 60px;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 
-  /* Styling the highlight button */
-.toggle-button {
-  background-color: #4a7749;
-  border: none;
-  color: #b1b1b1;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: color 0.15s ease;
+/* Scan-page button
+---------------------------------------------- */
+.scan-page-button {
+  margin: 20px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.toggle-button.pressed {
-  background-color: #3b993a;
-  color: white;
+.scan-page-button button {
+  width: 145px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #94227D;
+  color: #FFF;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 1px;
 }
 
-.toggle-button:active {
-  transform: translateY(4px);
-}
-.toggle-button.pressed:active {
-  background-color: #4a7749;
-  color: #b1b1b1;
+
+/* Headline 
+---------------------------------------------- */
+.headline {
+  display: flex;
+  background-color: #94227d17;
+  padding: 20px;
+  height: 60px;
+  border-radius: 10px;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgb(170, 170, 170);
+  margin-left: 20px;
 }
 
-/* ----------------------------------------------------- */
-/* Child collapsible */
-/* ----------------------------------------------------- */
-.collapsible-item-children .item-header {
-  background-color: rgb(245, 245, 245);
+.headline .headline-button {
+  width: 145px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #94227d;
+  color: #FFF;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 1px;
 }
 
-.collapsible-item-children {
-  background-color: rgb(245, 245, 245);
-}
 
-.collapsible-item-child.pressed .item-header {
-  color: black;
-}
+/* Collapsible content 
+---------------------------------------------- */
 
-.collapsible-item-child .arrow-button {
-  margin-left: 25px;
-  transition: transform 0.3s ease;
-}
+  /* Parent collapsible */
+  .collapsible-item {
+      background-color: white;
+      font-size: 20px;
+      margin-top: 10px;
+  }
 
-.collapsible-item-child.pressed .arrow-button {
-  transform: rotate(90deg);
-  color: black;
-}
+  .collapsible-item-parent .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin-left: 20px;
+      border: 1px solid rgb(170, 170, 170);
+      height: 40px;
+  }
 
-.collapsible-item-child .item-header:hover {
-  box-shadow: none;
-}
-/* ----------------------------------------------------- */
+  .collapsible-item-parent .arrow-button {
+      font-size: 20px;
+      color: grey;
+      rotate: 90deg;
+      padding: 10px;
+  }
+
+  .collapsible-item-parent .buttons-text {
+      margin-right: 20px;
+  }
+
+  .collapsible-item-parent .toggle-button {
+    width: 145px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #000;
+    background: #f8f8f8;
+    color: #000000;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .collapsible-item-parent .total-buttons {
+    border: 1px solid grey;
+    background-color: #94227d17;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(0, 0, 0);
+  }
+
+      /* Parent collapsible on hover */
+      .collapsible-item-parent .item-header:hover {
+        border: 1px solid #94227D;
+      }
+
+      .collapsible-item-parent .item-header:hover .arrow-button {
+        transition: transform 0.3s ease;
+        transform: rotate(90deg);
+        color: #94227d;
+      }
+
+      .collapsible-item-parent .item-header:hover .total-buttons {
+        background-color: #94227D;
+        color: white;
+      }
+
+
+      /* Parent collapsible on click */
+      .collapsible-item-parent .item-header.pressed {
+        border: 1px solid #94227D;
+      }
+
+      .collapsible-item-parent .item-header.pressed .arrow-button {
+        transition: transform 0.3s ease;
+        transform: rotate(90deg);
+        color: #94227d;
+      }
+
+      .collapsible-item-parent .item-header.pressed .total-buttons {
+        background-color: #94227D;
+        color: white;
+      }
+
+
+
+
+
+  
