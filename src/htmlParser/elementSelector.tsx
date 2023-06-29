@@ -5,9 +5,6 @@ export abstract class ElementSelector {
     }
 }
 
-/* export class ButtonSelector extends ElementSelector {
-    selector = "button, input[type='submit'], input[type='button'], [role='button']";
-} */
 //Example of a buttons selector that doesnt overlap with menu items
  export class ButtonSelector extends ElementSelector {
     selector = "button:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio']), input[type='submit']:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio']), input[type='button']:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio']), [role='button']:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio'])";
@@ -28,5 +25,3 @@ export class LinkSelector extends ElementSelector {
 export class Headings extends ElementSelector {
     selector = "h1, h2, h3, h4, h5, h6"
 }
-
-
