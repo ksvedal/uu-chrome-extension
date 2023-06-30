@@ -1,0 +1,187 @@
+/* ------------------------------------------------------------------------------- */
+/* Design 2  */
+/* ------------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------- */
+/* Scan-page button */
+.regular-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* ----------------------------------------------------- */
+/* Parent collapsable */
+/* ----------------------------------------------------- */
+.collapsible-item {
+  margin-bottom: 10px;
+  background-color: rgb(245, 245, 245);
+  color: rgb(155, 155, 155);
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+/* Styling the item header */
+.item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #ffffff;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.collapsible-item .item-header:hover {
+  color: black;
+  box-shadow: 0px 4px 10px 0px rgb(158, 158, 158);
+}
+
+.collapsible-item .item-header.pressed {
+  color: black;
+  box-shadow: 0px 4px 10px 0px rgb(158, 158, 158);
+}
+
+  /* Styling the arrow button */
+.arrow-button {
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 30px;
+  transition: transform 0.3s ease;
+}
+
+/* Styling the arrow button when pressed */
+.item-header.pressed .arrow-button {
+  transform: rotate(90deg);
+  color: black;
+}
+
+  /* Styling the highlight button */
+.toggle-button {
+  background-color: #4a7749;
+  border: none;
+  color: #b1b1b1;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.toggle-button.pressed {
+  background-color: #3b993a;
+  color: white;
+}
+
+.toggle-button:active {
+  transform: translateY(4px);
+}
+.toggle-button.pressed:active {
+  background-color: #4a7749;
+  color: #b1b1b1;
+}
+
+/* ----------------------------------------------------- */
+/* Child collapsible */
+/* ----------------------------------------------------- */
+.collapsible-item-children .item-header {
+  background-color: rgb(245, 245, 245);
+}
+
+.collapsible-item-children {
+  background-color: rgb(245, 245, 245);
+}
+
+.collapsible-item-child.pressed .item-header {
+  color: black;
+}
+
+.collapsible-item-child .arrow-button {
+  margin-left: 25px;
+  transition: transform 0.3s ease;
+}
+
+.collapsible-item-child.pressed .arrow-button {
+  transform: rotate(90deg);
+  color: black;
+}
+
+.collapsible-item-child .item-header:hover {
+  box-shadow: none;
+}
+/* ----------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* Styling the item header */
+.item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Styling the pressed item header */
+.item-header.pressed {
+    background-color: #e9ecef;
+  }
+
+  /* Styling the arrow button */
+.arrow-button {
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+  }
+  
+/* Styling the arrow button when pressed */
+.item-header.pressed .arrow-button {
+    transform: rotate(90deg);
+  }
+
+/* Styling the arrow child */
+.collapsible-item-child .arrow-button {
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+.collapsible-item-child .arrow-button.item-header.pressed {
+  transform: rotate(90deg);
+}
+
+  /* Styling the toggle button */
+.toggle-button {
+    background-color: #4a7749;
+    border: none;
+    color: #b1b1b1;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .toggle-button:hover {
+    background-color: #3b993a;
+    color: white;
+  }
+  
+

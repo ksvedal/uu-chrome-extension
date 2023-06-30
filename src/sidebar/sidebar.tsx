@@ -74,4 +74,3 @@ root.render(
     <Sidebar />
   </React.StrictMode>
 );
-
