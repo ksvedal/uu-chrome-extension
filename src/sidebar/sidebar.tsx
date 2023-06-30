@@ -41,16 +41,30 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className='App'>
-      <RegularButton text="Scan page" onClick={fetchData} />
-      {/* This is the non-collapsible space */}
-      <div style={{ height: '150px', backgroundColor: '#f5f5f5' }}>
-        <TabIcon></TabIcon>
-        <p>Site: {websiteURL} </p>
-        {/*<button className='headline-button' onClick={() => openInNewTab('./htmlTableBar')}>*/}
-        <button className='headline-button' onClick={openInNewTab}>
-          Åpen som tabell
-        </button>
 
+      <div className='header-field'>
+        <div className='extension-logo'>
+          <img src="./scan.png" alt="Extension Logo"/>
+        </div>
+        <div className='extension-text'> <p>Button Seeker</p></div>
+      </div>
+
+
+      <div className="scan-page-button">
+      <div className='welcome-text'>
+        <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
+      </div>
+        <RegularButton text="SCAN PAGE" onClick={fetchData} /> 
+      </div>
+
+
+      {/* This is the non-collapsible space */}
+      <div className='headline'>
+        <TabIcon></TabIcon>
+        <p>Website: {websiteURL} </p>
+        <button className='headline-button' onClick={openInNewTab}>
+          Open as table
+        </button>
       </div>
 
       {/*for each element in ScanPage, creates a collapse menu with other nodes*/}

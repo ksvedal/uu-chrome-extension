@@ -37,7 +37,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       </div>
 
       {isExpanded && (
-        <div className="item-content">
+        <div className="collapsible-item-children">
           {type.nodes.map((item, index) => (
             <CollapsibleItemElement
               type={type}
