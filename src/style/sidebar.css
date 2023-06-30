@@ -5,12 +5,12 @@
     border: none;
     border-radius: 5px;
   }
-  
+
   .toggle-button.pressed {
     background-color: #aaa;
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   }
-  
+
   .regular-button {
     background-color: #ddd;
     padding: 10px;
@@ -18,18 +18,18 @@
     border-radius: 5px;
     margin-left: 10px;
   }
-  
+
   .collapsible-item {
     margin-bottom: 10px;
   }
-  
+
   .item-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
   }
-   */
+*/
 
    body {
     background-color: white;
@@ -38,8 +38,7 @@
   
   
   }
-  
-  
+
   .item-header {
     display: flex;
     align-items: center;
@@ -48,7 +47,6 @@
     padding-left: 10px;
     text-decoration-color: black;
   }
-  
   
   /* HTML Content */
   .collapsible-item-child.pressed .item-content {
@@ -89,7 +87,6 @@
       right: 10px;
       transform: translateY(-50%);
     }
-    
   
   /* Jump-to-button */
   .regular-button {
@@ -165,5 +162,3 @@
     .collapsible-item-child.pressed span.arrow-button {
       color: black;
     }
-  
-   

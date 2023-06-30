@@ -2,7 +2,6 @@ import { ElementObject, ElementType } from "../sidebar/interfaces";
 import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage } from "./message";
 
 export class MessageSender {
-
     public scanPageMessage(callback: (response: ElementType[]) => void) {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const activeTab = tabs[0];
@@ -84,6 +83,4 @@ export class MessageSender {
         });
         return true;
     }
-
-
 }
