@@ -10,11 +10,11 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({url, isScanned, openIn
   
   return (
     <div className='headline'>
-    <TabIcon></TabIcon>
-    <p>Website: {url} </p>
-    <button className='headline-button' onClick={openInNewTab}>
-      View in table
-    </button>
+      <TabIcon></TabIcon>
+      <p>Website: {url} </p>
+      <button className='headline-button' onClick={openInNewTab}>
+        View in table
+      </button>
     </div>
   );
 };

@@ -6,7 +6,6 @@ import { WebUtils } from "./webUtils";
  * Fetches different types of elements from the page
  */
 export class WebsiteScanner {
-    //private buttonsSelector = "button, input[type='submit'], input[type='button'], [role='button']";
     private selectors: { [key: string]: ElementSelector } = {
         "Button": new ButtonSelector(),
         "Image": new ImageSelector(),
@@ -31,7 +30,7 @@ export class WebsiteScanner {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const activeTab = tabs[0];
             if (activeTab?.url) {
-                callback(activeTab.url)
+                callback(activeTab.url);
             }
         });
     }

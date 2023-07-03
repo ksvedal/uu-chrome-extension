@@ -8,13 +8,11 @@ import { MessageSender } from '../messageObjects/messageSender';
 import { WebsiteScanner } from '../htmlParser/websiteScanner';
 import ResultsHeader from './resultsHeader';
 
-
 const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
   const [websiteURL, setWebsiteURL] = useState<string>("");
   const [isAllHighlighted, setIsAllHighlighted] = useState<boolean>(false); // add this line
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
-
 
   const _message: MessageSender = new MessageSender();
   const _scan: WebsiteScanner = new WebsiteScanner();
@@ -29,7 +27,6 @@ const Sidebar: React.FC = () => {
     });
   };
 
-
   const openInNewTab = () => {
    const htmlFilePath = chrome.runtime.getURL('htmlTableBar.html');
     console.log(htmlFilePath);
@@ -37,7 +34,6 @@ const Sidebar: React.FC = () => {
 
   };
   
-
   return (
     <div className='App'>
 
