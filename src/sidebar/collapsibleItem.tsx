@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject } from "./interfaces";
 import { ToggleButton, CollapsibleArrowButton } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const messageSender = new MessageSender();
 
@@ -47,7 +49,11 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
               setHighlightedElement={setCurrentHighlighted}
               isAllHighlighted={isAllHighlighted}
               setIsAllHighlighted={setIsAllHighlighted}
-            > {item.htmlString}
+            > 
+            <SyntaxHighlighter language="html" style={vs}>
+            {item.htmlString}
+            </SyntaxHighlighter>
+
             </CollapsibleItemElement>
           ))}
         </div>

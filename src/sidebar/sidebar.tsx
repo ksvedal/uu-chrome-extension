@@ -9,7 +9,6 @@ import TabIcon from './tabIcon';
 import { WebsiteScanner } from '../htmlParser/websiteScanner';
 
 
-
 const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
   const [websiteURL, setWebsiteURL] = useState<string>("");
