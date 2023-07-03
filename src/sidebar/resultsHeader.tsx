@@ -1,8 +1,9 @@
 import React from 'react';
 import TabIcon from './tabIcon';
+import { ResultsHeaderInterface } from './interfaces';
 
 //TODO: Replace any with correct type
-const ResultsHeader: React.FC<any> = ({url, isScanned, openInNewTab}) => {
+const ResultsHeader: React.FC<ResultsHeaderInterface> = ({url, isScanned, openInNewTab}) => {
   if(!isScanned){
     return null;
   }

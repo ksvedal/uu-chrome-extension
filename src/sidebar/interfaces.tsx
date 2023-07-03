@@ -33,6 +33,12 @@ export interface CollapsibleItemElementInterface {
   setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+export interface ResultsHeaderInterface {
+  url: string;
+  isScanned: boolean;
+  openInNewTab: () => void;
+}
+
 /**
  * Interface for an elementType
  * Example: Button, Header, Image, Link, etc.
