@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject } from "./interfaces";
 import { ToggleButton, CollapsibleArrowButton } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
+import { ElementAttributes } from "./elementAttributes";
 
 const messageSender = new MessageSender();
 
@@ -41,7 +42,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
               setHighlightedElement={setCurrentHighlighted}
               isAllHighlighted={isAllHighlighted}
               setIsAllHighlighted={setIsAllHighlighted}
-            > {item.htmlString}
+            > <ElementAttributes attributes={item.attributes} title={item.title} htmlString={item.htmlString} selector={item.selector} />
             </CollapsibleItemElement>
           ))}
         </div>
