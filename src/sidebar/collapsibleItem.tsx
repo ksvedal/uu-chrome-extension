@@ -42,7 +42,12 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
               setHighlightedElement={setCurrentHighlighted}
               isAllHighlighted={isAllHighlighted}
               setIsAllHighlighted={setIsAllHighlighted}
-            > <ElementAttributes attributes={item.attributes} title={item.title} htmlString={item.htmlString} selector={item.selector} />
+            > <ElementAttributes
+                attributes={item.attributes}
+                title={item.title}
+                htmlString={item.htmlString}
+                selector={item.selector}
+                children={item.children} />
             </CollapsibleItemElement>
           ))}
         </div>
@@ -78,14 +83,11 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       messageSender.unhighlightAllAndHighlightSingleMessage(object, type);
       //unhighlightAllAndHighligthSingle( );
       setHighlightedElement(object);//Kan kanskje fjerne denne
-
-    } else
+    } else if (highlightedElement) {
       //Another element is highlighted, unhighlight it and highlight the new one
-      if (highlightedElement) {
         messageSender.highlightAndRemovePreviousMessage(object, highlightedElement);
         setHighlightedElement(object);//Kan kanskje fjerne denne
       } else {
-        console.log("else");
         //No element is highlighted, highlight the new one
         setHighlightedElement(object);
         messageSender.highlightSingleMessage(object, false);

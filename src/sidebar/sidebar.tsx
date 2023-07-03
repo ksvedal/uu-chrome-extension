@@ -28,19 +28,19 @@ const Sidebar: React.FC = () => {
   };
 
   const openInNewTab = () => {
-   const htmlFilePath = chrome.runtime.getURL('htmlTableBar.html');
+    const htmlFilePath = chrome.runtime.getURL('htmlTableBar.html');
     console.log(htmlFilePath);
     chrome.tabs.create({ url: htmlFilePath });
 
   };
-  
+
   return (
     <div className='App'>
-      <RegularButton text="Scan page" onClick={fetchData} /> 
+      <RegularButton text="Scan page" onClick={fetchData} />
       <ResultsHeader
-      url={websiteURL}
-      isScanned={scanPage.length !== 0}
-      openInNewTab={openInNewTab}></ResultsHeader>
+        url={websiteURL}
+        isScanned={scanPage.length !== 0}
+        openInNewTab={openInNewTab}></ResultsHeader>
 
       {/*for each element in ScanPage, creates a collapse menu with other nodes*/}
       {scanPage.map((item, index) =>

@@ -38,6 +38,21 @@
   
   
   }
+  .tableHead{
+    background-color: #f3a540;
+    color: white;
+    border: 2px solid black;
+
+  }
+
+  /*Adds a small blackborder around each element*/
+  .tableBody{
+    font-size: 14px;
+    border: 2px solid black;
+  }
+  .htmlText{
+    font-size: 14px;
+  }
 
   .item-header {
     display: flex;
