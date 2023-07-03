@@ -20,6 +20,7 @@ const Sidebar: React.FC = () => {
   const fetchData = () => {
     _message.scanPageMessage((response: ElementType[]) => {
       setScanPage(response); // update the state with the response data
+      chrome.storage.local.set({scanResults: response});
     });
 
     _scan.getWebsiteURL((url: string) => {
