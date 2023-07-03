@@ -1,164 +1,285 @@
-/* .toggle-button {
-    transition: 0.3s all ease-in-out;
-    background-color: #ddd;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-  }
+/* --------------------------------------------------------------
+| Design 3
+-------------------------------------------------------------- */
 
-  .toggle-button.pressed {
-    background-color: #aaa;
-    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
-  }
+/* Header Field
+---------------------------------------------- */
+.header-field {
+  display: flex;
+  border-bottom: 2px solid rgb(190, 190, 190);
+}
 
-  .regular-button {
-    background-color: #ddd;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    margin-left: 10px;
-  }
+.header-field .extension-text p {
+  color: #0F69EF;
+  font-size: 36px;
+  font-family: Zen Old Mincho;
+  letter-spacing: 2.16px;
+  margin-bottom: 15px;
+}
 
+.header-field .extension-logo {
+  margin-left: 20px;
+  margin-right: 10px;
+}
+
+.header-field .extension-logo img {
+  display: block;
+  width: 60px;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+/* Scan-page button
+---------------------------------------------- */
+.scan-page-button {
+  margin: 20px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.scan-page-button button {
+  width: 145px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #94227D;
+  color: #FFF;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 1px;
+}
+
+
+/* Headline 
+---------------------------------------------- */
+.headline {
+  display: flex;
+  background-color: #94227d17;
+  padding: 20px;
+  height: 60px;
+  border-radius: 10px;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgb(170, 170, 170);
+  margin-left: 20px;
+}
+
+.headline .headline-button {
+  width: 145px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #94227d;
+  color: #FFF;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 1px;
+}
+
+
+/* Collapsible content 
+---------------------------------------------- */
+
+  /* Parent collapsible */
   .collapsible-item {
-    margin-bottom: 10px;
-  }
-
-  .item-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-  }
-*/
-
-   body {
-    background-color: white;
-  
-    color: rgb(0, 0, 0);
-  
-  
-  }
-
-  .item-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    padding-left: 10px;
-    text-decoration-color: black;
-  }
-  
-  /* HTML Content */
-  .collapsible-item-child.pressed .item-content {
-    padding-left: 10px;
-    padding-right: 10px;
-    padding: 15px;
-    background-color: #fff0d3;
-  }
-  
-  /* Highlight button */
-  .toggle-button {
-    color: white;
-    transition: 0.3s all ease-in-out;
-    background-color: #21aba6;
-    padding: 10px;
-    border: solid 2px #21aba6;
-    border-radius: 2px;
-    margin: 10px;
-    cursor:pointer;
-  }
-    
-    .toggle-button.pressed {
-      background-color: #ab2166;
-      border: solid 2px #ab2166;
-      box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
-    }
-  
-    .headline-button {
-      color: white;
-      background-color: #f3a540;
-      padding: 10px;
-      border: solid 2px #f3a540;
-      border-radius: 2px;
-      margin: 10px;
-      cursor:pointer;
-      position: absolute;
-      top: 150px;
-      right: 10px;
-      transform: translateY(-50%);
-    }
-  
-  /* Jump-to-button */
-  .regular-button {
-    color: rgb(255, 255, 255);
-    background-color: #f3a540;
-    padding: 10px;
-    border: solid 2px #f3a540;
-    border-radius: 2px;
-    margin: 10px;
-    cursor:pointer;
-  }
-    
-  /* Parent collapsable */
-  .collapsible-item {
-    margin-bottom: 10px;
-    background-color: #ffffff;
-    color: rgb(155, 155, 155);
-    font-size: 20px;
-  
-    
-  }
-  .collapsible-item:hover {
-    background-color: whitesmoke;
-    color: black;
-  }
-  
-  .collapsible-item .item-header.pressed {
-    background-color: #ffffff;
-    border-bottom: 3px solid black;
-    margin-bottom: 10px;
-    color: black;
-  }
-    
-    /* Child collabsable */
-    .collapsible-item-child {
       background-color: white;
-      color: rgb(155, 155, 155);
+      font-size: 20px;
+  }
+
+  .collapsible-item-parent {
+    margin-top: 20px;
+  }
+
+  .collapsible-item-parent .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin-left: 20px;
+      border: 1px solid rgb(170, 170, 170);
+      height: 40px;
+  }
+
+  .collapsible-item-parent .arrow-button {
+      font-size: 20px;
+      color: #aaaaaa;
+      rotate: 90deg;
+      padding: 10px;
+  }
+
+  .collapsible-item-parent .buttons-text {
+      margin-right: 20px;
+  }
+
+  .collapsible-item-parent .toggle-button {
+    width: 145px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #aaaaaa;
+    background: #f8f8f8;
+    color: #000000;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .collapsible-item-parent .total-buttons {
+    border: 1px solid grey;
+    background-color: #94227d17;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(0, 0, 0);
+  }
+
+      /* Parent collapsible on hover */
+      .collapsible-item-parent .item-header:hover {
+        border: 1px solid #94227D;
+        cursor: pointer;
+      }
+
+      .collapsible-item-parent .item-header:hover .arrow-button {
+        transition: transform 0.3s ease;
+        color: #94227d;
+      }
+
+      .collapsible-item-parent .item-header:hover .total-buttons {
+        background-color: #94227D;
+        color: white;
+      }
+
+      .collapsible-item-parent .item-header .toggle-button:hover {
+        cursor: pointer;
+        border: 1px solid #000;
+      }
+
+
+
+      /* Parent collapsible on click */
+      .collapsible-item-parent .item-header.pressed {
+        border: 3px solid #94227D;
+      }
+
+      .collapsible-item-parent .item-header.pressed .arrow-button {
+        transition: transform 0.3s ease;
+        transform: rotate(90deg);
+        color: #94227d;
+      }
+
+      .collapsible-item-parent .item-header.pressed .total-buttons {
+        background-color: #94227D;
+        color: white;
+      }
+
+      .collapsible-item-parent .item-header .toggle-button.pressed {
+        background: #FFFACB;
+        border: 1px solid #000;
+      }
+
+
+    
+  /* Child collapsible */
+  .collapsible-item-children {
+    background-color: #94227d17;
+  }
+
+  .collapsible-item-children .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 20px;
+    border: 1px solid #94227D;
+    border-top: none;
+    height: 40px;
+    background-color: #94227d17;
+  }
+
+  .collapsible-item-children .item-header .flex-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .collapsible-item-children .item-header .arrow-button {
+    font-size: 17px;
+    color: #aaaaaa;
+    rotate: 90deg;
+    padding: 10px;
+    margin-left: 20px;
+  }
+
+  .collapsible-item-children .item-header .buttons-text {
+    margin-left: 40px;
+  }
+
+  .collapsible-item-children .item-header .toggle-button {
+    width: 110px;
+    height: 25px;
+    border-radius: 10px;
+    border: 1px solid #aaaaaa;
+    background: #f8f8f8;
+    color: #000000;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+    margin-right: 20px;
+  }
+
+    /* Child collapsible on hover */
+    .collapsible-item-child .item-header:hover {
+      cursor: pointer;
+      background-color: #a85e99;
+      color: white;
     }
-  
-    .collapsible-item-child.pressed {
-      box-shadow: 0px 4px 10px 0px rgb(158, 158, 158);
-      margin: 20px;
+
+    .collapsible-item-child .item-header:hover .arrow-button {
+      transition: transform 0.3s ease;
+      color: #94227d;
+    }
+
+    .collapsible-item-child .item-header .toggle-button:hover {
+      cursor: pointer;
+      border: 1px solid #000;
       color: black;
     }
-  
-    .collapsible-item-child:hover {
-      background-color: whitesmoke;
-      color: black;
+
+    .collapsible-item-child .item-header:hover .toggle-button {
+     background-color: #d8bfd3;
     }
-  
-  
-  /* Parent arrow-button */
-    .item-header span.arrow-button {
-      color: rgb(184, 184, 184);
-      font-size: 35px;
+
+    /* Child collapsible on click */
+    .collapsible-item-child .item-header.pressed {
+      cursor: pointer;
+      background-color: #a85e99;
+      color: white;
     }
-  
-    .item-header:hover span.arrow-button {
-      color: black;
+
+    .collapsible-item-child .item-header.pressed .arrow-button {
+      transition: transform 0.3s ease;
+      transform: rotate(90deg);
+      color: #94227d;
     }
-  
-    .item-header span.arrow-button.pressed {
-      color: rgb(0, 0, 0);
+
+    .collapsible-item-child .item-header.pressed .toggle-button {
+      background-color: #d8bfd3;
     }
-  
-    /* Child arrow-button */
-    .collapsible-item-child span.arrow-button {
-      color: rgb(184, 184, 184);
-      font-size: 30px;
-      padding-left: 20px;
+
+    .collapsible-item-child .item-header .toggle-button.pressed {
+      background: #FFFACB;
+      border: 1px solid #000;
     }
-  
-    .collapsible-item-child.pressed span.arrow-button {
-      color: black;
-    }
+
+
+  /* Content data */
+  .collapsible-item-child .content-data {
+    margin-left: 20px;
+    border: 1px solid #94227D;
+    border-top: none;
+  }

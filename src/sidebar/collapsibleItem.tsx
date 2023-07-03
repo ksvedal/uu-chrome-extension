@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject } from "./interfaces";
 import { ToggleButton, CollapsibleArrowButton } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const messageSender = new MessageSender();
 
@@ -23,15 +25,21 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   };
   return (
     <div className='collapsible-item'>
-      <div className='item-header' onClick={() => setIsExpanded(!isExpanded)}>
-        <CollapsibleArrowButton isExpanded={isExpanded} /> {type.name}
-        <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
-
-        <p>{type.nodes.length}</p>
+      <div className='collapsible-item-parent'>
+        <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
+          <CollapsibleArrowButton isExpanded={isExpanded} /> 
+          <div className="buttons-text">
+              {type.name + 's'}
+          </div>
+          <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
+          <div className="total-buttons">
+            <p>{type.nodes.length}</p>
+          </div>
+        </div>
       </div>
 
       {isExpanded && (
-        <div className="item-content">
+        <div className="collapsible-item-children">
           {type.nodes.map((item, index) => (
             <CollapsibleItemElement
               type={type}
@@ -41,7 +49,11 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
               setHighlightedElement={setCurrentHighlighted}
               isAllHighlighted={isAllHighlighted}
               setIsAllHighlighted={setIsAllHighlighted}
-            > {item.htmlString}
+            > 
+            <SyntaxHighlighter language="html" style={vs}>
+            {item.htmlString}
+            </SyntaxHighlighter>
+
             </CollapsibleItemElement>
           ))}
         </div>
@@ -93,12 +105,23 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   };
 
   return (
-    <div className='collapsible-item'>
-      <div className='item-header' onClick={() => setIsExpanded(!isExpanded)}>
-        <CollapsibleArrowButton isExpanded={isExpanded} /> {object.title}
-        <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
+    <div className="collapsible-item-child">
+      <div className='collapsible-item'>
+        <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
+
+          <div className="flex-item">
+            <CollapsibleArrowButton isExpanded={isExpanded} /> 
+            <div className="buttons-text">
+              {object.title}
+            </div>
+          </div>
+          <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
+        </div>
+
+        <div className="content-data">
+          {isExpanded && children}
+        </div>
       </div>
-      {isExpanded && children}
     </div>
   );
 };

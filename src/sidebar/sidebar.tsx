@@ -37,7 +37,22 @@ const Sidebar: React.FC = () => {
   
   return (
     <div className='App'>
-      <RegularButton text="Scan page" onClick={fetchData} /> 
+
+      <div className='header-field'>
+        <div className='extension-logo'>
+          <img src="./scan.png" alt="Extension Logo"/>
+        </div>
+        <div className='extension-text'> <p>Button Seeker</p></div>
+      </div>
+
+
+      <div className="scan-page-button">
+      <div className='welcome-text'>
+        <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
+      </div>
+        <RegularButton text="SCAN PAGE" onClick={fetchData} /> 
+      </div>
+
       <ResultsHeader
       url={websiteURL}
       isScanned={scanPage.length !== 0}
