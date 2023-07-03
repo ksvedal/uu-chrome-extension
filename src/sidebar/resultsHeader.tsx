@@ -9,14 +9,13 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({url, isScanned, openIn
   }
   
   return (
-    <div style={{ height: '150px', backgroundColor: '#f5f5f5' }}>
-        <TabIcon></TabIcon>
-        <p>Site: {url} </p>
-        <button className='headline-button' onClick={openInNewTab}>
-          View in table
-        </button>
-
-      </div>
+    <div className='headline'>
+      <TabIcon></TabIcon>
+      <p>Website: {url} </p>
+      <button className='headline-button' onClick={openInNewTab}>
+        View in table
+      </button>
+    </div>
   );
 };
 
