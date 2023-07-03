@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { CollapsibleItemType } from './collapsibleItem';
+import React, { useContext, useState } from 'react';
+import { CollapsibleItemType, CollapsibleItemElement } from './collapsibleItem';
 import { createRoot } from "react-dom/client";
 import "../style/sidebar.css";
 import { ElementObject, ElementType } from "./interfaces";
 import { RegularButton } from './buttons';
 import { MessageSender } from '../messageObjects/messageSender';
-import TabIcon from './tabIcon';
 import { WebsiteScanner } from '../htmlParser/websiteScanner';
+import ResultsHeader from './resultsHeader';
 
 
 const Sidebar: React.FC = () => {
@@ -56,15 +56,10 @@ const Sidebar: React.FC = () => {
         <RegularButton text="SCAN PAGE" onClick={fetchData} /> 
       </div>
 
-
-      {/* This is the non-collapsible space */}
-      <div className='headline'>
-        <TabIcon></TabIcon>
-        <p>Website: {websiteURL} </p>
-        <button className='headline-button' onClick={openInNewTab}>
-          Open as table
-        </button>
-      </div>
+      <ResultsHeader
+      url={websiteURL}
+      isScanned={scanPage.length !== 0}
+      openInNewTab={openInNewTab}></ResultsHeader>
 
       {/*for each element in ScanPage, creates a collapse menu with other nodes*/}
       {scanPage.map((item, index) =>
