@@ -17,6 +17,7 @@
     "url": "https://github.com/chibat/chrome-extension-typescript-starter.git"
   },
   "dependencies": {
+    "pretty": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.0",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/chrome": "^0.0.158",
     "@types/jest": "^29.5.2",
+    "@types/pretty": "^2.0.1",
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
     "@types/react-syntax-highlighter": "^15.5.7",

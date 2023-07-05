@@ -74,4 +74,18 @@ export interface ElementResult{
   name: string;
   comment: string;
   checked: boolean;
+  attributes: ElementAttribute[];
+}
+
+
+export interface ElementResult{
+  htmlString: string;
+  approved: boolean;
+  name: string;
+  comment: string;
+  checked: boolean;
+}
+export interface ElementAttribute {
+  name: string;
+  value: string;
 }

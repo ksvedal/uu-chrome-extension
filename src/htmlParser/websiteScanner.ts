@@ -7,9 +7,9 @@ import { WebUtils } from "./webUtils";
  */
 export class WebsiteScanner {
     private selectors: { [key: string]: ElementSelector } = {
-        "Button": new ButtonSelector(),
-        "Image": new ImageSelector(),
-        "Link": new LinkSelector(),
+        "Buttons": new ButtonSelector(),
+        "Images": new ImageSelector(),
+        "Links": new LinkSelector(),
         "Headings": new Headings(),
         "MenuItems": new MenuItems()
     };
