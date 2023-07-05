@@ -20,7 +20,7 @@ const Sidebar: React.FC = () => {
   const fetchData = () => {
     _message.scanPageMessage((response: ElementType[]) => {
       setScanPage(response); // update the state with the response data
-      chrome.storage.local.set({scanResults: response});
+      chrome.storage.local.set({ scanResults: response });
     });
 
     _scan.getWebsiteURL((url: string) => {
@@ -40,17 +40,17 @@ const Sidebar: React.FC = () => {
 
       <div className='header-field'>
         <div className='extension-logo'>
-          <img src="./scan.png" alt="Extension Logo"/>
+          <img src="scan.png" alt="Extension Logo" />
         </div>
         <div className='extension-text'> <p>Button Seeker</p></div>
       </div>
 
 
       <div className="scan-page-button">
-      <div className='welcome-text'>
-        <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
-      </div>
-        <RegularButton text="SCAN PAGE" onClick={fetchData} /> 
+        <div className='welcome-text'>
+          <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
+        </div>
+        <RegularButton text="SCAN PAGE" onClick={fetchData} />
       </div>
 
       <ResultsHeader

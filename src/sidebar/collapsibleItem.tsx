@@ -18,6 +18,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     console.log("Setter allhighlighted til " + isAllHighlighted);
     console.log("allhightlighted: " + isAllHighlighted);
     setCurrentHighlighted(null);
+
     highlightAll();
   };
 
@@ -28,9 +29,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     <div className='collapsible-item'>
       <div className='collapsible-item-parent'>
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-          <CollapsibleArrowButton isExpanded={isExpanded} /> 
+          <CollapsibleArrowButton isExpanded={isExpanded} />
           <div className="buttons-text">
-              {type.name + 's'}
+            {type.name}
           </div>
           <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
           <div className="total-buttons">
@@ -50,16 +51,17 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
               setHighlightedElement={setCurrentHighlighted}
               isAllHighlighted={isAllHighlighted}
               setIsAllHighlighted={setIsAllHighlighted}
-            > <ElementAttributes
+            >
+
+              <ElementAttributes
                 attributes={item.attributes}
                 title={item.title}
-                htmlString={item.htmlString} 
-                selector={item.selector}
-                children={item.children} />
-            
-            <SyntaxHighlighter language="html" style={vs}>
-            {item.htmlString}
-            </SyntaxHighlighter>
+                htmlString={item.htmlString}
+                selector={item.selector} />
+              <SyntaxHighlighter language="html" style={vs}>
+
+                {item.htmlString}
+              </SyntaxHighlighter>
 
             </CollapsibleItemElement>
           ))}
@@ -98,13 +100,13 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       setHighlightedElement(object);//Kan kanskje fjerne denne
     } else if (highlightedElement) {
       //Another element is highlighted, unhighlight it and highlight the new one
-        messageSender.highlightAndRemovePreviousMessage(object, highlightedElement);
-        setHighlightedElement(object);//Kan kanskje fjerne denne
-      } else {
-        //No element is highlighted, highlight the new one
-        setHighlightedElement(object);
-        messageSender.highlightSingleMessage(object, false);
-      }
+      messageSender.highlightAndRemovePreviousMessage(object, highlightedElement);
+      setHighlightedElement(object);//Kan kanskje fjerne denne
+    } else {
+      //No element is highlighted, highlight the new one
+      setHighlightedElement(object);
+      messageSender.highlightSingleMessage(object, false);
+    }
 
   };
 
@@ -114,7 +116,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
 
           <div className="flex-item">
-            <CollapsibleArrowButton isExpanded={isExpanded} /> 
+            <CollapsibleArrowButton isExpanded={isExpanded} />
             <div className="buttons-text">
               {object.title}
             </div>
