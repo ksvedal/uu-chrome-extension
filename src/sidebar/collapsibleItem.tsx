@@ -18,10 +18,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     console.log("Setter allhighlighted til " + isAllHighlighted);
     console.log("allhightlighted: " + isAllHighlighted);
     setCurrentHighlighted(null);
-
     highlightAll();
   };
-
+  
   const highlightAll = () => {
     messageSender.highlightAllWithType(type, isAllHighlighted);
   };
@@ -39,7 +38,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
           </div>
         </div>
       </div>
-
       {isExpanded && (
         <div className="collapsible-item-children">
           {type.nodes.map((item, index) => (
@@ -50,19 +48,15 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
               highlightedElement={currentHighlighted}
               setHighlightedElement={setCurrentHighlighted}
               isAllHighlighted={isAllHighlighted}
-              setIsAllHighlighted={setIsAllHighlighted}
-            >
-
+              setIsAllHighlighted={setIsAllHighlighted}>
               <ElementAttributes
                 attributes={item.attributes}
                 title={item.title}
                 htmlString={item.htmlString}
                 selector={item.selector} />
               <SyntaxHighlighter language="html" style={vs}>
-
                 {item.htmlString}
               </SyntaxHighlighter>
-
             </CollapsibleItemElement>
           ))}
         </div>
@@ -123,7 +117,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
           </div>
           <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
         </div>
-
         <div className="content-data">
           {isExpanded && children}
         </div>
