@@ -283,3 +283,29 @@
     border: 1px solid #94227D;
     border-top: none;
   }
+
+  /* This is the actual box */
+.checkbox-custom + label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 20px; /* Adjust this to change the size of the box */
+  height: 20px; /* Adjust this to change the size of the box */
+  border: 2px solid #6d1b7b; /* Dark purple border */
+  background: #d3b6c6; /* Light purple background */
+  transition: all 0.3s ease-in-out;
+}
+
+/* This is the checkmark/cross */
+.checkbox-custom:checked + label:after {
+  content: 'X'; /* Cross */
+  position: absolute;
+  left: 5px; /* Adjust this to move the cross left/right */
+  top: 2px; /* Adjust this to move the cross up/down */
+}
+
+/* This is what the box looks like when the checkbox is checked */
+.checkbox-custom:checked + label:before {
+  border-color: #6d1b7b; /* Dark purple border */
+  background: #d3b6c6; /* Light purple background */
+}

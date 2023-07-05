@@ -31,6 +31,8 @@ export interface CollapsibleItemElementInterface {
   isAllHighlighted: boolean;
   setHighlightedElement: React.Dispatch<React.SetStateAction<ElementObject | null>>;
   setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
+  updateJson: (elementObject: ElementObject, index: number) => void;
+  index: number;
 }
 
 export interface ResultsHeaderInterface {
@@ -62,4 +64,14 @@ export interface ElementObject {
   htmlString: string;
   //html: HTMLElement;
   selector: string;
+  result: ElementResult;
+}
+
+
+export interface ElementResult{
+  htmlString: string;
+  approved: boolean;
+  name: string;
+  comment: string;
+  checked: boolean;
 }
