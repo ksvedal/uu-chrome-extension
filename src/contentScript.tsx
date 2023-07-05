@@ -21,6 +21,7 @@ document.head.append(styleElement);
  * @param sender 
  * @param sendResponse 
  */
+
 function handleMessage(
   message: {action: string},
   sender: chrome.runtime.MessageSender,
@@ -30,28 +31,39 @@ function handleMessage(
     const _scan: WebsiteScanner = new WebsiteScanner();
     console.log("Message received:", message.action);
 
-    /*
-   Compares different actions and calls the appropriate function
- */
-      if (message.action === "scanPage") {
+    switch(message.action){
+      case 'scanPage':{
         let result: ElementType[] = _scan.scanPage();
         sendResponse(result);
-      } else if (message.action === "highlightElement") {
+        break;
+      }
+      case 'highlightElement':{
         _page.handleHighlightSingle((message as HighlightMessage));
         sendResponse({ message: "HighlightSingle response" });
-      } else if (message.action === "highlightAllElements") {
+        break;
+      }
+      case 'highlightAllElement':{
         _page.highlightAllWithType((message as HighlightAllMessage));
         sendResponse({ message: "Highlighted all with type" })
-      } else if (message.action === "highlightAndRemovePrevious") {
+        break;
+      }
+      case 'highlightAndRemovePrevious':{
         _page.highlightAndRemovePrevious((message as HighlightAndRemovePreviousMessage));
         sendResponse({ message: "Highlighted and removed previous" })
-      } else if (message.action === "unhighlightAllAndHighlightSingle") {
+        break;
+      }
+      case 'unhighlightAllAndHighlightSingle':{
         _page.unhighlightAllAndHighlightSingle((message as UnhighlightAllAndHighlightSingleMessage));
         sendResponse({ message: "Unhighlighted all and highlighted single" })
-      } else {
-        sendResponse({ message: "Unknown action" });
+        break;
       }
+      default:{
+        sendResponse({ message: "Unknown action" });
+        break;
+      }
+    }
     return true; //Keeps the message channel open
+
   } catch (error: unknown) {
     console.error(`Error handling message:`, error);
     let errorMessage = '';
