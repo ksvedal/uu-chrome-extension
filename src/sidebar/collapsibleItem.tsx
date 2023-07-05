@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject } from "./interfaces";
 import { ToggleButton, CollapsibleArrowButton } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
+import { ElementAttributes } from "./elementAttributes";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -19,7 +20,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     setCurrentHighlighted(null);
     highlightAll();
   };
-
+  
   const highlightAll = () => {
     messageSender.highlightAllWithType(type, isAllHighlighted);
   };
@@ -27,9 +28,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     <div className='collapsible-item'>
       <div className='collapsible-item-parent'>
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-          <CollapsibleArrowButton isExpanded={isExpanded} /> 
+          <CollapsibleArrowButton isExpanded={isExpanded} />
           <div className="buttons-text">
-              {type.name + 's'}
+            {type.name}
           </div>
           <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
           <div className="total-buttons">
@@ -37,7 +38,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
           </div>
         </div>
       </div>
-
       {isExpanded && (
         <div className="collapsible-item-children">
           {type.nodes.map((item, index) => (
@@ -48,12 +48,15 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
               highlightedElement={currentHighlighted}
               setHighlightedElement={setCurrentHighlighted}
               isAllHighlighted={isAllHighlighted}
-              setIsAllHighlighted={setIsAllHighlighted}
-            > 
-            <SyntaxHighlighter language="html" style={vs}>
-            {item.htmlString}
-            </SyntaxHighlighter>
-
+              setIsAllHighlighted={setIsAllHighlighted}>
+              <ElementAttributes
+                attributes={item.attributes}
+                title={item.title}
+                htmlString={item.htmlString}
+                selector={item.selector} />
+              <SyntaxHighlighter language="html" style={vs}>
+                {item.htmlString}
+              </SyntaxHighlighter>
             </CollapsibleItemElement>
           ))}
         </div>
@@ -89,18 +92,15 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       messageSender.unhighlightAllAndHighlightSingleMessage(object, type);
       //unhighlightAllAndHighligthSingle( );
       setHighlightedElement(object);//Kan kanskje fjerne denne
-
-    } else
+    } else if (highlightedElement) {
       //Another element is highlighted, unhighlight it and highlight the new one
-      if (highlightedElement) {
-        messageSender.highlightAndRemovePreviousMessage(object, highlightedElement);
-        setHighlightedElement(object);//Kan kanskje fjerne denne
-      } else {
-        console.log("else");
-        //No element is highlighted, highlight the new one
-        setHighlightedElement(object);
-        messageSender.highlightSingleMessage(object, false);
-      }
+      messageSender.highlightAndRemovePreviousMessage(object, highlightedElement);
+      setHighlightedElement(object);//Kan kanskje fjerne denne
+    } else {
+      //No element is highlighted, highlight the new one
+      setHighlightedElement(object);
+      messageSender.highlightSingleMessage(object, false);
+    }
 
   };
 
@@ -110,14 +110,13 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
 
           <div className="flex-item">
-            <CollapsibleArrowButton isExpanded={isExpanded} /> 
+            <CollapsibleArrowButton isExpanded={isExpanded} />
             <div className="buttons-text">
               {object.title}
             </div>
           </div>
           <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
         </div>
-
         <div className="content-data">
           {isExpanded && children}
         </div>

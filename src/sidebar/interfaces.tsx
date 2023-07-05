@@ -62,4 +62,10 @@ export interface ElementObject {
   htmlString: string;
   //html: HTMLElement;
   selector: string;
+  attributes: ElementAttribute[];
+}
+
+export interface ElementAttribute {
+  name: string;
+  value: string;
 }
