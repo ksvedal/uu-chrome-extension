@@ -1,4 +1,4 @@
-import { ElementAttribute, ElementObject, ElementType } from "../sidebar/interfaces";
+import { ElementAttribute, ElementObject, ElementType, ElementResult } from "../sidebar/interfaces";
 import pretty from 'pretty';
 
 export class WebUtils {
@@ -24,6 +24,7 @@ export class WebUtils {
             htmlString: pretty(element.outerHTML),
             selector: selector,
             attributes: mainObjectAttributes,
+            result: {name: title, htmlString: pretty(element.outerHTML), issue: false, comment: "", checked: false}
         };
 
         console.log(newObject);
