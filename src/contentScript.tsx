@@ -34,8 +34,8 @@ function handleMessage(
    Compares different actions and calls the appropriate function
  */
       if (message.action === "scanPage") {
-        let result: ElementType[] = _scan.scanPage();
-        sendResponse(result);
+        let scannedHtmlResults: ElementType[] = _scan.scanPage();
+        sendResponse(scannedHtmlResults);
       } else if (message.action === "highlightElement") {
         _page.handleHighlightSingle((message as HighlightMessage));
         sendResponse({ message: "HighlightSingle response" });

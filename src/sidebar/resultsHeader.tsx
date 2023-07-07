@@ -2,8 +2,7 @@ import React from 'react';
 import TabIcon from './tabIcon';
 import { ResultsHeaderInterface } from './interfaces';
 
-//TODO: Replace any with correct type
-const ResultsHeader: React.FC<ResultsHeaderInterface> = ({url, isScanned, openInNewTab}) => {
+const ResultsHeader: React.FC<ResultsHeaderInterface> = ({url, isScanned}) => {
   if(!isScanned){
     return null;
   }
@@ -12,9 +11,6 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({url, isScanned, openIn
     <div className='headline'>
       <TabIcon></TabIcon>
       <p>Website: {url} </p>
-      <button className='headline-button' onClick={openInNewTab}>
-        View in table
-      </button>
     </div>
   );
 };

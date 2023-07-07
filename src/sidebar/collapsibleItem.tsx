@@ -44,7 +44,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
             <CollapsibleItemElement
               type={type}
               key={index}
-              object={item}
+              thisElement={item}
               highlightedElement={currentHighlighted}
               setHighlightedElement={setCurrentHighlighted}
               isAllHighlighted={isAllHighlighted}
@@ -67,7 +67,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
 export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> = ({
   type,
-  object,
+  thisElement,
   children,
   highlightedElement,
   isAllHighlighted,
@@ -78,28 +78,28 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    setIsHighlighted((object === highlightedElement) || isAllHighlighted);
+    setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
   }, [highlightedElement, isAllHighlighted]);
 
   const toggleCheck = () => {
     //If we press the currently highlighted element, unhighlight it
-    if (highlightedElement === object) {
+    if (highlightedElement === thisElement) {
       setHighlightedElement(null);
-      messageSender.highlightSingleMessage(object, true);
+      messageSender.highlightSingleMessage(thisElement, true);
       //} else if (isAllHighlighted && highlightedElement === null) {
     } else if (isAllHighlighted) {
       setIsAllHighlighted(false);
-      messageSender.unhighlightAllAndHighlightSingleMessage(object, type);
+      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
       //unhighlightAllAndHighligthSingle( );
-      setHighlightedElement(object);//Kan kanskje fjerne denne
+      setHighlightedElement(thisElement);
     } else if (highlightedElement) {
       //Another element is highlighted, unhighlight it and highlight the new one
-      messageSender.highlightAndRemovePreviousMessage(object, highlightedElement);
-      setHighlightedElement(object);//Kan kanskje fjerne denne
+      messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
+      setHighlightedElement(thisElement);//Kan kanskje fjerne denne
     } else {
       //No element is highlighted, highlight the new one
-      setHighlightedElement(object);
-      messageSender.highlightSingleMessage(object, false);
+      setHighlightedElement(thisElement);
+      messageSender.highlightSingleMessage(thisElement, false);
     }
 
   };
@@ -112,7 +112,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
           <div className="flex-item">
             <CollapsibleArrowButton isExpanded={isExpanded} />
             <div className="buttons-text">
-              {object.title}
+              {thisElement.title}
             </div>
           </div>
           <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
