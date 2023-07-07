@@ -310,3 +310,11 @@
   border-spacing: 0;
 
 }
+
+  /* Comment box */
+  .collapsible-item-child .comment-box .textarea {
+  height: 100%;
+  width: 100%;
+  min-width: 300px;
+  min-height: 100px;
+  }

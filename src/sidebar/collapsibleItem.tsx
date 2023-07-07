@@ -20,9 +20,8 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       return null;
     }
     const { elementResults, setElementResults } = context;
-
-
-        console.log(elementResults)
+    console.log(elementResults)
+  
     const toggleCheck = () => {
         setIsAllHighlighted(!isAllHighlighted);
         console.log("Setter allhighlighted til " + isAllHighlighted);
@@ -103,6 +102,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
 }) => {
     const [isHighlighted, setIsHighlighted] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [textareaValue, setTextareaValue] = useState("");
 
     useEffect(() => {
         setIsHighlighted((object === highlightedElement) || isAllHighlighted);
@@ -117,7 +117,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
         }
         updateJson(object, index);
     };
-
 
     const toggleCheck = () => {
         //If we press the currently highlighted element, unhighlight it
@@ -141,14 +140,12 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
                 setHighlightedElement(object);
                 messageSender.highlightSingleMessage(object, false);
             }
-
     };
 
     return (
         <div className="collapsible-item-child">
             <div className='collapsible-item'>
                 <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-
                     <div className="flex-item">
                         <CollapsibleArrowButton isExpanded={isExpanded} />
                         <div className="buttons-text">
@@ -180,10 +177,22 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
                     <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
                 </div>
 
-                <div className="content-data">
-                    {isExpanded && children}
-                </div>
-            </div>
+                       <div className="content-data">
+          {isExpanded && children}
+          <div className="comment-box">
+            <textarea
+              className="textarea"
+              name="comment"
+              form="usrform"
+              value={textareaValue}
+              onChange={(e) => setTextareaValue(e.target.value)}
+            >
+              Enter text here...
+            </textarea>
+          </div>
+          <button onClick={() => console.log(textareaValue)}>Store Text</button>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
