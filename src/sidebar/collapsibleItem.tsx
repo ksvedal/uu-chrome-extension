@@ -48,6 +48,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
               highlightedElement={currentHighlighted}
               setHighlightedElement={setCurrentHighlighted}
               isAllHighlighted={isAllHighlighted}
+
               setIsAllHighlighted={setIsAllHighlighted}>
               <ElementAttributes
                 attributes={item.attributes}
@@ -76,6 +77,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
 }) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [textareaValue, setTextareaValue] = useState("");
 
   useEffect(() => {
     setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
@@ -101,14 +103,12 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       setHighlightedElement(thisElement);
       messageSender.highlightSingleMessage(thisElement, false);
     }
-
   };
 
   return (
     <div className="collapsible-item-child">
-      <div className='collapsible-item'>
+      <div className="collapsible-item">
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-
           <div className="flex-item">
             <CollapsibleArrowButton isExpanded={isExpanded} />
             <div className="buttons-text">
@@ -119,6 +119,18 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
         </div>
         <div className="content-data">
           {isExpanded && children}
+          <div className="comment-box">
+            <textarea
+              className="textarea"
+              name="comment"
+              form="usrform"
+              value={textareaValue}
+              onChange={(e) => setTextareaValue(e.target.value)}
+            >
+              Enter text here...
+            </textarea>
+          </div>
+          <button onClick={() => console.log(textareaValue)}>Store Text</button>
         </div>
       </div>
     </div>
