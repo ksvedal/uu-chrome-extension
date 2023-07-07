@@ -1,19 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import TabIcon from './tabIcon';
 import { ResultsHeaderInterface } from './interfaces';
+import { MyContext } from './resultItemsContext';
 
 //TODO: Replace any with correct type
 const ResultsHeader: React.FC<ResultsHeaderInterface> = ({url, isScanned, openInNewTab}) => {
   if(!isScanned){
     return null;
   }
+const context = useContext(MyContext);
+    if (context === null) {
+      // handle the case where the context is null
+      return null;
+    }
+    const { elementResults, setElementResults } = context;
+
+
+    const logResult= () => {
+      for (let result of elementResults){
+        console.log(result);
+      };
+      console.log("Result: " + elementResults);
+    }
   
   return (
     <div className='headline'>
       <TabIcon></TabIcon>
       <p>Website: {url} </p>
-      <button className='headline-button' onClick={openInNewTab}>
-        View in table
+      <button className='headline-button' onClick={logResult}>
+        Print results
       </button>
     </div>
   );

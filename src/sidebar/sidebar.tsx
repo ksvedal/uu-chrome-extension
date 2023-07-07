@@ -1,18 +1,23 @@
 import React, { useContext, useState } from 'react';
-import { CollapsibleItemType, CollapsibleItemElement } from './collapsibleItem';
 import { createRoot } from "react-dom/client";
 import "../style/sidebar.css";
-import { ElementObject, ElementType } from "./interfaces";
+import { ElementObject, ElementResult, ElementType } from "./interfaces";
 import { RegularButton } from './buttons';
 import { MessageSender } from '../messageObjects/messageSender';
 import { WebsiteScanner } from '../htmlParser/websiteScanner';
 import ResultsHeader from './resultsHeader';
+import { CollapsibleItemType } from './collapsibleItem';
+import { MyContext } from './resultItemsContext';
+
 
 const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
   const [websiteURL, setWebsiteURL] = useState<string>("");
   const [isAllHighlighted, setIsAllHighlighted] = useState<boolean>(false); // add this line
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
+  const [elementResults, setElementResults] = useState<ElementResult[]>([]);
+
+  
 
   const _message: MessageSender = new MessageSender();
   const _scan: WebsiteScanner = new WebsiteScanner();
@@ -21,6 +26,7 @@ const Sidebar: React.FC = () => {
     _message.scanPageMessage((response: ElementType[]) => {
       setScanPage(response); // update the state with the response data
       chrome.storage.local.set({ scanResults: response });
+     
     });
 
     _scan.getWebsiteURL((url: string) => {
@@ -52,12 +58,13 @@ const Sidebar: React.FC = () => {
         </div>
         <RegularButton text="SCAN PAGE" onClick={fetchData} />
       </div>
-
+      <MyContext.Provider value ={{elementResults, setElementResults}}>
       <ResultsHeader
         url={websiteURL}
         isScanned={scanPage.length !== 0}
-        openInNewTab={openInNewTab}></ResultsHeader>
-
+        openInNewTab={openInNewTab}
+        />
+          
       {/*for each element in ScanPage, creates a collapse menu with other nodes*/}
       {scanPage.map((item, index) =>
         <CollapsibleItemType key={index}
@@ -67,6 +74,7 @@ const Sidebar: React.FC = () => {
           isAllHighlighted={isAllHighlighted}
         >
         </CollapsibleItemType>)}
+        </MyContext.Provider>
     </div>
   );
 }
