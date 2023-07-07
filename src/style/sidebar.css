@@ -286,8 +286,6 @@
 
 
 .tableBody {
-  /* display: flex;
-    flex-direction: column; */
   align-items: center;
   justify-content: center;
   margin-top: 10px;
@@ -301,11 +299,6 @@
 }
 
 .tableHead {
-  /*  display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%; */
   height: 20px;
   background-color: #a85e99;
   color: white;

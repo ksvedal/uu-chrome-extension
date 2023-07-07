@@ -24,6 +24,7 @@ export class WebUtils {
             htmlString: pretty(element.outerHTML),
             selector: selector,
             attributes: mainObjectAttributes,
+            result: {name: title, htmlString: pretty(element.outerHTML), issue: false, comment: "", checked: false}
         };
 
         console.log(newObject);

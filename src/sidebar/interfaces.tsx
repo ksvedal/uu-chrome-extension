@@ -65,22 +65,12 @@ export interface ElementObject {
   //html: HTMLElement;
   selector: string;
   result: ElementResult;
-}
-
-
-export interface ElementResult{
-  htmlString: string;
-  approved: boolean;
-  name: string;
-  comment: string;
-  checked: boolean;
   attributes: ElementAttribute[];
 }
 
-
-export interface ElementResult{
+export interface ElementResult {
   htmlString: string;
-  approved: boolean;
+  issue: boolean;
   name: string;
   comment: string;
   checked: boolean;

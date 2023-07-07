@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult } from "./interfaces";
 import { ToggleButton, CollapsibleArrowButton } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { ElementAttributes } from "./elementAttributes";
+import { MyContext } from "./resultItemsContext";
 
 const messageSender = new MessageSender();
 
@@ -12,7 +14,15 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAllHighlighted, setIsAllHighlighted] = useState(false);
     const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
+    const context = useContext(MyContext);
+    if (context === null) {
+      // handle the case where the context is null
+      return null;
+    }
+    const { elementResults, setElementResults } = context;
 
+
+        console.log(elementResults)
     const toggleCheck = () => {
         setIsAllHighlighted(!isAllHighlighted);
         console.log("Setter allhighlighted til " + isAllHighlighted);
@@ -25,8 +35,10 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         let newNodes = [...type.nodes];  // copy the array
         newNodes[index] = elementObject;  // replace the element
         setTypeElements(newNodes);  // update the state
+        let elementResults : ElementResult[] = newNodes.map(node => node.result).flat();
+        setElementResults(elementResults);
     };
-    
+
 
     const highlightAll = () => {
         messageSender.highlightAllWithType(type, isAllHighlighted);
@@ -37,7 +49,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                 <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
                     <CollapsibleArrowButton isExpanded={isExpanded} />
                     <div className="buttons-text">
-                        {type.name + 's'}
+                        {type.name}
                     </div>
                     <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
                     <div className="total-buttons">
@@ -59,7 +71,13 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                             setIsAllHighlighted={setIsAllHighlighted}
                             updateJson={updateJson}
                             index={index}
-                        >
+                            //setElementResults={setElementResults} // pass down the setter
+                        ><ElementAttributes
+                                attributes={item.attributes}
+                                title={item.title}
+                                htmlString={item.htmlString}
+                                selector={item.selector}
+                                result={item.result} />
                             <SyntaxHighlighter language="html" style={vs}>
                                 {item.htmlString}
                             </SyntaxHighlighter>
@@ -92,8 +110,8 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
 
     const handleCheckboxClick = (e: React.MouseEvent<HTMLInputElement>, update: string) => {
         e.stopPropagation(); // prevent event propagation
-        if (update === "approved") {
-            object.result.approved = !object.result.approved;
+        if (update === "issue") {
+            object.result.issue = !object.result.issue;
         } else if (update === "checked") {
             object.result.checked = !object.result.checked;
         }
@@ -136,15 +154,15 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
                         <div className="buttons-text">
                             {object.title}
                         </div>
-                        <label htmlFor={`approvedCheckbox-${index}`}>
+                        <label htmlFor={`issueCheckbox-${index}`}>
                             Feil:
                             <input
-                                id={`approvedCheckbox-${index}`}
+                                id={`issueCheckbox-${index}`}
                                 type="checkbox"
                                 className="checkbox-custom"
                                 tabIndex={2}
-                                checked={object.result.approved}
-                                onClick={(e) => handleCheckboxClick(e, "approved")}
+                                checked={object.result.issue}
+                                onClick={(e) => handleCheckboxClick(e, "issue")}
                             />
                         </label>
                         <label htmlFor={`viewedCheckbox-${index}`}>
