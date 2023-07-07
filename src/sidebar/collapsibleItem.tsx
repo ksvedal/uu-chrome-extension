@@ -12,6 +12,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAllHighlighted, setIsAllHighlighted] = useState(false);
+  const [textareaValue, setTextareaValue] = useState("");
 
   const toggleCheck = () => {
     setIsAllHighlighted(!isAllHighlighted);
@@ -58,6 +59,19 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
               <SyntaxHighlighter language="html" style={vs}>
                 {item.htmlString}
               </SyntaxHighlighter>
+
+              <div className="comment-box">
+                <textarea
+                  className="textarea"
+                  name="comment"
+                  form="usrform"
+                  value={textareaValue}
+                  onChange={(e) => setTextareaValue(e.target.value)}
+                  >
+                    Enter text here...
+                </textarea>
+              </div>
+              <button onClick={() => console.log(textareaValue)}>Store Text</button>
             </CollapsibleItemElement>
           ))}
         </div>
@@ -77,7 +91,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
 }) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [textareaValue, setTextareaValue] = useState("");
 
   useEffect(() => {
     setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
@@ -119,18 +132,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
         </div>
         <div className="content-data">
           {isExpanded && children}
-          <div className="comment-box">
-            <textarea
-              className="textarea"
-              name="comment"
-              form="usrform"
-              value={textareaValue}
-              onChange={(e) => setTextareaValue(e.target.value)}
-            >
-              Enter text here...
-            </textarea>
-          </div>
-          <button onClick={() => console.log(textareaValue)}>Store Text</button>
         </div>
       </div>
     </div>
