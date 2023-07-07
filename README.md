@@ -14,7 +14,8 @@ It verifies whether images and non-text items have appropriate alternative text.
 
 ## Target audience
 
-This extension is created for developers who wish to automate tests on their websites. It's specifically designed for developers who already have some experience in web development, including HTML, CSS, and JavaScript. Having prior knowledge of accessibility guidelines (such as WCAG) and a basic understanding of UX design principles is beneficial. Additionally, being proficient in using accessibility evaluation tools and staying updated with the latest industry trends can further enhance the advantages of using this extension.
+This extension is created for developers who wish to automate tests on their websites. It's specifically designed for developers who already have some experience in web development, including HTML, CSS, and JavaScript. Having prior knowledge of accessibility guidelines (such as WCAG) and a basic understanding of UX design principles is beneficial. Additionally, being proficient in using accessibility evaluation tools and staying updated with the latest industry trends can further enhance the advantages of using this extension. 
+Knowledge of the various methods to code a button will also prove useful, as this extension aims to distinguish between well-designed buttons and poorly-designed ones.
 
 ## Setup
 
@@ -42,6 +43,10 @@ To be added later.
 ## Troubleshooting
 
 To be added later.
+
+## Extension Architecture
+
+![Domain model](DomainModel.png)
 
 ## Extension Preview
 
