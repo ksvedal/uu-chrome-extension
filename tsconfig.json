@@ -13,11 +13,9 @@
         "typeRoots": [ "node_modules/@types" ]
     },
 
-    "entryPoints": [
-        "./src/*",
-        "./src/htmlParser/*",
-        //"./src/htmlTableBar/",
-        "./src/messageObjects/*",
-        "./src/sidebar/*"
-      ]
+    "typedocOptions":{
+        "entryPoints": [
+            "./src/**/*"
+          ]
+    }
 }
