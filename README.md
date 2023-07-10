@@ -38,7 +38,15 @@ To set up the extension, follow these steps:
 
 ## User Manual
 
-To be added later.
+1. Click on the UU Extension. A side panel titled "Button Seeker" will appear.
+
+2. Click on "Scan Page". You will see a header displaying the logo and URL of the respective page. There are collapsible categories for Buttons, Images, Links, Headings, and MenuItems. Each category has a "Highlight All" button that you can click to highlight all elements belonging to that category. Clicking the "Highlight All" button again will remove the highlighting. The number of items in each category is also displayed.
+
+3. You can expand one or multiple categories to display all the elements within that category. The expandable items will have a corresponding "Jump to" button that highlights the element and scrolls to it. Clicking the "Jump to" button again will remove the highlighting. Additionally, you have the option to leave a comment related to the element.
+
+4. If you expand an element, a table will appear showing the element's attributes and their associated values, along with the HTML for that element.
+
+5. If you wish to inspect the data in another tab, you can click on "View in table".
 
 ## Troubleshooting
 
