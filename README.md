@@ -59,7 +59,7 @@ To set up the extension, follow these steps:
 
 ![Extension screenshot: gtml preview feature](/images/extension_screenshot6.jpg)
 
-5. If you wish to inspect the data in another tab, you can click on "View in table".
+5. If you wish to inspect the data in another tab, you can click on "Print results".
 
 ![Extension screenshot: click on print results](/images/utkast8.jpg)
 
