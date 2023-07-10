@@ -10,7 +10,7 @@ import { CollapsibleItemType } from './collapsibleItem';
 import { MyContext } from './resultItemsContext';
 
 
-const Sidebar: React.FC = () => {
+export const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
   const [websiteURL, setWebsiteURL] = useState<string>("");
   const [isAllHighlighted, setIsAllHighlighted] = useState<boolean>(false); // add this line
@@ -34,13 +34,6 @@ const Sidebar: React.FC = () => {
     });
   };
 
-  const openInNewTab = () => {
-    const htmlFilePath = chrome.runtime.getURL('htmlTableBar.html');
-    console.log(htmlFilePath);
-    chrome.tabs.create({ url: htmlFilePath });
-
-  };
-
   return (
     <div className='App'>
 
@@ -62,9 +55,8 @@ const Sidebar: React.FC = () => {
       <ResultsHeader
         url={websiteURL}
         isScanned={scanPage.length !== 0}
-        openInNewTab={openInNewTab}
-        />
-          
+      />
+
       {/*for each element in ScanPage, creates a collapse menu with other nodes*/}
       {scanPage.map((item, index) =>
         <CollapsibleItemType key={index}

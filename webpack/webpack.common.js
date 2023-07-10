@@ -5,12 +5,9 @@ const srcDir = path.join(__dirname, "..", "src");
 
 module.exports = {
     entry: {
-        popup: path.join(srcDir, 'popup.tsx'),
-        options: path.join(srcDir, 'options.tsx'),
         content_script: path.join(srcDir, 'contentScript.tsx'),
         sidebar: path.join(srcDir, 'sidebar/sidebar.tsx'),
         open_sidepanel: path.join(srcDir, 'openSidepanel.js'),
-        htmlTableBar: path.join(srcDir, 'htmlTableBar/htmlTableBar.tsx')
     },
     output: {
         path: path.join(__dirname, "../dist/js"),
