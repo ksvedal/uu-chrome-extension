@@ -1,10 +1,3 @@
-<style>
-img {
-  height: 300px;
-  margin: 15px;
-}
-</style>
-
 # Universal Design Analyzer Extension
 
 ## About
@@ -44,24 +37,24 @@ To set up the extension, follow these steps:
 
 1. Click on the UU Extension. A side panel titled "Button Seeker" will appear.
 
-![Extension screenshot: click on icon](/images/extension_screenshot_1.jpg)
+<img src="./images/extension_screenshot_1.jpg" alt="Extension screenshot: click on icon" width="300" style="margin: 15px">
 
 2. Click on "Scan Page". You will see a header displaying the logo and URL of the respective page. There are collapsible categories for Buttons, Images, Links, Headings, and MenuItems. Each category has a "Highlight All" button that you can click to highlight all elements belonging to that category. Clicking the "Highlight All" button again will remove the highlighting. The number of items in each category is also displayed.
 
-![Extension screenshot: click on scan page](/images/extension_screenshot_2.jpg)
-![Extension screenshot: preview of scan results](/images/extension_screenshot_3.jpg)
+<img src="./images/extension_screenshot_2.jpg" alt="Extension screenshot: click on scan page" width="300" style="margin: 15px">
+<img src="./images/extension_screenshot_3.jpg" alt="Extension screenshot: preview of scan results" width="300" style="margin: 15px">
 
 3. You can expand one or multiple categories to display all the elements within that category. The expandable items will have a corresponding "Jump to" button that highlights the element and scrolls to it. Clicking the "Jump to" button again will remove the highlighting. Additionally, you have the option to leave a comment related to the element.
 
-![Extension screenshot: jump to button feature](/images/extension_screenshot_5.jpg)
+<img src="./images/extension_screenshot_5.jpg" alt="Extension screenshot: jump to button feature" width="300" style="margin: 15px">
 
 4. If you expand an element, a table will appear showing the element's attributes and their associated values, along with the HTML for that element.
 
-![Extension screenshot: gtml preview feature](/images/extension_screenshot_6.jpg)
+<img src="./images/extension_screenshot_6.jpg" alt="Extension screenshot: HTML preview feature" width="300" style="margin: 15px">
 
 5. If you wish to inspect the data in another tab, you can click on "Print results".
 
-![Extension screenshot: click on print results](/images/extension_screenshot_7.jpg)
+<img src="./images/extension_screenshot_7.jpg" alt="Extension screenshot: click on print results" width="300" style="margin: 15px">
 
 ## Troubleshooting
 
