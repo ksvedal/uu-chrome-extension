@@ -44,24 +44,24 @@ To set up the extension, follow these steps:
 
 1. Click on the UU Extension. A side panel titled "Button Seeker" will appear.
 
-![Extension screenshot: click on icon](/images/extension_screenshot1.jpg)
+![Extension screenshot: click on icon](/images/extension_screenshot_1.jpg)
 
 2. Click on "Scan Page". You will see a header displaying the logo and URL of the respective page. There are collapsible categories for Buttons, Images, Links, Headings, and MenuItems. Each category has a "Highlight All" button that you can click to highlight all elements belonging to that category. Clicking the "Highlight All" button again will remove the highlighting. The number of items in each category is also displayed.
 
-![Extension screenshot: click on scan page](/images/extension_screenshot2.jpg)
-![Extension screenshot: preview of scan results](/images/extension_screenshot3.jpg)
+![Extension screenshot: click on scan page](/images/extension_screenshot_2.jpg)
+![Extension screenshot: preview of scan results](/images/extension_screenshot_3.jpg)
 
 3. You can expand one or multiple categories to display all the elements within that category. The expandable items will have a corresponding "Jump to" button that highlights the element and scrolls to it. Clicking the "Jump to" button again will remove the highlighting. Additionally, you have the option to leave a comment related to the element.
 
-![Extension screenshot: jump to button feature](/images/extension_screenshot5.jpg)
+![Extension screenshot: jump to button feature](/images/extension_screenshot_5.jpg)
 
 4. If you expand an element, a table will appear showing the element's attributes and their associated values, along with the HTML for that element.
 
-![Extension screenshot: gtml preview feature](/images/extension_screenshot6.jpg)
+![Extension screenshot: gtml preview feature](/images/extension_screenshot_6.jpg)
 
 5. If you wish to inspect the data in another tab, you can click on "Print results".
 
-![Extension screenshot: click on print results](/images/utkast8.jpg)
+![Extension screenshot: click on print results](/images/extension_screenshot_7.jpg)
 
 ## Troubleshooting
 
