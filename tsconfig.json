@@ -15,5 +15,11 @@
     "exclude": [
         "node_modules",
         "__test__",
-     ]
+     ],
+
+    "typedocOptions":{
+        "entryPoints": [
+            "./src/**/*"
+          ]
+    }
 }
