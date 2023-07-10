@@ -3,14 +3,15 @@ module.exports = {
         "src"
     ],
     "transform": {
-        "^.+\\.ts$": ["ts-jest", { tsconfig: "tsconfig.test.json" }]
+        "^.+\\.ts$": ["ts-jest", { tsconfig: "tsconfig.test.json" }],
+        '^.+\\.tsx?$': 'babel-jest',
+        '^.+\\.(ts|tsx)$': 'ts-jest',
+
     },
     preset: 'ts-jest',
     testEnvironment: 'jest-environment-jsdom',
     transformIgnorePatterns: [
-        "/node_modules/",
-        "^.+\\.module\\.(css|sass|scss)$",
-        "../../src/__tests__/sidebarComponent.test\\.tsx?$", // Replace with the actual path to your problematic test file
+        '/node_modules/(?!react)/'
       ],
 }; 
 

@@ -9,6 +9,21 @@ import ResultsHeader from './resultsHeader';
 import { CollapsibleItemType } from './collapsibleItem';
 import { MyContext } from './resultItemsContext';
 
+const _message: MessageSender = new MessageSender();
+const _scan: WebsiteScanner = new WebsiteScanner();
+
+export const fetchData = (setScanPage: { (value: React.SetStateAction<ElementType[]>): void; (arg0: ElementType[]): void; }, setWebsiteURL: { (value: React.SetStateAction<string>): void; (arg0: string): void; }) => {
+  _message.scanPageMessage((response: ElementType[]) => {
+    setScanPage(response); // update the state with the response data
+    chrome.storage.local.set({ scanResults: response });
+   
+  });
+
+  _scan.getWebsiteURL((url: string) => {
+    setWebsiteURL(url); // update the state with the response data
+  });
+};
+
 
 export const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
@@ -16,23 +31,6 @@ export const Sidebar: React.FC = () => {
   const [isAllHighlighted, setIsAllHighlighted] = useState<boolean>(false); // add this line
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
   const [elementResults, setElementResults] = useState<ElementResult[]>([]);
-
-  
-
-  const _message: MessageSender = new MessageSender();
-  const _scan: WebsiteScanner = new WebsiteScanner();
-
-  const fetchData = () => {
-    _message.scanPageMessage((response: ElementType[]) => {
-      setScanPage(response); // update the state with the response data
-      chrome.storage.local.set({ scanResults: response });
-     
-    });
-
-    _scan.getWebsiteURL((url: string) => {
-      setWebsiteURL(url); // update the state with the response data
-    });
-  };
 
   return (
     <div className='App'>
@@ -49,7 +47,7 @@ export const Sidebar: React.FC = () => {
         <div className='welcome-text'>
           <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
         </div>
-        <RegularButton text="SCAN PAGE" onClick={fetchData} />
+        <RegularButton text="SCAN PAGE" onClick={() => fetchData(setScanPage, setWebsiteURL)} />
       </div>
       <MyContext.Provider value ={{elementResults, setElementResults}}>
       <ResultsHeader
