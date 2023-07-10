@@ -3,8 +3,7 @@ import TabIcon from './tabIcon';
 import { ResultsHeaderInterface } from './interfaces';
 import { MyContext } from './resultItemsContext';
 
-//TODO: Replace any with correct type
-const ResultsHeader: React.FC<ResultsHeaderInterface> = ({url, isScanned, openInNewTab}) => {
+const ResultsHeader: React.FC<ResultsHeaderInterface> = ({url, isScanned}) => {
   if(!isScanned){
     return null;
   }
