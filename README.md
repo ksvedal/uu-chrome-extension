@@ -46,12 +46,13 @@ To be added later.
 
 ## Extension Architecture
 
-![Domain model](DomainModel.png)
+![Extension architecture](/images/extension_architecture.jpg)
 
+Here, we can see the layout of the extension. Each square represents a class, and the lines visualize how the classes cooperate. The purple classes are the ones that are visible to the users.
 ## Extension Preview
 
 ![Extension screenshot](/images/extension_screenshot.jpg)
 
 ## Conclusion 
 
-To be added later.
+We have developed an application that facilitates the semi-automatic analysis of buttons. Our app offers functionality that enables developers to navigate through buttons and other essential elements of an HTML page. It allows them to evaluate these elements and save the results for future reference.
