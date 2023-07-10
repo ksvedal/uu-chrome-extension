@@ -102,7 +102,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
 }) => {
     const [isHighlighted, setIsHighlighted] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
-    const [textareaValue, setTextareaValue] = useState("");
+    const [textareaValue, setTextareaValue] = useState(object.result.comment || "");
 
     useEffect(() => {
         setIsHighlighted((object === highlightedElement) || isAllHighlighted);
@@ -117,6 +117,12 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
         }
         updateJson(object, index);
     };
+
+    // const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //     const updatedResult = { ...object.result, comment: e.target.value }; 
+    //     const updatedObject = { ...object, result: updatedResult }; 
+    //     updateJson(updatedObject, index); 
+    //   };
 
     const toggleCheck = () => {
         //If we press the currently highlighted element, unhighlight it
@@ -141,6 +147,13 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
                 messageSender.highlightSingleMessage(object, false);
             }
     };
+
+    const storeText = () => {
+        object.result.comment = textareaValue;
+        updateJson(object, index);
+        console.log(object.result.comment); 
+    }
+
 
     return (
         <div className="collapsible-item-child">
@@ -185,12 +198,13 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
               name="comment"
               form="usrform"
               value={textareaValue}
+              //value={object.result.comment}
               onChange={(e) => setTextareaValue(e.target.value)}
             >
               Enter text here...
             </textarea>
           </div>
-          <button onClick={() => console.log(textareaValue)}>Store Text</button>
+          <button onClick={storeText}>Store Text</button>
         </div>
       </div>
     </div>
