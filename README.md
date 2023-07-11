@@ -101,7 +101,7 @@ If you encounter any issues while using the Universal Design Analyzer Extension,
 * Review the extension's documentation and ensure that you are following the recommended guidelines for analyzing buttons and other elements.
 * If you suspect a bug or incorrect behavior in the extension, consider reporting the issue at the extension's repository: https://github.com/ksvedal/uu-chrome-extension
 
-## Extension Architecture
+## Extension architecture
 
 ![Extension architecture](/images/extension_architecture.jpg)
 
@@ -112,9 +112,6 @@ Within the diagram, the sidebar component encompasses the resultheader, includin
 ## Conclusion 
 
 The Universal Design Analyzer Extension is a powerful tool that simplifies the semi-automatic analysis of buttons and other crucial elements within HTML pages. With its intuitive interface and comprehensive functionality, this extension empowers developers to efficiently navigate through buttons and evaluate their properties.
-
 By using the extension, developers can assess the intuitiveness and user-friendliness of buttons, ensuring an enhanced user experience. Additionally, they can verify whether images and non-text elements have appropriate alternative text, improving accessibility for users with visual impairments.
-
 The extension's capabilities go beyond mere analysis. It allows developers to save evaluation results for future reference, streamlining the development and testing process. The ability to highlight and jump to specific elements within the page, along with leaving comments related to those elements, enhances collaboration and communication among team members.
-
 By automating aspects of the analysis process, the Universal Design Analyzer Extension helps developers streamline their workflow, saving valuable time and effort. With its focus on adherence to accessibility guidelines and user-friendly design, this extension empowers developers to create inclusive and accessible web experiences.
