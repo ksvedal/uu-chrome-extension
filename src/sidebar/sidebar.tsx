@@ -22,6 +22,8 @@ export const Sidebar: React.FC = () => {
   const _message: MessageSender = new MessageSender();
   const _scan: WebsiteScanner = new WebsiteScanner();
 
+  // 1) --> messageSender.tsx
+  // 9) <-- updates "setScanPage"
   const fetchData = () => {
     _message.scanPageMessage((response: ElementType[]) => {
       setScanPage(response); // update the state with the response data
@@ -49,7 +51,7 @@ export const Sidebar: React.FC = () => {
         <div className='welcome-text'>
           <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
         </div>
-        <RegularButton text="SCAN PAGE" onClick={fetchData} />
+        <RegularButton data-testid="scanPage" text="SCAN PAGE" onClick={fetchData} />
       </div>
       <MyContext.Provider value ={{elementResults, setElementResults}}>
       <ResultsHeader

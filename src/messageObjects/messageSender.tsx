@@ -2,6 +2,8 @@ import { ElementObject, ElementType } from "../sidebar/interfaces";
 import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage } from "./message";
 
 export class MessageSender {
+    // 2) --> contentScript.tsx
+    // 8) <-- sidebar.tsx
     public scanPageMessage(callback: (response: ElementType[]) => void) {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const activeTab = tabs[0];
