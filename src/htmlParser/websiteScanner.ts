@@ -18,9 +18,6 @@ export class WebsiteScanner {
     * Scans for every type we want.
     * @returns 
     */
-
-    // 4) --> elementSelector | 5) --> webUtils
-    // 6) <-- contentScript
     public scanPage(): ElementType[] {
         let results: ElementType[] = [];
         for (let key in this.selectors) {

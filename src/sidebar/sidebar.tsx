@@ -22,8 +22,6 @@ export const Sidebar: React.FC = () => {
   const _message: MessageSender = new MessageSender();
   const _scan: WebsiteScanner = new WebsiteScanner();
 
-  // 1) --> messageSender.tsx
-  // 9) <-- updates "setScanPage"
   const fetchData = () => {
     _message.scanPageMessage((response: ElementType[]) => {
       setScanPage(response); // update the state with the response data

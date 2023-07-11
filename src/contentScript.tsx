@@ -32,8 +32,6 @@ function handleMessage(
     console.log("Message received:", message.action);
 
     switch(message.action){
-      // 3) --> websiteScanner.ts
-      // 7) <-- MessageSender
       case 'scanPage':{
         let result: ElementType[] = _scan.scanPage();
         sendResponse(result);
