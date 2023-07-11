@@ -1,9 +1,3 @@
-<style>
-img {
-  height: 300px;
-  margin: 15px;
-}
-</style>
 
 # Universal Design Analyzer Extension
 
@@ -44,24 +38,26 @@ To set up the extension, follow these steps:
 
 1. Click on the UU Extension. A side panel titled "Button Seeker" will appear.
 
-![Extension screenshot: click on icon](/images/extension_screenshot_1.jpg)
+<img src="./images/extension_screenshot_1.jpg" alt="Extension screenshot: click on icon" width="300" style="margin: 15px">
 
 2. Click on "Scan Page". You will see a header displaying the logo and URL of the respective page. There are collapsible categories for Buttons, Images, Links, Headings, and MenuItems. Each category has a "Highlight All" button that you can click to highlight all elements belonging to that category. Clicking the "Highlight All" button again will remove the highlighting. The number of items in each category is also displayed.
 
-![Extension screenshot: click on scan page](/images/extension_screenshot_2.jpg)
-![Extension screenshot: preview of scan results](/images/extension_screenshot_3.jpg)
+<div width="660px" display="flex" flex-direction="row">
+    <img src="./images/extension_screenshot_2.jpg" alt="Extension screenshot: click on scan page" width="300" style="margin: 15px" display="flex">
+    <img src="./images/extension_screenshot_3.jpg" alt="Extension screenshot: preview of scan results" width="300" style="margin: 15px" display="flex">
+</div>
 
 3. You can expand one or multiple categories to display all the elements within that category. The expandable items will have a corresponding "Jump to" button that highlights the element and scrolls to it. Clicking the "Jump to" button again will remove the highlighting. Additionally, you have the option to leave a comment related to the element.
 
-![Extension screenshot: jump to button feature](/images/extension_screenshot_5.jpg)
+<img src="./images/extension_screenshot_5.jpg" alt="Extension screenshot: jump to button feature" width="300" style="margin: 15px">
 
 4. If you expand an element, a table will appear showing the element's attributes and their associated values, along with the HTML for that element.
 
-![Extension screenshot: gtml preview feature](/images/extension_screenshot_6.jpg)
+<img src="./images/extension_screenshot_6.jpg" alt="Extension screenshot: HTML preview feature" width="300" style="margin: 15px">
 
 5. If you wish to inspect the data in another tab, you can click on "Print results".
 
-![Extension screenshot: click on print results](/images/extension_screenshot_7.jpg)
+<img src="./images/extension_screenshot_7.jpg" alt="Extension screenshot: click on print results" width="300" style="margin: 15px">
 
 ## Troubleshooting
 
@@ -105,19 +101,17 @@ If you encounter any issues while using the Universal Design Analyzer Extension,
 * Review the extension's documentation and ensure that you are following the recommended guidelines for analyzing buttons and other elements.
 * If you suspect a bug or incorrect behavior in the extension, consider reporting the issue at the extension's repository: https://github.com/ksvedal/uu-chrome-extension
 
-## Extension Architecture
+## Extension architecture
 
 ![Extension architecture](/images/extension_architecture.jpg)
 
-The extension architecture diagram illustrates the layout of the extension. Each square represents a class, and the lines visualize how the classes cooperate. The purple classes represent the components visible to users.
+The extension architecture diagram depicts the arrangement of the extension. Each square represents a component and its associated methods, while the lines illustrate the collaboration between the components. The purple boxes signify the components that are visible to users.
+Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between cotentscript.tsx and sidebar.tsx occurs through callback functions.
 
 
 ## Conclusion 
 
 The Universal Design Analyzer Extension is a powerful tool that simplifies the semi-automatic analysis of buttons and other crucial elements within HTML pages. With its intuitive interface and comprehensive functionality, this extension empowers developers to efficiently navigate through buttons and evaluate their properties.
-
 By using the extension, developers can assess the intuitiveness and user-friendliness of buttons, ensuring an enhanced user experience. Additionally, they can verify whether images and non-text elements have appropriate alternative text, improving accessibility for users with visual impairments.
-
 The extension's capabilities go beyond mere analysis. It allows developers to save evaluation results for future reference, streamlining the development and testing process. The ability to highlight and jump to specific elements within the page, along with leaving comments related to those elements, enhances collaboration and communication among team members.
-
 By automating aspects of the analysis process, the Universal Design Analyzer Extension helps developers streamline their workflow, saving valuable time and effort. With its focus on adherence to accessibility guidelines and user-friendly design, this extension empowers developers to create inclusive and accessible web experiences.
