@@ -17,15 +17,17 @@ export interface CollapsibleArrowProps {
 
 export interface CollapsibleItemTypeInterface {
   type: ElementType;
+  thisElement: ElementObject | null;
   children?: ReactNode;
   isAllHighlighted: boolean;
   setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>;
+  index: number;
 }
 
 export interface CollapsibleItemElementInterface {
   type: ElementType;
-  object: ElementObject;
+  thisElement: ElementObject;
   children?: ReactNode;
   highlightedElement: ElementObject | null;
   isAllHighlighted: boolean;
@@ -38,7 +40,6 @@ export interface CollapsibleItemElementInterface {
 export interface ResultsHeaderInterface {
   url: string;
   isScanned: boolean;
-  openInNewTab: () => void;
 }
 
 /**

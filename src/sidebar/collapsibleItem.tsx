@@ -9,10 +9,11 @@ import { MyContext } from "./resultItemsContext";
 
 const messageSender = new MessageSender();
 
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type }) => {
+export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, index }) => {
     const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAllHighlighted, setIsAllHighlighted] = useState(false);
+    const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.comment || ""));
     const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
     const context = useContext(MyContext);
     if (context === null) {
@@ -38,7 +39,17 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         setElementResults(elementResults);
     };
 
-
+    const storeText = (index: number) => {
+        setTypeElements((prevTypeElements) => {
+            const newNodes = [...prevTypeElements]; // copy the array
+            if (newNodes[index]) {
+                newNodes[index].result.comment = textareaValues[index]; // update the comment value
+                updateJson(newNodes[index], index); // update the JSON with the updated element
+            }
+            return newNodes; // return the updated array
+        });
+    };
+      
     const highlightAll = () => {
         messageSender.highlightAllWithType(type, isAllHighlighted);
     };
@@ -63,14 +74,13 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                         <CollapsibleItemElement
                             type={type}
                             key={index}
-                            object={item}
+                            thisElement={item}
                             highlightedElement={currentHighlighted}
                             setHighlightedElement={setCurrentHighlighted}
                             isAllHighlighted={isAllHighlighted}
                             setIsAllHighlighted={setIsAllHighlighted}
                             updateJson={updateJson}
                             index={index}
-                            //setElementResults={setElementResults} // pass down the setter
                         ><ElementAttributes
                                 attributes={item.attributes}
                                 title={item.title}
@@ -80,7 +90,25 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                             <SyntaxHighlighter language="html" style={vs}>
                                 {item.htmlString}
                             </SyntaxHighlighter>
+                            <div className="comment-box">
 
+                        <textarea
+                          className="textarea"
+                          name="comment"
+                          form="usrform"
+                          value={textareaValues[index]}
+                            onChange={(e) => setTextareaValues(prevValues => {
+                                const newValues = [...prevValues];
+                                newValues[index] = e.target.value;
+                                return newValues;
+                            })}
+                        >
+                            Enter text here...
+                        </textarea>
+                            </div>
+                                <button className="store-text-button" onClick={() => storeText(index)}>
+                                 Store Text
+                                </button>
                         </CollapsibleItemElement>
                     ))}
                 </div>
@@ -90,121 +118,94 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 };
 
 export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> = ({
-    type,
-    object,
-    children,
-    highlightedElement,
-    isAllHighlighted,
-    setHighlightedElement,
-    setIsAllHighlighted,
-    updateJson,
-    index
+  type,
+  thisElement,
+  children,
+  highlightedElement,
+  isAllHighlighted,
+  setHighlightedElement,
+  setIsAllHighlighted,
+  updateJson,
+  index
+
 }) => {
-    const [isHighlighted, setIsHighlighted] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(false);
-    const [textareaValue, setTextareaValue] = useState(object.result.comment || "");
 
-    useEffect(() => {
-        setIsHighlighted((object === highlightedElement) || isAllHighlighted);
-    }, [highlightedElement, isAllHighlighted]);
+  const [isHighlighted, setIsHighlighted] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
-    const handleCheckboxClick = (e: React.MouseEvent<HTMLInputElement>, update: string) => {
-        e.stopPropagation(); // prevent event propagation
-        if (update === "issue") {
-            object.result.issue = !object.result.issue;
-        } else if (update === "checked") {
-            object.result.checked = !object.result.checked;
-        }
-        updateJson(object, index);
-    };
 
-    // const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     const updatedResult = { ...object.result, comment: e.target.value }; 
-    //     const updatedObject = { ...object, result: updatedResult }; 
-    //     updateJson(updatedObject, index); 
-    //   };
+  useEffect(() => {
+    setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
+  }, [highlightedElement, isAllHighlighted]);
 
-    const toggleCheck = () => {
-        //If we press the currently highlighted element, unhighlight it
-        if (highlightedElement === object) {
-            setHighlightedElement(null);
-            messageSender.highlightSingleMessage(object, true);
-            //} else if (isAllHighlighted && highlightedElement === null) {
-        } else if (isAllHighlighted) {
-            setIsAllHighlighted(false);
-            messageSender.unhighlightAllAndHighlightSingleMessage(object, type);
-            //unhighlightAllAndHighligthSingle( );
-            setHighlightedElement(object);//Kan kanskje fjerne denne
-        } else
-            //Another element is highlighted, unhighlight it and highlight the new one
-            if (highlightedElement) {
-                messageSender.highlightAndRemovePreviousMessage(object, highlightedElement);
-                setHighlightedElement(object);//Kan kanskje fjerne denne
-            } else {
-                console.log("else");
-                //No element is highlighted, highlight the new one
-                setHighlightedElement(object);
-                messageSender.highlightSingleMessage(object, false);
-            }
-    };
-
-    const storeText = () => {
-        object.result.comment = textareaValue;
-        updateJson(object, index);
-        console.log(object.result.comment); 
+  const handleCheckboxClick = (e: React.MouseEvent<HTMLInputElement>, update: string) => {
+    e.stopPropagation(); // prevent event propagation
+    if (update === "issue") {
+        thisElement.result.issue = !thisElement.result.issue;
+    } else if (update === "checked") {
+        thisElement.result.checked = !thisElement.result.checked;
     }
+    updateJson(thisElement, index);
+};
 
 
-    return (
-        <div className="collapsible-item-child">
-            <div className='collapsible-item'>
-                <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-                    <div className="flex-item">
-                        <CollapsibleArrowButton isExpanded={isExpanded} />
-                        <div className="buttons-text">
-                            {object.title}
-                        </div>
-                        <label htmlFor={`issueCheckbox-${index}`}>
-                            Feil:
-                            <input
-                                id={`issueCheckbox-${index}`}
-                                type="checkbox"
-                                className="checkbox-custom"
-                                tabIndex={2}
-                                checked={object.result.issue}
-                                onClick={(e) => handleCheckboxClick(e, "issue")}
-                            />
-                        </label>
-                        <label htmlFor={`viewedCheckbox-${index}`}>
-                            Checked:
-                            <input
-                                id={"viewedCheckbox-${index}"}
-                                type="checkbox"
-                                className="checkbox-custom"
-                                tabIndex={2}
-                                checked={object.result.checked}
-                                onClick={(e) => handleCheckboxClick(e, "checked")} />
-                        </label>
+  const toggleCheck = () => {
+    //If we press the currently highlighted element, unhighlight it
+    if (highlightedElement === thisElement) {
+      setHighlightedElement(null);
+      messageSender.highlightSingleMessage(thisElement, true);
+      //} else if (isAllHighlighted && highlightedElement === null) {
+    } else if (isAllHighlighted) {
+      setIsAllHighlighted(false);
+      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
+      //unhighlightAllAndHighligthSingle( );
+      setHighlightedElement(thisElement);
+    } else if (highlightedElement) {
+      //Another element is highlighted, unhighlight it and highlight the new one
+      messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
+      setHighlightedElement(thisElement);//Kan kanskje fjerne denne
+    } else {
+      //No element is highlighted, highlight the new one
+      setHighlightedElement(thisElement);
+      messageSender.highlightSingleMessage(thisElement, false);
+    }
+  };
 
-                    </div>
-                    <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
-                </div>
-
-                       <div className="content-data">
-          {isExpanded && children}
-          <div className="comment-box">
-            <textarea
-              className="textarea"
-              name="comment"
-              form="usrform"
-              value={textareaValue}
-              //value={object.result.comment}
-              onChange={(e) => setTextareaValue(e.target.value)}
-            >
-              Enter text here...
-            </textarea>
+  return (
+    <div className="collapsible-item-child">
+      <div className="collapsible-item">
+        <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
+          <div className="flex-item">
+            <CollapsibleArrowButton isExpanded={isExpanded} />
+            <div className="buttons-text">
+              {thisElement.title}
+            </div>
+            <label htmlFor={`issueCheckbox-${index}`}>
+                &nbsp;&nbsp;&nbsp;Error:
+                  <input
+                      id={`issueCheckbox-${index}`}
+                      type="checkbox"
+                      className="checkbox-custom"
+                      tabIndex={2}
+                      checked={thisElement.result.issue}
+                      onClick={(e) => handleCheckboxClick(e, "issue")}
+                  />
+              </label>
+              <label htmlFor={`viewedCheckbox-${index}`}>
+                &nbsp;&nbsp;&nbsp;Checked:
+                  <input
+                      id={`viewedCheckbox-${index}`}
+                      type="checkbox"
+                      className="checkbox-custom"
+                      tabIndex={2}
+                      checked={thisElement.result.checked}
+                      onClick={(e) => handleCheckboxClick(e, "checked")} />
+              </label>
           </div>
-          <button onClick={storeText}>Store Text</button>
+          <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
+        </div>
+        <div className="content-data">
+          {isExpanded && children}
         </div>
       </div>
     </div>
