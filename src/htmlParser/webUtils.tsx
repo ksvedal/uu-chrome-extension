@@ -14,7 +14,6 @@ export class WebUtils {
         return newType;
     }
 
-
     public static toObject(element: HTMLElement): ElementObject {
         let selector = this.generateSelector(element);
         let title = this.getTitle(element);
@@ -79,6 +78,4 @@ export class WebUtils {
         }
         return title.trim();
     }
-
-
 }

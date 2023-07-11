@@ -17,10 +17,12 @@ export interface CollapsibleArrowProps {
 
 export interface CollapsibleItemTypeInterface {
   type: ElementType;
+  thisElement: ElementObject | null;
   children?: ReactNode;
   isAllHighlighted: boolean;
   setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>;
+  index: number;
 }
 
 export interface CollapsibleItemElementInterface {
