@@ -16,8 +16,8 @@ export const Sidebar: React.FC = () => {
   const [isAllHighlighted, setIsAllHighlighted] = useState<boolean>(false); // add this line
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
   const [elementResults, setElementResults] = useState<ElementResult[]>([]);
-
-  
+  const [index, setIndex] = useState<number[]>([]);
+  const [thisElement, setThisElement] = useState<ElementObject | null>(null);
 
   const _message: MessageSender = new MessageSender();
   const _scan: WebsiteScanner = new WebsiteScanner();
@@ -66,6 +66,8 @@ export const Sidebar: React.FC = () => {
           setIsAllHighlighted={setIsAllHighlighted}
           setCurrentHighlighted={setCurrentHighlighted}
           isAllHighlighted={isAllHighlighted}
+          index={index}
+          thisElement={thisElement}
         >
         </CollapsibleItemType>)}
         </MyContext.Provider>

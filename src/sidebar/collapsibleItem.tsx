@@ -9,11 +9,11 @@ import { MyContext } from "./resultItemsContext";
 
 const messageSender = new MessageSender();
 
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type }) => {
+export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, index }) => {
     const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAllHighlighted, setIsAllHighlighted] = useState(false);
-    const [textareaValue, setTextareaValue] = useState("");
+    const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.comment || ""));
     const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
     const context = useContext(MyContext);
     if (context === null) {
@@ -39,7 +39,17 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         setElementResults(elementResults);
     };
 
-
+    const storeText = (index: number) => {
+        setTypeElements((prevTypeElements) => {
+            const newNodes = [...prevTypeElements]; // copy the array
+            if (newNodes[index]) {
+                newNodes[index].result.comment = textareaValues[index]; // update the comment value
+                updateJson(newNodes[index], index); // update the JSON with the updated element
+            }
+            return newNodes; // return the updated array
+        });
+    };
+      
     const highlightAll = () => {
         messageSender.highlightAllWithType(type, isAllHighlighted);
     };
@@ -71,7 +81,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                             setIsAllHighlighted={setIsAllHighlighted}
                             updateJson={updateJson}
                             index={index}
-                            //setElementResults={setElementResults} // pass down the setter
                         ><ElementAttributes
                                 attributes={item.attributes}
                                 title={item.title}
@@ -87,14 +96,19 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                           className="textarea"
                           name="comment"
                           form="usrform"
-                          value={textareaValue}
-                          onChange={(e) => setTextareaValue(e.target.value)}
-                          >
+                          value={textareaValues[index]}
+                            onChange={(e) => setTextareaValues(prevValues => {
+                                const newValues = [...prevValues];
+                                newValues[index] = e.target.value;
+                                return newValues;
+                            })}
+                        >
                             Enter text here...
                         </textarea>
-              </div>
-              <button onClick={() => console.log(textareaValue)}>Store Text</button>
-
+                            </div>
+                                <button className="store-text-button" onClick={() => storeText(index)}>
+                                 Store Text
+                                </button>
                         </CollapsibleItemElement>
                     ))}
                 </div>
@@ -115,8 +129,10 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   index
 
 }) => {
+
   const [isHighlighted, setIsHighlighted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+
 
   useEffect(() => {
     setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
@@ -131,6 +147,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
     }
     updateJson(thisElement, index);
 };
+
 
   const toggleCheck = () => {
     //If we press the currently highlighted element, unhighlight it
@@ -164,7 +181,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
               {thisElement.title}
             </div>
             <label htmlFor={`issueCheckbox-${index}`}>
-                  Feil:
+                &nbsp;&nbsp;&nbsp;Error:
                   <input
                       id={`issueCheckbox-${index}`}
                       type="checkbox"
@@ -175,9 +192,9 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
                   />
               </label>
               <label htmlFor={`viewedCheckbox-${index}`}>
-                  Checked:
+                &nbsp;&nbsp;&nbsp;Checked:
                   <input
-                      id={"viewedCheckbox-${index}"}
+                      id={`viewedCheckbox-${index}`}
                       type="checkbox"
                       className="checkbox-custom"
                       tabIndex={2}
