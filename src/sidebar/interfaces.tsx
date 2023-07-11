@@ -63,7 +63,6 @@ export interface ElementType {
 export interface ElementObject {
   title: string;
   htmlString: string;
-  //html: HTMLElement;
   selector: string;
   result: ElementResult;
   attributes: ElementAttribute[];

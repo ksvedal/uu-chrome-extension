@@ -49,7 +49,7 @@ export const Sidebar: React.FC = () => {
         <div className='welcome-text'>
           <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
         </div>
-        <RegularButton text="SCAN PAGE" onClick={fetchData} />
+        <RegularButton data-testid="scanPage" text="SCAN PAGE" onClick={fetchData} />
       </div>
       <MyContext.Provider value ={{elementResults, setElementResults}}>
       <ResultsHeader

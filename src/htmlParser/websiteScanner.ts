@@ -21,6 +21,7 @@ export class WebsiteScanner {
     public scanPage(): ElementType[] {
         let results: ElementType[] = [];
         for (let key in this.selectors) {
+            console.log('HTML elements' + this.selectors[key].getElements())
             results.push(WebUtils.toType(this.selectors[key].getElements(), key, this.selectors[key].selector));
         }
         return results;
