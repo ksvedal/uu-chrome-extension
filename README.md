@@ -105,7 +105,8 @@ If you encounter any issues while using the Universal Design Analyzer Extension,
 
 ![Extension architecture](/images/extension_architecture.jpg)
 
-The extension architecture diagram illustrates the layout of the extension. Each square represents a class, and the lines visualize how the classes cooperate. The purple classes represent the components visible to users.
+The extension architecture diagram depicts the arrangement of the extension. Each square represents a component and its associated methods, while the lines illustrate the collaboration between the components. The purple boxes signify the components that are visible to users.
+Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between cotentscript.tsx and sidebar.tsx occurs through callback functions.
 
 
 ## Conclusion 
