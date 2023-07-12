@@ -1,116 +1,116 @@
 import { WebUtils } from '../htmlParser/webUtils';
 
 describe('WebUtils', () => {
-  describe('toType', () => {
+    describe('toType', () => {
     it('should convert elements to a type object', () => {
-      // Prepare the test data
-      const elements = document.querySelectorAll<HTMLElement>('.my-element');
-      const type = 'myType';
-      const selector = '.my-selector';
+        // Prepare the test data
+        const elements = document.querySelectorAll<HTMLElement>('.my-element');
+        const type = 'myType';
+        const selector = '.my-selector';
 
-      // Call the function
-      const result = WebUtils.toType(elements, type, selector);
+        // Call the function
+        const result = WebUtils.toType(elements, type, selector);
 
-      // Perform assertions on the result
-      expect(result.name).toBe(type);
-      expect(result.selector).toBe(selector);
-      expect(result.nodes.length).toBe(elements.length);
+        // Perform assertions on the result
+        expect(result.name).toBe(type);
+        expect(result.selector).toBe(selector);
+        expect(result.nodes.length).toBe(elements.length);
     });
 
     it('should handle empty input elements', () => {
-      // Prepare the test data
-      const elements: NodeListOf<HTMLElement> = document.querySelectorAll<HTMLElement>('.empty-element');
-      const type = 'emptyType';
-      const selector = '.empty-selector';
+        // Prepare the test data
+        const elements: NodeListOf<HTMLElement> = document.querySelectorAll<HTMLElement>('.empty-element');
+        const type = 'emptyType';
+        const selector = '.empty-selector';
 
-      // Call the function
-      const result = WebUtils.toType(elements, type, selector);
+        // Call the function
+        const result = WebUtils.toType(elements, type, selector);
 
-      // Perform assertions on the result
-      expect(result.name).toBe(type);
-      expect(result.selector).toBe(selector);
-      expect(result.nodes.length).toBe(0);
+        // Perform assertions on the result
+        expect(result.name).toBe(type);
+        expect(result.selector).toBe(selector);
+        expect(result.nodes.length).toBe(0);
     });
 
     it('should handle elements with different classes or types', () => {
-      // Prepare the test data
-      const elements = document.querySelectorAll<HTMLElement>('.different-element');
-      const type = 'differentType';
-      const selector = '.different-selector';
+        // Prepare the test data
+        const elements = document.querySelectorAll<HTMLElement>('.different-element');
+        const type = 'differentType';
+        const selector = '.different-selector';
 
-      // Call the function
-      const result = WebUtils.toType(elements, type, selector);
+        // Call the function
+        const result = WebUtils.toType(elements, type, selector);
 
-      // Perform assertions on the result
-      expect(result.name).toBe(type);
-      expect(result.selector).toBe(selector);
-      expect(result.nodes.length).toBe(elements.length);
-      // Add additional assertions based on the specific scenario
+        // Perform assertions on the result
+        expect(result.name).toBe(type);
+        expect(result.selector).toBe(selector);
+        expect(result.nodes.length).toBe(elements.length);
+        // Add additional assertions based on the specific scenario
     });
 
-  });
+    });
 
-  describe('toObject', () => {
+    describe('toObject', () => {
     it('should convert an element to an object', () => {
-      // Prepare the test data
-      const element = document.createElement('div');
-      element.innerHTML = '<span class="my-class">Hello, world!</span>';
+        // Prepare the test data
+        const element = document.createElement('div');
+        element.innerHTML = '<span class="my-class">Hello, world!</span>';
 
-      // Create a stub for the private method
-      const generateSelectorSpy = jest.spyOn(WebUtils as any, 'generateSelector');
-      generateSelectorSpy.mockReturnValue('.my-selector');
+        // Create a stub for the private method
+        const generateSelectorSpy = jest.spyOn(WebUtils as any, 'generateSelector');
+        generateSelectorSpy.mockReturnValue('.my-selector');
 
-      // Call the function
-      const result = WebUtils.toObject(element);
+        // Call the function
+        const result = WebUtils.toObject(element);
 
-      // Perform assertions on the result
-      expect(result.title).toBe('Hello, world!');
-      expect(result.htmlString).toBe('<div><span class="my-class">Hello, world!</span></div>');
-      expect(result.selector).toBe('.my-selector');
-      expect(result.attributes.length).toBe(1);
-      expect(result.result.name).toBe('Hello, world!');
-      expect(result.result.htmlString).toBe('<div><span class="my-class">Hello, world!</span></div>');
-      expect(result.result.issue).toBe(false);
-      expect(result.result.comment).toBe('');
-      expect(result.result.checked).toBe(false);
+        // Perform assertions on the result
+        expect(result.title).toBe('Hello, world!');
+        expect(result.htmlString).toBe('<div><span class="my-class">Hello, world!</span></div>');
+        expect(result.selector).toBe('.my-selector');
+        expect(result.attributes.length).toBe(1);
+        expect(result.result.name).toBe('Hello, world!');
+        expect(result.result.htmlString).toBe('<div><span class="my-class">Hello, world!</span></div>');
+        expect(result.result.issue).toBe(false);
+        expect(result.result.comment).toBe('');
+        expect(result.result.checked).toBe(false);
 
-      // Verify the private method was called
-      expect(generateSelectorSpy).toHaveBeenCalledWith(element);
+        // Verify the private method was called
+        expect(generateSelectorSpy).toHaveBeenCalledWith(element);
 
-      // Restore the original private method
-      generateSelectorSpy.mockRestore();
+        // Restore the original private method
+        generateSelectorSpy.mockRestore();
     });
 
     it('should handle elements with different attributes', () => {
-      // Prepare the test data
-      const element = document.createElement('div');
-      element.innerHTML = '<a href="https://example.com" target="_blank">Link</a>';
+        // Prepare the test data
+        const element = document.createElement('div');
+        element.innerHTML = '<a href="https://example.com" target="_blank">Link</a>';
 
-      // Call the function
-      const result = WebUtils.toObject(element);
-      
-      // Perform assertions on the result
-      expect(result.attributes.length).toBe(1);
-      // Add additional assertions based on the specific scenario
+        // Call the function
+        const result = WebUtils.toObject(element);
+        
+        // Perform assertions on the result
+        expect(result.attributes.length).toBe(1);
+        // Add additional assertions based on the specific scenario
     });
 
     it('should handle elements with different tag names', () => {
-      // Prepare the test data
-      const element = document.createElement('h1');
-      element.textContent = 'Heading';
+        // Prepare the test data
+        const element = document.createElement('h1');
+        element.textContent = 'Heading';
 
-      // Call the function
-      const result = WebUtils.toObject(element);
+        // Call the function
+        const result = WebUtils.toObject(element);
 
-      // Perform assertions on the result
-      expect(result.title).toBe('Heading');
-      // Add additional assertions based on the specific scenario
+        // Perform assertions on the result
+        expect(result.title).toBe('Heading');
+        // Add additional assertions based on the specific scenario
     });
 
-  });
+    });
 
-  // Rest of the test cases...
-  describe('generateSelector', () => {
+    // Rest of the test cases...
+    describe('generateSelector', () => {
     it('should generate an index-based selector for an element', () => {
         // Prepare the test data
         const element = document.createElement('div');
@@ -118,18 +118,18 @@ describe('WebUtils', () => {
         const childSelectors = [];
 
         for (let i = 1; i <= 5; i++) {
-        const child = document.createElement('span');
-        element.appendChild(child);
-        const selector = (WebUtils as any).generateSelector(child);
-        childSelectors.push(selector);
+            const child = document.createElement('span');
+            element.appendChild(child);
+            const selector = (WebUtils as any).generateSelector(child);
+            childSelectors.push(selector);
 
-        // Perform assertions for each child element
-        expect(childSelectors[i - 1]).toBe(`SPAN:nth-child(${i})`);
+            // Perform assertions for each child element
+            expect(childSelectors[i - 1]).toBe(`SPAN:nth-child(${i})`);
         }
 
     });
 
-    
+
     describe('getAttributes', () => {
         it('should get the attributes of an element', () => {
             // Prepare the test data
@@ -138,30 +138,30 @@ describe('WebUtils', () => {
             
             // Set attributes on the element with unique values
             wantedAttributes.forEach((attribute, index) => {
-              element.setAttribute(attribute, 'example data' + index);
+                element.setAttribute(attribute, 'example data' + index);
             });
             
             // Add a non-wanted attribute to the element
             element.setAttribute('width', '100');
-          
+            
             // Call the private method
             const result = (WebUtils as any).getAttributes(element);
             
             // Perform assertions on the result
             expect(result.length).toBe(wantedAttributes.length + 1);
-          
+            
             result.forEach((attribute: { name: any; value: any; }, index: number) => {
-              if (index === wantedAttributes.length) {
+                if (index === wantedAttributes.length) {
                 expect(attribute.name).toBe('contentText');
                 expect(attribute.value).toBe('');
-              } else {
+                } else {
                 expect(attribute.name).toBe(wantedAttributes[index]);
                 expect(attribute.value).toBe('example data' + index);
-              }
+                }
             });
         });
     });
-          
+            
 
     describe('getTitle', () => {
         it('should get the title of an element', () => {
@@ -187,6 +187,6 @@ describe('WebUtils', () => {
         // Perform assertions on the result
         expect(result).toBe('label-id');
         });
-      });  
+        });  
     });
 });
