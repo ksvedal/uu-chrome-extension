@@ -112,95 +112,81 @@ describe('WebUtils', () => {
   // Rest of the test cases...
   describe('generateSelector', () => {
     it('should generate an index-based selector for an element', () => {
-       // Prepare the test data
-       const element = document.createElement('div');
+        // Prepare the test data
+        const element = document.createElement('div');
 
-       const childSelectors = [];
+        const childSelectors = [];
 
-       for (let i = 1; i <= 5; i++) {
-            const child = document.createElement('span');
-            element.appendChild(child);
-            const selector = (WebUtils as any).generateSelector(child);
-            childSelectors.push(selector);
-       }
+        for (let i = 1; i <= 5; i++) {
+        const child = document.createElement('span');
+        element.appendChild(child);
+        const selector = (WebUtils as any).generateSelector(child);
+        childSelectors.push(selector);
 
-       // Perform assertions on the result
-       expect(childSelectors[0]).toBe('SPAN:nth-child(1)');
-       expect(childSelectors[1]).toBe('SPAN:nth-child(2)');
-       expect(childSelectors[2]).toBe('SPAN:nth-child(3)');
-       expect(childSelectors[3]).toBe('SPAN:nth-child(4)');
-       expect(childSelectors[4]).toBe('SPAN:nth-child(5)');
+        // Perform assertions for each child element
+        expect(childSelectors[i - 1]).toBe(`SPAN:nth-child(${i})`);
+        }
+
     });
 
     
     describe('getAttributes', () => {
         it('should get the attributes of an element', () => {
+            // Prepare the test data
+            const element = document.createElement('div');
+            const wantedAttributes = ["aria-labelledby", "aria-label", "aria-expand", "aria-controls", "class", "type", "focusable"];
+            
+            // Set attributes on the element with unique values
+            wantedAttributes.forEach((attribute, index) => {
+              element.setAttribute(attribute, 'example data' + index);
+            });
+            
+            // Add a non-wanted attribute to the element
+            element.setAttribute('width', '100');
           
-          //Array of wanted attributes, which is used to filter out unwanted attributes. 
-          const wantedAttributes = ["aria-labelledby", "aria-label", "aria-expand", "aria-controls","class","type","focusable"]
+            // Call the private method
+            const result = (WebUtils as any).getAttributes(element);
+            
+            // Perform assertions on the result
+            expect(result.length).toBe(wantedAttributes.length + 1);
           
-          //Unwanted attributes are attributes that are not relevant for the user to see, therefore the attribute contentText is set to empty string.
-          const unwantedAttributes = ['width', 'height', 'viewBox', 'fill', 'xmlns', "media", "sizes", "data-srcset", "itemprop", "itemtype", "srcset", "itemscope", "clip-rule", "fill-rule", "d", "data-ec-variant", "data-ec-position", "data-ga-category", "data-ga-label", "data-ga-action", "data-ga-value", "data-ga-non-interaction", "data-ga-event", "data-ga-event-category", "data-ga-event-action", "data-ga-event-label", "data-ga-event-value", "data-ga-event-non-interaction", "da", "cx", "cy", "r", "stroke", "stroke-width", "stroke-linejoin", "stroke-linecap", "stroke-width", "style", "content", "src"]; 
-          
-          //All attributes
-          const allAttributes = wantedAttributes.concat(unwantedAttributes);
-
-          // Prepare the test data
-          const element = document.createElement('div');
-        
-          //Loop through all wanted attributes and add them to the element
-          for (let i = 0; i < allAttributes.length; i++) {
-            element.setAttribute(allAttributes[i], 'example data' + i);
-          }
-          
-          // Call the private method
-          const result = (WebUtils as any).getAttributes(element);
-          
-          console.log(result);
-
-          // Perform assertions on the result
-          expect(result.length).toBe(wantedAttributes.length + 1);
-
-          //Loop through all wanted attributes and check if they are in the result. Unwanted attributes should be saved as | contentText: "" |, the last space.
-          for (let i = 0; i < wantedAttributes.length; i++) { 
-            expect(result[i].name).toBe(wantedAttributes[i]);
-            expect(result[i].value).toBe('example data' + i);
-          }
-
-          //Check if contentText is the last attribute in the result.
-          expect(result[wantedAttributes.length].name).toBe("contentText");
-
-         
+            result.forEach((attribute: { name: any; value: any; }, index: number) => {
+              if (index === wantedAttributes.length) {
+                expect(attribute.name).toBe('contentText');
+                expect(attribute.value).toBe('');
+              } else {
+                expect(attribute.name).toBe(wantedAttributes[index]);
+                expect(attribute.value).toBe('example data' + index);
+              }
+            });
         });
-    
-
-      });
-  });
-
-  describe('getTitle', () => {
-    it('should get the title of an element', () => {
-      // Prepare the test data
-      const element = document.createElement('div');
-      element.textContent = 'Hello, world!';
-
-      // Call the private method
-      const result = (WebUtils as any).getTitle(element);
-
-      // Perform assertions on the result
-      expect(result).toBe('Hello, world!');
     });
+          
 
-    it('should handle elements with no inner_text', () => {
-      // Prepare the test data
-      const element = document.createElement('div');
-      element.setAttribute('aria-labelledby', 'label-id');
+    describe('getTitle', () => {
+        it('should get the title of an element', () => {
+        // Prepare the test data
+        const element = document.createElement('div');
+        element.textContent = 'Hello, world!';
 
-      // Call the private method
-      const result = (WebUtils as any).getTitle(element);
+        // Call the private method
+        const result = (WebUtils as any).getTitle(element);
 
-      // Perform assertions on the result
-      expect(result).toBe('label-id');
+        // Perform assertions on the result
+        expect(result).toBe('Hello, world!');
+        });
+
+        it('should handle elements with no inner_text', () => {
+        // Prepare the test data
+        const element = document.createElement('div');
+        element.setAttribute('aria-labelledby', 'label-id');
+
+        // Call the private method
+        const result = (WebUtils as any).getTitle(element);
+
+        // Perform assertions on the result
+        expect(result).toBe('label-id');
+        });
+      });  
     });
-
-  });
 });
