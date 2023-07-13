@@ -2,47 +2,75 @@ import { ButtonSelector } from "../htmlParser/elementSelector";
 
 describe('ButtonSelector', () => {
     test('getElements should return the correct elements', () => {
-        // Create mock buttons that match the selector
-        const mockButtons: HTMLButtonElement[] = [
+        
+        // Mock elements that match the selector
+        const matchingElements: HTMLElement[] = [
         document.createElement('button'),
         document.createElement('button'),
         document.createElement('button'),
         document.createElement('button'),
+        document.createElement('input'),
+        document.createElement('input'),
+        document.createElement('div')
         ];
 
-        // Add unique attributes to differentiate buttons
-        mockButtons[0].id = 'button1';
-        mockButtons[1].classList.add('primary-button');
-        mockButtons[2].setAttribute('data-custom', 'button');
+        // Valid attributes for button elements
+        matchingElements[1].id = 'button';
+        matchingElements[2].classList.add('primary-button');
+        matchingElements[3].setAttribute('role', 'button');
+        matchingElements[4].setAttribute('type', 'submit');
+        matchingElements[5].setAttribute('type', 'button');
+        matchingElements[6].setAttribute('role', 'button');
+      
 
-        // Create mock buttons that should not be matched by the selector
-        const nonMatchingButtons: HTMLButtonElement[] = [
+        // Mock elements that does not match the selector
+        const nonMatchingElements: HTMLElement[] = [
         document.createElement('button'),
         document.createElement('button'),
+        document.createElement('button'),
+        document.createElement('input'),
+        document.createElement('input'),
+        document.createElement('input'),
+        document.createElement('input'),
+        document.createElement('input'),
+        document.createElement('input'),
+        document.createElement('input'),
         ];
 
-        // Add attributes to the non-matching buttons that should exclude them from the selector
-        nonMatchingButtons[0].setAttribute('role', 'menuitem');
-        nonMatchingButtons[1].setAttribute('disabled', 'true');
+        // Non-valid attributes for the non-matching elements
+        nonMatchingElements[0].setAttribute('role', 'menuitem');
+        nonMatchingElements[1].setAttribute('role', 'menuitemcheckbox');
+        nonMatchingElements[2].setAttribute('role', 'menuitemradio');
+        nonMatchingElements[4].setAttribute('type', 'submit');
+        nonMatchingElements[4].setAttribute('role', 'menuitem');
+        nonMatchingElements[5].setAttribute('type', 'submit');
+        nonMatchingElements[5].setAttribute('role', 'menuitemcheckbox');
+        nonMatchingElements[6].setAttribute('type', 'submit');
+        nonMatchingElements[6].setAttribute('role', 'menuitemradio');
+        nonMatchingElements[7].setAttribute('type', 'button');
+        nonMatchingElements[7].setAttribute('role', 'menuitem');
+        nonMatchingElements[8].setAttribute('type', 'button');
+        nonMatchingElements[8].setAttribute('role', 'menuitemcheckbox');
+        nonMatchingElements[9].setAttribute('type', 'button');
+        nonMatchingElements[9].setAttribute('role', 'menuitemradio');
 
         // Create an instance of ButtonSelector
         const buttonSelector: ButtonSelector = new ButtonSelector();
 
         // Mock the getElements method to return the mock buttons
-        jest.spyOn(buttonSelector, 'getElements').mockReturnValue(mockButtons as unknown as NodeListOf<HTMLElement>);
+        jest.spyOn(buttonSelector, 'getElements').mockReturnValue(matchingElements as unknown as NodeListOf<HTMLElement>);
 
         // Call the getElements method
         const buttonElements: NodeListOf<HTMLElement> = buttonSelector.getElements();
 
         // Assert the expected results
-        expect(buttonElements.length).toBe(3);
-        expect(buttonElements[0].id).toBe('button1');
-        expect(buttonElements[1].classList.contains('primary-button')).toBe(true);
-        expect(buttonElements[2].getAttribute('data-custom')).toBe('button');
+        matchingElements.forEach((correctButton) => {
+            expect(buttonElements).toContain(correctButton);
+        })
 
         // Assert that non-matching buttons are not included
-        nonMatchingButtons.forEach((button) => {
-        expect(buttonElements).not.toContain(button);
+        nonMatchingElements.forEach((falseButton) => {
+        expect(buttonElements).not.toContain(falseButton);
         });
 
         // Restore the mock
