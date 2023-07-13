@@ -20,4 +20,3 @@ export const RegularButton: React.FC<RegularButtonProps> = ({ onClick, text }) =
 export const CollapsibleArrowButton: React.FC<CollapsibleArrowProps> = ({ isExpanded }) => {
   return <span className= {`arrow-button ${isExpanded ? 'pressed' : ''}`}>{isExpanded ? ' ▲' : ' ▲'}</span>;
 };
-
