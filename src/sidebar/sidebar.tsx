@@ -66,6 +66,7 @@ export const Sidebar: React.FC = () => {
           isAllHighlighted={isAllHighlighted}
           index={index}
           thisElement={thisElement}
+          url={websiteURL}
         >
         </CollapsibleItemType>)}
         </MyContext.Provider>
