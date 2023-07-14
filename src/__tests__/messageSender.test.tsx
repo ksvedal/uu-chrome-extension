@@ -1,6 +1,7 @@
 import { MessageSender } from "../messageObjects/messageSender";
 import { ElementObject, ElementType } from "../sidebar/interfaces";
-import { chrome } from 'jest-webextension-mock';
+import sinon from 'sinon';
+import * as sinonChrome from 'sinon-chrome';
 
 
 // Apply the mock for the Chrome API
