@@ -14,7 +14,7 @@ module.exports = {
         '/node_modules/(?!react)/',
         '\\.css$',
         '/node_modules/(?!react-syntax-highlighter)',
-      ],
+    ],
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json'],
     moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
