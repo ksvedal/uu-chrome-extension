@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult } from "./interfaces";
-import { ToggleButton, CollapsibleArrowButton } from "./buttons";
+import {ToggleButton, CollapsibleArrowButton, CheckboxButton} from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
+import {anOldHope, gruvboxLight} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 const messageSender = new MessageSender();
 
@@ -56,63 +57,77 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     return (
         <div className='collapsible-item'>
             <div className='collapsible-item-parent'>
-                <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-                    <CollapsibleArrowButton isExpanded={isExpanded} />
-                    <div className="buttons-text">
-                        {type.name}
-                    </div>
-                    <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
-                    <div className="total-buttons">
-                        <p>{type.nodes.length}</p>
-                    </div>
-                </div>
-            </div>
+                <div className={`item-header row ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
 
-            {isExpanded && (
-                <div className="collapsible-item-children">
-                    {type.nodes.map((item, index) => (
-                        <CollapsibleItemElement
-                            type={type}
-                            key={index}
-                            thisElement={item}
-                            highlightedElement={currentHighlighted}
-                            setHighlightedElement={setCurrentHighlighted}
-                            isAllHighlighted={isAllHighlighted}
-                            setIsAllHighlighted={setIsAllHighlighted}
-                            updateJson={updateJson}
-                            index={index}
-                        ><ElementAttributes
+                    <div className={"col-4"}>
+                        <div className="buttons-text">
+                            {type.name}
+                        </div>
+                    </div>
+
+                    <div className={"col-4"}>
+                        <div className="total-buttons float-right">
+                            <p>{type.nodes.length}</p>
+                        </div>
+                    </div>
+
+                    <div className={"col-4"}>
+                        <div className="float-right">
+                            <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
+                        </div>
+                    </div>
+
+                </div>
+                {isExpanded && (
+                    <div className="collapsible-item-children">
+                        {type.nodes.map((item, index) => (
+                            <CollapsibleItemElement
+                                type={type}
+                                key={index}
+                                thisElement={item}
+                                highlightedElement={currentHighlighted}
+                                setHighlightedElement={setCurrentHighlighted}
+                                isAllHighlighted={isAllHighlighted}
+                                setIsAllHighlighted={setIsAllHighlighted}
+                                updateJson={updateJson}
+                                index={index}
+                            >
+                                <ElementAttributes
                                 attributes={item.attributes}
                                 title={item.title}
                                 htmlString={item.htmlString}
                                 selector={item.selector}
                                 result={item.result} />
-                            <SyntaxHighlighter language="html" style={vs}>
-                                {item.htmlString}
-                            </SyntaxHighlighter>
-                            <div className="comment-box">
 
-                        <textarea
-                          className="textarea"
-                          name="comment"
-                          form="usrform"
-                          value={textareaValues[index]}
-                            onChange={(e) => setTextareaValues(prevValues => {
-                                const newValues = [...prevValues];
-                                newValues[index] = e.target.value;
-                                return newValues;
-                            })}
-                        >
-                            Enter text here...
-                        </textarea>
-                            </div>
-                                <button className="store-text-button" onClick={() => storeText(index)}>
-                                 Store Text
+                                    <SyntaxHighlighter  language="html" style={vs}>
+                                        {item.htmlString}
+                                    </SyntaxHighlighter>
+
+                                <div className="comment-box">
+                                    <textarea
+                                        className="textarea"
+                                        name="comment"
+                                        form="usrform"
+                                        value={textareaValues[index]}
+                                        onChange={(e) => setTextareaValues(prevValues => {
+                                            const newValues = [...prevValues];
+                                            newValues[index] = e.target.value;
+                                            return newValues;
+                                        })}
+                                    >
+                                        Enter text here...
+                                    </textarea>
+                                </div>
+                                <button className="store-text-button float-right" onClick={() => storeText(index)}>
+                                    Store Text
                                 </button>
-                        </CollapsibleItemElement>
-                    ))}
-                </div>
-            )}
+                            </CollapsibleItemElement>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+
         </div>
     );
 };
@@ -138,8 +153,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
     setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
   }, [highlightedElement, isAllHighlighted]);
 
-  const handleCheckboxClick = (e: React.MouseEvent<HTMLInputElement>, update: string) => {
-    e.stopPropagation(); // prevent event propagation
+  const handleCheckboxClick = (update: string) => {
     if (update === "issue") {
         thisElement.result.issue = !thisElement.result.issue;
     } else if (update === "checked") {
@@ -175,38 +189,44 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
     <div className="collapsible-item-child">
       <div className="collapsible-item">
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-          <div className="flex-item">
-            <CollapsibleArrowButton isExpanded={isExpanded} />
-            <div className="buttons-text">
+          <div className="row">
+            <div className="col-3">
               {thisElement.title}
             </div>
-            <label htmlFor={`issueCheckbox-${index}`}>
-                &nbsp;&nbsp;&nbsp;Error:
-                  <input
-                      id={`issueCheckbox-${index}`}
-                      type="checkbox"
-                      className="checkbox-custom"
-                      tabIndex={2}
-                      checked={thisElement.result.issue}
-                      onClick={(e) => handleCheckboxClick(e, "issue")}
-                  />
-              </label>
-              <label htmlFor={`viewedCheckbox-${index}`}>
-                &nbsp;&nbsp;&nbsp;Checked:
-                  <input
-                      id={`viewedCheckbox-${index}`}
-                      type="checkbox"
-                      className="checkbox-custom"
-                      tabIndex={2}
-                      checked={thisElement.result.checked}
-                      onClick={(e) => handleCheckboxClick(e, "checked")} />
-              </label>
+
+              <div className={"col-3"}>
+                  <div className={"float-right"}>
+                      <CheckboxButton
+                          isChecked={thisElement.result.issue}
+                          onToggle={() => handleCheckboxClick("issue")}
+                          text={"Error"} />
+                  </div>
+              </div>
+
+              <div className={"col-3"}>
+                  <div className={"float-left"}>
+                      <CheckboxButton
+                          isChecked={thisElement.result.checked}
+                          onToggle={() => handleCheckboxClick("checked")}
+                          text={"Checked"} />
+                  </div>
+              </div>
+
+              <div className={"col-3"}>
+                  <div className={"float-right"}>
+                      <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
+                  </div>
+              </div>
           </div>
-          <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
+
         </div>
-        <div className="content-data">
-          {isExpanded && children}
-        </div>
+          <div className={"row"}>
+              <div className={"col-12"}>
+                  <div className="content-data">
+                      {isExpanded && children}
+                  </div>
+              </div>
+          </div>
       </div>
     </div>
   );

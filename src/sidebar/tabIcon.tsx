@@ -51,7 +51,7 @@ const TabIcon: React.FC = () => {
 
   return (
     <div>
-      {favicon && <img src={favicon} alt="favicon" style={{width: '64px', height: '64px'}}/>}
+      {favicon && <img src={favicon} alt="favicon"/>}
     </div>
   );
 };

@@ -45,30 +45,37 @@ export const Sidebar: React.FC = () => {
       </div>
 
 
-      <div className="scan-page-button">
-        <div className='welcome-text'>
-          <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
+        <div className={"row scan-page-field"}>
+            <div className={"whitebox"}>
+                <div className="col-8">
+                    <div className='welcome-text'>
+                        <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
+                    </div>
+                </div>
+                <div className="col-4">
+                    <RegularButton data-testid="scanPage" text="Scan Page" onClick={fetchData} />
+                </div>
+            </div>
+        <div className="col-12">
+            <MyContext.Provider value ={{elementResults, setElementResults}}>
+                <div className={"whitebox"}>
+                    <ResultsHeader url={websiteURL} isScanned={scanPage.length !== 0}/>
+                </div>
+            {/*for each element in ScanPage, creates a collapse menu with other nodes*/}
+            {scanPage.map((item, index) =>
+              <CollapsibleItemType key={index}
+                type={item}
+                setIsAllHighlighted={setIsAllHighlighted}
+                setCurrentHighlighted={setCurrentHighlighted}
+                isAllHighlighted={isAllHighlighted}
+                index={index}
+                thisElement={thisElement}
+              >
+              </CollapsibleItemType>)}
+              </MyContext.Provider>
         </div>
-        <RegularButton data-testid="scanPage" text="SCAN PAGE" onClick={fetchData} />
-      </div>
-      <MyContext.Provider value ={{elementResults, setElementResults}}>
-      <ResultsHeader
-        url={websiteURL}
-        isScanned={scanPage.length !== 0}
-      />
+        </div>
 
-      {/*for each element in ScanPage, creates a collapse menu with other nodes*/}
-      {scanPage.map((item, index) =>
-        <CollapsibleItemType key={index}
-          type={item}
-          setIsAllHighlighted={setIsAllHighlighted}
-          setCurrentHighlighted={setCurrentHighlighted}
-          isAllHighlighted={isAllHighlighted}
-          index={index}
-          thisElement={thisElement}
-        >
-        </CollapsibleItemType>)}
-        </MyContext.Provider>
     </div>
   );
 }
