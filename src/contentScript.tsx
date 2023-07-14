@@ -22,7 +22,7 @@ document.head.append(styleElement);
  * @param sendResponse 
  */
 
-function handleMessage(
+export function handleMessage(
   message: {action: string},
   sender: chrome.runtime.MessageSender,
   sendResponse: (response: ElementType[] | { message: string } ) => void) {
