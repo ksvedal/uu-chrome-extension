@@ -18,14 +18,7 @@ module.exports = {
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json'],
     moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-<<<<<<< HEAD
-    }
-
-}; 
-
-=======
     },
     setupFiles: ["jest-webextension-mock"],
 
 }; 
->>>>>>> ada7c207a807950688ee530570a75afe922f6414
