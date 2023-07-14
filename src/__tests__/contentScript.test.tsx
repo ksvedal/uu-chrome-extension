@@ -1,6 +1,14 @@
 import { handleMessage } from "../contentScript";
 import { PageInteractor } from "../htmlParser/pageInteractor";
 import { WebsiteScanner } from "../htmlParser/websiteScanner";
+import {
+  HighlightAllMessage,
+  HighlightAndRemovePreviousMessage,
+  HighlightMessage,
+  Message,
+  ScanPageMessage,
+  UnhighlightAllAndHighlightSingleMessage,} from "../messageObjects/message";
+import { ElementType } from "../sidebar/interfaces";
 
 describe('Content Script', () => {
   let pageInteractor: PageInteractor;
@@ -13,19 +21,26 @@ describe('Content Script', () => {
     messageSender = {} as chrome.runtime.MessageSender;
   });
 
-  afterEach(() => {
-    // Clean up any modifications made to the DOM or other resources
-  });
-
   test('handleMessage should scan the page', () => {
+    // Mock the `sendResponse` function
     const sendResponseMock = jest.fn();
 
-    const message = { action: 'scanPage' };
+    // Create a message object for the 'scanPage' action
+    const message: ScanPageMessage = { action: 'scanPage' };
+
+    // Call the handleMessage function
     handleMessage(message, messageSender, sendResponseMock);
 
+    // Verify that sendResponse was called with an array (result of scanPage)
     expect(sendResponseMock).toHaveBeenCalledWith(expect.any(Array));
-    // Add more assertions to validate the response
+
+    // Verify that the page was scanned by checking the number of elements in the response
+    const response: ElementType[] = sendResponseMock.mock.calls[0][0]; // Get the response from the mock
+    const numElements = response.length;
+    expect(numElements).toBeGreaterThan(0); // Assert that at least one element was scanned
   });
 
-  // Write more tests for other actions handled by handleMessage
+
 });
+
+
