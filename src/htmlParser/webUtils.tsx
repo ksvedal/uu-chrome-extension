@@ -23,11 +23,11 @@ export class WebUtils {
             htmlString: pretty(element.outerHTML),
             selector: selector,
             attributes: mainObjectAttributes,
-            result: {name: title, htmlString: pretty(element.outerHTML), issue: false, comment: "", checked: false}
+            result: {testID: "", name: title, htmlString: pretty(element.outerHTML), issue: false, comment: "", checked: false, url: ""}
         };
 
         console.log(newObject);
-        return newObject;
+        return newObject;webkitURL
     }
 
     // A simple function to generate an index-based selector for an element

@@ -31,4 +31,3 @@ export const CheckboxButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggl
 export const CollapsibleArrowButton: React.FC<CollapsibleArrowProps> = ({ isExpanded }) => {
   return <span className= {`arrow-button ${isExpanded ? 'pressed' : ''}`}>{isExpanded ? ' ▲' : ' ▲'}</span>;
 };
-
