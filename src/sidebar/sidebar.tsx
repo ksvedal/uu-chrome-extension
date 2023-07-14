@@ -9,7 +9,6 @@ import ResultsHeader from './resultsHeader';
 import { CollapsibleItemType } from './collapsibleItem';
 import { MyContext } from './resultItemsContext';
 
-
 export const Sidebar: React.FC = () => {
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
   const [websiteURL, setWebsiteURL] = useState<string>("");
@@ -66,6 +65,7 @@ export const Sidebar: React.FC = () => {
           isAllHighlighted={isAllHighlighted}
           index={index}
           thisElement={thisElement}
+          url={websiteURL}
         >
         </CollapsibleItemType>)}
         </MyContext.Provider>
