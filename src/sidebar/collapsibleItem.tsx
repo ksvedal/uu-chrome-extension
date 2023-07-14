@@ -9,7 +9,7 @@ import { MyContext } from "./resultItemsContext";
 
 const messageSender = new MessageSender();
 
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, index }) => {
+export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, index, url }) => {
     const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAllHighlighted, setIsAllHighlighted] = useState(false);
@@ -31,9 +31,10 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         highlightAll();
     };
 
-    const updateJson = (elementObject: ElementObject, index: number) => {
+    const updateJson = (elementObject: ElementObject, index: number, url: string) => {
         let newNodes = [...type.nodes];  // copy the array
         newNodes[index] = elementObject;  // replace the element
+        newNodes[index].result.url = url;
         setTypeElements(newNodes);  // update the state
         let elementResults : ElementResult[] = newNodes.map(node => node.result).flat();
         setElementResults(elementResults);
@@ -44,7 +45,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
             const newNodes = [...prevTypeElements]; // copy the array
             if (newNodes[index]) {
                 newNodes[index].result.comment = textareaValues[index]; // update the comment value
-                updateJson(newNodes[index], index); // update the JSON with the updated element
+                updateJson(newNodes[index], index, url); // update the JSON with the updated element
             }
             return newNodes; // return the updated array
         });
@@ -79,8 +80,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                             setHighlightedElement={setCurrentHighlighted}
                             isAllHighlighted={isAllHighlighted}
                             setIsAllHighlighted={setIsAllHighlighted}
-                            updateJson={updateJson}
+                            updateJson={(elementObject, index) => updateJson(elementObject, index, url)}
                             index={index}
+                            url={url}
                         ><ElementAttributes
                                 attributes={item.attributes}
                                 title={item.title}
@@ -126,7 +128,8 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   setHighlightedElement,
   setIsAllHighlighted,
   updateJson,
-  index
+  index, 
+  url
 
 }) => {
 
@@ -145,7 +148,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
     } else if (update === "checked") {
         thisElement.result.checked = !thisElement.result.checked;
     }
-    updateJson(thisElement, index);
+    updateJson(thisElement, index, url);
 };
 
 
@@ -170,6 +173,12 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       messageSender.highlightSingleMessage(thisElement, false);
     }
   };
+
+  useEffect(() => {
+    type.nodes.forEach((node, index) => {
+        updateJson(node, index, url);
+    });
+}, [type.nodes, url]);
 
   return (
     <div className="collapsible-item-child">
