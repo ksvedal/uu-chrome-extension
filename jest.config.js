@@ -20,5 +20,6 @@ module.exports = {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     },
     setupFiles: ["jest-webextension-mock"],
+    setupFilesAfterEnv: ['./jest.setup.js'],
 
 }; 
