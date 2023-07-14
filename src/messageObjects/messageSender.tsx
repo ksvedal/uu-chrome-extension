@@ -1,5 +1,8 @@
 import { ElementObject, ElementType } from "../sidebar/interfaces";
 import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage } from "./message";
+import sinon from 'sinon';
+import * as sinonChrome from 'sinon-chrome';
+
 
 export class MessageSender {
     public scanPageMessage(callback: (response: ElementType[]) => void) {
