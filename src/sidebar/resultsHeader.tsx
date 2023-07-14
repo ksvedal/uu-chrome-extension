@@ -23,12 +23,18 @@ const context = useContext(MyContext);
     }
   
   return (
-    <div className='headline'>
-      <TabIcon></TabIcon>
-      <p>Website: {url} </p>
-      <button className='headline-button' onClick={logResult}>
-        Print results
-      </button>
+    <div className='row headline'>
+        <div className={"col-2"}>
+          <TabIcon></TabIcon>
+        </div>
+        <div className={"col-10"}>
+            <p>Website: {url} </p>
+        </div>
+        <div className={"col-12"}>
+            <button className='headline-button float-right' onClick={logResult}>
+                Print results
+            </button>
+        </div>
     </div>
   );
 };
