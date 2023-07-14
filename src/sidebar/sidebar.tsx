@@ -17,6 +17,7 @@ export const Sidebar: React.FC = () => {
   const [elementResults, setElementResults] = useState<ElementResult[]>([]);
   const [index, setIndex] = useState<number[]>([]);
   const [thisElement, setThisElement] = useState<ElementObject | null>(null);
+  const [testID, setTestID] = useState<string>("");
 
   const _message: MessageSender = new MessageSender();
   const _scan: WebsiteScanner = new WebsiteScanner();
@@ -66,6 +67,7 @@ export const Sidebar: React.FC = () => {
           index={index}
           thisElement={thisElement}
           url={websiteURL}
+          testID={testID}
         >
         </CollapsibleItemType>)}
         </MyContext.Provider>

@@ -24,6 +24,7 @@ export interface CollapsibleItemTypeInterface {
   setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>;
   index: number;
   url: string;
+  testID: string;
 }
 
 export interface CollapsibleItemElementInterface {
@@ -37,6 +38,7 @@ export interface CollapsibleItemElementInterface {
   updateJson: (elementObject: ElementObject, index: number, url: string) => void;
   index: number;
   url: string;
+  testID: string;
 }
 
 export interface ResultsHeaderInterface {
@@ -77,6 +79,7 @@ export interface ElementResult {
   comment: string;
   checked: boolean;
   url: string;
+  testID: string;
 }
 export interface ElementAttribute {
   name: string;

@@ -9,7 +9,7 @@ import { MyContext } from "./resultItemsContext";
 
 const messageSender = new MessageSender();
 
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, index, url }) => {
+export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, index, url}) => {
     const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAllHighlighted, setIsAllHighlighted] = useState(false);
@@ -35,6 +35,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         let newNodes = [...type.nodes];  // copy the array
         newNodes[index] = elementObject;  // replace the element
         newNodes[index].result.url = url;
+        newNodes[index].result.testID = generateTestID(index);
         setTypeElements(newNodes);  // update the state
         let elementResults : ElementResult[] = newNodes.map(node => node.result).flat();
         setElementResults(elementResults);
@@ -49,6 +50,12 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
             }
             return newNodes; // return the updated array
         });
+    };
+
+    const generateTestID = (index: number) => {
+      const testIndex = index + 1;
+      const paddedIndex = String(testIndex).padStart(5, '0');
+      return `Test${paddedIndex}`;
     };
       
     const highlightAll = () => {
@@ -71,7 +78,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
             {isExpanded && (
                 <div className="collapsible-item-children">
-                    {type.nodes.map((item, index) => (
+                    {type.nodes.map((item, index) => {
+                      const testID = generateTestID(index);
+                      return(
                         <CollapsibleItemElement
                             type={type}
                             key={index}
@@ -81,6 +90,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                             isAllHighlighted={isAllHighlighted}
                             setIsAllHighlighted={setIsAllHighlighted}
                             updateJson={(elementObject, index) => updateJson(elementObject, index, url)}
+                            testID={testID}
                             index={index}
                             url={url}
                         ><ElementAttributes
@@ -112,7 +122,8 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                  Store Text
                                 </button>
                         </CollapsibleItemElement>
-                    ))}
+                    );
+                  })}
                 </div>
             )}
         </div>
@@ -128,6 +139,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   setHighlightedElement,
   setIsAllHighlighted,
   updateJson,
+  testID,
   index, 
   url
 
@@ -176,9 +188,10 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
 
   useEffect(() => {
     type.nodes.forEach((node, index) => {
-        updateJson(node, index, url);
+      node.result.testID = testID;
+      updateJson(node, index, url);
     });
-}, [type.nodes, url]);
+}, [type.nodes, url, testID]);
 
   return (
     <div className="collapsible-item-child">
