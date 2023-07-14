@@ -14,8 +14,8 @@ export const ElementAttributes: React.FC<ElementObject> = ({ attributes, htmlStr
             <table>
                 <thead>
                     <tr>
-                        <th className="tableHead">Attribute</th>
-                        <th className="tableHead">value</th>
+                        <th className="tableHead attribute">Attribute</th>
+                        <th className="tableHead value">value</th>
                     </tr>
                 </thead>
                 <tbody>
