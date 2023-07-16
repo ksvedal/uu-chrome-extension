@@ -12,23 +12,37 @@ export class MessageSender {
         return true;
     }
 
-    public highlightSingleMessage(element: ElementObject, isChecked: boolean) {
+    public highlightSingleMessage(element: ElementObject, isChecked: boolean, callback?: (response: any) => void) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            if (tabs[0]?.id) {
-                console.log("Running with a tab id");
-                chrome.tabs.sendMessage(tabs[0].id, new HighlightMessage(element, isChecked), (response) => {
-                    if (chrome.runtime.lastError) {
-                        console.error(chrome.runtime.lastError.message);
-                    } else {
-                        console.log("Result message: " + response.message);
-                    }
-                });
-            } else {
-                console.log("No tab id");
+          if (tabs[0]?.id) {
+            console.log("Running with a tab id");
+            chrome.tabs.sendMessage(tabs[0].id, new HighlightMessage(element, isChecked), (response) => {
+              if (chrome.runtime.lastError) {
+                console.error(chrome.runtime.lastError.message);
+              } else if (response && response.message) {
+                console.log("Result message: " + response.message);
+              } else {
+                console.log("Response is undefined or missing 'message' property");
+              }
+              
+              //Used for testing purposes
+              if (callback) {
+                callback(response); // Invoke the callback function with the response
+              }
+            });
+          } else {
+            console.log("No tab id");
+            
+            //Used for testing purposes
+            if (callback) {
+              callback([]); // Invoke the callback function with an empty array
             }
+          }
         });
+        
         return true;
-    }
+      }
+      
 
     public highlightAndRemovePreviousMessage(newElement: ElementObject, previousElement: ElementObject) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
