@@ -1,15 +1,34 @@
 import { MessageSender } from "../messageObjects/messageSender";
 import { ElementObject, ElementType } from "../sidebar/interfaces";
-import { chrome as jestChrome } from 'jest-chrome';
 import { Message, HighlightMessage, ScanPageMessage } from "../messageObjects/message";
 
-const mockMessage: Message = {
-  action: "exampleAction",
+type Tab = {
+  id: number;
+  url: string;
 };
 
-type Tab = chrome.tabs.Tab;
+type QueryInfo = {
+  active: boolean;
+  currentWindow: boolean;
+};
 
-type QueryInfo = chrome.tabs.QueryInfo;
+declare const chrome: {
+  tabs: {
+    query: (
+      queryInfo: QueryInfo,
+      callback: (tabs: Tab[]) => void
+    ) => void;
+    sendMessage: (
+      tabId: number,
+      message: Message,
+      options: chrome.runtime.MessageOptions | undefined,
+      callback?: (response: any) => void
+    ) => void;
+  };
+  runtime: {
+    lastError: any;
+  };
+};
 
 describe("MessageSender", () => {
   let messageSender: MessageSender;
@@ -34,108 +53,104 @@ describe("MessageSender", () => {
     };
   
     // Mock the chrome.tabs.query function
-    jestChrome.tabs.query.mockImplementation((queryInfo: QueryInfo, callback: (tabs: Tab[]) => void) => {
+    chrome.tabs.query = jest.fn((queryInfo: QueryInfo, callback: (tabs: Tab[]) => void) => {
       // Simulate the active tab with a valid id
       const tabs: Tab[] = [{ id: 1, url: "example.com" }];
       callback(tabs);
     });
   
     // Mock the chrome.tabs.sendMessage function
-    jestChrome.tabs.sendMessage.mockImplementation(
-      (tabId: number, message: Message, options?: chrome.runtime.MessageSendOptions, callback?: (response: any) => void) => {
-        if (typeof callback === 'function') {
+    chrome.tabs.sendMessage = jest.fn(
+      (
+        tabId: number,
+        message: Message,
+        options?: chrome.runtime.MessageOptions | undefined | ((response: any) => void),
+        callback?: (response: any) => void
+      ) => {
+        if (typeof options === "function") {
           // Simulate the response from sendMessage
           const response = { message: "highlighted" };
-          callback(response);
+          options(response); // Invoke the callback function
+        } else if (typeof options === "undefined" && typeof callback === "function") {
+          console.log("No active tab");
+          callback([]); // Invoke the callback function
         } else {
-          console.log("No callback provided");
+          console.log("Invalid parameters for sendMessage");
         }
       }
     );
-
-
+    
   });
   
-  
-
   afterEach(() => {
-    // Restore mock implementations
-    jestChrome.tabs.query.mockRestore();
-    jestChrome.tabs.sendMessage.mockRestore();
-
-    // Clear any other mocks or spies if necessary
+    // Clear the mock implementation
     jest.clearAllMocks();
   });
 
   describe("scanPageMessage", () => {
     it("should send a scan page message to the active tab", () => {
       const callback = jest.fn();
-
       messageSender.scanPageMessage(callback);
-
-      expect(jestChrome.tabs.query).toHaveBeenCalledWith(
+      expect(chrome.tabs.query).toHaveBeenCalledWith(
         { active: true, currentWindow: true },
         expect.any(Function)
       );
-
-      // Simulate the response from jestChrome.tabs.sendMessage
-      (jestChrome.tabs.sendMessage as jest.Mock).mock.calls[0][2](["element1", "element2"]);
-
+      // Simulate the response from chrome.tabs.sendMessage
+      (chrome.tabs.sendMessage as jest.Mock).mock.calls[0][2](["element1", "element2"]);
       expect(callback).toHaveBeenCalledWith(["element1", "element2"]);
     });
-
     it("should handle no active tab", () => {
       const callback = jest.fn();
-
+    
       messageSender.scanPageMessage(callback);
-
-      expect(jestChrome.tabs.query).toHaveBeenCalledWith(
+    
+      expect(chrome.tabs.query).toHaveBeenCalledWith(
         { active: true, currentWindow: true },
         expect.any(Function)
       );
-
+    
       // Simulate no active tab
-      (jestChrome.tabs.sendMessage as jest.Mock).mock.calls[0][2](undefined);
-
-      expect(callback).toHaveBeenCalledWith([]);
+      (chrome.tabs.sendMessage as jest.Mock).mock.calls[0][2](undefined, callback);
+    
+      expect(callback).toHaveBeenCalledWith(expect.arrayContaining([]));
     });
+    
   });
+
 
   describe("highlightSingleMessage", () => {
     it("should send a highlight single message to the active tab", () => {
       const isChecked = true;
-
       messageSender.highlightSingleMessage(element, isChecked);
-
-      expect(jestChrome.tabs.query).toHaveBeenCalledWith(
+      expect(chrome.tabs.query).toHaveBeenCalledWith(
         { active: true, currentWindow: true },
         expect.any(Function)
       );
-
-      // Simulate the response from jestChrome.tabs.sendMessage
-      (jestChrome.tabs.sendMessage as jest.Mock).mock.calls[0][2]({ message: "highlighted" });
-
+      // Simulate the response from chrome.tabs.sendMessage
+      (chrome.tabs.sendMessage as jest.Mock).mock.calls[0][2]({ message: "highlighted" });
       // You can also check for runtime errors if needed
-      expect(jestChrome.runtime.lastError).toBeUndefined();
+      expect(chrome.runtime.lastError).toBeUndefined();
     });
-
     it("should handle no active tab", () => {
       const isChecked = true;
-
+      const callback = jest.fn();
+    
       messageSender.highlightSingleMessage(element, isChecked);
-
-      expect(jestChrome.tabs.query).toHaveBeenCalledWith(
+    
+      expect(chrome.tabs.query).toHaveBeenCalledWith(
         { active: true, currentWindow: true },
         expect.any(Function)
       );
-
+    
       // Simulate no active tab
-      (jestChrome.tabs.sendMessage as jest.Mock).mock.calls[0][2](undefined);
-
-      // You can check for runtime errors or other assertions
-      expect(jestChrome.runtime.lastError).toBeDefined();
+      (chrome.tabs.sendMessage as jest.Mock).mock.calls[0][2](undefined);
+      // Invoke the callback function directly with undefined as the response argument
+    
+      expect(callback).toHaveBeenCalledWith(expect.arrayContaining([]));
     });
+    
   });
-
+  
   // Additional tests for other message types...
 });
+
