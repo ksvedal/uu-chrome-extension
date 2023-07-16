@@ -7,15 +7,9 @@ const mockMessage: Message = {
   action: "exampleAction",
 };
 
-type Tab = {
-  id: number;
-  // Add other properties used in your code
-};
+type Tab = chrome.tabs.Tab;
 
-type QueryInfo = {
-  active?: boolean;
-  currentWindow?: boolean;
-};
+type QueryInfo = chrome.tabs.QueryInfo;
 
 describe("MessageSender", () => {
   let messageSender: MessageSender;
@@ -38,25 +32,31 @@ describe("MessageSender", () => {
       },
       attributes: [],
     };
-
+  
     // Mock the chrome.tabs.query function
     jestChrome.tabs.query.mockImplementation((queryInfo: QueryInfo, callback: (tabs: Tab[]) => void) => {
-      // Simulate no active tab
-      const tabs: Tab[] = [];
+      // Simulate the active tab with a valid id
+      const tabs: Tab[] = [{ id: 1, url: "example.com" }];
       callback(tabs);
     });
-
+  
     // Mock the chrome.tabs.sendMessage function
     jestChrome.tabs.sendMessage.mockImplementation(
-      (tabId: number, message: Message, callback?: (response: any) => void) => {
-        // Simulate the response from sendMessage
-        const response = { message: "highlighted" };
-        if (callback) {
+      (tabId: number, message: Message, options?: chrome.runtime.MessageSendOptions, callback?: (response: any) => void) => {
+        if (typeof callback === 'function') {
+          // Simulate the response from sendMessage
+          const response = { message: "highlighted" };
           callback(response);
+        } else {
+          console.log("No callback provided");
         }
       }
     );
+
+
   });
+  
+  
 
   afterEach(() => {
     // Restore mock implementations
