@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ToggleButtonProps, RegularButtonProps, CollapsibleArrowProps } from "./interfaces";
+import { ToggleButtonProps, RegularButtonProps, CollapsibleArrowProps, RadioButtonGroupProps} from "./interfaces";
 
 export const ToggleButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggle, text }) => {
   return (
@@ -27,22 +27,55 @@ export const CheckboxButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggl
     </label>
   );
 };
+export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChange }) => {
+  const [selectedOption, setSelectedOption] = useState<string>('');
 
-export const RadioButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggle, text }) => {
-  const additionalClass = text === 'Error' ? 'error' : text === 'Checked' ? 'checked' : '';
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const option = event.target.value;
+    setSelectedOption(option);
+    onOptionChange(option);
+  };
 
   return (
-    <label className={`checkbox-button float-right ${isChecked ? 'pressed' : ''} ${additionalClass}`}>
-      <input
-        type="radio"
-        name="option"
-        checked={isChecked}
-        onChange={onToggle}
-      />
-      {text}
-    </label>
+    <div className="checkbox-button float-left">
+      <p>Does the button's text identify its function?</p>
+      <label className={`button-style ${selectedOption === 'Yes' ? 'active' : ''}`}>
+        <input
+          type="radio"
+          name="option"
+          value="Yes"
+          checked={selectedOption === 'Yes'}
+          onChange={handleOptionChange}
+        />
+        <span className="radio-button-text">Yes</span>
+      </label>
+      <br />
+      <label className={`button-style ${selectedOption === 'No' ? 'active' : ''}`}>
+        <input
+          type="radio"
+          name="option"
+          value="No"
+          checked={selectedOption === 'No'}
+          onChange={handleOptionChange}
+        />
+        <span className="radio-button-text">No</span>
+      </label>
+      <br />
+      <label className={`button-style ${selectedOption === 'The element is not a button' ? 'active' : ''}`}>
+        <input
+          type="radio"
+          name="The element is not a button"
+          value="The element is not a button"
+          checked={selectedOption === 'The element is not a button'}
+          onChange={handleOptionChange}
+        />
+        <span className="radio-button-text">The element is not a button</span>
+      </label>
+    </div>
   );
 };
+
+
 
 
 

@@ -1,5 +1,10 @@
 import { ReactNode } from "react";
 
+export interface RadioButtonGroupProps {
+  onOptionChange: (option: string) => void;
+}
+
+
 export interface ToggleButtonProps {
   isChecked: boolean;
   onToggle: () => void;

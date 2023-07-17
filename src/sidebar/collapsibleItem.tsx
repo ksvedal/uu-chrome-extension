@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult } from "./interfaces";
-import {ToggleButton, CollapsibleArrowButton, CheckboxButton, RadioButton} from "./buttons";
+import {ToggleButton, CollapsibleArrowButton, CheckboxButton, RadioButtonGroup} from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -63,16 +63,17 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
     const highlightAll = () => {
         messageSender.highlightAllWithType(type, isAllHighlighted);
-
-
-    
-
-
     };
+
+    // Define the handleOptionChange function
+    const handleOptionChange = (option: string) => {
+        console.log("Selected option:", option);
+    };
+    
     const toggleCommentSection = () => {
-        setCommentVisible(!commentVisible);
-        console.log("commentVisable", commentVisible)
+        setCommentVisible(true);
       };
+
     return (
         <div className='collapsible-item'>
             <div className='collapsible-item-parent'>
@@ -126,6 +127,10 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         {item.htmlString}
                                     </SyntaxHighlighter>
 
+                                    <div onClick={ () => toggleCommentSection()}>
+                                        <RadioButtonGroup onOptionChange={handleOptionChange} />
+                                    </div>
+
                                     <div>
                                         {commentVisible && (
                                             <div className="comment-box">
@@ -149,10 +154,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         )}
                                          
                                     </div>
-                                    <button onClick={toggleCommentSection}>Vis comment section</button>
-                                    <button className="store-text-button float-right" onClick={() => storeText(index) }>
-                                        Store Text
-                                    </button>
+                                    
                                 </CollapsibleItemElement>
                             );
                         })}
@@ -195,7 +197,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
     updateJson(thisElement, index, url);
 };
 
-
   const toggleCheck = () => {
     //If we press the currently highlighted element, unhighlight it
     if (highlightedElement === thisElement) {
@@ -233,23 +234,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
             <div className="col-3">
               {thisElement.title}
             </div>
-            <div className={"col-3"}>
-                  <div className={"float-left"}>
-                      <RadioButton
-                          isChecked={thisElement.result.checked}
-                          onToggle={() => handleCheckboxClick("checked")}
-                          text={"Checked"} />
-                  </div>
-              </div>
-
-              <div className={"col-3"}>
-                  <div className={"float-right"}>
-                      <RadioButton
-                          isChecked={thisElement.result.checked}
-                          onToggle={() => handleCheckboxClick("checked")}
-                          text={"Checked"} />
-                  </div>
-              </div>
 
               <div className={"col-3"}>
                   <div className={"float-right"}>
@@ -271,4 +255,5 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       </div>
     </div>
   );
+
 };
