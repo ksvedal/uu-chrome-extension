@@ -1,6 +1,11 @@
 import { MessageSender } from "../messageObjects/messageSender";
 import { ElementObject, ElementType } from "../sidebar/interfaces";
-import { Message, HighlightMessage, ScanPageMessage } from "../messageObjects/message";
+import {
+  Message,
+  HighlightMessage,
+  HighlightAndRemovePreviousMessage,
+  UnhighlightAllAndHighlightSingleMessage,
+} from "../messageObjects/message";
 
 type Tab = {
   id: number;
@@ -51,14 +56,14 @@ describe("MessageSender", () => {
       },
       attributes: [],
     };
-  
+
     // Mock the chrome.tabs.query function
     chrome.tabs.query = jest.fn((queryInfo: QueryInfo, callback: (tabs: Tab[]) => void) => {
       // Simulate the active tab with a valid id
       const tabs: Tab[] = [{ id: 1, url: "example.com" }];
       callback(tabs);
     });
-  
+
     // Mock the chrome.tabs.sendMessage function
     chrome.tabs.sendMessage = jest.fn(
       (
@@ -79,79 +84,233 @@ describe("MessageSender", () => {
         }
       }
     );
-    
   });
-  
+
   afterEach(() => {
     // Clear the mock implementation
     jest.clearAllMocks();
   });
 
-  describe("scanPageMessage", () => {
-    it("should send a scan page message to the active tab", () => {
-      const callback = jest.fn();
-      messageSender.scanPageMessage(callback);
+  describe("sendMessageToActiveTab", () => {
+    let mockMessage: Message;
+
+    beforeEach(() => {
+      mockMessage = new HighlightMessage(element, true);
+    });
+
+    it("should send a message to the active tab", () => {
+      messageSender.sendMessageToActiveTab(mockMessage);
+
       expect(chrome.tabs.query).toHaveBeenCalledWith(
         { active: true, currentWindow: true },
         expect.any(Function)
       );
-      // Simulate the response from chrome.tabs.sendMessage
-      (chrome.tabs.sendMessage as jest.Mock).mock.calls[0][2](["element1", "element2"]);
-      expect(callback).toHaveBeenCalledWith(["element1", "element2"]);
+      expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
+        1,
+        mockMessage,
+        expect.any(Function)
+      );
+      // Add more assertions if needed
     });
+
     it("should handle no active tab", () => {
-      const callback = jest.fn();
-    
-      messageSender.scanPageMessage(callback);
-    
+      (chrome.tabs.query as jest.Mock).mockImplementationOnce((queryInfo, callback) => {
+        callback([]); // Simulate no active tab
+      });
+
+      messageSender.sendMessageToActiveTab(mockMessage);
+
       expect(chrome.tabs.query).toHaveBeenCalledWith(
         { active: true, currentWindow: true },
         expect.any(Function)
       );
-    
-      // Simulate no active tab
-      (chrome.tabs.sendMessage as jest.Mock).mock.calls[0][2](undefined, callback);
-    
-      expect(callback).toHaveBeenCalledWith(expect.arrayContaining([]));
+      // Add assertions for the behavior when there is no active tab
     });
-    
+
+    // Add more tests for different scenarios
   });
 
+  describe("highlightAndRemovePreviousMessage", () => {
+    let mockNewElement: ElementObject;
+    let mockPreviousElement: ElementObject;
 
-  describe("highlightSingleMessage", () => {
-    it("should send a highlight single message to the active tab", () => {
-      const isChecked = true;
-      messageSender.highlightSingleMessage(element, isChecked);
+    beforeEach(() => {
+      mockNewElement = {
+        title: "New Element Title",
+        htmlString: "<div>New Element HTML</div>",
+        selector: ".new-element-selector",
+        result: {
+          name: "New Element Name",
+          htmlString: "<div>New Element Result HTML</div>",
+          issue: false,
+          comment: "",
+          checked: false,
+          url: "example.com",
+          testID: "new-element-test-id",
+        },
+        attributes: [],
+      };
+
+      mockPreviousElement = {
+        title: "Previous Element Title",
+        htmlString: "<div>Previous Element HTML</div>",
+        selector: ".previous-element-selector",
+        result: {
+          name: "Previous Element Name",
+          htmlString: "<div>Previous Element Result HTML</div>",
+          issue: false,
+          comment: "",
+          checked: false,
+          url: "example.com",
+          testID: "previous-element-test-id",
+        },
+        attributes: [],
+      };
+    });
+
+    it("should send a highlight and remove previous message to the active tab", () => {
+      const mockMessage = new HighlightAndRemovePreviousMessage(mockNewElement, mockPreviousElement);
+
+      messageSender.sendMessageToActiveTab(mockMessage);
+
       expect(chrome.tabs.query).toHaveBeenCalledWith(
         { active: true, currentWindow: true },
         expect.any(Function)
       );
-      // Simulate the response from chrome.tabs.sendMessage
-      (chrome.tabs.sendMessage as jest.Mock).mock.calls[0][2]({ message: "highlighted" });
-      // You can also check for runtime errors if needed
-      expect(chrome.runtime.lastError).toBeUndefined();
+      expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
+        1,
+        mockMessage,
+        expect.any(Function)
+      );
+      // Add more assertions if needed
     });
+
     it("should handle no active tab", () => {
-      const isChecked = true;
-      
-      messageSender.highlightSingleMessage(element, isChecked);
-      
+      (chrome.tabs.query as jest.Mock).mockImplementationOnce((queryInfo, callback) => {
+        callback([]); // Simulate no active tab
+      });
+
+      const mockMessage = new HighlightAndRemovePreviousMessage(mockNewElement, mockPreviousElement);
+
+      messageSender.sendMessageToActiveTab(mockMessage);
+
       expect(chrome.tabs.query).toHaveBeenCalledWith(
         { active: true, currentWindow: true },
         expect.any(Function)
       );
-      
-      // Simulate no active tab
-      (chrome.tabs.sendMessage as jest.Mock).mock.calls[0][2](undefined);
-      // Invoke the callback function directly with undefined as the response argument
-      
-      // Add assertions here to check the behavior directly
+      // Add assertions for the behavior when there is no active tab
     });
-    
-    
-    
-    
+
+    // Add more tests for different scenarios
   });
-  // Additional tests for other message types...
+
+  describe("highlightAllWithType", () => {
+    let mockElementType: ElementType;
+
+    beforeEach(() => {
+      mockElementType = "button";
+    });
+
+    it("should send a highlight all message with the correct element type", () => {
+      const mockIsChecked = true;
+      const mockMessage = new HighlightAllMessage(mockElementType, mockIsChecked);
+
+      messageSender.sendMessageToActiveTab(mockMessage);
+
+      expect(chrome.tabs.query).toHaveBeenCalledWith(
+        { active: true, currentWindow: true },
+        expect.any(Function)
+      );
+      expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
+        1,
+        mockMessage,
+        expect.any(Function)
+      );
+      // Add more assertions if needed
+    });
+
+    it("should handle no active tab", () => {
+      (chrome.tabs.query as jest.Mock).mockImplementationOnce((queryInfo, callback) => {
+        callback([]); // Simulate no active tab
+      });
+
+      const mockMessage = new HighlightAllMessage(mockElementType, true);
+
+      messageSender.sendMessageToActiveTab(mockMessage);
+
+      expect(chrome.tabs.query).toHaveBeenCalledWith(
+        { active: true, currentWindow: true },
+        expect.any(Function)
+      );
+      // Add assertions for the behavior when there is no active tab
+    });
+
+    // Add more tests for different scenarios
+  });
+
+  describe("unhighlightAllAndHighlightSingleMessage", () => {
+    let mockElement: ElementObject;
+    let mockElementType: ElementType;
+
+    beforeEach(() => {
+      mockElement = {
+        title: "Example Element Title",
+        htmlString: "<div>Example Element HTML</div>",
+        selector: ".example-element-selector",
+        result: {
+          name: "Example Element Name",
+          htmlString: "<div>Example Element Result HTML</div>",
+          issue: false,
+          comment: "",
+          checked: false,
+          url: "example.com",
+          testID: "example-element-test-id",
+        },
+        attributes: [],
+      };
+
+      mockElementType = "button";
+    });
+
+    it("should send an unhighlight all and highlight single message to the active tab", () => {
+      const mockMessage = new UnhighlightAllAndHighlightSingleMessage(
+        mockElement,
+        mockElementType
+      );
+
+      messageSender.sendMessageToActiveTab(mockMessage);
+
+      expect(chrome.tabs.query).toHaveBeenCalledWith(
+        { active: true, currentWindow: true },
+        expect.any(Function)
+      );
+      expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
+        1,
+        mockMessage,
+        expect.any(Function)
+      );
+      // Add more assertions if needed
+    });
+
+    it("should handle no active tab", () => {
+      (chrome.tabs.query as jest.Mock).mockImplementationOnce((queryInfo, callback) => {
+        callback([]); // Simulate no active tab
+      });
+
+      const mockMessage = new UnhighlightAllAndHighlightSingleMessage(
+        mockElement,
+        mockElementType
+      );
+
+      messageSender.sendMessageToActiveTab(mockMessage);
+
+      expect(chrome.tabs.query).toHaveBeenCalledWith(
+        { active: true, currentWindow: true },
+        expect.any(Function)
+      );
+      // Add assertions for the behavior when there is no active tab
+    });
+
+    // Add more tests for different scenarios
+  });
 });
-
