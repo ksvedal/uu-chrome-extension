@@ -27,10 +27,10 @@ const context = useContext(MyContext);
         <div className={"col-2"}>
           <TabIcon></TabIcon>
         </div>
-        <div className={"col-10"}>
-            <p>Website: {url} </p>
+        <div className={"col-7"}>
+            <p> {url} </p>
         </div>
-        <div className={"col-12"}>
+        <div className={"col-3"}>
             <button className='headline-button float-right' onClick={logResult}>
                 Print results
             </button>
