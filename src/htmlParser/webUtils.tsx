@@ -23,7 +23,9 @@ export class WebUtils {
             htmlString: pretty(element.outerHTML),
             selector: selector,
             attributes: mainObjectAttributes,
-            result: {testID: "", name: title, htmlString: pretty(element.outerHTML), issue: false, comment: "", checked: false, url: ""}
+            result: {testID: "", name: title, htmlString: pretty(element.outerHTML), issue: false, comment: "", checked: false, url: "", ChromeVersion: "", ChromeExtensionVersion: ""},
+            ChromeVersion: "",
+            ChromeExtensionVersion: "",
         };
 
         console.log(newObject);

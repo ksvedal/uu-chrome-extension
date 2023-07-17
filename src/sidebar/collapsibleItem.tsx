@@ -36,6 +36,8 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         newNodes[index] = elementObject;  // replace the element
         newNodes[index].result.url = url;
         newNodes[index].result.testID = generateTestID(index);
+        newNodes[index].result.ChromeVersion = getChromeVersion();
+        newNodes[index].result.ChromeExtensionVersion = getChromeExtensionVersion();
         setTypeElements(newNodes);  // update the state
         let elementResults : ElementResult[] = newNodes.map(node => node.result).flat();
         setElementResults(elementResults);
@@ -58,6 +60,17 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       return `Test${paddedIndex}`;
     };
 
+    const getChromeVersion = () => {
+      const raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9.]+)/);
+      return raw ? raw[2] : null;
+    };
+
+    const getChromeExtensionVersion = () => {
+      const manifest = chrome.runtime.getManifest();
+      return manifest.version;
+    };
+  
+      
     const highlightAll = () => {
         messageSender.highlightAllWithType(type, isAllHighlighted);
     };
@@ -108,7 +121,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         title={item.title}
                                         htmlString={item.htmlString}
                                         selector={item.selector}
-                                        result={item.result}/>
+                                        result={item.result}
+                                        ChromeVersion={item.ChromeVersion}
+                                        ChromeExtensionVersion={item.ChromeExtensionVersion}/>
 
                                     <div className="comment-box">
                                     <textarea
@@ -148,8 +163,8 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   setIsAllHighlighted,
   updateJson,
   testID,
-  index,
-  url
+  index, 
+  url,
 
 }) => {
 
@@ -196,6 +211,8 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   useEffect(() => {
     type.nodes.forEach((node, index) => {
       node.result.testID = testID;
+      node.result.ChromeVersion = node.ChromeVersion;
+      node.result.ChromeExtensionVersion = node.ChromeExtensionVersion;
       updateJson(node, index, url);
     });
 }, [type.nodes, url, testID]);
