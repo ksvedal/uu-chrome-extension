@@ -71,11 +71,15 @@ describe('Content Script', () => {
         checked: false,
         url: '',
         testID: '123',
+        ChromeVersion: null,
+        ChromeExtensionVersion: null
       },
       attributes: [
         { name: 'attribute1', value: 'value1' },
         { name: 'attribute2', value: 'value2' },
       ],
+      ChromeVersion: "",
+      ChromeExtensionVersion: ""
     };
 
     // HighlightMessage for handleHighlightSingle
@@ -94,4 +98,3 @@ describe('Content Script', () => {
 
 });
 
- 
