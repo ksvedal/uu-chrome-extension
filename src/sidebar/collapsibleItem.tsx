@@ -16,6 +16,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.comment || ""));
     const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
     const context = useContext(MyContext);
+    const [commentVisible, setCommentVisible] = useState(false);
+
+
     if (context === null) {
       // handle the case where the context is null
       return null;
@@ -60,7 +63,16 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
     const highlightAll = () => {
         messageSender.highlightAllWithType(type, isAllHighlighted);
+
+
+    
+
+
     };
+    const toggleCommentSection = () => {
+        setCommentVisible(!commentVisible);
+        console.log("commentVisable", commentVisible)
+      };
     return (
         <div className='collapsible-item'>
             <div className='collapsible-item-parent'>
@@ -114,22 +126,29 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         {item.htmlString}
                                     </SyntaxHighlighter>
 
-                                    <div className="comment-box">
-                                    <textarea
-                                        className="textarea"
-                                        name="comment"
-                                        form="usrform"
-                                        value={textareaValues[index]}
-                                        onChange={(e) => setTextareaValues(prevValues => {
-                                            const newValues = [...prevValues];
-                                            newValues[index] = e.target.value;
-                                            return newValues;
-                                        })}
-                                    >
-                                        Enter text here...
-                                    </textarea>
+                                    <div>
+                                    <button onClick={toggleCommentSection}>Vis comment section</button>
+                                        {commentVisible && (
+                                            <div className="comment-box">
+                                                <textarea
+                                                className="textarea"
+                                                name="comment"
+                                                form="usrform"
+                                                value={textareaValues[index]}
+                                                onChange={(e) =>
+                                                    setTextareaValues((prevValues) => {
+                                                    const newValues = [...prevValues];
+                                                    newValues[index] = e.target.value;
+                                                    return newValues;
+                                                    })
+                                                }
+                                            >
+                                                Enter text here...
+                                                </textarea>
+                                            </div>
+                                        )}
                                     </div>
-                                    <button className="store-text-button float-right" onClick={() => storeText(index)}>
+                                    <button className="store-text-button float-right" onClick={() => storeText(index) }>
                                         Store Text
                                     </button>
                                 </CollapsibleItemElement>
