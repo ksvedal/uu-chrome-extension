@@ -17,16 +17,6 @@ export const RegularButton: React.FC<RegularButtonProps> = ({ onClick, text }) =
   );
 };
 
-export const CheckboxButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggle, text }) => {
-  const additionalClass = text === 'Error' ? 'error' : text === 'Checked' ? 'checked' : '';
-
-  return (
-    <label className={`checkbox-button float-right ${isChecked ? 'pressed' : ''} ${additionalClass}`}>
-      <input type="checkbox" checked={isChecked} readOnly /> {/* Checkbox */}
-      {text}
-    </label>
-  );
-};
 export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChange }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
 
@@ -37,9 +27,9 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
   };
 
   return (
-    <div className="checkbox-button float-left">
+    <div>
       <p>Does the button's text identify its function?</p>
-      <label className={`button-style ${selectedOption === 'Yes' ? 'active' : ''}`}>
+      <label className={`radio-button ${selectedOption === 'Yes' ? 'active' : ''}`}>
         <input
           type="radio"
           name="option"
@@ -49,8 +39,7 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
         />
         <span className="radio-button-text">Yes</span>
       </label>
-      <br />
-      <label className={`button-style ${selectedOption === 'No' ? 'active' : ''}`}>
+      <label className={`radio-button ${selectedOption === 'No' ? 'active' : ''}`}>
         <input
           type="radio"
           name="option"
@@ -60,8 +49,7 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
         />
         <span className="radio-button-text">No</span>
       </label>
-      <br />
-      <label className={`button-style ${selectedOption === 'The element is not a button' ? 'active' : ''}`}>
+      <label className={`radio-button ${selectedOption === 'The element is not a button' ? 'active' : ''}`}>
         <input
           type="radio"
           name="The element is not a button"
