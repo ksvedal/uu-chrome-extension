@@ -110,10 +110,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         selector={item.selector}
                                         result={item.result}/>
 
-                                    <SyntaxHighlighter language="html" style={vs}>
-                                        {item.htmlString}
-                                    </SyntaxHighlighter>
-
                                     <div className="comment-box">
                                     <textarea
                                         className="textarea"
@@ -209,7 +205,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       <div className="collapsible-item">
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
           <div className="row">
-            <div className="col-3">
+            <div className="col-3 buttons-text">
               {thisElement.title}
             </div>
 
