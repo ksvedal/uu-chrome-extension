@@ -127,7 +127,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                     </SyntaxHighlighter>
 
                                     <div>
-                                    <button onClick={toggleCommentSection}>Vis comment section</button>
                                         {commentVisible && (
                                             <div className="comment-box">
                                                 <textarea
@@ -147,7 +146,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                                 </textarea>
                                             </div>
                                         )}
+                                         
                                     </div>
+                                    <button onClick={toggleCommentSection}>Vis comment section</button>
                                     <button className="store-text-button float-right" onClick={() => storeText(index) }>
                                         Store Text
                                     </button>
