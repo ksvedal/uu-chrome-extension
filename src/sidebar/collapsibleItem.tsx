@@ -122,7 +122,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         selector={item.selector}
                                         result={item.result}/>
 
-<<<<<<< HEAD
                                     <SyntaxHighlighter language="html" style={vs}>
                                         {item.htmlString}
                                     </SyntaxHighlighter>
@@ -136,6 +135,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                                 form="usrform"
                                                 value={textareaValues[index]}
                                                 onChange={(e) =>
+                                                    
                                                     setTextareaValues((prevValues) => {
                                                     const newValues = [...prevValues];
                                                     newValues[index] = e.target.value;
@@ -148,22 +148,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                             </div>
                                         )}
                                          
-=======
-                                    <div className="comment-box">
-                                    <textarea
-                                        className="textarea"
-                                        name="comment"
-                                        form="usrform"
-                                        value={textareaValues[index]}
-                                        onChange={(e) => setTextareaValues(prevValues => {
-                                            const newValues = [...prevValues];
-                                            newValues[index] = e.target.value;
-                                            return newValues;
-                                        })}
-                                    >
-                                        Enter text here...
-                                    </textarea>
->>>>>>> ec1ce9fe8aba59c8d3f0febed3c5bd043f1a5ee9
                                     </div>
                                     <button onClick={toggleCommentSection}>Vis comment section</button>
                                     <button className="store-text-button float-right" onClick={() => storeText(index) }>
@@ -246,7 +230,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       <div className="collapsible-item">
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
           <div className="row">
-            <div className="col-3 buttons-text">
+            <div className="col-3">
               {thisElement.title}
             </div>
 
