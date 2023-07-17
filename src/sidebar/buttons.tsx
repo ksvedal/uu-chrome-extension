@@ -28,52 +28,22 @@ export const CheckboxButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggl
   );
 };
 
-export const RadioButtons: React.FC<ToggleButtonProps> = ({ isChecked, onToggle, text }) => {
-  const [selectedOption, setSelectedOption] = useState<string>('option1');
-
+export const RadioButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggle, text }) => {
   const additionalClass = text === 'Error' ? 'error' : text === 'Checked' ? 'checked' : '';
 
-  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const option = event.target.value;
-    setSelectedOption(option);
-    onToggle();
-  };
-
   return (
-    <div>
-      <label className={`checkbox-button float-right ${isChecked ? 'pressed' : ''} ${additionalClass}`}>
-        <input
-          type="radio"
-          name="option"
-          value="option1"
-          checked={selectedOption === 'option1'}
-          onChange={handleOptionChange}
-        />
-        Ja
-      </label>
-      <label className={`checkbox-button float-right ${isChecked ? 'pressed' : ''} ${additionalClass}`}>
-        <input
-          type="radio"
-          name="option"
-          value="option2"
-          checked={selectedOption === 'option2'}
-          onChange={handleOptionChange}
-        />
-        Nei
-      </label>
-      <label className={`checkbox-button float-right ${isChecked ? 'pressed' : ''} ${additionalClass}`}>
-        <input
-          type="radio"
-          name="option"
-          value="option3"
-          checked={selectedOption === 'option3'}
-          onChange={handleOptionChange}
-        />
-        Kansje
-      </label>
-    </div>
+    <label className={`checkbox-button float-right ${isChecked ? 'pressed' : ''} ${additionalClass}`}>
+      <input
+        type="radio"
+        name="option"
+        checked={isChecked}
+        onChange={onToggle}
+      />
+      {text}
+    </label>
   );
 };
+
 
 
 export const CollapsibleArrowButton: React.FC<CollapsibleArrowProps> = ({ isExpanded }) => {
