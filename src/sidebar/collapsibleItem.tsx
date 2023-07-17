@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult } from "./interfaces";
-import {ToggleButton, CollapsibleArrowButton, CheckboxButton} from "./buttons";
+import {ToggleButton, CollapsibleArrowButton, CheckboxButton, RadioButtons} from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -215,16 +215,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
 
               <div className={"col-3"}>
                   <div className={"float-right"}>
-                      <CheckboxButton
-                          isChecked={thisElement.result.issue}
-                          onToggle={() => handleCheckboxClick("issue")}
-                          text={"Error"} />
-                  </div>
-              </div>
-
-              <div className={"col-3"}>
-                  <div className={"float-left"}>
-                      <CheckboxButton
+                      <RadioButtons
                           isChecked={thisElement.result.checked}
                           onToggle={() => handleCheckboxClick("checked")}
                           text={"Checked"} />
@@ -236,6 +227,8 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
                       <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
                   </div>
               </div>
+
+
           </div>
 
         </div>
