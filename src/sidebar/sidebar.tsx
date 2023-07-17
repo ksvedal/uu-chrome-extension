@@ -10,6 +10,7 @@ import { CollapsibleItemType } from './collapsibleItem';
 import { MyContext } from './resultItemsContext';
 
 export const Sidebar: React.FC = () => {
+  const [darkMode, setDarkMode] = useState(false);
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
   const [websiteURL, setWebsiteURL] = useState<string>("");
   const [isAllHighlighted, setIsAllHighlighted] = useState<boolean>(false); // add this line
@@ -21,6 +22,7 @@ export const Sidebar: React.FC = () => {
 
   const _message: MessageSender = new MessageSender();
   const _scan: WebsiteScanner = new WebsiteScanner();
+  let dark: String = "light";
 
   const fetchData = () => {
     _message.scanPageMessage((response: ElementType[]) => {
@@ -34,14 +36,18 @@ export const Sidebar: React.FC = () => {
     });
   };
 
-  return (
-    <div className='App'>
+  const toggleDarkMode = () => {
+      setDarkMode(!darkMode);
+    }
 
+  return (
+      <div className={`App ${darkMode ? "dark" : ""}`}>
       <div className='header-field'>
         <div className='extension-logo'>
           <img src="scan.png" alt="Extension Logo" />
         </div>
         <div className='extension-text'> <p>Button Seeker 2000</p></div>
+          <button onClick={toggleDarkMode}>  sadsadsad </button>
       </div>
 
 

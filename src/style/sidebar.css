@@ -18,6 +18,8 @@
   --text-color: #ffffff;
   --text-color-inverse: #000000;
 
+  --shadow-color: rgba(0, 0, 0, 0.12);
+
   --good-color: #4ea289;
   --alert-color: #fddc6e;
   --danger-color: #ff2a5c;
@@ -28,7 +30,7 @@
   --big-font: 1.2rem;
 
   --border: 0px solid var(--light-purple);
-  --radius: 3px;
+  --radius: 6px;
 
   --small-space: 0.5rem;
   --medium-space: 1rem;
@@ -39,9 +41,32 @@
   --big-padding: 1rem;
 }
 
+.dark {
+  --primary-color: #151515;
+  --secondary-color: #232323;
+  --tertiary-color: #3a3a3a;
+  --quartiary-color: #2a2927;
+
+  --purple: #ff97e9;
+  --light-purple: #ffc8f4;
+  --orange: #ffb571;
+  --light-orange: #ffcc9d;
+
+  --text-color: #030303;
+  --text-color-inverse: #d9d9d9;
+
+  --shadow-color: rgba(138, 138, 138, 0);
+  --border: 0.15rem solid var(--tertiary-color);
+
+  --good-color: #71eec8;
+  --alert-color: #fcd452;
+  --danger-color: #fd1f54;
+}
+
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
   background-color: var(--primary-color);
   color: var(--text-color-inverse);
   font-family: "Open Sans", sans-serif;
@@ -133,7 +158,7 @@ body {
   background-color: var(--secondary-color);
   border-radius: var(--radius);
   overflow-wrap: break-word;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 2px var(--shadow-color);
 }
 
 /* Header Field
@@ -150,7 +175,6 @@ body {
 
 .header-field .extension-text p {
   font-size: 2rem;
-  margin-bottom: var(--medium-space);
 }
 
 .header-field .extension-logo {
@@ -171,6 +195,10 @@ body {
 ---------------------------------------------- */
 .scan-page-field {
   justify-content: center;
+  background-color: var(--primary-color);
+  color: var(--text-color-inverse);
+  margin: 0;
+  height: 100%;
 }
 
 .scan-page-field .welcome-text {
@@ -184,7 +212,7 @@ body {
   border: var(--border);
   background: var(--purple);
   color: var(--text-color);
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 4px var(--shadow-color);
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
   font-size: var(--very-small-font);
@@ -205,8 +233,9 @@ body {
   font-weight: bolder;
   font-size: var(--medium-font);
   background-color: var(--quartiary-color);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 2px var(--shadow-color);
   border-radius: var(--radius);
+  border: var(--border);
 }
 
 .headline .headline-button {
@@ -215,7 +244,7 @@ body {
   border: var(--border);
   background: var(--orange);
   color: var(--text-color);
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 4px var(--shadow-color);
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
   font-size: var(--very-small-font);
@@ -240,6 +269,7 @@ body {
 
 /* Parent collapsible */
 .collapsible-item {
+
 }
 
 .collapsible-item-parent {
@@ -247,9 +277,10 @@ body {
   border-radius: var(--radius);
   background-color: var(--secondary-color);
   padding: var(--small-padding);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 2px var(--shadow-color);
   transition: box-shadow 0.02s ease-in-out;
   font-size: var(--medium-font);
+  border: var(--border);
 }
 
 .collapsible-item-parent .item-header {
@@ -258,7 +289,7 @@ body {
 .collapsible-item-parent .toggle-button {
   width: auto;
   border-radius: var(--radius);
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 4px var(--shadow-color);
   background: var(--purple);
   color: var(--text-color);
   font-size: var(--very-small-font);
@@ -280,31 +311,31 @@ body {
 .checkbox-button.error {
   background: var(--tertiary-color);
   border: var(--border);
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 4px var(--shadow-color);
 }
 
 .checkbox-button.error.pressed {
   background-color: var(--danger-color);
   color: var(--text-color-inverse);
-  box-shadow: inset 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 3px 4px var(--shadow-color);
 }
 
 .checkbox-button.checked {
   background: var(--tertiary-color);
   border: var(--border);
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 4px var(--shadow-color);
 }
 
 .checkbox-button.checked.pressed {
   background-color: var(--alert-color);
   color: var(--text-color-inverse);
-  box-shadow: inset 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 3px 4px var(--shadow-color);
 }
 
 /* Parent collapsible on hover */
 .collapsible-item-parent:hover {
   cursor: pointer;
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 4px var(--shadow-color);
 }
 
 .collapsible-item-parent .item-header .toggle-button:hover {
@@ -320,7 +351,7 @@ body {
 
 .collapsible-item-parent .item-header .toggle-button.pressed {
   background: var(--orange);
-  box-shadow: inset 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 3px 4px var(--shadow-color);
 }
 
 /* Child collapsible */
@@ -332,11 +363,13 @@ body {
   padding: var(--small-padding);
   padding-left: var(--medium-padding);
   border-radius: var(--radius);
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 4px var(--shadow-color);
   background-color: var(--primary-color);
   margin-left: var(--small-space);
   margin-right: var(--small-space);
   font-size: var(--small-font);
+  border: var(--border);
+
 }
 
 .collapsible-item-children .buttons-text{
@@ -366,13 +399,14 @@ body {
 /* Child collapsible on hover */
 .collapsible-item-child .item-header:hover {
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 6px var(--shadow-color);
 }
 
 /* Child collapsible on click */
 .collapsible-item-child .item-header.pressed {
-  box-shadow: inset 0 3px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 3px 4px var(--shadow-color);
   background-color: var(--light-orange);
+  color: var(--text-color);
 }
 
 
@@ -398,10 +432,9 @@ body {
   cursor: text;
   margin-left: 100px;
   margin-top: 100px;
-
   background-color: var(--tertiary-color);
-  color: var(--text-color);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  color: #f5f5f5;
+  box-shadow: 0 1px 2px var(--shadow-color);
   font-size: var(--very-small-font);
   text-align: left;
 }
@@ -413,8 +446,10 @@ body {
   cursor: text;
   border-spacing: 100px;
   color: var(--text-color-inverse);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 2px var(--shadow-color);
   font-size: var(--very-small-font);
+  border: var(--border);
+  background-color: var(--primary-color);
 }
 
 .tableHead.attribute {
@@ -442,11 +477,12 @@ body {
   width: 100%;
   margin-top: var(--medium-space);
   padding: 0;
+  background-color: var(--secondary-color);
 }
 
 .collapsible-item-child .comment-box .textarea {
   border-radius: var(--radius);
-  border: 0;
+  border: var(--border);
   width: 100%;
   max-width: 100%;
   min-width: 100%;
@@ -454,5 +490,8 @@ body {
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
   padding: var(--medium-padding);
-  box-shadow: inset 0 3px 3px rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 3px 3px var(--shadow-color);
+  background-color: var(--primary-color);
+  color: var(--text-color-inverse)
+
 }
