@@ -27,11 +27,13 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
   };
 
   return (
-    <div className={"row"}>
-        <p>Does the button's text identify its function?</p>
-      <div className={"row"}>
+    <div>
+        <div className={"row"}>
+            <p> Does the button's text identify its function?</p>
+        </div>
+      <div>
 
-        <div className={"col-4"}>
+        <div className={"col-4 extra-padding"}>
             <label className={`radio-button ${selectedOption === 'Yes' ? 'active' : ''}`}>
               <input
                 type="radio"
@@ -43,7 +45,7 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
               <span className="radio-button-text">Yes</span>
             </label>
         </div>
-        <div className={"col-4"}>
+        <div className={"col-4 extra-padding"}>
             <label className={`radio-button ${selectedOption === 'No' ? 'active' : ''}`}>
               <input
                 type="radio"
@@ -55,7 +57,7 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
               <span className="radio-button-text">No</span>
             </label>
         </div>
-        <div className={"col-4"}>
+        <div className={"col-4 extra-padding"}>
             <label className={`radio-button ${selectedOption === 'The element is not a button' ? 'active' : ''}`}>
               <input
                 type="radio"
