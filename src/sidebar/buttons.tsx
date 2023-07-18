@@ -1,5 +1,5 @@
-import React from "react";
-import { ToggleButtonProps, RegularButtonProps, CollapsibleArrowProps } from "./interfaces";
+import React, { useState } from "react";
+import { ToggleButtonProps, RegularButtonProps, CollapsibleArrowProps, RadioButtonGroupProps} from "./interfaces";
 
 export const ToggleButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggle, text }) => {
   return (
@@ -17,17 +17,61 @@ export const RegularButton: React.FC<RegularButtonProps> = ({ onClick, text }) =
   );
 };
 
-export const CheckboxButton: React.FC<ToggleButtonProps> = ({ isChecked, onToggle, text }) => {
-  const additionalClass = text === 'Error' ? 'error' : text === 'Checked' ? 'checked' : '';
+export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChange }) => {
+  const [selectedOption, setSelectedOption] = useState<string>('');
+
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const option = event.target.value;
+    setSelectedOption(option);
+    onOptionChange(option);
+  };
 
   return (
-      <button className={`checkbox-button float-right ${isChecked ? 'pressed' : ''} ${additionalClass}`} onClick={(e) => { e.stopPropagation(); onToggle(); }}>
-        <input type="checkbox" checked={isChecked} readOnly /> {/* Checkbox */}
-        {text}
-      </button>
+    <div className={"row"}>
+        <p>Does the button's text identify its function?</p>
+      <div className={"row"}>
+
+        <div className={"col-4"}>
+            <label className={`radio-button ${selectedOption === 'Yes' ? 'active' : ''}`}>
+              <input
+                type="radio"
+                name="option"
+                value="Yes"
+                checked={selectedOption === 'Yes'}
+                onChange={handleOptionChange}
+              />
+              <span className="radio-button-text">Yes</span>
+            </label>
+        </div>
+        <div className={"col-4"}>
+            <label className={`radio-button ${selectedOption === 'No' ? 'active' : ''}`}>
+              <input
+                type="radio"
+                name="option"
+                value="No"
+                checked={selectedOption === 'No'}
+                onChange={handleOptionChange}
+              />
+              <span className="radio-button-text">No</span>
+            </label>
+        </div>
+        <div className={"col-4"}>
+            <label className={`radio-button ${selectedOption === 'The element is not a button' ? 'active' : ''}`}>
+              <input
+                type="radio"
+                name="The element is not a button"
+                value="The element is not a button"
+                checked={selectedOption === 'The element is not a button'}
+                onChange={handleOptionChange}
+              />
+              <span className="radio-button-text">Not a button</span>
+            </label>
+        </div>
+    </div>
+    </div>
   );
 };
 
 export const CollapsibleArrowButton: React.FC<CollapsibleArrowProps> = ({ isExpanded }) => {
-  return <span className= {`arrow-button ${isExpanded ? 'pressed' : ''}`}>{isExpanded ? ' ▲' : ' ▲'}</span>;
+  return <span className={`arrow-button ${isExpanded ? 'pressed' : ''}`}>{isExpanded ? ' ▲' : ' ▲'}</span>;
 };

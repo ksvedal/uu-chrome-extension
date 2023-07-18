@@ -1,5 +1,9 @@
 import { ReactNode } from "react";
 
+export interface RadioButtonGroupProps {
+  onOptionChange: (option: string) => void;
+}
+
 export interface ToggleButtonProps {
   isChecked: boolean;
   onToggle: () => void;
@@ -70,6 +74,8 @@ export interface ElementObject {
   selector: string;
   result: ElementResult;
   attributes: ElementAttribute[];
+  ChromeVersion: string;
+  ChromeExtensionVersion: string;
 }
 
 export interface ElementResult {
@@ -80,6 +86,8 @@ export interface ElementResult {
   checked: boolean;
   url: string;
   testID: string;
+  ChromeVersion: string | null;
+  ChromeExtensionVersion: string | null;
 }
 export interface ElementAttribute {
   name: string;

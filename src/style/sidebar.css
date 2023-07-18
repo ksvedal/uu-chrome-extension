@@ -46,8 +46,8 @@
   --medium-space: 1rem;
   --big-space: 4rem;
 
-  --small-padding: 0.4rem;
-  --medium-padding: 0.6rem;
+  --small-padding: 0.6rem;
+  --medium-padding: 0.7rem;
   --big-padding: 1rem;
 }
 
@@ -108,7 +108,6 @@ html, body {
 [class*="col-"] {
   width: 100%;
   float: left;
-  padding: var(--small-padding);
 }
 
 /* Full width: */
@@ -221,7 +220,7 @@ html, body {
   margin: var(--medium-padding);
   padding: var(--medium-padding);
   border-radius: var(--radius);
-  border: var(--border);
+  border: none;
   background: var(--primary-color);
   color: var(--text-color-inverse);
   box-shadow: var(--big-shadow);
@@ -252,7 +251,7 @@ html, body {
   margin: var(--medium-padding);
   padding: var(--medium-padding);
   border-radius: var(--radius);
-  border: var(--big-border) var(--border-color-purple);
+  border: none;
   background: var(--purple);
   color: var(--text-color);
   box-shadow: var(--big-shadow);
@@ -283,7 +282,7 @@ html, body {
 .headline .headline-button {
   width: auto;
   border-radius: var(--radius);
-  border: var(--big-border) var(--border-color-orange);
+  border: none;
   background: var(--orange);
   color: var(--text-color);
   box-shadow: var(--big-shadow);
@@ -334,7 +333,7 @@ html, body {
   background: var(--purple);
   color: var(--text-color);
   font-size: var(--very-small-font);
-  border: var(--big-border) var(--border-color-purple);
+  border: none;
 }
 
 .total-buttons {
@@ -515,7 +514,9 @@ html, body {
 .collapsible-item-child .comment-box {
   border-radius: var(--radius);
   width: 100%;
+  display: hidden;
   margin-top: var(--medium-space);
+  margin-bottom: var(--medium-space);
   padding: 0;
   background-color: var(--secondary-color);
 }
@@ -535,3 +536,44 @@ html, body {
   color: var(--text-color-inverse)
 
 }
+
+/* Radioboxes */
+.collapsible-item-child .radio-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.collapsible-item-child .radio-button  label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.collapsible-item-child .radio-button  {
+  padding: var(--small-padding);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--big-shadow);
+  background: var(--purple);
+  color: var(--text-color);
+  font-size: var(--very-small-font);
+  cursor: pointer;
+  margin-bottom: var(--small-padding);
+  width: 98%;
+}
+
+.collapsible-item-child .radio-button  input[type="radio"] {
+  display: none;
+}
+
+/* Radiobox on hover */
+.collapsible-item-child .radio-button:hover {
+  cursor: pointer;
+  box-shadow: var(--big-shadow-inset);
+}
+
+/* Radiobox selected */
+.collapsible-item-child .radio-button.active {
+  background-color: var(--orange);
+}
+
