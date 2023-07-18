@@ -252,7 +252,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
           <div className="row">
             <div className="col-3">
-              {thisElement.title}
+                <p> </p> {thisElement.title}
             </div>
 
               <div className={"col-9"}>
@@ -260,8 +260,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
                       <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
                   </div>
               </div>
-
-
           </div>
 
         </div>

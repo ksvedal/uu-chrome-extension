@@ -21,6 +21,7 @@
   --border-color-primary: var(--primary-color);
   --border-color-secondary: var(--secondary-color);
   --border-color-tertiary: var(--tertiary-color);
+  --border-color-quartiary: var(--quartiary-color);
   --border-color-orange: var(--light-orange);
   --border-color-purple: var(--light-purple);
 
@@ -36,11 +37,11 @@
   --big-font: 1.2rem;
 
   --small-border: 1px solid;
-  --big-border: 1px solid;
+  --big-border: 0.18rem solid;
   --small-shadow: -1px 1px 2px var(--shadow-color);
   --big-shadow: 1px 1px 1px 0px var(--shadow-color);
   --big-shadow-inset: inset 1px 1px 1px 0px var(--shadow-color);
-  --radius: 4px;
+  --radius: 10px;
 
   --small-space: 0.5rem;
   --medium-space: 1rem;
@@ -59,8 +60,8 @@
 
   --purple: #ffe797;
   --light-purple: #fff1cc;
-  --orange: #71d4ff;
-  --light-orange: #9ce0ff;
+  --orange: #5ed5c3;
+  --light-orange: #91e8da;
 
   --text-color: #030303;
   --text-color-inverse: #d9d9d9;
@@ -68,6 +69,7 @@
   --border-color-primary: var(--primary-color);
   --border-color-secondary: var(--secondary-color);
   --border-color-tertiary: var(--tertiary-color);
+  --border-color-quartiary: var(--quartiary-color);
   --border-color-orange: var(--light-orange);
   --border-color-purple: var(--light-purple);
 
@@ -221,6 +223,7 @@ html, body {
   padding: var(--medium-padding);
   border-radius: var(--radius);
   border: none;
+  float: right;
   background: var(--primary-color);
   color: var(--text-color-inverse);
   box-shadow: var(--big-shadow);
@@ -228,7 +231,6 @@ html, body {
   font-weight: bold;
   font-size: var(--very-small-font);
 }
-
 .dank-toggle-button:hover {
   cursor: pointer;
 }
@@ -276,7 +278,7 @@ html, body {
   background-color: var(--quartiary-color);
   box-shadow: var(--big-shadow);
   border-radius: var(--radius);
-  border: var(--big-border) var(--border-color-orange);
+  border: var(--big-border) var(--border-color-quartiary);
 }
 
 .headline .headline-button {
@@ -308,22 +310,16 @@ html, body {
 /* Collapsible content ---------------------------------------------- */
 
 /* Parent collapsible */
-.collapsible-item {
-
-}
-
 .collapsible-item-parent {
   margin-top: var(--small-space);
   border-radius: var(--radius);
   background-color: var(--secondary-color);
-  padding: var(--small-padding);
+  padding-left: var(--small-padding);
+  padding-right: var(--small-padding);
   box-shadow: var(--big-shadow);
   transition: box-shadow 0.02s ease-in-out;
   font-size: var(--medium-font);
   border: var(--border);
-}
-
-.collapsible-item-parent .item-header {
 }
 
 .collapsible-item-parent .toggle-button {
@@ -346,33 +342,6 @@ html, body {
   padding: var(--medium-padding);
 }
 
-.checkbox-button.pressed {
-}
-
-.checkbox-button.error {
-  background: var(--tertiary-color);
-  border: var(--border);
-  box-shadow: var(--big-shadow);
-}
-
-.checkbox-button.error.pressed {
-  background-color: var(--danger-color);
-  color: var(--text-color-inverse);
-  box-shadow: var(--big-shadow-inset);
-}
-
-.checkbox-button.checked {
-  background: var(--tertiary-color);
-  border: var(--border);
-  box-shadow: var(--big-shadow);
-}
-
-.checkbox-button.checked.pressed {
-  background-color: var(--alert-color);
-  color: var(--text-color-inverse);
-  box-shadow: var(--big-shadow-inset);
-}
-
 /* Parent collapsible on hover */
 .collapsible-item-parent:hover {
   cursor: pointer;
@@ -384,12 +353,6 @@ html, body {
 }
 
 /* Parent collapsible on click */
-.collapsible-item .item-header.pressed {
-}
-
-.collapsible-item-parent .item-header.pressed .total-buttons {
-}
-
 .collapsible-item-parent .item-header .toggle-button.pressed {
   background: var(--orange);
   box-shadow: var(--big-shadow-inset);
@@ -398,10 +361,12 @@ html, body {
 
 /* Child collapsible */
 .collapsible-item-children {
+  margin: 0;
+  padding: 0;
 }
 
 .collapsible-item-children .item-header {
-  padding-left: var(--medium-padding);
+  padding-left: var(--small-padding);
   border-radius: var(--radius);
   box-shadow: var(--big-shadow);
   background-color: var(--primary-color);
@@ -413,16 +378,14 @@ html, body {
 
 .collapsible-item-children .buttons-text{
   font-size: var(--small-font);
-  padding: var(--medium-padding);
-}
-
-.collapsible-item-children .item-header .flex-item {
+  margin: 0;
+  padding: 0;
 }
 
 .collapsible-item-children .item-header .toggle-button {
   padding: var(--medium-padding);
   border-radius: var(--radius);
-  border: var(--big-border) var(--border-color-purple);
+  border: none;
   background: var(--purple);
   color: var(--text-color);
   font-family: "Open Sans", sans-serif;
@@ -450,9 +413,6 @@ html, body {
   color: var(--text-color-inverse);
 }
 
-.collapsible-item-child .item-header.pressed .toggle-button {
-}
-
 .collapsible-item-child .item-header .toggle-button.pressed {
   background: var(--orange);
 }
@@ -467,7 +427,7 @@ html, body {
   padding: var(--medium-padding);
   border-collapse: collapse;
   border-spacing: 100px;
-  border: var(--small-border) var(--border-color-orange);
+  border: var(--small-border) var(--border-color-tertiary);
   border-radius: var(--radius);
   table-layout: fixed;
   cursor: text;
@@ -500,14 +460,9 @@ html, body {
   width: auto;
 }
 
-.tableBody.attribute {
-}
-
-.tableBody.value {
-}
-
-.tss {
-  background-color: #ff2a5c;
+.extra-padding {
+  padding-left: 0.11rem;
+  padding-right: 0.11rem;
 }
 
 /* Comment box */
@@ -515,26 +470,26 @@ html, body {
   border-radius: var(--radius);
   width: 100%;
   display: hidden;
-  margin-top: var(--medium-space);
-  margin-bottom: var(--medium-space);
-  padding: 0;
+  padding-left: 0.11rem;
+  padding-right: 0.11rem;
+  margin: var(--medium-space) 0;
   background-color: var(--secondary-color);
 }
 
 .collapsible-item-child .comment-box .textarea {
   border-radius: var(--radius);
-  border: var(--small-border) var(--border-color-tertiary);
+  border: none;
+  padding: var(--medium-padding);
   width: 100%;
   max-width: 100%;
   min-width: 100%;
   min-height: 100px;
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
-  padding: var(--medium-padding);
   box-shadow: var(--big-shadow-inset);
   background-color: var(--primary-color);
-  color: var(--text-color-inverse)
-
+  color: var(--text-color-inverse);
+  border: var(--big-border) var(--border-color-quartiary);
 }
 
 /* Radioboxes */
@@ -542,6 +497,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin: 0;
 }
 
 .collapsible-item-child .radio-button  label {
@@ -550,16 +506,16 @@ html, body {
 }
 
 .collapsible-item-child .radio-button  {
-  padding: var(--small-padding);
+  padding: var(--medium-padding);
   border: none;
   border-radius: var(--radius);
   box-shadow: var(--big-shadow);
-  background: var(--purple);
+  text-align: center;
+  background: var(--light-purple);
   color: var(--text-color);
   font-size: var(--very-small-font);
   cursor: pointer;
   margin-bottom: var(--small-padding);
-  width: 98%;
 }
 
 .collapsible-item-child .radio-button  input[type="radio"] {
@@ -575,5 +531,6 @@ html, body {
 /* Radiobox selected */
 .collapsible-item-child .radio-button.active {
   background-color: var(--orange);
+  color: #0c0c0c;
 }
 
