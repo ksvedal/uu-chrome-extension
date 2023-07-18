@@ -39,7 +39,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         let newNodes = [...type.nodes];  // copy the array
         newNodes[index] = elementObject;  // replace the element
         newNodes[index].result.url = url;
-        //newNodes[index].result.testID = generateTestID(index);
+        newNodes[index].result.testID = generateTestID();
         newNodes[index].result.ChromeVersion = getChromeVersion();
         newNodes[index].result.ChromeExtensionVersion = getChromeExtensionVersion();
         setTypeElements(newNodes);  // update the state
@@ -52,7 +52,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         updateJson(type.nodes[index], index, url); 
     };
 
-    const generateTestID = (index: number) => {
+    const generateTestID = () => {
       const uuid = uuidv4().split('-')[0]; // Get the first part of the generated UUID
       return `ID$${uuid}`;
     };
@@ -111,7 +111,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                 {isExpanded && (
                     <div className="collapsible-item-children">
                         {type.nodes.map((item, index) => {
-                            const testID = generateTestID(index);
+                            const testID = generateTestID();
                             return (
                                 <CollapsibleItemElement
                                     type={type}
