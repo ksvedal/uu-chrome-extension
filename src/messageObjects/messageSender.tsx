@@ -20,10 +20,11 @@ export class MessageSender {
                 chrome.tabs.sendMessage(tabs[0].id, new HighlightMessage(element, isChecked), (response) => {
                     if (chrome.runtime.lastError) {
                         console.error(chrome.runtime.lastError.message);
-                    } else {
+                    } else if (response && response.message) {  // Add a null check for response and message properties
                         console.log("Result message: " + response.message);
                     }
                 });
+
             } else {
                 console.log("No tab id");
             }
