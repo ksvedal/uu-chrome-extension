@@ -87,12 +87,8 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     
     const toggleCommentSection = (currentIndex: number) => {
         // Toggle the visibility of the comment-box
-        setOpenCommentIndex(prevIndex => (prevIndex === currentIndex ? null : currentIndex));
+        setOpenCommentIndex((currentIndex));
       };
-    
-
-    
-    
 
     return (
         <div className='collapsible-item'>
@@ -145,9 +141,10 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         ChromeVersion={item.ChromeVersion}
                                         ChromeExtensionVersion={item.ChromeExtensionVersion}/>
 
-                                    <div onClick={ () => toggleCommentSection(index)}>
-                                        <RadioButtonGroup onOptionChange={handleOptionChange} />
-                                    </div>
+                                    <RadioButtonGroup onOptionChange={(value) => {
+                                        handleOptionChange(value);
+                                        toggleCommentSection(index);
+                                    }} />
 
                                     <div>
                                      {openCommentIndex === index && (
