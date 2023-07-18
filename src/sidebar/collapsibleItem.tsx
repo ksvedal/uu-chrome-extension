@@ -69,6 +69,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   
       
     const highlightAll = () => {
+        console.log("sending highlightAllMessage")
         messageSender.highlightAllWithType(type, isAllHighlighted);
     };
 
