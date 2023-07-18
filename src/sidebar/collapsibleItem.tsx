@@ -26,7 +26,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       return null;
     }
     const { elementResults, setElementResults } = context;
-    console.log(elementResults)
+    //console.log(elementResults)
   
     const toggleCheck = () => {
         setIsAllHighlighted(!isAllHighlighted);
@@ -140,7 +140,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                     <RadioButtonGroup onOptionChange={(value) => {
                                         handleOptionChange(value, index);
                                         toggleCommentSection(index);
-                                    }} presetOption="" index={index} />
+                                    }} presetOption={type.nodes[index].result.correctText} index={index} />
 
                                     <div>
                                      {openCommentIndex === index && (
