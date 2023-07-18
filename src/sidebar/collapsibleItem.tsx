@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult } from "./interfaces";
-import {ToggleButton, CollapsibleArrowButton, CheckboxButton} from "./buttons";
+import {ToggleButton, RadioButtonGroup} from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -16,6 +16,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.comment || ""));
     const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
     const context = useContext(MyContext);
+    const [commentVisible, setCommentVisible] = useState(false);
+
+
     if (context === null) {
       // handle the case where the context is null
       return null;
@@ -36,6 +39,8 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         newNodes[index] = elementObject;  // replace the element
         newNodes[index].result.url = url;
         newNodes[index].result.testID = generateTestID(index);
+        newNodes[index].result.ChromeVersion = getChromeVersion();
+        newNodes[index].result.ChromeExtensionVersion = getChromeExtensionVersion();
         setTypeElements(newNodes);  // update the state
         let elementResults : ElementResult[] = newNodes.map(node => node.result).flat();
         setElementResults(elementResults);
@@ -58,9 +63,30 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       return `Test${paddedIndex}`;
     };
 
+    const getChromeVersion = () => {
+      const raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9.]+)/);
+      return raw ? raw[2] : null;
+    };
+
+    const getChromeExtensionVersion = () => {
+      const manifest = chrome.runtime.getManifest();
+      return manifest.version;
+    };
+  
+      
     const highlightAll = () => {
         messageSender.highlightAllWithType(type, isAllHighlighted);
     };
+
+    // Define the handleOptionChange function
+    const handleOptionChange = (option: string) => {
+        console.log("Selected option:", option);
+    };
+    
+    const toggleCommentSection = () => {
+        setCommentVisible(true);
+      };
+
     return (
         <div className='collapsible-item'>
             <div className='collapsible-item-parent'>
@@ -108,30 +134,42 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         title={item.title}
                                         htmlString={item.htmlString}
                                         selector={item.selector}
-                                        result={item.result}/>
+                                        result={item.result}
+                                        ChromeVersion={item.ChromeVersion}
+                                        ChromeExtensionVersion={item.ChromeExtensionVersion}/>
 
                                     <SyntaxHighlighter language="html" style={vs}>
                                         {item.htmlString}
                                     </SyntaxHighlighter>
 
-                                    <div className="comment-box">
-                                    <textarea
-                                        className="textarea"
-                                        name="comment"
-                                        form="usrform"
-                                        value={textareaValues[index]}
-                                        onChange={(e) => setTextareaValues(prevValues => {
-                                            const newValues = [...prevValues];
-                                            newValues[index] = e.target.value;
-                                            return newValues;
-                                        })}
-                                    >
-                                        Enter text here...
-                                    </textarea>
+                                    <div onClick={ () => toggleCommentSection()}>
+                                        <RadioButtonGroup onOptionChange={handleOptionChange} />
                                     </div>
-                                    <button className="store-text-button float-right" onClick={() => storeText(index)}>
-                                        Store Text
-                                    </button>
+
+                                    <div>
+                                        {commentVisible && (
+                                            <div className="comment-box">
+                                                <textarea
+                                                className="textarea"
+                                                name="comment"
+                                                form="usrform"
+                                                value={textareaValues[index]}
+                                                onChange={(e) =>
+                                                    
+                                                    setTextareaValues((prevValues) => {
+                                                    const newValues = [...prevValues];
+                                                    newValues[index] = e.target.value;
+                                                    return newValues;
+                                                    })
+                                                }
+                                            >
+                                                Enter text here...
+                                                </textarea>
+                                            </div>
+                                        )}
+                                         
+                                    </div>
+                                    
                                 </CollapsibleItemElement>
                             );
                         })}
@@ -152,8 +190,8 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   setIsAllHighlighted,
   updateJson,
   testID,
-  index,
-  url
+  index, 
+  url,
 
 }) => {
 
@@ -173,7 +211,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
     }
     updateJson(thisElement, index, url);
 };
-
 
   const toggleCheck = () => {
     //If we press the currently highlighted element, unhighlight it
@@ -200,6 +237,8 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   useEffect(() => {
     type.nodes.forEach((node, index) => {
       node.result.testID = testID;
+      node.result.ChromeVersion = node.ChromeVersion;
+      node.result.ChromeExtensionVersion = node.ChromeExtensionVersion;
       updateJson(node, index, url);
     });
 }, [type.nodes, url, testID]);
@@ -213,29 +252,13 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
               {thisElement.title}
             </div>
 
-              <div className={"col-3"}>
-                  <div className={"float-right"}>
-                      <CheckboxButton
-                          isChecked={thisElement.result.issue}
-                          onToggle={() => handleCheckboxClick("issue")}
-                          text={"Error"} />
-                  </div>
-              </div>
-
-              <div className={"col-3"}>
-                  <div className={"float-left"}>
-                      <CheckboxButton
-                          isChecked={thisElement.result.checked}
-                          onToggle={() => handleCheckboxClick("checked")}
-                          text={"Checked"} />
-                  </div>
-              </div>
-
-              <div className={"col-3"}>
+              <div className={"col-9"}>
                   <div className={"float-right"}>
                       <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
                   </div>
               </div>
+
+
           </div>
 
         </div>
@@ -249,4 +272,5 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       </div>
     </div>
   );
+
 };

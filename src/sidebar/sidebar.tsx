@@ -41,7 +41,7 @@ export const Sidebar: React.FC = () => {
         <div className='extension-logo'>
           <img src="scan.png" alt="Extension Logo" />
         </div>
-        <div className='extension-text'> <p>Button Seeker</p></div>
+        <div className='extension-text'> <p>Button Seeker 2000</p></div>
       </div>
 
 
