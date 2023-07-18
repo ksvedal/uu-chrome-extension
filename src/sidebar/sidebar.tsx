@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { createRoot } from "react-dom/client";
 import "../style/sidebar.css";
 import { ElementObject, ElementResult, ElementType } from "./interfaces";
@@ -10,7 +10,8 @@ import { CollapsibleItemType } from './collapsibleItem';
 import { MyContext } from './resultItemsContext';
 
 export const Sidebar: React.FC = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const [darkMode, setDarkMode] = useState(prefersDarkMode);
   const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
   const [websiteURL, setWebsiteURL] = useState<string>("");
   const [isAllHighlighted, setIsAllHighlighted] = useState<boolean>(false); // add this line
@@ -23,6 +24,20 @@ export const Sidebar: React.FC = () => {
   const _message: MessageSender = new MessageSender();
   const _scan: WebsiteScanner = new WebsiteScanner();
   let dark: String = "light";
+
+  useEffect(() => {
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+        const handleChange = (event: MediaQueryListEvent) => {
+            setDarkMode(event.matches);
+        };
+
+        mediaQuery.addEventListener("change", handleChange);
+
+        return () => {
+            mediaQuery.removeEventListener("change", handleChange);
+        };
+  }, []);
 
   const fetchData = () => {
     _message.scanPageMessage((response: ElementType[]) => {
@@ -47,9 +62,8 @@ export const Sidebar: React.FC = () => {
           <img src="scan.png" alt="Extension Logo" />
         </div>
         <div className='extension-text'> <p>Button Seeker 2000</p></div>
-          <button onClick={toggleDarkMode}>  sadsadsad </button>
+        <button className={"dank-toggle-button float-right"} onClick={toggleDarkMode}> moon </button>
       </div>
-
 
         <div className={"row scan-page-field"}>
             <div className={"whitebox"}>
