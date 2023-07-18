@@ -6,6 +6,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
+import { v4 as uuidv4 } from 'uuid';
 
 const messageSender = new MessageSender();
 
@@ -60,9 +61,8 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     };
 
     const generateTestID = (index: number) => {
-      const testIndex = index + 1;
-      const paddedIndex = String(testIndex).padStart(5, '0');
-      return `Test${paddedIndex}`;
+      const uuid = uuidv4().split('-')[0]; // Get the first part of the generated UUID
+      return `ID$${uuid}`;
     };
 
     const getChromeVersion = () => {
