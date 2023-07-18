@@ -27,9 +27,9 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
   };
 
   return (
-    <div className={"row"}>
+    <div>
         <p>Does the button's text identify its function?</p>
-      <div className={"row"}>
+      <div>
 
         <div className={"col-4"}>
             <label className={`radio-button ${selectedOption === 'Yes' ? 'active' : ''}`}>

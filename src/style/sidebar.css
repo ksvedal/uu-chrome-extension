@@ -36,7 +36,7 @@
   --big-font: 1.2rem;
 
   --small-border: 1px solid;
-  --big-border: 1px solid;
+  --big-border: 0.15rem solid;
   --small-shadow: -1px 1px 2px var(--shadow-color);
   --big-shadow: 1px 1px 1px 0px var(--shadow-color);
   --big-shadow-inset: inset 1px 1px 1px 0px var(--shadow-color);
@@ -316,7 +316,8 @@ html, body {
   margin-top: var(--small-space);
   border-radius: var(--radius);
   background-color: var(--secondary-color);
-  padding: var(--small-padding);
+  padding-left: var(--small-padding);
+  padding-right: var(--small-padding);
   box-shadow: var(--big-shadow);
   transition: box-shadow 0.02s ease-in-out;
   font-size: var(--medium-font);
@@ -344,33 +345,6 @@ html, body {
 .buttons-text {
   font-size: var(--small-font);
   padding: var(--medium-padding);
-}
-
-.checkbox-button.pressed {
-}
-
-.checkbox-button.error {
-  background: var(--tertiary-color);
-  border: var(--border);
-  box-shadow: var(--big-shadow);
-}
-
-.checkbox-button.error.pressed {
-  background-color: var(--danger-color);
-  color: var(--text-color-inverse);
-  box-shadow: var(--big-shadow-inset);
-}
-
-.checkbox-button.checked {
-  background: var(--tertiary-color);
-  border: var(--border);
-  box-shadow: var(--big-shadow);
-}
-
-.checkbox-button.checked.pressed {
-  background-color: var(--alert-color);
-  color: var(--text-color-inverse);
-  box-shadow: var(--big-shadow-inset);
 }
 
 /* Parent collapsible on hover */
@@ -422,7 +396,7 @@ html, body {
 .collapsible-item-children .item-header .toggle-button {
   padding: var(--medium-padding);
   border-radius: var(--radius);
-  border: var(--big-border) var(--border-color-purple);
+  border: none;
   background: var(--purple);
   color: var(--text-color);
   font-family: "Open Sans", sans-serif;
@@ -542,6 +516,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin: 0;
 }
 
 .collapsible-item-child .radio-button  label {
@@ -550,10 +525,11 @@ html, body {
 }
 
 .collapsible-item-child .radio-button  {
-  padding: var(--small-padding);
+  padding: var(--medium-padding);
   border: none;
   border-radius: var(--radius);
   box-shadow: var(--big-shadow);
+  text-align: center;
   background: var(--purple);
   color: var(--text-color);
   font-size: var(--very-small-font);
