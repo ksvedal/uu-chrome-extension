@@ -14,9 +14,15 @@ const context = useContext(MyContext);
     }
     const { elementResults, setElementResults } = context;
 
-
+    const generateTestID = (index: number) => {
+      const testIndex = index + 1;
+      const paddedIndex = String(testIndex).padStart(5, '0');
+      return `Test${paddedIndex}`;
+    };
+    
     const logResult= () => {
       for (let result of elementResults){
+        result.testID = generateTestID(elementResults.indexOf(result));
         console.log(result);
       };
       console.log("Result: " + elementResults);

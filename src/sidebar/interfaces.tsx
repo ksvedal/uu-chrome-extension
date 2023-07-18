@@ -1,7 +1,9 @@
 import { ReactNode } from "react";
 
 export interface RadioButtonGroupProps {
-  onOptionChange: (option: string) => void;
+  presetOption: string;
+  index: number;
+  onOptionChange: (option: string, index: number) => void;
 }
 
 export interface ToggleButtonProps {
@@ -26,7 +28,7 @@ export interface CollapsibleItemTypeInterface {
   isAllHighlighted: boolean;
   setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>;
-  index: number;
+  parentIndex: number;
   url: string;
   testID: string;
 }
@@ -80,7 +82,7 @@ export interface ElementObject {
 
 export interface ElementResult {
   htmlString: string;
-  issue: boolean;
+  correctText: string;
   name: string;
   comment: string;
   checked: boolean;

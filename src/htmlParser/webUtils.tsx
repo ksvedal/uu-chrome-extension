@@ -22,8 +22,8 @@ export class WebUtils {
             title: title ? title : '',
             htmlString: pretty(element.outerHTML),
             selector: selector,
-            attributes: mainObjectAttributes,
-            result: {testID: "", name: title, htmlString: pretty(element.outerHTML), issue: false, comment: "", checked: false, url: "", ChromeVersion: "", ChromeExtensionVersion: ""},
+            attributes: mainObjectAttributes,                                        //TODO: noe med correctText
+            result: {testID: "", name: title, htmlString: pretty(element.outerHTML), correctText: "", comment: "", checked: false, url: "", ChromeVersion: "", ChromeExtensionVersion: ""},
             ChromeVersion: "",
             ChromeExtensionVersion: "",
         };
