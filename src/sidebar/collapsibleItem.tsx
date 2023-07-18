@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult } from "./interfaces";
+import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult,ExtendedElementObject  } from "./interfaces";
 import {ToggleButton, RadioButtonGroup} from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const messageSender = new MessageSender();
 
+
 export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, index, url}) => {
     const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -17,9 +18,10 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.comment || ""));
     const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
     const context = useContext(MyContext);
-    const [commentVisible, setCommentVisible] = useState(false);
+    const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
 
 
+    
     if (context === null) {
       // handle the case where the context is null
       return null;
@@ -83,8 +85,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         console.log("Selected option:", option);
     };
     
-    const toggleCommentSection = () => {
-        setCommentVisible(true);
+    const toggleCommentSection = (currentIndex: number) => {
+        // Toggle the visibility of the comment-box
+        setOpenCommentIndex((currentIndex));
       };
 
     return (
@@ -138,12 +141,13 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         ChromeVersion={item.ChromeVersion}
                                         ChromeExtensionVersion={item.ChromeExtensionVersion}/>
 
-                                    <div onClick={ () => toggleCommentSection()}>
-                                        <RadioButtonGroup onOptionChange={handleOptionChange} />
-                                    </div>
+                                    <RadioButtonGroup onOptionChange={(value) => {
+                                        handleOptionChange(value);
+                                        toggleCommentSection(index);
+                                    }} />
 
                                     <div>
-                                        {commentVisible && (
+                                     {openCommentIndex === index && (
                                             <div className="comment-box">
                                                 <textarea
                                                 className="textarea"
