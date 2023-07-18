@@ -145,7 +145,7 @@ html, body {
   }
 
   .col-9 {
-    width: 75%;
+    width: 75%; 
   }
 
   .col-10 {
@@ -401,6 +401,7 @@ html, body {
 }
 
 .collapsible-item-children .item-header {
+  display: block;
   padding-left: var(--medium-padding);
   border-radius: var(--radius);
   box-shadow: var(--big-shadow);
