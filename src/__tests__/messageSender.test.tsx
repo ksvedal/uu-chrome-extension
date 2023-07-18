@@ -55,8 +55,12 @@ describe("MessageSender", () => {
         checked: false,
         url: "example.com",
         testID: "example-test-id",
+        ChromeVersion: "",
+        ChromeExtensionVersion: "",
       },
       attributes: [],
+      ChromeVersion: "",
+      ChromeExtensionVersion: "",
     };
 
     mockElementType = {
@@ -158,8 +162,12 @@ describe("MessageSender", () => {
           checked: false,
           url: "example.com",
           testID: "new-element-test-id",
+          ChromeVersion: "",
+          ChromeExtensionVersion: "",
         },
         attributes: [],
+        ChromeVersion: "",
+        ChromeExtensionVersion: "",
       };
 
       mockPreviousElement = {
@@ -174,8 +182,12 @@ describe("MessageSender", () => {
           checked: false,
           url: "example.com",
           testID: "previous-element-test-id",
+          ChromeVersion: "",
+          ChromeExtensionVersion: "",
         },
         attributes: [],
+        ChromeVersion: "",
+        ChromeExtensionVersion: "",
       };
     });
 
@@ -279,8 +291,12 @@ describe("MessageSender", () => {
           checked: false,
           url: "example.com",
           testID: "example-element-test-id",
+          ChromeVersion: "",
+          ChromeExtensionVersion: "",
         },
         attributes: [],
+        ChromeVersion: "",
+        ChromeExtensionVersion: "",
       };
     });
 
