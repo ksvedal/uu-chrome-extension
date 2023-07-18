@@ -3,22 +3,6 @@ import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRem
 
 export class MessageSender {
 
-    public sendMessageToActiveTab(message: Message, callback?: (response: any) => void) {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-          const activeTab = tabs[0];
-          if (activeTab?.id) {
-            if (callback) {
-                chrome.tabs.sendMessage(activeTab.id, message, callback);
-              } else {
-                chrome.tabs.sendMessage(activeTab.id, message);
-              }
-              
-          } else {
-            console.log("No tab id");
-          }
-        });
-      }
-
     public scanPageMessage(callback: (response: ElementType[]) => void) {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const activeTab = tabs[0];
