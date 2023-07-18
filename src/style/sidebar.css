@@ -440,7 +440,9 @@ body {
 .collapsible-item-child .comment-box {
   border-radius: var(--radius);
   width: 100%;
-  margin-top: var(--medium-space);
+  display: hidden;
+
+ margin-top: var(--medium-space);
   padding: 0;
 }
 
@@ -456,3 +458,46 @@ body {
   padding: var(--medium-padding);
   box-shadow: inset 0 3px 3px rgba(0, 0, 0, 0.12);
 }
+
+/* Radioboxes */
+.collapsible-item-child .radio-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.collapsible-item-child .radio-button  label {
+  display: inline-block;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.collapsible-item-child .radio-button  {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.12);
+  background: var(--purple);
+  color: var(--text-color);
+  font-size: var(--very-small-font);
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.collapsible-item-child .radio-button  input[type="radio"] {
+  display: none;
+}
+
+
+/* Radiobox on hover */
+.collapsible-item-child .radio-button:hover {
+  cursor: pointer;
+  box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.12); 
+}
+
+/* Radiobox selected */
+.collapsible-item-child .radio-button.active {
+  background-color: var(--orange); 
+}
+

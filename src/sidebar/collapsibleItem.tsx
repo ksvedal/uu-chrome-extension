@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult } from "./interfaces";
-import {ToggleButton, CollapsibleArrowButton, CheckboxButton} from "./buttons";
+import {ToggleButton, RadioButtonGroup} from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -16,6 +16,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.comment || ""));
     const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
     const context = useContext(MyContext);
+    const [commentVisible, setCommentVisible] = useState(false);
+
+
     if (context === null) {
       // handle the case where the context is null
       return null;
@@ -74,6 +77,16 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     const highlightAll = () => {
         messageSender.highlightAllWithType(type, isAllHighlighted);
     };
+
+    // Define the handleOptionChange function
+    const handleOptionChange = (option: string) => {
+        console.log("Selected option:", option);
+    };
+    
+    const toggleCommentSection = () => {
+        setCommentVisible(true);
+      };
+
     return (
         <div className='collapsible-item'>
             <div className='collapsible-item-parent'>
@@ -125,24 +138,38 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         ChromeVersion={item.ChromeVersion}
                                         ChromeExtensionVersion={item.ChromeExtensionVersion}/>
 
-                                    <div className="comment-box">
-                                    <textarea
-                                        className="textarea"
-                                        name="comment"
-                                        form="usrform"
-                                        value={textareaValues[index]}
-                                        onChange={(e) => setTextareaValues(prevValues => {
-                                            const newValues = [...prevValues];
-                                            newValues[index] = e.target.value;
-                                            return newValues;
-                                        })}
-                                    >
-                                        Enter text here...
-                                    </textarea>
+                                    <SyntaxHighlighter language="html" style={vs}>
+                                        {item.htmlString}
+                                    </SyntaxHighlighter>
+
+                                    <div onClick={ () => toggleCommentSection()}>
+                                        <RadioButtonGroup onOptionChange={handleOptionChange} />
                                     </div>
-                                    <button className="store-text-button float-right" onClick={() => storeText(index)}>
-                                        Store Text
-                                    </button>
+
+                                    <div>
+                                        {commentVisible && (
+                                            <div className="comment-box">
+                                                <textarea
+                                                className="textarea"
+                                                name="comment"
+                                                form="usrform"
+                                                value={textareaValues[index]}
+                                                onChange={(e) =>
+                                                    
+                                                    setTextareaValues((prevValues) => {
+                                                    const newValues = [...prevValues];
+                                                    newValues[index] = e.target.value;
+                                                    return newValues;
+                                                    })
+                                                }
+                                            >
+                                                Enter text here...
+                                                </textarea>
+                                            </div>
+                                        )}
+                                         
+                                    </div>
+                                    
                                 </CollapsibleItemElement>
                             );
                         })}
@@ -185,7 +212,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
     updateJson(thisElement, index, url);
 };
 
-
   const toggleCheck = () => {
     //If we press the currently highlighted element, unhighlight it
     if (highlightedElement === thisElement) {
@@ -222,33 +248,17 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       <div className="collapsible-item">
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
           <div className="row">
-            <div className="col-3 buttons-text">
+            <div className="col-3">
               {thisElement.title}
             </div>
 
-              <div className={"col-3"}>
-                  <div className={"float-right"}>
-                      <CheckboxButton
-                          isChecked={thisElement.result.issue}
-                          onToggle={() => handleCheckboxClick("issue")}
-                          text={"Error"} />
-                  </div>
-              </div>
-
-              <div className={"col-3"}>
-                  <div className={"float-left"}>
-                      <CheckboxButton
-                          isChecked={thisElement.result.checked}
-                          onToggle={() => handleCheckboxClick("checked")}
-                          text={"Checked"} />
-                  </div>
-              </div>
-
-              <div className={"col-3"}>
+              <div className={"col-9"}>
                   <div className={"float-right"}>
                       <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
                   </div>
               </div>
+
+
           </div>
 
         </div>
@@ -262,4 +272,5 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       </div>
     </div>
   );
+
 };
