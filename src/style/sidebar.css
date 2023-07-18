@@ -366,7 +366,7 @@ html, body {
 }
 
 .collapsible-item-children .item-header {
-  padding: var(--small-padding);
+  padding-left: var(--small-padding);
   border-radius: var(--radius);
   box-shadow: var(--big-shadow);
   background-color: var(--primary-color);
@@ -427,7 +427,7 @@ html, body {
   padding: var(--medium-padding);
   border-collapse: collapse;
   border-spacing: 100px;
-  border: var(--small-border) var(--border-color-orange);
+  border: var(--small-border) var(--border-color-tertiary);
   border-radius: var(--radius);
   table-layout: fixed;
   cursor: text;
@@ -531,5 +531,6 @@ html, body {
 /* Radiobox selected */
 .collapsible-item-child .radio-button.active {
   background-color: var(--orange);
+  color: #0c0c0c;
 }
 
