@@ -138,10 +138,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         ChromeVersion={item.ChromeVersion}
                                         ChromeExtensionVersion={item.ChromeExtensionVersion}/>
 
-                                    <SyntaxHighlighter language="html" style={vs}>
-                                        {item.htmlString}
-                                    </SyntaxHighlighter>
-
                                     <div onClick={ () => toggleCommentSection()}>
                                         <RadioButtonGroup onOptionChange={handleOptionChange} />
                                     </div>
