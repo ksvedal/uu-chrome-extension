@@ -5,6 +5,7 @@ import {
   HighlightMessage,
   HighlightAndRemovePreviousMessage,
   UnhighlightAllAndHighlightSingleMessage,
+  HighlightAllMessage,
 } from "../messageObjects/message";
 
 type Tab = {
@@ -26,8 +27,8 @@ declare const chrome: {
     sendMessage: (
       tabId: number,
       message: Message,
-      options: chrome.runtime.MessageOptions | undefined,
-      callback?: (response: any) => void
+      options?: chrome.runtime.MessageOptions | undefined,
+      responseCallback?: (response: any) => void
     ) => void;
   };
   runtime: {
@@ -38,6 +39,7 @@ declare const chrome: {
 describe("MessageSender", () => {
   let messageSender: MessageSender;
   let element: ElementObject;
+  let mockElementType: ElementType;
 
   beforeEach(() => {
     messageSender = new MessageSender();
@@ -57,6 +59,12 @@ describe("MessageSender", () => {
       attributes: [],
     };
 
+    mockElementType = {
+      name: "Button",
+      nodes: [],
+      selector: ".button-selector",
+    };
+
     // Mock the chrome.tabs.query function
     chrome.tabs.query = jest.fn((queryInfo: QueryInfo, callback: (tabs: Tab[]) => void) => {
       // Simulate the active tab with a valid id
@@ -69,27 +77,29 @@ describe("MessageSender", () => {
       (
         tabId: number,
         message: Message,
-        options?: chrome.runtime.MessageOptions | undefined | ((response: any) => void),
-        callback?: (response: any) => void
+        options?: chrome.runtime.MessageOptions | undefined,
+        responseCallback?: (response: any) => void
       ) => {
-        if (typeof options === "function") {
+        if (typeof options === "function" && responseCallback) {
           // Simulate the response from sendMessage
           const response = { message: "highlighted" };
-          options(response); // Invoke the callback function
-        } else if (typeof options === "undefined" && typeof callback === "function") {
+          responseCallback(response); // Invoke the callback function
+        } else if (typeof options === "undefined" && typeof responseCallback === "function") {
           console.log("No active tab");
-          callback([]); // Invoke the callback function
+          responseCallback([]); // Invoke the callback function
         } else {
           console.log("Invalid parameters for sendMessage");
         }
       }
     );
+
   });
 
   afterEach(() => {
     // Clear the mock implementation
     jest.clearAllMocks();
   });
+
 
   describe("sendMessageToActiveTab", () => {
     let mockMessage: Message;
@@ -108,6 +118,7 @@ describe("MessageSender", () => {
       expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
         1,
         mockMessage,
+        undefined,
         expect.any(Function)
       );
       // Add more assertions if needed
@@ -180,6 +191,7 @@ describe("MessageSender", () => {
       expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
         1,
         mockMessage,
+        undefined,
         expect.any(Function)
       );
       // Add more assertions if needed
@@ -205,10 +217,12 @@ describe("MessageSender", () => {
   });
 
   describe("highlightAllWithType", () => {
-    let mockElementType: ElementType;
-
     beforeEach(() => {
-      mockElementType = "button";
+      mockElementType = {
+        name: "Button",
+        nodes: [],
+        selector: ".button-selector",
+      };
     });
 
     it("should send a highlight all message with the correct element type", () => {
@@ -224,6 +238,7 @@ describe("MessageSender", () => {
       expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
         1,
         mockMessage,
+        undefined,
         expect.any(Function)
       );
       // Add more assertions if needed
@@ -250,7 +265,6 @@ describe("MessageSender", () => {
 
   describe("unhighlightAllAndHighlightSingleMessage", () => {
     let mockElement: ElementObject;
-    let mockElementType: ElementType;
 
     beforeEach(() => {
       mockElement = {
@@ -268,8 +282,6 @@ describe("MessageSender", () => {
         },
         attributes: [],
       };
-
-      mockElementType = "button";
     });
 
     it("should send an unhighlight all and highlight single message to the active tab", () => {
@@ -287,6 +299,7 @@ describe("MessageSender", () => {
       expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
         1,
         mockMessage,
+        undefined,
         expect.any(Function)
       );
       // Add more assertions if needed

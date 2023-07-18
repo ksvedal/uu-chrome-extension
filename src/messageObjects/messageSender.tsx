@@ -1,7 +1,24 @@
 import { ElementObject, ElementType } from "../sidebar/interfaces";
-import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage } from "./message";
+import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage, Message } from "./message";
 
 export class MessageSender {
+
+    public sendMessageToActiveTab(message: Message, callback?: (response: any) => void) {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+          const activeTab = tabs[0];
+          if (activeTab?.id) {
+            if (callback) {
+                chrome.tabs.sendMessage(activeTab.id, message, callback);
+              } else {
+                chrome.tabs.sendMessage(activeTab.id, message);
+              }
+              
+          } else {
+            console.log("No tab id");
+          }
+        });
+      }
+
     public scanPageMessage(callback: (response: ElementType[]) => void) {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const activeTab = tabs[0];
