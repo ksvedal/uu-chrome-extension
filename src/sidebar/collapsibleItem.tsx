@@ -1,17 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult,ExtendedElementObject  } from "./interfaces";
 import {ToggleButton, RadioButtonGroup} from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
 import { v4 as uuidv4 } from 'uuid';
+import {ToastContainer, toast, Flip, Slide, Zoom} from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+import IsCheckedStatus from "./isCheckedStatus";
 
 const messageSender = new MessageSender();
 
-
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, index, url}) => {
+export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, parentIndex, url}) => {
     const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAllHighlighted, setIsAllHighlighted] = useState(false);
@@ -19,6 +19,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
     const context = useContext(MyContext);
     const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
+    const typingTimeoutRef = useRef<number | null>(null);
 
 
     
@@ -27,7 +28,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       return null;
     }
     const { elementResults, setElementResults } = context;
-    console.log(elementResults)
   
     const toggleCheck = () => {
         setIsAllHighlighted(!isAllHighlighted);
@@ -41,48 +41,55 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         let newNodes = [...type.nodes];  // copy the array
         newNodes[index] = elementObject;  // replace the element
         newNodes[index].result.url = url;
-        newNodes[index].result.testID = generateTestID(index);
-        newNodes[index].result.ChromeVersion = getChromeVersion();
-        newNodes[index].result.ChromeExtensionVersion = getChromeExtensionVersion();
         setTypeElements(newNodes);  // update the state
         let elementResults : ElementResult[] = newNodes.map(node => node.result).flat();
         setElementResults(elementResults);
     };
 
-    const storeText = (index: number) => {
-        setTypeElements((prevTypeElements) => {
-            const newNodes = [...prevTypeElements]; // copy the array
-            if (newNodes[index]) {
-                newNodes[index].result.comment = textareaValues[index]; // update the comment value
-                updateJson(newNodes[index], index, url); // update the JSON with the updated element
-            }
-            return newNodes; // return the updated array
+    const storeText = (index: number, newText: string) => {
+        type.nodes[index].result.comment = newText;
+        updateJson(type.nodes[index], index, url);
+      };
+
+      const handleTextareaChange = (index: number, newText: string) => {
+        setTextareaValues((prevValues) => {
+          const newValues = [...prevValues];
+          newValues[index] = newText;
+          return newValues;
         });
-    };
 
-    const generateTestID = (index: number) => {
-      const uuid = uuidv4().split('-')[0]; // Get the first part of the generated UUID
-      return `ID$${uuid}`;
-    };
+        // Clear the previous timeout, if any
+        if (typingTimeoutRef.current !== null) {
+          clearTimeout(typingTimeoutRef.current);
+        }
 
-    const getChromeVersion = () => {
-      const raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9.]+)/);
-      return raw ? raw[2] : null;
-    };
+        // Set a new timeout to execute storeText after 2 seconds
+        typingTimeoutRef.current = setTimeout(() => {
+          storeText(index, newText);
+          toast.success(`'${newText}' lagret `,{
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              progress: undefined,
+              closeButton: false,
+              transition: Slide,
+              toastId: "the-toasht",
+              icon: false
+          })
+        }, 3000) as any; // Cast the setTimeout return value to any
+      };
 
-    const getChromeExtensionVersion = () => {
-      const manifest = chrome.runtime.getManifest();
-      return manifest.version;
-    };
-  
-      
     const highlightAll = () => {
+        console.log("sending highlightAllMessage")
         messageSender.highlightAllWithType(type, isAllHighlighted);
     };
 
     // Define the handleOptionChange function
-    const handleOptionChange = (option: string) => {
+    const handleOptionChange = (option: string, index: number) => {
         console.log("Selected option:", option);
+        type.nodes[index].result.correctText = option;
+        updateJson(type.nodes[index], index, url);
     };
     
     const toggleCommentSection = (currentIndex: number) => {
@@ -97,13 +104,13 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
                     <div className={"col-4"}>
                         <div className="buttons-text">
-                            {type.name}
+                            <br/> {type.name}
                         </div>
                     </div>
 
                     <div className={"col-4"}>
-                        <div className="total-buttons float-right">
-                            <p>{type.nodes.length}</p>
+                        <div className="total-buttons">
+                            <br/> {type.nodes.length}
                         </div>
                     </div>
 
@@ -117,7 +124,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                 {isExpanded && (
                     <div className="collapsible-item-children">
                         {type.nodes.map((item, index) => {
-                            const testID = generateTestID(index);
                             return (
                                 <CollapsibleItemElement
                                     type={type}
@@ -126,25 +132,19 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                     highlightedElement={currentHighlighted}
                                     setHighlightedElement={setCurrentHighlighted}
                                     isAllHighlighted={isAllHighlighted}
-                                    setIsAllHighlighted={setIsAllHighlighted}
-                                    updateJson={(elementObject, index) => updateJson(elementObject, index, url)}
-                                    testID={testID}
-                                    index={index}
-                                    url={url}
+                                    setIsAllHighlighted={setIsAllHighlighted} 
                                 >
                                     <ElementAttributes
                                         attributes={item.attributes}
                                         title={item.title}
                                         htmlString={item.htmlString}
                                         selector={item.selector}
-                                        result={item.result}
-                                        ChromeVersion={item.ChromeVersion}
-                                        ChromeExtensionVersion={item.ChromeExtensionVersion}/>
+                                        result={item.result}/>
 
                                     <RadioButtonGroup onOptionChange={(value) => {
-                                        handleOptionChange(value);
+                                        handleOptionChange(value, index);
                                         toggleCommentSection(index);
-                                    }} />
+                                    }} presetOption={type.nodes[index].result.correctText} index={index} />
 
                                     <div>
                                      {openCommentIndex === index && (
@@ -154,22 +154,19 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                                 name="comment"
                                                 form="usrform"
                                                 value={textareaValues[index]}
-                                                onChange={(e) =>
-                                                    
-                                                    setTextareaValues((prevValues) => {
-                                                    const newValues = [...prevValues];
-                                                    newValues[index] = e.target.value;
-                                                    return newValues;
-                                                    })
-                                                }
-                                            >
+                                                onChange={(e) => handleTextareaChange(index, e.target.value)}
+                                                onBlur={() => {
+                                                  // Execute storeText when the textarea loses focus
+                                                  storeText(index, textareaValues[index]);
+                                                }}
+                                              >
                                                 Enter text here...
                                                 </textarea>
                                             </div>
                                         )}
                                          
                                     </div>
-                                    
+                                    <ToastContainer />
                                 </CollapsibleItemElement>
                             );
                         })}
@@ -188,11 +185,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   isAllHighlighted,
   setHighlightedElement,
   setIsAllHighlighted,
-  updateJson,
-  testID,
-  index, 
-  url,
-
 }) => {
 
   const [isHighlighted, setIsHighlighted] = useState(false);
@@ -203,14 +195,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
     setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
   }, [highlightedElement, isAllHighlighted]);
 
-  const handleCheckboxClick = (update: string) => {
-    if (update === "issue") {
-        thisElement.result.issue = !thisElement.result.issue;
-    } else if (update === "checked") {
-        thisElement.result.checked = !thisElement.result.checked;
-    }
-    updateJson(thisElement, index, url);
-};
 
   const toggleCheck = () => {
     //If we press the currently highlighted element, unhighlight it
@@ -234,25 +218,19 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
     }
   };
 
-  useEffect(() => {
-    type.nodes.forEach((node, index) => {
-      node.result.testID = testID;
-      node.result.ChromeVersion = node.ChromeVersion;
-      node.result.ChromeExtensionVersion = node.ChromeExtensionVersion;
-      updateJson(node, index, url);
-    });
-}, [type.nodes, url, testID]);
-
   return (
     <div className="collapsible-item-child">
       <div className="collapsible-item">
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
           <div className="row">
-            <div className="col-3">
-                <p> </p> {thisElement.title}
+            <div className="col-4">
+               <br/> {thisElement.title}
             </div>
-
-              <div className={"col-9"}>
+            <div className="col-4">
+              <br/>
+            <IsCheckedStatus text={thisElement.result.correctText}></IsCheckedStatus>
+              </div>
+              <div className={"col-4"}>
                   <div className={"float-right"}>
                       <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
                   </div>

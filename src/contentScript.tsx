@@ -42,7 +42,7 @@ export function handleMessage(
         sendResponse({ message: "HighlightSingle response" });
         break;
       }
-      case 'highlightAllElement':{
+      case 'highlightAllElements':{
         _page.highlightAllWithType((message as HighlightAllMessage));
         sendResponse({ message: "Highlighted all with type" })
         break;

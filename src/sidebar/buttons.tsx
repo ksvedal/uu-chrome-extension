@@ -17,13 +17,13 @@ export const RegularButton: React.FC<RegularButtonProps> = ({ onClick, text }) =
   );
 };
 
-export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChange }) => {
-  const [selectedOption, setSelectedOption] = useState<string>('');
+export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChange , index, presetOption}) => {
+  const [selectedOption, setSelectedOption] = useState<string>(presetOption);
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const option = event.target.value;
     setSelectedOption(option);
-    onOptionChange(option);
+    onOptionChange(option, index);
   };
 
   return (

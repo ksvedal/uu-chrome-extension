@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import TabIcon from './tabIcon';
 import { ResultsHeaderInterface } from './interfaces';
 import { MyContext } from './resultItemsContext';
+import { TestUtils } from './testUtils';
 
 const ResultsHeader: React.FC<ResultsHeaderInterface> = ({url, isScanned}) => {
   if(!isScanned){
@@ -14,9 +15,11 @@ const context = useContext(MyContext);
     }
     const { elementResults, setElementResults } = context;
 
-
+    
+    
     const logResult= () => {
       for (let result of elementResults){
+        TestUtils.giveIdChromeAndExtensionVersion(result);
         console.log(result);
       };
       console.log("Result: " + elementResults);
