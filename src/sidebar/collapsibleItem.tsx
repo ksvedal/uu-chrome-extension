@@ -11,6 +11,7 @@ import IsCheckedStatus from "./isCheckedStatus";
 
 const messageSender = new MessageSender();
 
+
 export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, parentIndex, url}) => {
     const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -28,6 +29,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       return null;
     }
     const { elementResults, setElementResults } = context;
+    console.log(elementResults)
   
     const toggleCheck = () => {
         setIsAllHighlighted(!isAllHighlighted);
@@ -85,17 +87,32 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         messageSender.highlightAllWithType(type, isAllHighlighted);
     };
 
-    // Define the handleOptionChange function
     const handleOptionChange = (option: string, index: number) => {
-        console.log("Selected option:", option);
-        type.nodes[index].result.correctText = option;
-        updateJson(type.nodes[index], index, url);
+      let outcome = "";
+    
+      if (option === "Yes") {
+        outcome =
+          "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer knappen.";
+      } else if (option === "No") {
+        outcome =
+          "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer ikkje knappen.";
+      } else if (option === "The element is not a button") {
+        outcome = "Testelementet er ikkje ein knapp.";
+      }
+
+      type.nodes[index].result.correctText = option;
+      type.nodes[index].result.outcome = outcome;
+      updateJson(type.nodes[index], index, url);
     };
+    
+    
     
     const toggleCommentSection = (currentIndex: number) => {
         // Toggle the visibility of the comment-box
         setOpenCommentIndex((currentIndex));
-      };
+    };
+
+   
 
     return (
         <div className='collapsible-item'>
