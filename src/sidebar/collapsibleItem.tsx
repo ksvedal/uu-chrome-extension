@@ -26,7 +26,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       return null;
     }
     const { elementResults, setElementResults } = context;
-    //console.log(elementResults)
   
     const toggleCheck = () => {
         setIsAllHighlighted(!isAllHighlighted);
@@ -40,9 +39,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         let newNodes = [...type.nodes];  // copy the array
         newNodes[index] = elementObject;  // replace the element
         newNodes[index].result.url = url;
-        newNodes[index].result.testID = generateTestID();
-        newNodes[index].result.ChromeVersion = getChromeVersion();
-        newNodes[index].result.ChromeExtensionVersion = getChromeExtensionVersion();
         setTypeElements(newNodes);  // update the state
         let elementResults : ElementResult[] = newNodes.map(node => node.result).flat();
         setElementResults(elementResults);
@@ -53,22 +49,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         updateJson(type.nodes[index], index, url); 
     };
 
-    const generateTestID = () => {
-      const uuid = uuidv4().split('-')[0]; // Get the first part of the generated UUID
-      return `ID$${uuid}`;
-    };
-
-    const getChromeVersion = () => {
-      const raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9.]+)/);
-      return raw ? raw[2] : null;
-    };
-
-    const getChromeExtensionVersion = () => {
-      const manifest = chrome.runtime.getManifest();
-      return manifest.version;
-    };
-  
-      
     const highlightAll = () => {
         console.log("sending highlightAllMessage")
         messageSender.highlightAllWithType(type, isAllHighlighted);
@@ -113,7 +93,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                 {isExpanded && (
                     <div className="collapsible-item-children">
                         {type.nodes.map((item, index) => {
-                            const testID = generateTestID();
                             return (
                                 <CollapsibleItemElement
                                     type={type}
@@ -122,20 +101,14 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                     highlightedElement={currentHighlighted}
                                     setHighlightedElement={setCurrentHighlighted}
                                     isAllHighlighted={isAllHighlighted}
-                                    setIsAllHighlighted={setIsAllHighlighted}
-                                    updateJson={(elementObject, index) => updateJson(elementObject, index, url)}
-                                    testID={testID}
-                                    index={index}
-                                    url={url}
+                                    setIsAllHighlighted={setIsAllHighlighted} 
                                 >
                                     <ElementAttributes
                                         attributes={item.attributes}
                                         title={item.title}
                                         htmlString={item.htmlString}
                                         selector={item.selector}
-                                        result={item.result}
-                                        ChromeVersion={item.ChromeVersion}
-                                        ChromeExtensionVersion={item.ChromeExtensionVersion}/>
+                                        result={item.result}/>
 
                                     <RadioButtonGroup onOptionChange={(value) => {
                                         handleOptionChange(value, index);
@@ -185,11 +158,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   isAllHighlighted,
   setHighlightedElement,
   setIsAllHighlighted,
-  updateJson,
-  testID,
-  index, 
-  url,
-
 }) => {
 
   const [isHighlighted, setIsHighlighted] = useState(false);

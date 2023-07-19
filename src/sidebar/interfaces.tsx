@@ -41,10 +41,10 @@ export interface CollapsibleItemElementInterface {
   isAllHighlighted: boolean;
   setHighlightedElement: React.Dispatch<React.SetStateAction<ElementObject | null>>;
   setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
-  updateJson: (elementObject: ElementObject, index: number, url: string) => void;
+  /* updateJson: (elementObject: ElementObject, index: number, url: string) => void;
   index: number;
   url: string;
-  testID: string;
+  testID: string; */
 }
 
 export interface ResultsHeaderInterface {
@@ -76,8 +76,6 @@ export interface ElementObject {
   selector: string;
   result: ElementResult;
   attributes: ElementAttribute[];
-  ChromeVersion: string;
-  ChromeExtensionVersion: string;
 }
 
 export interface ElementResult {
@@ -88,8 +86,8 @@ export interface ElementResult {
   checked: boolean;
   url: string;
   testID: string;
-  ChromeVersion: string | null;
-  ChromeExtensionVersion: string | null;
+  chromeVersion: string | null;
+  chromeExtensionVersion: string | null;
 }
 export interface ElementAttribute {
   name: string;
