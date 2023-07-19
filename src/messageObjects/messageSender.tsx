@@ -19,6 +19,7 @@ export class MessageSender {
         });
       }
       
+      
 
     public highlightSingleMessage(element: ElementObject, isChecked: boolean) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {

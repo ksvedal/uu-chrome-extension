@@ -83,6 +83,7 @@ describe("MessageSender", () => {
         }
       }
     );
+    
   });
 
   afterEach(() => {
@@ -135,6 +136,44 @@ describe("MessageSender", () => {
 
       expect(callback).toHaveBeenCalledWith([]); // Assert that the callback is called with an empty array
     });
+
+    it("should handle error when sending scan page message", (done) => {
+      const callback = jest.fn();
+    
+      // Mock the chrome.tabs.query function to simulate an active tab
+      chrome.tabs.query = jest.fn((queryInfo: QueryInfo, queryCallback: (tabs: Tab[]) => void) => {
+        const tabs: Tab[] = [{ id: 1, url: "example.com" }];
+        queryCallback(tabs);
+      });
+    
+      // Mock the chrome.tabs.sendMessage function to simulate an error
+      chrome.tabs.sendMessage = jest.fn((tabId, message, options, sendMessageCallback) => {
+        if (typeof options === "function") {
+          console.error("Invalid options for sendMessage");
+        } else if (typeof options === "undefined") {
+          if (typeof sendMessageCallback === "function") {
+            console.log("No active tab");
+            try {
+              sendMessageCallback(undefined); // Simulate an error response
+            } catch (error) {
+              console.error(error);
+              callback([]); // Call the callback with an empty array
+            }
+          }
+        } else {
+          console.log("Invalid parameters for sendMessage");
+        }
+      });
+    
+      messageSender.scanPageMessage(callback);
+    
+      setTimeout(() => {
+        expect(chrome.tabs.query).toHaveBeenCalled();
+        expect(chrome.tabs.sendMessage).toHaveBeenCalled();
+        expect(callback).toHaveBeenCalledWith([]);
+        done();
+      }, 5000);
+    });
   });
 
   describe("highlightSingleMessage", () => {
@@ -168,6 +207,20 @@ describe("MessageSender", () => {
         expect.any(Function)
       );
 
+      expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
+    });
+
+    it("should handle error when sending highlight single message", () => {
+      const isChecked = true;
+      
+      // Simulate no active tab
+      (chrome.tabs.query as jest.Mock).mockImplementationOnce((queryInfo, callback) => {
+        callback([]);
+      });
+
+      messageSender.highlightSingleMessage(element, isChecked);
+
+      expect(chrome.tabs.query).toHaveBeenCalled();
       expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
     });
   });
@@ -208,6 +261,22 @@ describe("MessageSender", () => {
 
       expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
     });
+
+    it("should handle error when sending highlight and remove previous message", () => {
+      const newElement: ElementObject = { ...element, title: "New Element" };
+      const previousElement: ElementObject = { ...element, title: "Previous Element" };
+
+      // Simulate no active tab
+      (chrome.tabs.query as jest.Mock).mockImplementationOnce((queryInfo, callback) => {
+        callback([]);
+      });
+
+      messageSender.highlightAndRemovePreviousMessage(newElement, previousElement);
+
+      expect(chrome.tabs.query).toHaveBeenCalled();
+      expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
+    });
+
   });
 
   describe("highlightAllWithType", () => {
@@ -254,6 +323,26 @@ describe("MessageSender", () => {
 
       expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
     });
+
+    it("should handle error when sending highlight all with type message", () => {
+      const elementType: ElementType = {
+        name: "Button",
+        nodes: [element],
+        selector: ".button-selector",
+      };
+      const isChecked = true;
+
+      // Simulate no active tab
+      (chrome.tabs.query as jest.Mock).mockImplementationOnce((queryInfo, callback) => {
+        callback([]);
+      });
+
+      messageSender.highlightAllWithType(elementType, isChecked);
+
+      expect(chrome.tabs.query).toHaveBeenCalled();
+      expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
+    });
+
   });
 
   describe("unhighlightAllAndHighlightSingleMessage", () => {
@@ -297,6 +386,24 @@ describe("MessageSender", () => {
         expect.any(Function)
       );
 
+      expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
+    });
+
+    it("should handle error when sending unhighlight all and highlight single message", () => {
+      const elementType: ElementType = {
+        name: "Button",
+        nodes: [element],
+        selector: ".button-selector",
+      };
+
+      // Simulate no active tab
+      (chrome.tabs.query as jest.Mock).mockImplementationOnce((queryInfo, callback) => {
+        callback([]);
+      });
+
+      messageSender.unhighlightAllAndHighlightSingleMessage(element, elementType);
+
+      expect(chrome.tabs.query).toHaveBeenCalled();
       expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
     });
   });

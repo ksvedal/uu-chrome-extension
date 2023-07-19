@@ -366,6 +366,7 @@ html, body {
 }
 
 .collapsible-item-children .item-header {
+  display: block;
   padding-left: var(--small-padding);
   border-radius: var(--radius);
   box-shadow: var(--big-shadow);
