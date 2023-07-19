@@ -42,18 +42,16 @@ describe("MessageSender", () => {
       selector: ".example-selector",
       result: {
         name: "Example Name",
+        correctText: "Example Correct Text",
         htmlString: "<div>Example Result HTML</div>",
-        issue: false,
         comment: "",
         checked: false,
         url: "example.com",
         testID: "example-test-id",
-        ChromeVersion: "",
-        ChromeExtensionVersion: "",
+        chromeVersion: "",
+        chromeExtensionVersion: "",
       },
       attributes: [],
-      ChromeVersion: "",
-      ChromeExtensionVersion: "",
     };
 
     // Mock the chrome.tabs.query function
@@ -68,16 +66,19 @@ describe("MessageSender", () => {
       (
         tabId: number,
         message: Message,
-        options?: chrome.runtime.MessageOptions | undefined | ((response: any) => void),
+        options?: chrome.runtime.MessageOptions, // Change the parameter type to `chrome.runtime.MessageOptions`
         callback?: (response: any) => void
       ) => {
-        if (typeof options === "function") {
-          // Simulate the response from sendMessage
-          const response = { message: "highlighted" };
-          options(response); // Invoke the callback function
+        if (options && typeof options === "function") { // Add a condition to check if `options` is defined
+          console.error("Invalid options for sendMessage");
         } else if (typeof options === "undefined" && typeof callback === "function") {
           console.log("No active tab");
-          callback([]); // Invoke the callback function
+          try {
+            callback({ message: "highlighted" });
+          } catch (error) {
+            console.error(error);
+            callback([]);
+          }
         } else {
           console.log("Invalid parameters for sendMessage");
         }
@@ -86,12 +87,43 @@ describe("MessageSender", () => {
     
   });
 
-  afterEach(() => {
-    // Clear the mock implementation
-    jest.clearAllMocks();
-  });
 
   describe("scanPageMessage", () => {
+    it("should handle error when sending scan page message", () => {
+      const callback = jest.fn();
+
+      // Mock the chrome.tabs.query function to simulate an active tab
+      chrome.tabs.query = jest.fn((queryInfo: QueryInfo, queryCallback: (tabs: Tab[]) => void) => {
+        const tabs: Tab[] = [{ id: 1, url: "example.com" }];
+        queryCallback(tabs);
+      });
+
+      // Mock the chrome.tabs.sendMessage function to simulate an error
+      chrome.tabs.sendMessage = jest.fn((tabId, message, options, sendMessageCallback) => {
+        if (typeof options === "function") {
+          console.error("Invalid options for sendMessage");
+        } else if (typeof options === "undefined") {
+          if (typeof sendMessageCallback === "function") {
+            console.log("No active tab");
+            try {
+              sendMessageCallback(undefined); // Simulate an error response
+            } catch (error) {
+              console.error(error);
+              callback([]); // Call the callback with an empty array
+            }
+          }
+        } else {
+          console.log("Invalid parameters for sendMessage");
+        }
+      });
+
+      messageSender.scanPageMessage(callback);
+
+      expect(chrome.tabs.query).toHaveBeenCalled();
+      expect(chrome.tabs.sendMessage).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalledWith([]);
+    });
+
     it("should send a scan page message to the active tab", () => {
       const callback = jest.fn();
 
@@ -137,43 +169,7 @@ describe("MessageSender", () => {
       expect(callback).toHaveBeenCalledWith([]); // Assert that the callback is called with an empty array
     });
 
-    it("should handle error when sending scan page message", (done) => {
-      const callback = jest.fn();
-    
-      // Mock the chrome.tabs.query function to simulate an active tab
-      chrome.tabs.query = jest.fn((queryInfo: QueryInfo, queryCallback: (tabs: Tab[]) => void) => {
-        const tabs: Tab[] = [{ id: 1, url: "example.com" }];
-        queryCallback(tabs);
-      });
-    
-      // Mock the chrome.tabs.sendMessage function to simulate an error
-      chrome.tabs.sendMessage = jest.fn((tabId, message, options, sendMessageCallback) => {
-        if (typeof options === "function") {
-          console.error("Invalid options for sendMessage");
-        } else if (typeof options === "undefined") {
-          if (typeof sendMessageCallback === "function") {
-            console.log("No active tab");
-            try {
-              sendMessageCallback(undefined); // Simulate an error response
-            } catch (error) {
-              console.error(error);
-              callback([]); // Call the callback with an empty array
-            }
-          }
-        } else {
-          console.log("Invalid parameters for sendMessage");
-        }
-      });
-    
-      messageSender.scanPageMessage(callback);
-    
-      setTimeout(() => {
-        expect(chrome.tabs.query).toHaveBeenCalled();
-        expect(chrome.tabs.sendMessage).toHaveBeenCalled();
-        expect(callback).toHaveBeenCalledWith([]);
-        done();
-      }, 5000);
-    });
+   
   });
 
   describe("highlightSingleMessage", () => {
