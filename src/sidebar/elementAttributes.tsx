@@ -19,7 +19,6 @@ export const ElementAttributes: React.FC<ElementObject> = ({ attributes, htmlStr
 
     //Table created by ElementObject to display attributes
     return (
-        <div>
             <table>
                 <thead>
                 <tr>
@@ -36,8 +35,6 @@ export const ElementAttributes: React.FC<ElementObject> = ({ attributes, htmlStr
                 }
                 </tbody>
             </table>
-
-        </div>
     );
 };
 
