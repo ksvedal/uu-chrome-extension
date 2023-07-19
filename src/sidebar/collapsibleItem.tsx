@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult,ExtendedElementObject  } from "./interfaces";
 import {ToggleButton, RadioButtonGroup} from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
@@ -7,6 +7,8 @@ import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
 import { v4 as uuidv4 } from 'uuid';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const messageSender = new MessageSender();
 
@@ -18,6 +20,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
     const context = useContext(MyContext);
     const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
+    const typingTimeoutRef = useRef<number | null>(null);
 
 
     
@@ -46,8 +49,34 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
     const storeText = (index: number, newText: string) => {
         type.nodes[index].result.comment = newText;
-        updateJson(type.nodes[index], index, url); 
-    };
+        updateJson(type.nodes[index], index, url);
+      };
+    
+      const handleTextareaChange = (index: number, newText: string) => {
+        setTextareaValues((prevValues) => {
+          const newValues = [...prevValues];
+          newValues[index] = newText;
+          return newValues;
+        });
+    
+        // Clear the previous timeout, if any
+        if (typingTimeoutRef.current !== null) {
+          clearTimeout(typingTimeoutRef.current);
+        }
+    
+        // Set a new timeout to execute storeText after 2 seconds
+        typingTimeoutRef.current = setTimeout(() => {
+          storeText(index, newText);
+          toast.success(`Kommentaren "${newText}" ble lagret `,{
+            hideProgressBar: true,
+            autoClose: 2000,
+
+          })
+        }, 2000) as any; // Cast the setTimeout return value to any
+      };
+    
+     
+    
 
     const highlightAll = () => {
         console.log("sending highlightAllMessage")
@@ -123,23 +152,19 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                                 name="comment"
                                                 form="usrform"
                                                 value={textareaValues[index]}
-                                                onChange={(e) =>
-                                                    
-                                                    setTextareaValues((prevValues) => {
-                                                    const newValues = [...prevValues];
-                                                    newValues[index] = e.target.value;
-                                                    storeText(index, e.target.value);
-                                                    return newValues;
-                                                    })
-                                                }
-                                            >
+                                                onChange={(e) => handleTextareaChange(index, e.target.value)}
+                                                onBlur={() => {
+                                                  // Execute storeText when the textarea loses focus
+                                                  storeText(index, textareaValues[index]);
+                                                }}
+                                              >
                                                 Enter text here...
                                                 </textarea>
                                             </div>
                                         )}
                                          
                                     </div>
-                                    
+                                    <ToastContainer />
                                 </CollapsibleItemElement>
                             );
                         })}
