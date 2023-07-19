@@ -93,3 +93,7 @@ export interface ElementAttribute {
   name: string;
   value: string;
 }
+
+ export interface ExtendedElementObject {
+  isCommentVisible: boolean;
+}
