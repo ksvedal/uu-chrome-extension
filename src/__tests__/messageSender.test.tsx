@@ -1,5 +1,5 @@
 import { MessageSender } from "../messageObjects/messageSender";
-import { ElementObject, ElementType } from "../sidebar/interfaces";
+import { ElementObject, ElementResult, ElementType } from "../sidebar/interfaces";
 import { Message, HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage } from "../messageObjects/message";
 
 type Tab = {
@@ -33,6 +33,7 @@ declare const chrome: {
 describe("MessageSender", () => {
   let messageSender: MessageSender;
   let element: ElementObject;
+  let result: ElementResult;
 
   beforeEach(() => {
     messageSender = new MessageSender();
