@@ -183,10 +183,10 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         )}
                                          
                                     </div>
-                                    <ToastContainer />
                                 </CollapsibleItemElement>
                             );
                         })}
+                        <ToastContainer />
                     </div>
                 )}
             </div>
