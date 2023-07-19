@@ -88,7 +88,7 @@ export const Sidebar: React.FC = () => {
                 setIsAllHighlighted={setIsAllHighlighted}
                 setCurrentHighlighted={setCurrentHighlighted}
                 isAllHighlighted={isAllHighlighted}
-                index={index}
+                parentIndex={index}
                 thisElement={thisElement}
                 url={websiteURL}
                 testID={testID}

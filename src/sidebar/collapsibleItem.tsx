@@ -10,8 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const messageSender = new MessageSender();
 
-
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, index, url}) => {
+export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, parentIndex, url}) => {
     const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAllHighlighted, setIsAllHighlighted] = useState(false);
@@ -27,7 +26,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       return null;
     }
     const { elementResults, setElementResults } = context;
-    console.log(elementResults)
   
     const toggleCheck = () => {
         setIsAllHighlighted(!isAllHighlighted);
@@ -41,48 +39,26 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         let newNodes = [...type.nodes];  // copy the array
         newNodes[index] = elementObject;  // replace the element
         newNodes[index].result.url = url;
-        newNodes[index].result.testID = generateTestID(index);
-        newNodes[index].result.ChromeVersion = getChromeVersion();
-        newNodes[index].result.ChromeExtensionVersion = getChromeExtensionVersion();
         setTypeElements(newNodes);  // update the state
         let elementResults : ElementResult[] = newNodes.map(node => node.result).flat();
         setElementResults(elementResults);
     };
 
-    const storeText = (index: number) => {
-        setTypeElements((prevTypeElements) => {
-            const newNodes = [...prevTypeElements]; // copy the array
-            if (newNodes[index]) {
-                newNodes[index].result.comment = textareaValues[index]; // update the comment value
-                updateJson(newNodes[index], index, url); // update the JSON with the updated element
-            }
-            return newNodes; // return the updated array
-        });
+    const storeText = (index: number, newText: string) => {
+        type.nodes[index].result.comment = newText;
+        updateJson(type.nodes[index], index, url); 
     };
 
-    const generateTestID = (index: number) => {
-      const uuid = uuidv4().split('-')[0]; // Get the first part of the generated UUID
-      return `ID$${uuid}`;
-    };
-
-    const getChromeVersion = () => {
-      const raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9.]+)/);
-      return raw ? raw[2] : null;
-    };
-
-    const getChromeExtensionVersion = () => {
-      const manifest = chrome.runtime.getManifest();
-      return manifest.version;
-    };
-  
-      
     const highlightAll = () => {
+        console.log("sending highlightAllMessage")
         messageSender.highlightAllWithType(type, isAllHighlighted);
     };
 
     // Define the handleOptionChange function
-    const handleOptionChange = (option: string) => {
+    const handleOptionChange = (option: string, index: number) => {
         console.log("Selected option:", option);
+        type.nodes[index].result.correctText = option;
+        updateJson(type.nodes[index], index, url);
     };
     
     const toggleCommentSection = (currentIndex: number) => {
@@ -117,7 +93,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                 {isExpanded && (
                     <div className="collapsible-item-children">
                         {type.nodes.map((item, index) => {
-                            const testID = generateTestID(index);
                             return (
                                 <CollapsibleItemElement
                                     type={type}
@@ -126,25 +101,19 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                     highlightedElement={currentHighlighted}
                                     setHighlightedElement={setCurrentHighlighted}
                                     isAllHighlighted={isAllHighlighted}
-                                    setIsAllHighlighted={setIsAllHighlighted}
-                                    updateJson={(elementObject, index) => updateJson(elementObject, index, url)}
-                                    testID={testID}
-                                    index={index}
-                                    url={url}
+                                    setIsAllHighlighted={setIsAllHighlighted} 
                                 >
                                     <ElementAttributes
                                         attributes={item.attributes}
                                         title={item.title}
                                         htmlString={item.htmlString}
                                         selector={item.selector}
-                                        result={item.result}
-                                        ChromeVersion={item.ChromeVersion}
-                                        ChromeExtensionVersion={item.ChromeExtensionVersion}/>
+                                        result={item.result}/>
 
                                     <RadioButtonGroup onOptionChange={(value) => {
-                                        handleOptionChange(value);
+                                        handleOptionChange(value, index);
                                         toggleCommentSection(index);
-                                    }} />
+                                    }} presetOption={type.nodes[index].result.correctText} index={index} />
 
                                     <div>
                                      {openCommentIndex === index && (
@@ -159,6 +128,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                                     setTextareaValues((prevValues) => {
                                                     const newValues = [...prevValues];
                                                     newValues[index] = e.target.value;
+                                                    storeText(index, e.target.value);
                                                     return newValues;
                                                     })
                                                 }
@@ -188,11 +158,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   isAllHighlighted,
   setHighlightedElement,
   setIsAllHighlighted,
-  updateJson,
-  testID,
-  index, 
-  url,
-
 }) => {
 
   const [isHighlighted, setIsHighlighted] = useState(false);
@@ -203,14 +168,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
     setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
   }, [highlightedElement, isAllHighlighted]);
 
-  const handleCheckboxClick = (update: string) => {
-    if (update === "issue") {
-        thisElement.result.issue = !thisElement.result.issue;
-    } else if (update === "checked") {
-        thisElement.result.checked = !thisElement.result.checked;
-    }
-    updateJson(thisElement, index, url);
-};
 
   const toggleCheck = () => {
     //If we press the currently highlighted element, unhighlight it
@@ -233,15 +190,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       messageSender.highlightSingleMessage(thisElement, false);
     }
   };
-
-  useEffect(() => {
-    type.nodes.forEach((node, index) => {
-      node.result.testID = testID;
-      node.result.ChromeVersion = node.ChromeVersion;
-      node.result.ChromeExtensionVersion = node.ChromeExtensionVersion;
-      updateJson(node, index, url);
-    });
-}, [type.nodes, url, testID]);
 
   return (
     <div className="collapsible-item-child">
