@@ -23,9 +23,10 @@ export class WebUtils {
             htmlString: pretty(element.outerHTML),
             selector: selector,
             attributes: mainObjectAttributes,
-            result: {testID: "", name: title, htmlString: pretty(element.outerHTML), issue: false, comment: "", checked: false, url: "", ChromeVersion: "", ChromeExtensionVersion: ""},
+            result: {testID: "", name: title, htmlString: pretty(element.outerHTML), issue: false, comment: "", checked: false, url: "", ChromeVersion: "", ChromeExtensionVersion: "", outcome: "" },
             ChromeVersion: "",
-            ChromeExtensionVersion: "",
+            ChromeExtensionVersion: "", 
+            outcome: "",
         };
 
         console.log(newObject);

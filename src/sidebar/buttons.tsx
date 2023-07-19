@@ -26,6 +26,8 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
     onOptionChange(option);
   };
 
+  
+
   return (
     <div>
       <p>Does the button's text identify its function?</p>

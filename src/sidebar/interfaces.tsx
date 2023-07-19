@@ -76,6 +76,7 @@ export interface ElementObject {
   attributes: ElementAttribute[];
   ChromeVersion: string;
   ChromeExtensionVersion: string;
+  outcome: string;
 }
 
 export interface ElementResult {
@@ -88,6 +89,7 @@ export interface ElementResult {
   testID: string;
   ChromeVersion: string | null;
   ChromeExtensionVersion: string | null;
+  outcome: string;
 }
 export interface ElementAttribute {
   name: string;

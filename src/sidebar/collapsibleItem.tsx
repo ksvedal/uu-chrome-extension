@@ -136,7 +136,8 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                                         selector={item.selector}
                                         result={item.result}
                                         ChromeVersion={item.ChromeVersion}
-                                        ChromeExtensionVersion={item.ChromeExtensionVersion}/>
+                                        ChromeExtensionVersion={item.ChromeExtensionVersion}
+                                        outcome={item.outcome}/>
 
                                     <SyntaxHighlighter language="html" style={vs}>
                                         {item.htmlString}
