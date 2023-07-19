@@ -28,7 +28,7 @@
   --shadow-color: rgba(0,0,0,0.1);
 
   --good-color: #4ea289;
-  --alert-color: #fddc6e;
+  --alert-color: #ffd95d;
   --danger-color: #ff2a5c;
 
   --very-small-font: 0.8rem;
@@ -415,6 +415,21 @@ html, body {
 
 .collapsible-item-child .item-header .toggle-button.pressed {
   background: var(--orange);
+}
+
+/*Child collapsible checkedStatus*/
+.yesColor {
+  color: var(--good-color);
+  font-weight: bolder;
+}
+.noColor{
+  color: var(--danger-color);
+/*   font-weight: bold;
+ */}
+.notButtonColor{
+  color: var(--orange);
+  font-weight: bold;
+  text-shadow: var(--big-shadow);
 }
 
 /* Content data */
