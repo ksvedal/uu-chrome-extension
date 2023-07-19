@@ -2,11 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult,ExtendedElementObject  } from "./interfaces";
 import {ToggleButton, RadioButtonGroup} from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
-import { v4 as uuidv4 } from 'uuid';
+import IsCheckedStatus from "./isCheckedStatus";
 
 const messageSender = new MessageSender();
 
@@ -196,11 +194,14 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       <div className="collapsible-item">
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
           <div className="row">
-            <div className="col-3">
-                <p> </p> {thisElement.title}
+            <div className="col-4">
+               <br/> {thisElement.title}
             </div>
-
-              <div className={"col-9"}>
+            <div className="col-4">
+              <br/>
+            <IsCheckedStatus text={thisElement.result.correctText}></IsCheckedStatus>
+              </div>
+              <div className={"col-4"}>
                   <div className={"float-right"}>
                       <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
                   </div>
