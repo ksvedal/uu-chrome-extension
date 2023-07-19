@@ -337,11 +337,6 @@ html, body {
   padding: 0;
 }
 
-.buttons-text {
-  font-size: var(--small-font);
-  padding: var(--medium-padding);
-}
-
 /* Parent collapsible on hover */
 .collapsible-item-parent:hover {
   cursor: pointer;
