@@ -204,8 +204,6 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   setIsAllHighlighted,
 }) => {
 
-  console.log("thisElement.result.correctText: ", thisElement.result.correctText); // debugging line
-
   const [isHighlighted, setIsHighlighted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
