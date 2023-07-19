@@ -24,9 +24,9 @@ export class WebUtils {
             selector: selector,
             attributes: mainObjectAttributes,
 
-            result: {testID: "", name: title, htmlString: pretty(element.outerHTML), correctText: "", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: ""},
+            result: {testID: "", name: title, htmlString: pretty(element.outerHTML), correctText: "", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome:""},
         };
-
+        
         console.log(newObject);
         return newObject;webkitURL
     }
