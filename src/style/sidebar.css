@@ -338,8 +338,6 @@ html, body {
 }
 
 .buttons-text {
-  font-size: var(--small-font);
-  padding: var(--medium-padding);
 }
 
 /* Parent collapsible on hover */

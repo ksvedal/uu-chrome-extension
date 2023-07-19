@@ -104,13 +104,13 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
                     <div className={"col-4"}>
                         <div className="buttons-text">
-                            {type.name}
+                            <br/> {type.name}
                         </div>
                     </div>
 
                     <div className={"col-4"}>
                         <div className="total-buttons">
-                            <p>{type.nodes.length}</p>
+                            <br/> {type.nodes.length}
                         </div>
                     </div>
 
