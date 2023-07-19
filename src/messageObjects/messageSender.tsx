@@ -9,10 +9,8 @@ export class MessageSender {
           if (activeTab && activeTab.id) {
             chrome.tabs.sendMessage(activeTab.id, new ScanPageMessage(), callback);
           } else {
-            // Handle the scenario of no active tab here
-            // You can choose to log a message or take any other necessary action
+            // There is no active tab, maybe window isn't focused
             console.log("No active tab");
-      
             // Invoke the callback with an empty array to handle the error case
             callback([]);
           }
@@ -21,24 +19,25 @@ export class MessageSender {
       
       
 
-    public highlightSingleMessage(element: ElementObject, isChecked: boolean) {
+      public highlightSingleMessage(element: ElementObject, isChecked: boolean) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            if (tabs[0]?.id) {
-                console.log("Running with a tab id");
-                chrome.tabs.sendMessage(tabs[0].id, new HighlightMessage(element, isChecked), (response) => {
-                    if (chrome.runtime.lastError) {
-                        console.error(chrome.runtime.lastError.message);
-                    } else if (response && response.message) {  // Add a null check for response and message properties
-                        console.log("Result message: " + response.message);
-                    }
-                });
-
-            } else {
-                console.log("No tab id");
-            }
+          if (tabs[0]?.id) {
+            console.log("Running with a tab id");
+            chrome.tabs.sendMessage(tabs[0].id, new HighlightMessage(element, isChecked), {}, (response) => {
+              if (chrome.runtime.lastError) {
+                console.error(chrome.runtime.lastError.message);
+              } else if (response && response.message) {
+                console.log("Result message: " + response.message);
+              }
+            });
+          } else {
+            console.log("No tab id");
+          }
         });
         return true;
-    }
+      }
+      
+      
 
     public highlightAndRemovePreviousMessage(newElement: ElementObject, previousElement: ElementObject) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
