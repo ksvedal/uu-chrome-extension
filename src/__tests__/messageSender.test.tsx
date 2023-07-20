@@ -1,6 +1,6 @@
 import { MessageSender } from "../messageObjects/messageSender";
 import { ElementObject, ElementType } from "../sidebar/interfaces";
-import { Message, HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage } from "../messageObjects/message";
+import { Message, ScanPageMessage } from "../messageObjects/message";
 
 type Tab = {
   id: number;
