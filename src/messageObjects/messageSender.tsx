@@ -7,12 +7,15 @@ export class MessageSender {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           const activeTab = tabs[0];
           if (activeTab && activeTab.id) {
-            chrome.tabs.sendMessage(activeTab.id, new ScanPageMessage(), callback);
+            try {
+              chrome.tabs.sendMessage(activeTab.id, new ScanPageMessage(), callback);
+            } catch (error) {
+              console.error("Error sending message:", error);
+              callback([]); // Call the callback with an empty array to handle the error case
+            }
           } else {
-            // There is no active tab, maybe window isn't focused
             console.log("No active tab");
-            // Invoke the callback with an empty array to handle the error case
-            callback([]);
+            callback([]); // Invoke the callback with an empty array to handle the error case
           }
         });
       }

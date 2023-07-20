@@ -50,6 +50,7 @@ describe("MessageSender", () => {
         testID: "example-test-id",
         chromeVersion: "",
         chromeExtensionVersion: "",
+        outcome: "Example outcome",
       },
       attributes: [],
     };
@@ -91,11 +92,45 @@ describe("MessageSender", () => {
 
   describe("scanPageMessage", () => {
     
-    /* To be added later
-    it("should handle error when sending scan page message", () => {
+    it("should handle error when sendMessage encounters an error", () => {
+      const callback = jest.fn();
     
-    */
- 
+      // Mock the chrome.tabs.query function to simulate an active tab
+      const activeTab = { id: 1, url: "example.com" };
+      chrome.tabs.query = jest.fn((queryInfo, queryCallback) => {
+        queryCallback([activeTab]);
+      });
+    
+      // Mock the chrome.tabs.sendMessage function to simulate an error response
+      chrome.tabs.sendMessage = jest.fn((tabId, message, options) => {
+        if (typeof options === "function") {
+          // Simulate an error response by throwing an error
+          throw new Error("Simulated error in sendMessage");
+        } else {
+          console.error("Invalid options for sendMessage");
+        }
+      });
+    
+      // Call the function to test
+      messageSender.scanPageMessage(callback);
+    
+      // Ensure that the chrome.tabs.query function is called
+      expect(chrome.tabs.query).toHaveBeenCalledWith(
+        { active: true, currentWindow: true },
+        expect.any(Function)
+      );
+    
+      // Ensure that the chrome.tabs.sendMessage function is called with the correct arguments
+      expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
+        activeTab.id,
+        expect.any(ScanPageMessage),
+        expect.any(Function)
+      );
+    
+      // Ensure that the callback is called with an empty array
+      expect(callback).toHaveBeenCalledWith([]);
+    });    
+    
 
     it("should send a scan page message to the active tab", () => {
       const callback = jest.fn();
