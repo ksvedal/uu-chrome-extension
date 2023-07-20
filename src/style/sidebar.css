@@ -8,7 +8,7 @@
   --primary-color: #f6f6f6;
   --secondary-color: #ffffff;
   --tertiary-color: #edeef0;
-  --quartiary-color: #FFFBF2;
+  --quartiary-color: #fff0e2;
 
   --purple: #94227D;
   --light-purple: #9a618f;
@@ -28,7 +28,7 @@
   --shadow-color: rgba(0,0,0,0.1);
 
   --good-color: #4ea289;
-  --alert-color: #fddc6e;
+  --alert-color: #ffd95d;
   --danger-color: #ff2a5c;
 
   --very-small-font: 0.8rem;
@@ -41,7 +41,7 @@
   --small-shadow: -1px 1px 2px var(--shadow-color);
   --big-shadow: 1px 1px 1px 0px var(--shadow-color);
   --big-shadow-inset: inset 1px 1px 1px 0px var(--shadow-color);
-  --radius: 10px;
+  --radius: 4px;
 
   --small-space: 0.5rem;
   --medium-space: 1rem;
@@ -50,6 +50,7 @@
   --small-padding: 0.6rem;
   --medium-padding: 0.7rem;
   --big-padding: 1rem;
+
 }
 
 .dark {
@@ -60,8 +61,8 @@
 
   --purple: #ffe797;
   --light-purple: #fff1cc;
-  --orange: #5ed5c3;
-  --light-orange: #91e8da;
+  --orange: #29bccb;
+  --light-orange: #7fc0c9;
 
   --text-color: #030303;
   --text-color-inverse: #d9d9d9;
@@ -164,7 +165,6 @@ html, body {
 }
 
 .row {
-  margin-top: var(--small-space);
   padding: var(--small-padding);
 }
 
@@ -337,11 +337,6 @@ html, body {
   padding: 0;
 }
 
-.buttons-text {
-  font-size: var(--small-font);
-  padding: var(--medium-padding);
-}
-
 /* Parent collapsible on hover */
 .collapsible-item-parent:hover {
   cursor: pointer;
@@ -403,19 +398,34 @@ html, body {
 .collapsible-item-child .item-header:hover {
   cursor: pointer;
   box-shadow: var(--big-shadow);
-  border-color: var(--border-color-orange)
+  border-color: var(--border-color-purple)
 }
 
 /* Child collapsible on click */
 .collapsible-item-child .item-header.pressed {
   box-shadow: var(--big-shadow-inset);
   background-color: var(--quartiary-color);
-  border: var(--big-border) var(--border-color-orange);
+  border: var(--big-border) var(--border-color-purple);
   color: var(--text-color-inverse);
 }
 
 .collapsible-item-child .item-header .toggle-button.pressed {
   background: var(--orange);
+}
+
+/*Child collapsible checkedStatus*/
+.yesColor {
+  color: var(--good-color);
+  font-weight: bolder;
+}
+.noColor{
+  color: var(--danger-color);
+/*   font-weight: bold;
+ */}
+.notButtonColor{
+  color: var(--orange);
+  font-weight: bold;
+  text-shadow: var(--big-shadow);
 }
 
 /* Content data */
@@ -427,7 +437,6 @@ html, body {
   height: var(--small-space);
   padding: var(--medium-padding);
   border-collapse: collapse;
-  border-spacing: 100px;
   border: var(--small-border) var(--border-color-tertiary);
   border-radius: var(--radius);
   table-layout: fixed;
@@ -445,7 +454,6 @@ html, body {
   table-layout: fixed;
   cursor: text;
   border: var(--small-border) var(--border-color-tertiary);
-  border-spacing: 100px;
   color: var(--text-color-inverse);
   box-shadow: var(--small-shadow);
   font-size: var(--very-small-font);
@@ -490,7 +498,7 @@ html, body {
   box-shadow: var(--big-shadow-inset);
   background-color: var(--primary-color);
   color: var(--text-color-inverse);
-  border: var(--big-border) var(--border-color-quartiary);
+  border: var(--big-border) var(--border-color-orange);
 }
 
 /* Radioboxes */
@@ -535,3 +543,10 @@ html, body {
   color: #0c0c0c;
 }
 
+#the-toasht {
+  background-color: var(--alert-color);
+  border-radius: var(--radius);
+  color: #000000;
+  border: 0;
+  box-shadow: var(--big-shadow);
+}
