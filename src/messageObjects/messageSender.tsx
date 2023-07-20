@@ -23,7 +23,7 @@ export class MessageSender {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
           if (tabs[0]?.id) {
             console.log("Running with a tab id");
-            chrome.tabs.sendMessage(tabs[0].id, new HighlightMessage(element, isChecked), {}, (response) => {
+            chrome.tabs.sendMessage(tabs[0].id, new HighlightMessage(element, isChecked), (response) => {
               if (chrome.runtime.lastError) {
                 console.error(chrome.runtime.lastError.message);
               } else if (response && response.message) {
