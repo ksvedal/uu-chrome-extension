@@ -1,33 +1,22 @@
-import {
-  setupTest,
-  cleanupTest,
-  QueryInfo,
-  Tab,
-  chrome
-} from './testUtils';
-
+// Import the necessary functions and types from testUtils
+import { setupTest, cleanupTest, QueryInfo, Tab, chrome } from './testUtils';
 import { ScanPageMessage } from '../../messageObjects/message';
 import { MessageSender } from '../../messageObjects/messageSender';
 import { ElementObject } from '../../sidebar/interfaces';
 
-
 describe("MessageSender", () => {
   // Initialize the variables using the correct types
-   let messageSender: MessageSender;
-   let element: ElementObject;
- 
-   beforeEach(() => {
-     // Initialize the chrome object before each test case
-     chrome.tabs.query = jest.fn();
-     chrome.tabs.sendMessage = jest.fn();
- 
-     // Assign the values returned by setupTest() to the variables
-     ({ messageSender, element } = setupTest());
-   });
- 
-   afterEach(() => {
-     cleanupTest();
-   });
+  let messageSender: MessageSender;
+  let element: ElementObject;
+
+  beforeEach(() => {
+    // Assign the values returned by setupTest() to the variables
+    ({ messageSender, element } = setupTest());
+  });
+
+  afterEach(() => {
+    cleanupTest();
+  });
   
   describe("scanPageMessage", () => {
     
@@ -139,23 +128,26 @@ describe("MessageSender", () => {
     
     it("should handle no active tab", () => {
       const callback = jest.fn();
-
+    
       // Mock the chrome.tabs.query function to simulate no active tab
-      chrome.tabs.query = jest.fn((queryInfo: QueryInfo, callback: (tabs: Tab[]) => void) => {
-        callback([]); // Simulate no active tab by passing an empty array
+      chrome.tabs.query = jest.fn((queryInfo: QueryInfo, queryCallback: QueryCallback) => {
+        queryCallback([]); // Simulate no active tab by passing an empty array
       });
-
+    
       messageSender.scanPageMessage(callback);
-
+    
       expect(chrome.tabs.query).toHaveBeenCalledWith(
         { active: true, currentWindow: true },
         expect.any(Function)
       );
-
-      expect(chrome.tabs.sendMessage).not.toHaveBeenCalled(); // Ensure sendMessage is not called
-
-      expect(callback).toHaveBeenCalledWith([]); // Assert that the callback is called with an empty array
+    
+      // Ensure that chrome.tabs.sendMessage is not called in this scenario
+      expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
+    
+      // Assert that the callback is called with an empty array
+      expect(callback).toHaveBeenCalledWith([]);
     });
+    
 
    
   });

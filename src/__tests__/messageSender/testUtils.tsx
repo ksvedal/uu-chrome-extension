@@ -18,7 +18,7 @@ export let chrome: {
     tabs: {
       query: (
         queryInfo: QueryInfo,
-        callback: QueryCallback
+        callback: (tabs: Tab[]) => void
       ) => void;
       sendMessage: (
         tabId: number,
@@ -30,14 +30,6 @@ export let chrome: {
     runtime: {
       lastError: any;
     };
-  } = {
-    tabs: {
-      query: () => {},
-      sendMessage: () => {},
-    },
-    runtime: {
-      lastError: null,
-    },
   };
 
 
@@ -74,24 +66,25 @@ export function setupTest() {
 
      // Mock the chrome.tabs.sendMessage function
      chrome.tabs.sendMessage = jest.fn(
-      (
-        tabId: number,
-        message: Message,
-        options?: chrome.runtime.MessageOptions | undefined | ((response: any) => void),
-        callback?: (response: any) => void
-      ) => {
-        if (typeof options === "function") {
-          // Simulate the response from sendMessage
-          const response = { message: "highlighted" };
-          options(response); // Invoke the callback function
-        } else if (typeof options === "undefined" && typeof callback === "function") {
-          console.log("No active tab");
-          callback([]); // Invoke the callback function
-        } else {
-          console.log("Invalid parameters for sendMessage");
+        (
+          tabId: number,
+          message: Message,
+          options?: chrome.runtime.MessageOptions | undefined | ((response: any) => void),
+          callback?: (response: any) => void
+        ) => {
+          if (typeof options === "function") {
+            // Simulate the response from sendMessage
+            const response = { message: "highlighted" };
+            options(response); // Invoke the callback function
+          } else if (typeof options === "undefined" && typeof callback === "function") {
+            console.log("No active tab");
+            callback([]); // Invoke the callback function
+          } else {
+            console.log("Invalid parameters for sendMessage");
+          }
         }
-      }
-    );
+      );
+      
     return { messageSender, element };
 }
 
