@@ -1,5 +1,5 @@
 // Import the necessary functions and types from testUtils
-import { setupTest, cleanupTest, QueryInfo, Tab, chrome } from './testUtils';
+import { setupTest, cleanupTest } from './testUtils';
 import { ScanPageMessage } from '../../messageObjects/message';
 import { MessageSender } from '../../messageObjects/messageSender';
 import { ElementObject } from '../../sidebar/interfaces';
@@ -20,7 +20,7 @@ describe("MessageSender", () => {
   
   describe("scanPageMessage", () => {
     
-    it("should handle error when sendMessage encounters an error", () => {
+    test("should handle error when sendMessage encounters an error", () => {
       const callback = jest.fn();
     
       // Mock the chrome.tabs.query function to simulate an active tab
@@ -59,7 +59,7 @@ describe("MessageSender", () => {
       expect(callback).toHaveBeenCalledWith([]);
     });    
     
-    it("should handle error when sendMessage callback throws an error", () => {
+    test("should handle error when sendMessage callback throws an error", () => {
       const callback = jest.fn();
     
       // Mock the chrome.tabs.query function to simulate an active tab
@@ -101,7 +101,7 @@ describe("MessageSender", () => {
     
     
 
-    it("should send a scan page message to the active tab", () => {
+    test("should send a scan page message to the active tab", () => {
       const callback = jest.fn();
 
       // Mock the chrome.tabs.query function to simulate an active tab
@@ -126,7 +126,7 @@ describe("MessageSender", () => {
       expect(callback).not.toHaveBeenCalled(); // Ensure callback is not called
     });
     
-    it("should handle no active tab", () => {
+    test("should handle no active tab", () => {
       const callback = jest.fn();
     
       // Mock the chrome.tabs.query function to simulate no active tab
@@ -147,9 +147,6 @@ describe("MessageSender", () => {
       // Assert that the callback is called with an empty array
       expect(callback).toHaveBeenCalledWith([]);
     });
-    
-
-   
-  });
-
+  });   
 });
+

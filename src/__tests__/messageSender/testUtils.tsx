@@ -14,23 +14,47 @@ export type QueryInfo = {
 
 export type QueryCallback = (tabs: Tab[]) => void;
 
-export let chrome: {
-    tabs: {
-      query: (
-        queryInfo: QueryInfo,
-        callback: (tabs: Tab[]) => void
-      ) => void;
-      sendMessage: (
-        tabId: number,
-        message: Message,
-        options: chrome.runtime.MessageOptions | undefined,
-        callback?: (response: any) => void
-      ) => void;
-    };
-    runtime: {
-      lastError: any;
-    };
+export type MessageOptions = Record<string, any>;
+
+export const chrome: {
+  tabs: {
+    query: (queryInfo: QueryInfo, callback: QueryCallback) => void;
+    sendMessage: (
+      tabId: number,
+      message: Message,
+      options: MessageOptions | undefined, // Use the MessageOptions type
+      callback?: (response: any) => void
+    ) => void;
   };
+  runtime: {
+    lastError: any;
+  };
+} = {
+  tabs: {
+    query: jest.fn((queryInfo, callback) => {
+      // Your mock implementation for chrome.tabs.query
+      // For example, you can simulate an active tab with a valid id like this:
+      const tabs: Tab[] = [{ id: 1, url: "example.com" }];
+      callback(tabs);
+    }),
+    sendMessage: jest.fn((tabId, message, options, callback) => {
+      // Your mock implementation for chrome.tabs.sendMessage
+      if (typeof options === "function") {
+        // Simulate the response from sendMessage
+        const response = { message: "highlighted" };
+        options(response); // Invoke the callback function
+      } else if (typeof options === "undefined" && typeof callback === "function") {
+        console.log("No active tab");
+        callback([]); // Invoke the callback function
+      } else {
+        console.log("Invalid parameters for sendMessage");
+      }
+    }),
+  },
+  runtime: {
+    lastError: null,
+  },
+};
 
 
 export function setupTest() {
@@ -57,33 +81,6 @@ export function setupTest() {
       attributes: [],
     };
 
-    // Mock the chrome.tabs.query function
-    chrome.tabs.query = jest.fn((queryInfo: QueryInfo, callback: QueryCallback) => {
-      // Simulate the active tab with a valid id
-      const tabs: Tab[] = [{ id: 1, url: "example.com" }];
-      callback(tabs);
-    });
-
-     // Mock the chrome.tabs.sendMessage function
-     chrome.tabs.sendMessage = jest.fn(
-        (
-          tabId: number,
-          message: Message,
-          options?: chrome.runtime.MessageOptions | undefined | ((response: any) => void),
-          callback?: (response: any) => void
-        ) => {
-          if (typeof options === "function") {
-            // Simulate the response from sendMessage
-            const response = { message: "highlighted" };
-            options(response); // Invoke the callback function
-          } else if (typeof options === "undefined" && typeof callback === "function") {
-            console.log("No active tab");
-            callback([]); // Invoke the callback function
-          } else {
-            console.log("Invalid parameters for sendMessage");
-          }
-        }
-      );
       
     return { messageSender, element };
 }

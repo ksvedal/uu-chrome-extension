@@ -92,7 +92,7 @@ describe("MessageSender", () => {
 
   describe("scanPageMessage", () => {
     
-    it("should handle error when sendMessage encounters an error", () => {
+    test("should handle error when sendMessage encounters an error", () => {
       const callback = jest.fn();
     
       // Mock the chrome.tabs.query function to simulate an active tab
@@ -131,7 +131,7 @@ describe("MessageSender", () => {
       expect(callback).toHaveBeenCalledWith([]);
     });    
     
-    it("should handle error when sendMessage callback throws an error", () => {
+    test("should handle error when sendMessage callback throws an error", () => {
       const callback = jest.fn();
     
       // Mock the chrome.tabs.query function to simulate an active tab
@@ -173,7 +173,7 @@ describe("MessageSender", () => {
     
     
 
-    it("should send a scan page message to the active tab", () => {
+    test("should send a scan page message to the active tab", () => {
       const callback = jest.fn();
 
       // Mock the chrome.tabs.query function to simulate an active tab
@@ -198,7 +198,7 @@ describe("MessageSender", () => {
       expect(callback).not.toHaveBeenCalled(); // Ensure callback is not called
     });
     
-    it("should handle no active tab", () => {
+    test("should handle no active tab", () => {
       const callback = jest.fn();
 
       // Mock the chrome.tabs.query function to simulate no active tab
@@ -224,7 +224,7 @@ describe("MessageSender", () => {
   describe("highlightSingleMessage", () => {
 
     
-    it("should send a highlight single message to the active tab", () => {
+    test("should send a highlight single message to the active tab", () => {
       const isChecked = true;
       messageSender.highlightSingleMessage(element, isChecked);
       expect(chrome.tabs.query).toHaveBeenCalledWith(
@@ -237,7 +237,7 @@ describe("MessageSender", () => {
       expect(chrome.runtime.lastError).toBeUndefined();
     });
     
-    it("should handle no active tab", () => {
+    test("should handle no active tab", () => {
       const isChecked = true;
 
       // Simulate no active tab
@@ -255,7 +255,7 @@ describe("MessageSender", () => {
       expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
     });
     
-    it("should handle error when sending highlight single message", () => {
+    test("should handle error when sending highlight single message", () => {
       const isChecked = true;
       
       // Simulate no active tab
@@ -271,7 +271,7 @@ describe("MessageSender", () => {
   });
 
   describe("highlightAndRemovePreviousMessage", () => {
-    it("should send a highlight and remove previous message to the active tab", () => {
+    test("should send a highlight and remove previous message to the active tab", () => {
       const newElement: ElementObject = { ...element, title: "New Element" };
       const previousElement: ElementObject = { ...element, title: "Previous Element" };
 
@@ -288,7 +288,7 @@ describe("MessageSender", () => {
       expect(chrome.runtime.lastError).toBeUndefined();
     });
 
-    it("should handle no active tab", () => {
+    test("should handle no active tab", () => {
       const newElement: ElementObject = { ...element, title: "New Element" };
       const previousElement: ElementObject = { ...element, title: "Previous Element" };
 
@@ -307,7 +307,7 @@ describe("MessageSender", () => {
       expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
     });
 
-    it("should handle error when sending highlight and remove previous message", () => {
+    test("should handle error when sending highlight and remove previous message", () => {
       const newElement: ElementObject = { ...element, title: "New Element" };
       const previousElement: ElementObject = { ...element, title: "Previous Element" };
 
@@ -325,7 +325,7 @@ describe("MessageSender", () => {
   });
 
   describe("highlightAllWithType", () => {
-    it("should send a highlight all with type message to the active tab", () => {
+    test("should send a highlight all with type message to the active tab", () => {
       const elementType: ElementType = {
         name: "Button",
         nodes: [element],
@@ -346,7 +346,7 @@ describe("MessageSender", () => {
       expect(chrome.runtime.lastError).toBeUndefined();
     });
 
-    it("should handle no active tab", () => {
+    test("should handle no active tab", () => {
       const elementType: ElementType = {
         name: "Button",
         nodes: [element],
@@ -369,7 +369,7 @@ describe("MessageSender", () => {
       expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
     });
 
-    it("should handle error when sending highlight all with type message", () => {
+    test("should handle error when sending highlight all with type message", () => {
       const elementType: ElementType = {
         name: "Button",
         nodes: [element],
@@ -391,7 +391,7 @@ describe("MessageSender", () => {
   });
 
   describe("unhighlightAllAndHighlightSingleMessage", () => {
-    it("should send an unhighlight all and highlight single message to the active tab", () => {
+    test("should send an unhighlight all and highlight single message to the active tab", () => {
       const elementType: ElementType = {
         name: "Button",
         nodes: [element],
@@ -412,7 +412,7 @@ describe("MessageSender", () => {
       expect(chrome.runtime.lastError).toBeUndefined();
     });
 
-    it("should handle no active tab", () => {
+    test("should handle no active tab", () => {
       const elementType: ElementType = {
         name: "Button",
         nodes: [element],
@@ -434,7 +434,7 @@ describe("MessageSender", () => {
       expect(chrome.tabs.sendMessage).not.toHaveBeenCalled();
     });
 
-    it("should handle error when sending unhighlight all and highlight single message", () => {
+    test("should handle error when sending unhighlight all and highlight single message", () => {
       const elementType: ElementType = {
         name: "Button",
         nodes: [element],
