@@ -7,7 +7,6 @@ export class WebUtils {
         let newType: ElementType = { name: type, nodes: [], selector: selector };
         let i: number = 1;
         elements.forEach((element) => {
-            //TODO: Find out if there is a better way to display names, if it has an outer text display that? anything else we can use?
             newType.nodes.push(this.toObject(element));
             i++;
         });
@@ -15,19 +14,34 @@ export class WebUtils {
     }
 
     public static toObject(element: HTMLElement): ElementObject {
-        let selector = this.generateSelector(element);
-        let title = this.getTitle(element);
-        let mainObjectAttributes = this.getAttributes(element);
-        let newObject: ElementObject = {
-            title: title ? title : '',
-            htmlString: pretty(element.outerHTML),
-            selector: selector,
-            attributes: mainObjectAttributes,
-            result: {testID: "", name: title, htmlString: pretty(element.outerHTML), correctText: "", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: ""},
-        };
+        try {
+            let selector = this.generateSelector(element);
+            let title = this.getTitle(element);
+            let mainObjectAttributes = this.getAttributes(element);
+            let newObject: ElementObject = {
+                title: title ? title : '',
+                htmlString: pretty(element.outerHTML),
+                selector: selector,
+                attributes: mainObjectAttributes,
+                isCommentVisible: false,
 
-        console.log(newObject);
-        return newObject;webkitURL
+                result: { testID: "", name: title, htmlString: pretty(element.outerHTML), correctText: "", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome: "" },
+            };
+            console.log(newObject);
+            return newObject;
+        } catch (error) {
+            console.error(`Error in toObject: ${error}`);
+            // Optionally, report the error to a logging service
+            return {
+                title: 'Error creating object',
+                htmlString: 'Error creating object',
+                selector: 'Error creating object',
+                attributes: [],
+                isCommentVisible: false,
+
+                result: { testID: "", name: "Error creating object", htmlString: "", correctText: "Error creating object", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome: "" },
+            };
+        }
     }
 
     // A simple function to generate an index-based selector for an element
@@ -45,18 +59,22 @@ export class WebUtils {
     }
 
     private static getAttributes(element: HTMLElement): ElementAttribute[] {
-        let attributeList: ElementAttribute[] = [];
-        const attributes = element.attributes;
-        /* const unwantedAttributes = ['width', 'height', 'viewBox', 'fill', 'xmlns', "media", "sizes", "data-srcset", "itemprop", "itemtype", "srcset", "itemscope", "clip-rule", "fill-rule", "d", "data-ec-variant", "data-ec-position", "data-ga-category", "data-ga-label", "data-ga-action", "data-ga-value", "data-ga-non-interaction", "data-ga-event", "data-ga-event-category", "data-ga-event-action", "data-ga-event-label", "data-ga-event-value", "data-ga-event-non-interaction", "da", "cx", "cy", "r", "stroke", "stroke-width", "stroke-linejoin", "stroke-linecap", "stroke-width", "style", "content", "src"]; */
-        const wantedAttributes = ["aria-labelledby", "aria-label", "aria-expand", "aria-controls","class","type","focusable"];
-
-        for (let i = 0; i < attributes.length; i++) {
-            if (wantedAttributes.includes(attributes[i].name) && attributes[i].value.length > 0) {
-                attributeList.push({ name: attributes[i].name, value: attributes[i].value });
+        try {
+            let attributeList: ElementAttribute[] = [];
+            const attributes = element.attributes;
+            const wantedAttributes = ["aria-labelledby", "aria-label", "aria-expand", "aria-controls", "class", "type", "focusable"];
+            for (let i = 0; i < attributes.length; i++) {
+                if (wantedAttributes.includes(attributes[i].name) && attributes[i].value.length > 0) {
+                    attributeList.push({ name: attributes[i].name, value: attributes[i].value });
+                }
             }
+            attributeList.push({ name: "contentText", value: element.textContent || "" });
+            return attributeList;
+        } catch (error) {
+            console.error(`Error in getAttributes: ${error}`);
+            // Optionally, report the error to a logging service
+            return []; // Return an empty array as a fallback
         }
-        attributeList.push({ name: "contentText", value: element.textContent || "" })
-        return attributeList;
     }
 
     /**

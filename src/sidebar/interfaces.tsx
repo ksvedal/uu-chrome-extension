@@ -76,6 +76,7 @@ export interface ElementObject {
   selector: string;
   result: ElementResult;
   attributes: ElementAttribute[];
+  isCommentVisible: boolean;
 }
 
 export interface ElementResult {
@@ -88,12 +89,13 @@ export interface ElementResult {
   testID: string;
   chromeVersion: string | null;
   chromeExtensionVersion: string | null;
+  outcome: string;
 }
 export interface ElementAttribute {
   name: string;
   value: string;
 }
 
- export interface ExtendedElementObject {
+export interface ExtendedElementObject {
   isCommentVisible: boolean;
 }
