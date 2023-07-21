@@ -76,6 +76,7 @@ export interface ElementObject {
   selector: string;
   result: ElementResult;
   attributes: ElementAttribute[];
+  isCommentVisible: boolean;
 }
 
 export interface ElementResult {
@@ -95,6 +96,6 @@ export interface ElementAttribute {
   value: string;
 }
 
- export interface ExtendedElementObject {
+export interface ExtendedElementObject {
   isCommentVisible: boolean;
 }
