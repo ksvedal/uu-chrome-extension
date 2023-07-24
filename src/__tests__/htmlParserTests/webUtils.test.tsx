@@ -1,4 +1,4 @@
-import { WebUtils } from '../htmlParser/webUtils';
+import { WebUtils } from '../../htmlParser/webUtils';
 
 describe('WebUtils', () => {
     describe('toType', () => {

@@ -11,14 +11,18 @@ import {
 import { ElementObject, ElementType } from "../sidebar/interfaces";
 
 describe('Content Script', () => {
-  let pageInteractor: PageInteractor;
-  let websiteScanner: WebsiteScanner;
+  let page: PageInteractor;
+  let scan: WebsiteScanner;
   let sender: chrome.runtime.MessageSender;
 
   beforeEach(() => {
-    pageInteractor = new PageInteractor();
-    websiteScanner = new WebsiteScanner();
+    page = new PageInteractor();
+    scan = new WebsiteScanner();
     sender = {} as chrome.runtime.MessageSender;
+
+    
+    // Mock the handleHighlightSingle method of the PageInteractor class
+    page.handleHighlightSingle = jest.fn();
   });
 
 
@@ -92,7 +96,13 @@ describe('Content Script', () => {
     // Call the handleMessage function
     handleMessage(testMessage, sender, sendResponseMock);
 
+    // sjekk page.HandleHighlighSingle (message as HighlightMessage)
+    expect(page.handleHighlightSingle).toHaveBeenCalled;
+   /*  expect(page.handleHighlightSingle).toHaveBeenCalledWith(testMessage as HighlightMessage);
 
+    // sjekk sendresponse (message: HighlightSingle response)
+    expect(sendResponseMock).toHaveBeenCalledWith({ message: "HighlightSingle response" });
+ */
 
   });
 

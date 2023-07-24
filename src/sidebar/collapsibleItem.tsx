@@ -232,7 +232,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   };
 
   return (
-    <div className="collapsible-item-child">
+    <div data-testid="collapsible-type" className=" collapsible-item-child">
       <div className="collapsible-item">
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
           <div className="row">
