@@ -1,10 +1,9 @@
 // Import the necessary classes and interfaces for the tests
 // Note: Please adjust the paths according to your project structure
 import { WebsiteScanner } from "../../htmlParser/websiteScanner";
-import { ButtonSelector, ImageSelector, LinkSelector, MenuItems, Headings } from "../../htmlParser/elementSelector";
+import { ElementSelector, ButtonSelector, ImageSelector, LinkSelector, MenuItems, Headings } from "../../htmlParser/elementSelector";
 import { ElementType, ElementObject } from "../../sidebar/interfaces";
-// Define the ElementSelector type
-type ElementSelector = ButtonSelector | ImageSelector | LinkSelector | MenuItems | Headings;
+
 
 // Mock chrome.tabs.query function
 jest.mock('chrome', () => ({
@@ -18,15 +17,31 @@ jest.mock('chrome', () => ({
 
 describe('WebsiteScanner', () => {
   let websiteScanner: WebsiteScanner;
+  
+  const mockSelectors: { [key: string]: ElementSelector } = {
+    "Buttons": {
+      getElements: jest.fn().mockReturnValue([]),
+      selector: "button:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio']), input[type='submit']:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio']), input[type='button']:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio']), [role='button']:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio'])",
+    },
+    "Images": {
+      getElements: jest.fn().mockReturnValue([]),
+      selector: "img:not([role='button'])",
+    },
+    "Links": {
+      getElements: jest.fn().mockReturnValue([]),
+      selector: "a:not([role='button'])",
+    },
+    "Headings": {
+      getElements: jest.fn().mockReturnValue([]),
+      selector: "h1, h2, h3, h4, h5, h6",
+    },
+    "MenuItems": {
+      getElements: jest.fn().mockReturnValue([]),
+      selector: "[role='menuitem'], [role='menuitemcheckbox'], [role='menuitemradio']",
+    },
+  };
 
   beforeEach(() => {
-    const selectors: { [key: string]: ElementSelector } = {
-      "Buttons": new ButtonSelector(),
-      "Images": new ImageSelector(),
-      "Links": new LinkSelector(),
-      "Headings": new Headings(),
-      "MenuItems": new MenuItems()
-    };
     websiteScanner = new WebsiteScanner();
   });
 
@@ -63,16 +78,29 @@ describe('WebsiteScanner', () => {
     expect(scanResult).toEqual(expectedResult);
   });
 
-  test('getWebsiteURL calls the callback with the website URL', () => {
+
+  test('getWebsiteURL calls the callback with undefined when active tab URL is not available', () => {
+    const callback = jest.fn();
+  
+    // Mock chrome.tabs.query to return no active tab
+    global.chrome.tabs.query = jest.fn().mockImplementation((_, cb) => cb([]));
+  
+    websiteScanner.getWebsiteURL(callback);
+  
+    expect(callback).not.toHaveBeenCalled();
+  });
+  
+  test('getWebsiteURL calls the callback with the website URL when active tab URL is available', () => {
     const url = "https://example.com";
     const callback = jest.fn();
-
-    // Mock chrome.tabs.query to return a fake tab
+  
+    // Mock chrome.tabs.query to return a fake active tab with the URL
     const fakeTabs = [{ url }];
     global.chrome.tabs.query = jest.fn().mockImplementation((_, cb) => cb(fakeTabs));
-
+  
     websiteScanner.getWebsiteURL(callback);
-
+  
     expect(callback).toHaveBeenCalledWith(url);
   });
+
 });

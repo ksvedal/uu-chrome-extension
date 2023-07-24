@@ -6,14 +6,18 @@ import { WebUtils } from "./webUtils";
  * Fetches different types of elements from the page
  */
 export class WebsiteScanner {
-    private selectors: { [key: string]: ElementSelector } = {
+    private selectors: { [key: string]: ElementSelector };
+
+    constructor(selectors?: { [key: string]: ElementSelector }) {
+        this.selectors = selectors || {
         "Buttons": new ButtonSelector(),
         "Images": new ImageSelector(),
         "Links": new LinkSelector(),
         "Headings": new Headings(),
         "MenuItems": new MenuItems()
-    };
-
+        };
+    }
+    
     /**
     * Scans for every type we want.
     * @returns 
@@ -35,4 +39,6 @@ export class WebsiteScanner {
             }
         });
     }
+
+
 }
