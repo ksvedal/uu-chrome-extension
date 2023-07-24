@@ -1,17 +1,20 @@
-import { MessageSender } from "../messageObjects/messageSender";
-import { ElementObject, ElementType } from "../sidebar/interfaces";
-import { Message, ScanPageMessage } from "../messageObjects/message";
+import { MessageSender } from "../../messageObjects/messageSender";
+import { ElementObject, ElementType } from "../../sidebar/interfaces";
+import { Message, ScanPageMessage } from "../../messageObjects/message";
 
+// Define a custom type for representing a tab in Chrome
 type Tab = {
   id: number;
   url: string;
 };
 
+// Define a custom type for representing query information about tabs
 type QueryInfo = {
   active: boolean;
   currentWindow: boolean;
 };
 
+// Declare a constant variable 'chrome' to mock Chrome's API
 declare const chrome: {
   tabs: {
     query: (
@@ -30,12 +33,17 @@ declare const chrome: {
   };
 };
 
+// Begin the test suite for the MessageSender class
 describe("MessageSender", () => {
   let messageSender: MessageSender;
   let element: ElementObject;
 
+  // This function will run before each test case to set up common variables
   beforeEach(() => {
+    // Create a new instance of the MessageSender class
     messageSender = new MessageSender();
+
+    // Create a mock 'element' object that will be used in the tests
     element = {
       title: "Example Title",
       htmlString: "<div>Example HTML</div>",
@@ -53,17 +61,18 @@ describe("MessageSender", () => {
         outcome: "Example outcome",
       },
       attributes: [],
+      isCommentVisible: false,
     };
 
     // Mock the chrome.tabs.query function
     chrome.tabs.query = jest.fn((queryInfo: QueryInfo, callback: (tabs: Tab[]) => void) => {
       // Simulate the active tab with a valid id
       const tabs: Tab[] = [{ id: 1, url: "example.com" }];
-      callback(tabs);
+      callback(tabs); // Call the callback function with the simulated tabs
     });
 
-     // Mock the chrome.tabs.sendMessage function
-     chrome.tabs.sendMessage = jest.fn(
+    // Mock the chrome.tabs.sendMessage function
+    chrome.tabs.sendMessage = jest.fn(
       (
         tabId: number,
         message: Message,
@@ -82,14 +91,13 @@ describe("MessageSender", () => {
         }
       }
     );
-    
   });
 
+  // This function will run after each test case to clear mocked functions
   afterEach(() => {
     jest.clearAllMocks();
   });
-
-
+  
   describe("scanPageMessage", () => {
     
     test("should handle error when sendMessage encounters an error", () => {

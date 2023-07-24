@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { createRoot } from "react-dom/client";
 import "../style/sidebar.css";
 import { ElementObject, ElementResult, ElementType } from "./interfaces";
@@ -20,43 +20,58 @@ export const Sidebar: React.FC = () => {
   const [index, setIndex] = useState<number[]>([]);
   const [thisElement, setThisElement] = useState<ElementObject | null>(null);
   const [testID, setTestID] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+
 
   const _message: MessageSender = new MessageSender();
   const _scan: WebsiteScanner = new WebsiteScanner();
   let dark: String = "light";
 
   useEffect(() => {
-        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-        const handleChange = (event: MediaQueryListEvent) => {
-            setDarkMode(event.matches);
-        };
+    const handleChange = (event: MediaQueryListEvent) => {
+      setDarkMode(event.matches);
+    };
 
-        mediaQuery.addEventListener("change", handleChange);
+    mediaQuery.addEventListener("change", handleChange);
 
-        return () => {
-            mediaQuery.removeEventListener("change", handleChange);
-        };
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
   }, []);
 
   const fetchData = () => {
     _message.scanPageMessage((response: ElementType[]) => {
+      if (response == null || response.length === 0) {
+        const errorMsg = "No response from the content script or the response is empty. Refresh the page and try again.";
+        console.error(errorMsg);
+        setError(errorMsg); // update error state with the error message
+        return;
+      }
       setScanPage(response); // update the state with the response data
-      chrome.storage.local.set({ scanResults: response });
-     
+      setError(null); // clear the error message if no error occurs
     });
-
     _scan.getWebsiteURL((url: string) => {
+      if (!url) {
+        const errorMsg = "Failed to get the website URL.";
+        console.error(errorMsg);
+        setError(errorMsg); // update error state with the error message
+        return;
+      }
       setWebsiteURL(url); // update the state with the response data
+      setError(null); // clear the error message if no error occurs
     });
   };
 
+
+
   const toggleDarkMode = () => {
-      setDarkMode(!darkMode);
-    }
+    setDarkMode(!darkMode);
+  }
 
   return (
-      <div className={`App ${darkMode ? "dark" : ""}`}>
+    <div className={`App ${darkMode ? "dark" : ""}`}>
       <div className='header-field'>
         <div className='extension-logo'>
           <img src="scan.png" alt="Extension Logo" />
@@ -65,22 +80,24 @@ export const Sidebar: React.FC = () => {
         <button className={"dank-toggle-button float-right"} onClick={toggleDarkMode}> moon </button>
       </div>
 
-        <div className={"row scan-page-field"}>
-            <div className={"whitebox"}>
-                <div className="col-8">
-                    <div className='welcome-text'>
-                        <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
-                    </div>
-                </div>
-                <div className="col-4">
-                    <RegularButton data-testid="scanPage" text="Scan Page" onClick={fetchData} />
-                </div>
+      <div className={"row scan-page-field"}>
+        <div className={"whitebox"}>
+          <div className="col-8">
+            <div className='welcome-text'>
+              <p> Welcome to Button Seeker! Click the “Scan Page” to find all buttons</p>
             </div>
+          </div>
+          <div className="col-4">
+            <RegularButton data-testid="scanPage" text="Scan Page" onClick={fetchData} />
+          </div>
+          {error && <div className="col-12 error-message">{error}</div>}
+        </div>
+
         <div className="col-12">
-            <MyContext.Provider value ={{elementResults, setElementResults}}>
-                <div className={"whitebox"}>
-                    <ResultsHeader url={websiteURL} isScanned={scanPage.length !== 0}/>
-                </div>
+          <MyContext.Provider value={{ elementResults, setElementResults }}>
+            <div className={"whitebox"}>
+              <ResultsHeader url={websiteURL} isScanned={scanPage.length !== 0} />
+            </div>
             {/*for each element in ScanPage, creates a collapse menu with other nodes*/}
             {scanPage.map((item, index) =>
               <CollapsibleItemType key={index}
@@ -94,9 +111,9 @@ export const Sidebar: React.FC = () => {
                 testID={testID}
               >
               </CollapsibleItemType>)}
-              </MyContext.Provider>
+          </MyContext.Provider>
         </div>
-        </div>
+      </div>
 
     </div>
   );
