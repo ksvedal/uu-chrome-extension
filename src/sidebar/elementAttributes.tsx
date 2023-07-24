@@ -19,25 +19,22 @@ export const ElementAttributes: React.FC<ElementObject> = ({ attributes, htmlStr
 
     //Table created by ElementObject to display attributes
     return (
-        <div>
-            <table>
-                <thead>
+        <table>
+            <thead>
                 <tr>
                     <th className="tableHead attribute">Attribute</th>
                     <th className="tableHead value">Value</th>
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 {
                     // map over the attributess
                     attributess.map((item, index) =>
                         <AttributeField key={index} name={item.name} value={item.value} />
                     )
                 }
-                </tbody>
-            </table>
-
-        </div>
+            </tbody>
+        </table>
     );
 };
 

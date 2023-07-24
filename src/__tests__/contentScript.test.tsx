@@ -8,8 +8,7 @@ import {
   Message,
   ScanPageMessage,
   UnhighlightAllAndHighlightSingleMessage,} from "../messageObjects/message";
-import { ElementObject, ElementType } from "../sidebar/interfaces";
-
+import { ElementType } from "../sidebar/interfaces";
 
 describe('Content Script', () => {
   let pageInteractor: PageInteractor;
@@ -21,6 +20,14 @@ describe('Content Script', () => {
     websiteScanner = new WebsiteScanner();
     sender = {} as chrome.runtime.MessageSender;
   });
+  describe('handleMessage', () => {
+    test('should scan the page', () => {
+      
+      // Mock the messageSender
+      const sendResponseMock = jest.fn();
+      
+      // Create a message object for the 'scanPage' action
+      const message: ScanPageMessage = { action: 'scanPage' };
 
 
   //CASE: scanPage
@@ -97,4 +104,3 @@ describe('Content Script', () => {
   });
 
 });
-
