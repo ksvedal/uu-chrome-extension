@@ -1,6 +1,6 @@
-import { MessageSender } from "../messageObjects/messageSender";
-import { ElementObject, ElementType } from "../sidebar/interfaces";
-import { Message, ScanPageMessage } from "../messageObjects/message";
+import { MessageSender } from "../../messageObjects/messageSender";
+import { ElementObject, ElementType } from "../../sidebar/interfaces";
+import { Message, ScanPageMessage } from "../../messageObjects/message";
 
 // Define a custom type for representing a tab in Chrome
 type Tab = {
@@ -62,6 +62,7 @@ describe("MessageSender", () => {
         outcome: "Example outcome",
       },
       attributes: [],
+      isCommentVisible: false
     };
 
     // Mock the chrome.tabs.query function
