@@ -79,6 +79,7 @@ export function setupTest() {
         outcome: "Example outcome",
       },
       attributes: [],
+      isCommentVisible: false,
     };
 
       
