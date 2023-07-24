@@ -21,7 +21,7 @@ describe('ElementAttributes', () => {
     };
 
 
-    // Check when all attributes are given
+    // Test for when all attributes are given a value
     it('renders all attributes with correct values when all attributes are provided', () => {
         const attributes = [
             { name: 'title', value: 'Sample Title' },
@@ -42,7 +42,37 @@ describe('ElementAttributes', () => {
         expect(screen.getByText('true')).toBeInTheDocument();
     });
 
+
+    // Test for when no values are given (empty table)
+    it('renders attributes with empty values when no attributes are provided', () => {
+        render(
+            <ElementAttributes
+            attributes={[]} // Empty attributes array
+            htmlString=""
+            title=""
+            selector=""
+            result={mockElementResult}
+            isCommentVisible={false}
+          />
+        );
+
+        const attributeTable = screen.getByRole('table');
+        expect(attributeTable).toBeInTheDocument();
+
+        // Check that the table body contains rows for each of the predefined attribute names
+        const attributeNames = ["aria-labelledby", "aria-label", "title", "Description", "Role", "Focusable"];
+        attributeNames.forEach((name) => {
+            const attributeNameCell = screen.getByText(name);
+            expect(attributeNameCell).toBeInTheDocument();
+
+            // Check that the corresponding value cell is empty
+            const valueCell = attributeNameCell.parentElement?.querySelector('.tableBody.value');
+            expect(valueCell?.textContent).toBe('');
+        });
+    });
+
     
+    // Test for when values are updated
     it('updates attribute values when attributes prop changes', () => {
         const initialAttributes = [
             { name: 'title', value: 'Initial Title' },
@@ -64,6 +94,4 @@ describe('ElementAttributes', () => {
         expect(screen.getByText('Updated Title')).toBeInTheDocument();
         expect(screen.getByText('updatedRole')).toBeInTheDocument();
     });
-
-
 });
