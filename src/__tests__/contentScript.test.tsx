@@ -8,7 +8,7 @@ import {
   Message,
   ScanPageMessage,
   UnhighlightAllAndHighlightSingleMessage,} from "../messageObjects/message";
-import { ElementType } from "../sidebar/interfaces";
+import { ElementObject, ElementType } from "../sidebar/interfaces";
 
 describe('Content Script', () => {
   let pageInteractor: PageInteractor;
@@ -20,14 +20,7 @@ describe('Content Script', () => {
     websiteScanner = new WebsiteScanner();
     sender = {} as chrome.runtime.MessageSender;
   });
-  describe('handleMessage', () => {
-    test('should scan the page', () => {
-      
-      // Mock the messageSender
-      const sendResponseMock = jest.fn();
-      
-      // Create a message object for the 'scanPage' action
-      const message: ScanPageMessage = { action: 'scanPage' };
+
 
 
   //CASE: scanPage
@@ -72,21 +65,21 @@ describe('Content Script', () => {
       selector: 'div.test-element',
       result: {
         htmlString: '<div>Test Element</div>',
-        issue: false,
-        name: 'Test Element',
-        comment: '',
-        checked: false,
-        url: '',
-        testID: '123',
-        ChromeVersion: null,
-        ChromeExtensionVersion: null
+        correctText: 'string',
+        name: 'string',
+        comment: 'string',
+        checked: true,
+        url: 'string',
+        testID: 'string',
+        chromeVersion: '',
+        chromeExtensionVersion: 'string | null',
+        outcome: 'string'
       },
       attributes: [
         { name: 'attribute1', value: 'value1' },
         { name: 'attribute2', value: 'value2' },
       ],
-      ChromeVersion: "",
-      ChromeExtensionVersion: ""
+      isCommentVisible: true,
     };
 
     // HighlightMessage for handleHighlightSingle

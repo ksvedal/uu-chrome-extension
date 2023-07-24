@@ -61,6 +61,7 @@ describe("MessageSender", () => {
         outcome: "Example outcome",
       },
       attributes: [],
+      isCommentVisible: true,
     };
 
     // Mock the chrome.tabs.query function
