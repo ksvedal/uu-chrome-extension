@@ -42,5 +42,28 @@ describe('ElementAttributes', () => {
         expect(screen.getByText('true')).toBeInTheDocument();
     });
 
+    
+    it('updates attribute values when attributes prop changes', () => {
+        const initialAttributes = [
+            { name: 'title', value: 'Initial Title' },
+            { name: 'Role', value: 'initialRole' },
+        ];
+        
+        const { rerender } = render(<ElementAttributes attributes={initialAttributes} htmlString="" title={''} selector={''} result={mockElementResult} isCommentVisible={false} />);
+        
+        expect(screen.getByText('Initial Title')).toBeInTheDocument();
+        expect(screen.getByText('initialRole')).toBeInTheDocument();
+
+        const updatedAttributes = [
+            { name: 'title', value: 'Updated Title' },
+            { name: 'Role', value: 'updatedRole' },
+        ];
+
+        rerender(<ElementAttributes attributes={updatedAttributes} htmlString="" title={''} selector={''} result={mockElementResult} isCommentVisible={false} />);
+        
+        expect(screen.getByText('Updated Title')).toBeInTheDocument();
+        expect(screen.getByText('updatedRole')).toBeInTheDocument();
+    });
+
 
 });
