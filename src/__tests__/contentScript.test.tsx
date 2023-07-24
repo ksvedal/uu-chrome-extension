@@ -20,9 +20,6 @@ describe('Content Script', () => {
     scan = new WebsiteScanner();
     sender = {} as chrome.runtime.MessageSender;
 
-    
-    // Mock the handleHighlightSingle method of the PageInteractor class
-    page.handleHighlightSingle = jest.fn();
   });
 
 
@@ -50,15 +47,10 @@ describe('Content Script', () => {
 
 
 
-
-  // skal sjekke at case highlightElement bruker handleHighlighSingle på _page 
-  // der handleHighlighSingle i pageInteractor tar inn en message av typen HighlightMessage
-  // der klassen highlightMessage har et element: Elementobject og isChecked: boolean
-  // der ElementObject i interfaces har string, string, Elementresult, Elementattribute
-  // der Elementresult har string, boolean, osv.. ok og ElementAttribute har string, string.
-
   // CASE: highlighElement
   test('handleMessage should highlight a single element', () => {
+
+    console.log('TESTING HIGHLIGHT ELEMENT');
   
     const sendResponseMock = jest.fn();
   
@@ -76,7 +68,7 @@ describe('Content Script', () => {
         url: 'string',
         testID: 'string',
         chromeVersion: '',
-        chromeExtensionVersion: 'string | null',
+        chromeExtensionVersion: '',
         outcome: 'string'
       },
       attributes: [
@@ -93,17 +85,20 @@ describe('Content Script', () => {
       isChecked: false,
     };
 
-    // Call the handleMessage function
-    handleMessage(testMessage, sender, sendResponseMock);
+    const handleHighlightSingleMock = jest.spyOn(page, 'handleHighlightSingle');
+    handleHighlightSingleMock.mockImplementation(() => {});
 
-    // sjekk page.HandleHighlighSingle (message as HighlightMessage)
-    expect(page.handleHighlightSingle).toHaveBeenCalled;
-   /*  expect(page.handleHighlightSingle).toHaveBeenCalledWith(testMessage as HighlightMessage);
+    handleMessage(testMessage, sender, sendResponseMock); 
 
-    // sjekk sendresponse (message: HighlightSingle response)
+
+    //  _page.handleHighlightSingle((message as HighlightMessage));
+    
+
+
+    //  sendResponse({ message: "HighlightSingle response" });
     expect(sendResponseMock).toHaveBeenCalledWith({ message: "HighlightSingle response" });
- */
 
+    
   });
 
 });
