@@ -1,4 +1,4 @@
-import { ButtonSelector } from "../htmlParser/elementSelector";
+import { ButtonSelector } from "../../htmlParser/elementSelector";
 
 describe('ButtonSelector', () => {
     test('getElements should return the correct elements', () => {
