@@ -71,6 +71,42 @@ describe('ElementAttributes', () => {
         });
     });
 
+
+    // Test for when some attributes have values and some don't
+    it('renders attributes with correct values when a subset of attributes is provided', () => {
+        const attributes = [
+          { name: 'title', value: 'Sample Title' },
+          { name: 'Role', value: 'button' },
+        ];
+    
+        render(
+          <ElementAttributes
+            attributes={attributes}
+            htmlString=""
+            title=""
+            selector=""
+            result={mockElementResult}
+            isCommentVisible={false}
+          />
+        );
+    
+        // Check that the table body contains rows for each of the provided attribute names
+        const attributeNameValuePairs = {
+          title: 'Sample Title',
+          Role: 'button',
+          // Add more attributes and their expected values here if needed
+        };
+    
+        Object.entries(attributeNameValuePairs).forEach(([name, value]) => {
+          const attributeNameCell = screen.getByText(name);
+          expect(attributeNameCell).toBeInTheDocument();
+    
+          // Check that the corresponding value cell contains the correct value
+          const valueCell = attributeNameCell.parentElement?.querySelector('.tableBody.value');
+          expect(valueCell?.textContent).toBe(value);
+        });
+    });
+
     
     // Test for when values are updated
     it('updates attribute values when attributes prop changes', () => {
