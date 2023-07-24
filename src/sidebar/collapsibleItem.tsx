@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast, Flip, Slide, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IsCheckedStatus from "./isCheckedStatus";
+import { successToast } from "./toastUtils";
 
 const messageSender = new MessageSender();
 
@@ -65,17 +66,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     // Set a new timeout to execute storeText after 2 seconds
     typingTimeoutRef.current = setTimeout(() => {
       storeText(index, newText);
-      toast.success(`'${newText}' lagret `, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        progress: undefined,
-        closeButton: false,
-        transition: Slide,
-        toastId: "the-toasht",
-        icon: false
-      })
+      successToast(`'${newText}' lagret `);
     }, 3000) as any; // Cast the setTimeout return value to any
   };
 
