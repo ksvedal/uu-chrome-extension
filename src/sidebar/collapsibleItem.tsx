@@ -115,7 +115,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
    
 
     return (
-        <div className='collapsible-item'>
+        <div data-testid="collapsible-type" className='collapsible-item'>
             <div className='collapsible-item-parent'>
                 <div className={`item-header row ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
 
