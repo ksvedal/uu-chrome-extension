@@ -4,7 +4,7 @@ import {
   UnhighlightAllAndHighlightSingleMessage,
   HighlightAllMessage,
   ScanPageMessage,
-} from "../messageObjects/message";
+} from "../../messageObjects/message";
 
 describe("Messages", () => {
   describe("HighlightMessage", () => {
