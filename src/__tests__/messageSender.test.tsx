@@ -48,6 +48,7 @@ describe("MessageSender", () => {
       title: "Example Title",
       htmlString: "<div>Example HTML</div>",
       selector: ".example-selector",
+      isCommentVisible: false,
       result: {
         name: "Example Name",
         correctText: "Example Correct Text",

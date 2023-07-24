@@ -3,9 +3,14 @@ import TabIcon from './tabIcon';
 import { ResultsHeaderInterface } from './interfaces';
 import { MyContext } from './resultItemsContext';
 import { TestUtils } from './testUtils';
+import { postTestResults } from '../client/testResultsApi';
+import { Slide, toast } from 'react-toastify';
+import { errorToast, successToast } from './toastUtils';
+import { APIError } from '../client/apiError';
+
 
 const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => {
-  const [error, setError] = useState<string | null>(null);
+  const [actionResponse, setActionResponse] = useState<any | null>(null);
 
   if (!isScanned) {
     return null;
@@ -19,11 +24,11 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => 
 
 
 
-  const logResult = () => {
+  const logResult = async () => {
     if (elementResults == null || elementResults.length === 0) {
       const errorMsg = "No elements are evaluated yet.";
       console.error(errorMsg);
-      setError(errorMsg);
+      setActionResponse({ "message": errorMsg, "error": true });
       return;
     }
 
@@ -35,8 +40,22 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => 
       }
       console.log(result);
     };
-    setError(null);
-    console.log("Result: " + elementResults);
+    try {
+      //Currently using both toast and actionResponse, might only need one
+      const message : string = await postTestResults(elementResults).then(data => data.message);
+      setActionResponse({ "message": message, "error": false });
+      successToast(message);
+    } catch (error) {
+      if (error instanceof APIError) {
+        const errorMessage = `Failed to send results: ${error.message}. Status: ${error.status}`;
+        errorToast(errorMessage);
+        setActionResponse({ "message": errorMessage, "error": true });
+      } else {
+        errorToast("An unknown error occurred");
+        setActionResponse({ "message": "An unknown error occurred", "error": true });
+      }
+    }
+
   }
 
   return (
@@ -52,7 +71,8 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => 
           Print results
         </button>
       </div>
-      {error && <div className="col-12 error-message">{error}</div>}
+      {actionResponse && <div className={actionResponse.error ? "col-12 error-message" : "col-12 complete-message"}>
+        {actionResponse.message}</div>}
     </div>
   );
 };
