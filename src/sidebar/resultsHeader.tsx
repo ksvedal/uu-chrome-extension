@@ -4,13 +4,12 @@ import { ResultsHeaderInterface } from './interfaces';
 import { MyContext } from './resultItemsContext';
 import { TestUtils } from './testUtils';
 import { postTestResults } from '../client/testResultsApi';
-import { Slide, toast } from 'react-toastify';
 import { errorToast, successToast } from './toastUtils';
 import { APIError } from '../client/apiError';
 
 
 const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => {
-  const [actionResponse, setActionResponse] = useState<any | null>(null);
+  const [actionResponse, setActionResponse] = useState<{ message: string, error: boolean } | null>(null);
 
   if (!isScanned) {
     return null;
@@ -42,7 +41,7 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => 
     };
     try {
       //Currently using both toast and actionResponse, might only need one
-      const message : string = await postTestResults(elementResults).then(data => data.message);
+      const message: string = await postTestResults(elementResults).then(data => data);
       setActionResponse({ "message": message, "error": false });
       successToast(message);
     } catch (error) {
