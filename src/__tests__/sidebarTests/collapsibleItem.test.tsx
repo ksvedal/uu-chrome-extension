@@ -1,7 +1,7 @@
 // Import necessary dependencies and libraries
 import React from "react";
 import { render } from "@testing-library/react";
-import { CollapsibleItemType } from "../sidebar/collapsibleItem";
+import { CollapsibleItemType } from "../../sidebar/collapsibleItem";
 import '@testing-library/jest-dom/extend-expect';
 
 // Describe the test suite for the 'CollapsibleItemType' component
