@@ -2,8 +2,6 @@
     "compilerOptions": {
         "strict": true,
         "target": "es6",
-        "moduleResolution": "bundler",
-        "module": "ES6",
         "esModuleInterop": true,
         "sourceMap": false,
         "rootDir": "src",
@@ -14,12 +12,11 @@
     },
     "exclude": [
         "node_modules",
-        "__test__",
-     ],
-
-    "typedocOptions":{
+        "__tests__" // Corrected directory name for test files
+    ],
+    "typedocOptions": {
         "entryPoints": [
             "./src/**/*"
-          ]
+        ]
     }
 }

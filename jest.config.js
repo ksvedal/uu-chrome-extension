@@ -18,6 +18,7 @@ module.exports = {
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json'],
     moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '^src/__tests__/(.*)$': '<rootDir>/src/__tests__/$1',
     },
     setupFiles: ["jest-webextension-mock"],
 

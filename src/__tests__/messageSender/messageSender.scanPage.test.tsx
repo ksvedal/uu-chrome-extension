@@ -1,5 +1,5 @@
 // Import the necessary functions and types from testUtils
-import { setupTest, cleanupTest } from './testUtils';
+import { setupTest, cleanupTest} from './testUtils';
 import { ScanPageMessage } from '../../messageObjects/message';
 import { MessageSender } from '../../messageObjects/messageSender';
 import { ElementObject } from '../../sidebar/interfaces';

@@ -87,4 +87,10 @@ export function setupTest() {
 
 export function cleanupTest(): void {
   jest.clearAllMocks();
-}
+};
+
+describe("TestUtils", () => {  
+  test("Mock test", () => {
+    expect(true).toBe(true)
+  });
+});
