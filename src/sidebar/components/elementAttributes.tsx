@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ElementAttribute, ElementObject } from '../interfaces/interfaces';
+import { ElementAttribute, ElementObject } from '../../interfaces/interfaces';
 
 export const ElementAttributes: React.FC<ElementObject> = ({ attributes, htmlString, }) => {
     // Define your desired attribute names

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { CollapsibleArrowButton, RadioButtonGroup, RegularButton, ToggleButton } from '../../sidebar/buttons'; 
+import { CollapsibleArrowButton, RadioButtonGroup, RegularButton, ToggleButton } from '../../sidebar/components/buttons'; 
 
 // ------------------------- ToggleButton component -------------------------------------
 test('ToggleButton renders correctly', () => {

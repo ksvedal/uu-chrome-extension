@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { CollapsibleObjectInterface } from "../interfaces/interfaces";
 import { MessageSender } from "../messageObjects/messageSender";
-import IsCheckedStatus from "./isCheckedStatus";
-import { ToggleButton } from "./buttons";
+import IsCheckedStatus from "./components/isCheckedStatus";
+import { ToggleButton } from "./components/buttons";
 
 const messageSender = new MessageSender();
 
-export const CollapsibleItemElement: React.FC<CollapsibleObjectInterface> = ({
+export const CollapsibleObject: React.FC<CollapsibleObjectInterface> = ({
     elementType,
     thisElement,
     children,
