@@ -3,13 +3,10 @@ import { createRoot } from "react-dom/client";
 import "../style/sidebar.css";
 import { ElementType, JsonDataFormat } from "../interfaces/interfaces";
 import { RegularButton } from './components/buttons';
-// import { MessageSender } from '../messageObjects/messageSender';
-// import { WebsiteScanner } from '../htmlParser/websiteScanner';
 import ResultsHeader from './resultsHeader';
-import { CollapsibleItemType } from './components/collapsibleType';
 import { MyContext } from './components/resultItemsContext';
-import { fetchData, toggleDarkMode } from './sidebarUtils/sidebarFunctions';
-
+import { fetchData, toggleDarkMode } from './utils/sidebarUtils';
+import { CollapsibleTypeContainer } from './containers/collapsibleTypeContainer';
 
 export const Sidebar: React.FC = () => {
   const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -67,12 +64,12 @@ export const Sidebar: React.FC = () => {
             </div>
             {/*for each element in ScanPage, creates a collapse menu with other nodes*/}
             {scanPageResult.map((elementType, index) =>
-              <CollapsibleItemType
+              <CollapsibleTypeContainer
                 key={index}
                 elementType={elementType} // Buttons, Links, Images, etc.
                 url={websiteURL}
               >
-              </CollapsibleItemType>)}
+              </CollapsibleTypeContainer>)}
           </MyContext.Provider>
         </div>
       </div>

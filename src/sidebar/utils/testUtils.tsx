@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { JsonDataFormat } from '../interfaces/interfaces';
+import { JsonDataFormat } from '../../interfaces/interfaces';
 
 export class TestUtils {
 

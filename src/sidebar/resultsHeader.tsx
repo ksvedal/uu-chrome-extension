@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import TabIcon from './tabIcon';
 import { ResultsHeaderInterface } from '../interfaces/interfaces';
 import { MyContext } from './components/resultItemsContext';
-import { TestUtils } from './testUtils';
+import { TestUtils } from './utils/testUtils';
 
 const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => {
   const [error, setError] = useState<string | null>(null);

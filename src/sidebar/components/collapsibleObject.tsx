@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { CollapsibleObjectInterface } from "../../interfaces/interfaces";
-import { toggleCheck } from "../sidebarUtils/collapsibleObjectFunctions";
+import { toggleCheck } from "../utils/objectUtils";
 import IsCheckedStatus from "./isCheckedStatus";
 import { ToggleButton } from "./buttons";
 
 
 export const CollapsibleObject: React.FC<CollapsibleObjectInterface> = ({
+    isExpanded,
+    setIsExpanded,
+    isHighlighted,
     elementType,
     thisElement,
     children,
@@ -14,14 +17,6 @@ export const CollapsibleObject: React.FC<CollapsibleObjectInterface> = ({
     setHighlightedElement,
     setIsAllHighlighted,
   }) => {
-  
-    const [isHighlighted, setIsHighlighted] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(false);
-  
-  
-    useEffect(() => {
-      setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
-    }, [highlightedElement, isAllHighlighted]);
   
     return (
       <div data-testid="collapsible-type" className=" collapsible-item-child">

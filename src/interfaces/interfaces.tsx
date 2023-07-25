@@ -22,18 +22,33 @@ export interface CollapsibleArrowProps {
 }
 
 export interface CollapsibleTypeInterface {
+  children?: ReactNode
+  isExpanded: boolean
+  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>
+  elementType: ElementType
+  isAllHighlighted: boolean
+  setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>
+  currentHighlighted: ElementObject | null
+  setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>
+  commentBoxValue: string[]
+  setCommentBoxValue: React.Dispatch<React.SetStateAction<string[]>>
+  typingTimeoutRef: React.MutableRefObject<number | null>
+  url: string
+  typeElements: ElementObject[]
+  setTypeElements: React.Dispatch<React.SetStateAction<ElementObject[]>>
+  setJsonData: React.Dispatch<React.SetStateAction<JsonDataFormat[]>>
+}
+
+export interface CollapsibleTypeContainerInterface {
   elementType: ElementType;
-  // thisElement: ElementObject | null;
   children?: ReactNode;
-  // isAllHighlighted: boolean;
-  // setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
-  // setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>;
-  // parentIndex: number;
   url: string;
-  // testID: string;
 }
 
 export interface CollapsibleObjectInterface {
+  isExpanded: boolean
+  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>
+  isHighlighted:boolean
   elementType: ElementType;
   thisElement: ElementObject;
   children?: ReactNode;
@@ -41,11 +56,27 @@ export interface CollapsibleObjectInterface {
   isAllHighlighted: boolean;
   setHighlightedElement: React.Dispatch<React.SetStateAction<ElementObject | null>>;
   setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
-  /* updateJson: (elementObject: ElementObject, index: number, url: string) => void;
-  index: number;
-  url: string;
-  testID: string; */
 }
+
+export interface CollapsibleObjectContainerInterface {
+  children?: ReactNode
+  elementType: ElementType
+  thisElement: ElementObject
+  highlightedElement: ElementObject | null
+  setHighlightedElement: React.Dispatch<React.SetStateAction<ElementObject | null>>
+  isAllHighlighted: boolean
+  setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>
+  commentBoxValue: string[]
+  setCommentBoxValue: React.Dispatch<React.SetStateAction<string[]>>
+  typingTimeoutRef:  React.MutableRefObject<number | null>
+  url: string
+  typeElements: ElementObject[]
+  setTypeElements: React.Dispatch<React.SetStateAction<ElementObject[]>>
+  setJsonData:React.Dispatch<React.SetStateAction<JsonDataFormat[]>>
+  index: number
+}
+
+
 
 export interface ResultsHeaderInterface {
   url: string;

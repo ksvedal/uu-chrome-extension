@@ -1,29 +1,30 @@
-import React, { useContext, useState, useRef } from "react";
-import { CollapsibleTypeInterface, ElementObject, JsonDataFormat } from "../../interfaces/interfaces";
+import React from "react";
+import { CollapsibleTypeInterface } from "../../interfaces/interfaces";
 import { CollapsibleObject } from "./collapsibleObject";
 import { ToggleButton, RadioButtonGroup } from "./buttons";
 import { ElementAttributes } from "./elementAttributes";
-import { MyContext } from "./resultItemsContext";
 import { ToastContainer } from 'react-toastify';
-import { toggleCheck, updateJson, handleTextareaChange, storeText, handleOptionChange, openCommentSection } from "../sidebarUtils/collapsibleTypeFunctions";
+import { toggleCheck, updateJson, handleTextareaChange, storeText, handleOptionChange, openCommentSection } from "../utils/typeUtils";
 import 'react-toastify/dist/ReactToastify.css';
+import { CollapsibleObjectContainer } from "../containers/collapsibleObjectContainer";
 
 
-export const CollapsibleItemType: React.FC<CollapsibleTypeInterface> = ({ elementType, url }) => {
-  const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isAllHighlighted, setIsAllHighlighted] = useState(false);
-  const [commentBoxValue, setCommentBoxValue] = useState<string[]>(elementType.nodes.map(node => node.result.comment || ""));
-  const [typeElements, setTypeElements] = useState<ElementObject[]>(elementType.nodes);
-  const context = useContext(MyContext);
-  const typingTimeoutRef = useRef<number | null>(null);
-
-  if (context === null) {
-    // handle the case where the context is null
-    return null;
-  }
-  const { jsonData, setJsonData } = context;
-
+export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
+    isExpanded,
+    setIsExpanded,
+    elementType,
+    isAllHighlighted,
+    setIsAllHighlighted,
+    currentHighlighted,
+    setCurrentHighlighted,
+    commentBoxValue,
+    setCommentBoxValue,
+    typingTimeoutRef,
+    url,
+    typeElements,
+    setTypeElements,
+    setJsonData
+ }) => {
 
   return (
     <div className='collapsible-item'>
@@ -53,60 +54,23 @@ export const CollapsibleItemType: React.FC<CollapsibleTypeInterface> = ({ elemen
           <div className="collapsible-item-children">
             {elementType.nodes.map((elementObject, index) => {
               return (
-                <CollapsibleObject
+                <CollapsibleObjectContainer
                   elementType={elementType}
-                  key={index}
+                  index={index}
                   thisElement={elementObject}
                   highlightedElement={currentHighlighted}
                   setHighlightedElement={setCurrentHighlighted}
                   isAllHighlighted={isAllHighlighted}
                   setIsAllHighlighted={setIsAllHighlighted}
+                  commentBoxValue={commentBoxValue}
+                  setCommentBoxValue={setCommentBoxValue}
+                  typingTimeoutRef={typingTimeoutRef}
+                  url={url}
+                  typeElements={typeElements}
+                  setTypeElements={setTypeElements}
+                  setJsonData={setJsonData}
                 >
-                  <ElementAttributes
-                    attributes={elementObject.attributes}
-                    title={elementObject.title}
-                    htmlString={elementObject.htmlString}
-                    selector={elementObject.selector}
-                    result={elementObject.result}
-                    isCommentVisible={false} />
-
-                  <RadioButtonGroup onOptionChange={(value) => {
-                    handleOptionChange(value, index, url, elementType, typeElements, setTypeElements, setJsonData);
-                    openCommentSection(index, elementType);
-                  }} presetOption={elementType.nodes[index].result.correctText} index={index} />
-
-                  <div>
-                    {elementType.nodes[index].isCommentVisible && (
-                      <div className="comment-box">
-                        <textarea
-                          className="textarea"
-                          name="comment"
-                          form="usrform"
-                          value={commentBoxValue[index]}
-                          onChange={(e) => handleTextareaChange(
-                              index,
-                              e.target.value,
-                              setCommentBoxValue,
-                              typingTimeoutRef,
-                              elementType,
-                              elementObject,
-                              url,
-                              typeElements,
-                              setTypeElements,
-                              setJsonData)}
-                          onBlur={() => {
-                            // Execute storeText when the textarea loses focus
-                            storeText(index, commentBoxValue[index], elementType);
-                            updateJson(elementType.nodes[index], index, url, typeElements, setTypeElements, setJsonData);
-                          }}
-                        >
-                          Enter text here...
-                        </textarea>
-                      </div>
-                    )}
-
-                  </div>
-                </CollapsibleObject>
+                </CollapsibleObjectContainer>
               );
             })}
             <ToastContainer />

@@ -1,8 +1,8 @@
 // Import necessary dependencies and libraries
 import React from "react";
 import { render } from "@testing-library/react";
-import { CollapsibleItemType } from "../../sidebar/components/collapsibleType";
 import '@testing-library/jest-dom/extend-expect';
+import { CollapsibleTypeContainer } from "../../sidebar/containers/collapsibleTypeContainer";
 
 // Describe the test suite for the 'CollapsibleItemType' component
 describe("CollapsibleItemType", () => {
@@ -41,7 +41,7 @@ describe("CollapsibleItemType", () => {
 
     // Render the 'CollapsibleItemType' component with the mock props
     const { container } = render(
-      <CollapsibleItemType
+      <CollapsibleTypeContainer
         elementType={type}
         // thisElement={null}
         // isAllHighlighted={false}
