@@ -1,7 +1,7 @@
 import { PageInteractor } from '../../htmlParser/pageInteractor';
 import { HighlightMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage } from '../../messageObjects/message';
 import { mock, MockProxy } from 'jest-mock-extended';
-import { ElementObject } from '../../interfaces/interfaces';
+import { ElementObject } from '../../interfaces/elementInterfaces';
 
 // Create mock HTMLElement
 let mockElem: MockProxy<HTMLElement>;

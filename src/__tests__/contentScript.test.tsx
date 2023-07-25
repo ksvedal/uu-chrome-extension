@@ -1,14 +1,8 @@
 import { handleMessage } from "../contentScript";
 import { PageInteractor } from "../htmlParser/pageInteractor";
 import { WebsiteScanner } from "../htmlParser/websiteScanner";
-import {
-  HighlightAllMessage,
-  HighlightAndRemovePreviousMessage,
-  HighlightMessage,
-  Message,
-  ScanPageMessage,
-  UnhighlightAllAndHighlightSingleMessage,} from "../messageObjects/message";
-import { ElementType } from "../interfaces/interfaces";
+import { ScanPageMessage } from "../messageObjects/message";
+import { ElementType } from "../interfaces/elementInterfaces";
 
 describe('Content Script', () => {
   let pageInteractor: PageInteractor;

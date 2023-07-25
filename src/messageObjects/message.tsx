@@ -1,4 +1,4 @@
-import { ElementObject, ElementType } from "../interfaces/interfaces";
+import { ElementObject, ElementType } from "../interfaces/elementInterfaces";
 
 export interface Message {
     action: string;

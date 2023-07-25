@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import TabIcon from './tabIcon';
-import { ResultsHeaderInterface } from '../interfaces/interfaces';
+import { ResultsHeaderInterface } from '../interfaces/resultInterfaces';
 import { MyContext } from './components/resultItemsContext';
 import { TestUtils } from './utils/testUtils';
 

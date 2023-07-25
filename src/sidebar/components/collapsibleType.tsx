@@ -1,10 +1,8 @@
 import React from "react";
-import { CollapsibleTypeInterface } from "../../interfaces/interfaces";
-import { CollapsibleObject } from "./collapsibleObject";
-import { ToggleButton, RadioButtonGroup } from "./buttons";
-import { ElementAttributes } from "./elementAttributes";
+import { CollapsibleTypeInterface } from "../../interfaces/collapsibleTypeInterfaces";
+import { ToggleButton } from "./buttons";
 import { ToastContainer } from 'react-toastify';
-import { toggleCheck, updateJson, handleTextareaChange, storeText, handleOptionChange, openCommentSection } from "../utils/typeUtils";
+import { toggleCheck } from "../utils/typeUtils";
 import 'react-toastify/dist/ReactToastify.css';
 import { CollapsibleObjectContainer } from "../containers/collapsibleObjectContainer";
 

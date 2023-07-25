@@ -1,5 +1,5 @@
 import { WebsiteScanner } from "../../htmlParser/websiteScanner";
-import { ElementType } from "../../interfaces/interfaces";
+import { ElementType } from "../../interfaces/elementInterfaces";
 import { MessageSender } from "../../messageObjects/messageSender";
 
 

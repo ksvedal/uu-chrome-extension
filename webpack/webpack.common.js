@@ -6,7 +6,7 @@ const srcDir = path.join(__dirname, "..", "src");
 module.exports = {
     entry: {
         content_script: path.join(srcDir, 'contentScript.tsx'),
-        sidebar: path.join(srcDir, 'sidebar/sidebar.tsx'),
+        sidepanel: path.join(srcDir, 'sidebar/containers/sidepanelContainer.tsx'),
         open_sidepanel: path.join(srcDir, 'openSidepanel.js'),
     },
     output: {

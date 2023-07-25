@@ -1,38 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { createRoot } from "react-dom/client";
-import "../style/sidebar.css";
-import { ElementType, JsonDataFormat } from "../interfaces/interfaces";
-import { RegularButton } from './components/buttons';
-import ResultsHeader from './resultsHeader';
-import { MyContext } from './components/resultItemsContext';
-import { fetchData, toggleDarkMode } from './utils/sidebarUtils';
-import { CollapsibleTypeContainer } from './containers/collapsibleTypeContainer';
+import React from 'react';
+import "../../style/sidepanel.css";
+import { RegularButton } from './buttons';
+import ResultsHeader from '../resultsHeader';
+import { MyContext } from './resultItemsContext';
+import { fetchData, toggleDarkMode } from '../utils/sidebarUtils';
+import { CollapsibleTypeContainer } from '../containers/collapsibleTypeContainer';
+import { SidepanelInterface } from '../../interfaces/sidepanelInterfaces';
 
-export const Sidebar: React.FC = () => {
-  const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const [darkMode, setDarkMode] = useState(prefersDarkMode);
-  const [scanPageResult, setScanPageResult] = useState<ElementType[]>([]); 
-  const [websiteURL, setWebsiteURL] = useState<string>("");
-  const [jsonData, setJsonData] = useState<JsonDataFormat[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-
-  let dark: String = "light";
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      setDarkMode(event.matches);
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-    };
-  }, []);
-
+export const Sidepanel: React.FC<SidepanelInterface> = ({
+  darkMode,
+  setDarkMode,
+  scanPageResult,
+  setScanPageResult,
+  error,
+  setError,
+  websiteURL,
+  setWebsiteURL,
+  jsonData,
+  setJsonData
+}) => {
+  
 
   return (
     <div className={`App ${darkMode ? "dark" : ""}`}>
@@ -77,12 +64,3 @@ export const Sidebar: React.FC = () => {
     </div>
   );
 }
-
-//export default Sidebar;
-const root = createRoot(document.getElementById("root")!);
-
-root.render(
-  <React.StrictMode>
-    <Sidebar />
-  </React.StrictMode>
-);

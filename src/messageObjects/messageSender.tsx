@@ -1,5 +1,5 @@
-import { ElementObject, ElementType } from "../interfaces/interfaces";
-import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage, Message } from "./message";
+import { ElementObject, ElementType } from "../interfaces/elementInterfaces";
+import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage } from "./message";
 
 export class MessageSender {
 

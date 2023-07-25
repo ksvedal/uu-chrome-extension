@@ -1,8 +1,9 @@
+import React from "react";
 import { useState, useContext, useRef } from "react";
-import { CollapsibleTypeContainerInterface, ElementObject } from "../../interfaces/interfaces";
+import { CollapsibleTypeContainerInterface } from "../../interfaces/collapsibleTypeInterfaces";
 import { MyContext } from "../components/resultItemsContext";
 import { CollapsibleType } from "../components/collapsibleType";
-import React from "react";
+import { ElementObject } from "../../interfaces/elementInterfaces";
 
 
 export const CollapsibleTypeContainer: React.FC<CollapsibleTypeContainerInterface> = ({elementType, url}) => {

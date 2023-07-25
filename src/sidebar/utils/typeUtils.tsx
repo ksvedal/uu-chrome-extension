@@ -1,6 +1,7 @@
 import { toast, Slide } from "react-toastify";
-import { ElementObject, ElementType, JsonDataFormat } from "../../interfaces/interfaces";
+import { ElementObject, ElementType } from "../../interfaces/elementInterfaces";
 import { MessageSender } from "../../messageObjects/messageSender";
+import { JsonDataFormat } from "../../interfaces/resultInterfaces";
 
 
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { CollapsibleObjectInterface } from "../../interfaces/interfaces";
+import React from "react";
+import { CollapsibleObjectInterface } from "../../interfaces/collapsibleObjectInterfaces";
 import { toggleCheck } from "../utils/objectUtils";
 import IsCheckedStatus from "./isCheckedStatus";
 import { ToggleButton } from "./buttons";

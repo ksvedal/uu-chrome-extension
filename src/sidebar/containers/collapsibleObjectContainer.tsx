@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CollapsibleObjectContainerInterface } from "../../interfaces/interfaces";
+import { CollapsibleObjectContainerInterface } from "../../interfaces/collapsibleObjectInterfaces";
 import { CollapsibleObject } from "../components/collapsibleObject";
 import { RadioButtonGroup } from "../components/buttons";
 import { ElementAttributes } from "../components/elementAttributes";

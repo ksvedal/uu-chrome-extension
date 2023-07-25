@@ -1,4 +1,4 @@
-import { ElementObject, ElementType } from "../../interfaces/interfaces";
+import { ElementObject, ElementType } from "../../interfaces/elementInterfaces";
 import { MessageSender } from "../../messageObjects/messageSender";
 
 const messageSender = new MessageSender();

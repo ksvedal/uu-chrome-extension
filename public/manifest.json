@@ -11,7 +11,7 @@
   },
 
   "side_panel": {
-    "default_path": "sidebar.html"
+    "default_path": "sidepanel.html"
   },
 
   "content_scripts": [

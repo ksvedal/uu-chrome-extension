@@ -1,5 +1,5 @@
 import { MessageSender } from "../../messageObjects/messageSender";
-import { ElementObject, ElementType } from "../../interfaces/interfaces";
+import { ElementObject, ElementType } from "../../interfaces/elementInterfaces";
 import { Message, ScanPageMessage } from "../../messageObjects/message";
 
 // Define a custom type for representing a tab in Chrome
