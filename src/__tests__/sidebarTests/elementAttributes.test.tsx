@@ -1,9 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect'; // For additional matchers
-
-import { ElementAttributes } from '../../sidebar/elementAttributes';
-import { ElementResult } from '../../sidebar/interfaces';
+import '@testing-library/jest-dom/extend-expect';
+import { ElementAttributes, AttributeField } from '../../sidebar/elementAttributes';
+import { ElementAttribute, ElementResult } from '../../sidebar/interfaces';
 
 describe('ElementAttributes', () => {
     
@@ -45,30 +44,31 @@ describe('ElementAttributes', () => {
 
     // Test for when no values are given (empty table)
     it('renders attributes with empty values when no attributes are provided', () => {
-        render(
-            <ElementAttributes
-            attributes={[]} // Empty attributes array
-            htmlString=""
-            title=""
-            selector=""
-            result={mockElementResult}
-            isCommentVisible={false}
-          />
-        );
+      
+      render(
+        <ElementAttributes
+          attributes={[]}
+          htmlString=""
+          title=""
+          selector=""
+          result={mockElementResult}
+          isCommentVisible={false}
+        />
+      );
 
-        const attributeTable = screen.getByRole('table');
-        expect(attributeTable).toBeInTheDocument();
+      const attributeTable = screen.getByRole('table');
+      expect(attributeTable).toBeInTheDocument();
 
-        // Check that the table body contains rows for each of the predefined attribute names
-        const attributeNames = ["aria-labelledby", "aria-label", "title", "Description", "Role", "Focusable"];
-        attributeNames.forEach((name) => {
-            const attributeNameCell = screen.getByText(name);
-            expect(attributeNameCell).toBeInTheDocument();
+      // Check that the table body contains rows for each of the predefined attribute names
+      const attributeNames = ["aria-labelledby", "aria-label", "title", "Description", "Role", "Focusable"];
+      attributeNames.forEach((name) => {
+          const attributeNameCell = screen.getByText(name);
+          expect(attributeNameCell).toBeInTheDocument();
 
-            // Check that the corresponding value cell is empty
-            const valueCell = attributeNameCell.parentElement?.querySelector('.tableBody.value');
-            expect(valueCell?.textContent).toBe('');
-        });
+          // Check that the corresponding value cell is empty
+          const valueCell = attributeNameCell.parentElement?.querySelector('.tableBody.value');
+          expect(valueCell?.textContent).toBe('');
+      });
     });
 
 
@@ -129,5 +129,22 @@ describe('ElementAttributes', () => {
         
         expect(screen.getByText('Updated Title')).toBeInTheDocument();
         expect(screen.getByText('updatedRole')).toBeInTheDocument();
+    });
+
+
+    // Test for AttributeField
+    describe('AttributeField', () => {
+      it('renders attribute name and value correctly', () => {
+          const attributeName = 'title';
+          const attributeValue = 'Sample Title';
+  
+          render(<AttributeField name={attributeName} value={attributeValue} />);
+  
+          const attributeNameCell = screen.getByText(attributeName);
+          const attributeValueCell = screen.getByText(attributeValue);
+  
+          expect(attributeNameCell).toBeInTheDocument();
+          expect(attributeValueCell).toBeInTheDocument();
+      });
     });
 });
