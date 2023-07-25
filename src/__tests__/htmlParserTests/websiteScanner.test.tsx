@@ -15,6 +15,39 @@ jest.mock('chrome', () => ({
     }
   }));
 
+jest.mock('../../htmlParser/webUtils', () => ({
+  WebUtils: {
+    toType: jest.fn().mockReturnValue({
+      name: 'MockElementType',
+      nodes: [
+        {
+          title: 'MockTitle',
+          htmlString: '<div>Mock HTML</div>',
+          selector: 'MockSelector',
+          attributes: [{ name: 'mockAttr', value: 'mockValue' }],
+          isCommentVisible: false,
+          result: {
+            testID: 'mock-test-id',
+            name: 'MockElementType',
+            htmlString: '<div>Mock HTML</div>',
+            correctText: 'MockCorrectText',
+            comment: 'MockComment',
+            checked: false,
+            url: 'MockURL',
+            chromeVersion: 'MockChromeVersion',
+            chromeExtensionVersion: 'MockChromeExtensionVersion',
+            outcome: 'MockOutcome',
+          },
+        },
+      ],
+      selector: 'MockSelector',
+    }),
+    generateSelector: jest.fn().mockReturnValue('MockSelector'),
+    getAttributes: jest.fn().mockReturnValue([{ name: 'mockAttr', value: 'mockValue' }]),
+    getTitle: jest.fn().mockReturnValue('MockTitle'),
+  },
+}));
+
 const mockSelectors: { [key: string]: ElementSelector } = {
     "Buttons": new ButtonSelector(),
     "Images": new ImageSelector(),
@@ -35,39 +68,39 @@ describe('WebsiteScanner', () => {
         createMockElementNode("button", "Submit", { type: "button" }),
       ];
   
-      const imageElementNodes = [
-        createMockElementNode("img", "", { src: "example.jpg", alt: "Example image" }),
-        createMockElementNode("img", "", { src: "another.jpg", alt: "Another image" }),
-      ];
-  
-      const linkElementNodes = [
-        createMockElementNode("a", "Home", { href: "https://example.com", target: "_self" }),
-        createMockElementNode("a", "About", { href: "https://example.com/about", target: "_blank" }),
-      ];
-  
-      const headingElementNodes = [
-        createMockElementNode("h1", "Welcome to our website"),
-        createMockElementNode("h2", "About Us"),
-      ];
-  
-      const menuItemsElementNodes = [
-        createMockElementNode("div", "Menu Item 1", { role: "menuitem" }),
-        createMockElementNode("div", "Menu Item 2", { role: "menuitem" }),
-      ];
-  
-      // Helper function to create a mock element node
-      function createMockElementNode(tagName: string, textContent: string, attributes: { [key: string]: string } = {}) {
-        const element = document.createElement(tagName);
-        element.textContent = textContent;
-        for (const attr in attributes) {
-          element.setAttribute(attr, attributes[attr]);
-        }
-        return {
-          tagName,
-          textContent,
-          attributes,
-        };
+    const imageElementNodes = [
+      createMockElementNode("img", "", { src: "example.jpg", alt: "Example image" }),
+      createMockElementNode("img", "", { src: "another.jpg", alt: "Another image" }),
+    ];
+
+    const linkElementNodes = [
+      createMockElementNode("a", "Home", { href: "https://example.com", target: "_self" }),
+      createMockElementNode("a", "About", { href: "https://example.com/about", target: "_blank" }),
+    ];
+
+    const headingElementNodes = [
+      createMockElementNode("h1", "Welcome to our website"),
+      createMockElementNode("h2", "About Us"),
+    ];
+
+    const menuItemsElementNodes = [
+      createMockElementNode("div", "Menu Item 1", { role: "menuitem" }),
+      createMockElementNode("div", "Menu Item 2", { role: "menuitem" }),
+    ];
+
+    // Helper function to create a mock element node
+    function createMockElementNode(tagName: string, textContent: string, attributes: { [key: string]: string } = {}) {
+      const element = document.createElement(tagName);
+      element.textContent = textContent;
+      for (const attr in attributes) {
+        element.setAttribute(attr, attributes[attr]);
       }
+      return {
+        tagName,
+        textContent,
+        attributes,
+      };
+    }
       
     mockSelectors["Buttons"].getElements = jest.fn().mockReturnValue(buttonElementNodes);
     mockSelectors["Images"].getElements = jest.fn().mockReturnValue(imageElementNodes);
@@ -77,14 +110,14 @@ describe('WebsiteScanner', () => {
   
     });
 
-    test('scanPage returns an array of ElementType with non-empty nodes', () => {
-        const scanResult = websiteScanner.scanPage();
-      
-        // Check if all ElementType have non-empty nodes
-        for (const result of scanResult) {
-          expect(result.nodes.length).toBeGreaterThan(0);
-        }
-      });
+  test('scanPage returns an array of ElementType with non-empty nodes', () => {
+      const scanResult = websiteScanner.scanPage();
+    
+      // Check if all ElementType have non-empty nodes
+      for (const result of scanResult) {
+        expect(result.nodes.length).toBeGreaterThan(0);
+      }
+    });
 
   test('scanPage returns an empty array of ElementType when nothing is detected', () => {
     websiteScanner = new WebsiteScanner();
@@ -143,6 +176,66 @@ describe('WebsiteScanner', () => {
     websiteScanner.getWebsiteURL(callback);
   
     expect(callback).toHaveBeenCalledWith(url);
+  });
+
+  test('scanPage returns correct ElementObject instances for each ElementType', () => {
+    const scanResult = websiteScanner.scanPage();
+  
+    // Define the different ElementTypes to test
+    const elementTypesToTest = ['Buttons', 'Images', 'Links', 'Headings', 'MenuItems'];
+  
+    for (const elementType of elementTypesToTest) {
+      const elementTypeResult = scanResult.find((result) => result.name === elementType);
+      const elementTypeNodes = elementTypeResult?.nodes ?? [];
+  
+      // Ensure that the returned nodes are not empty for this ElementType
+      expect(elementTypeNodes.length).toBeGreaterThan(0);
+  
+      // Check the structure of each ElementObject instance for this ElementType
+      for (const element of elementTypeNodes) {
+        expect(element.title).toBeDefined();
+        expect(element.htmlString).toBeDefined();
+        expect(element.selector).toBeDefined();
+        expect(element.result).toBeDefined();
+        expect(element.attributes).toBeDefined();
+        expect(element.isCommentVisible).toBeDefined();
+        console.log(element);
+      }
+    }
+  });
+  
+  test('scanPage returns correct ElementObject instances for each ElementType', () => {
+    const scanResult = websiteScanner.scanPage();
+
+    // Define the expected ElementType
+    const expectedElementType: ElementType = {
+      name: 'MockElementType',
+      nodes: [
+        {
+          title: 'MockTitle',
+          htmlString: '<div>Mock HTML</div>',
+          selector: 'MockSelector',
+          attributes: [{ name: 'mockAttr', value: 'mockValue' }],
+          isCommentVisible: false,
+          result: {
+            testID: 'mock-test-id',
+            name: 'MockElementType',
+            htmlString: '<div>Mock HTML</div>',
+            correctText: 'MockCorrectText',
+            comment: 'MockComment',
+            checked: false,
+            url: 'MockURL',
+            chromeVersion: 'MockChromeVersion',
+            chromeExtensionVersion: 'MockChromeExtensionVersion',
+            outcome: 'MockOutcome',
+          },
+        },
+      ],
+      selector: 'MockSelector',
+    };
+
+    // Ensure that the scanResult matches the expected result
+    expect(scanResult).toEqual([expectedElementType]);
   });
 
   test('scanPage returns correct ElementObject instances for each ElementType', () => {
@@ -302,4 +395,8 @@ describe('WebsiteScanner', () => {
     
   });
 
+
+function createMockElementNode(arg0: string, arg1: string, arg2: { class: string; }) {
+  throw new Error("Function not implemented.");
+}
  

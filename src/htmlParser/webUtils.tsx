@@ -15,34 +15,41 @@ export class WebUtils {
 
     public static toObject(element: HTMLElement): ElementObject {
         try {
-            let selector = this.generateSelector(element);
-            let title = this.getTitle(element);
-            let mainObjectAttributes = this.getAttributes(element);
-            let newObject: ElementObject = {
-                title: title ? title : '',
-                htmlString: pretty(element.outerHTML),
-                selector: selector,
-                attributes: mainObjectAttributes,
-                isCommentVisible: false,
-
-                result: { testID: "", name: title, htmlString: pretty(element.outerHTML), correctText: "", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome: "" },
-            };
-            console.log(newObject);
-            return newObject;
-        } catch (error) {
-            console.error(`Error in toObject: ${error}`);
-            // Optionally, report the error to a logging service
-            return {
-                title: 'Error creating object',
-                htmlString: 'Error creating object',
-                selector: 'Error creating object',
-                attributes: [],
-                isCommentVisible: false,
-
-                result: { testID: "", name: "Error creating object", htmlString: "", correctText: "Error creating object", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome: "" },
-            };
+          const selector = this.generateSelector(element);
+          const title = this.getTitle(element);
+          const mainObjectAttributes = this.getAttributes(element);
+      
+          if (!selector || !title) {
+            throw new Error('Error: Missing selector or title for the element.');
+          }
+      
+          const newObject: ElementObject = {
+            title: title,
+            htmlString: pretty(element.outerHTML),
+            selector: selector,
+            attributes: mainObjectAttributes,
+            isCommentVisible: false,
+            result: { testID: "", name: title, htmlString: pretty(element.outerHTML), correctText: "", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome: "" },
+          };
+      
+          console.log(newObject);
+          return newObject;
+        } catch (error:any) {
+          console.error(`Error in toObject: ${error.message}`);
+          // Optionally, report the error to a logging service
+      
+          // Return a default object when an error occurs
+          return {
+            title: 'Error creating object',
+            htmlString: pretty(element.outerHTML),
+            selector: 'Error creating object',
+            attributes: [],
+            isCommentVisible: false,
+            result: { testID: "", name: 'Error creating object', htmlString: "", correctText: "Error creating object", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome: "" },
+          };
         }
-    }
+      }
+      
 
     // A simple function to generate an index-based selector for an element
     private static generateSelector(element: HTMLElement): string {
