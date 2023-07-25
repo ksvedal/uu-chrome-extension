@@ -42,14 +42,14 @@ describe("CollapsibleItemType", () => {
     // Render the 'CollapsibleItemType' component with the mock props
     const { container } = render(
       <CollapsibleItemType
-        type={type}
-        thisElement={null}
-        isAllHighlighted={false}
-        setIsAllHighlighted={() => {}}
-        setCurrentHighlighted={() => {}}
-        parentIndex={0}
+        elementType={type}
+        // thisElement={null}
+        // isAllHighlighted={false}
+        // setIsAllHighlighted={() => {}}
+        // setCurrentHighlighted={() => {}}
+        // parentIndex={0}
         url=""
-        testID=""
+        // testID=""
       />
     );
 
@@ -63,8 +63,3 @@ describe("CollapsibleItemType", () => {
     expect(container).toMatchSnapshot();
   });
 });
-
-
-
-
-

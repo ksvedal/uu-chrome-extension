@@ -1,23 +1,22 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult, ExtendedElementObject } from "./interfaces";
+import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, JsonDataFormat, ExtendedElementObject } from "./interfaces";
 import { ToggleButton, RadioButtonGroup } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
-import { v4 as uuidv4 } from 'uuid';
-import { ToastContainer, toast, Flip, Slide, Zoom } from 'react-toastify';
+import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IsCheckedStatus from "./isCheckedStatus";
 
 const messageSender = new MessageSender();
 
 
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, parentIndex, url }) => {
+export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ elementType, url }) => {
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAllHighlighted, setIsAllHighlighted] = useState(false);
-  const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.comment || ""));
-  const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
+  const [commentBoxValue, setCommentBoxValue] = useState<string[]>(elementType.nodes.map(node => node.result.comment || ""));
+  const [typeElements, setTypeElements] = useState<ElementObject[]>(elementType.nodes);
   const context = useContext(MyContext);
   //const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
   const typingTimeoutRef = useRef<number | null>(null);
@@ -28,7 +27,11 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     // handle the case where the context is null
     return null;
   }
-  const { elementResults, setElementResults } = context;
+  const { jsonData, setJsonData } = context;
+
+  // jsonData.forEach(string => {
+  //   console.log('jsondata name: ' + string.name)
+  // })
 
   const toggleCheck = () => {
     setIsAllHighlighted(!isAllHighlighted);
@@ -37,21 +40,21 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   };
 
   const updateJson = (elementObject: ElementObject, index: number, url: string) => {
-    let newNodes = [...type.nodes];  // copy the array
+    let newNodes = typeElements;  // copy the array
     newNodes[index] = elementObject;  // replace the element
     newNodes[index].result.url = url;
     setTypeElements(newNodes);  // update the state
-    let elementResults: ElementResult[] = newNodes.map(node => node.result).flat();
-    setElementResults(elementResults);
+    let jsonData: JsonDataFormat[] = newNodes.map(node => node.result).flat();
+    setJsonData(jsonData);
   };
 
   const storeText = (index: number, newText: string) => {
-    type.nodes[index].result.comment = newText;
-    updateJson(type.nodes[index], index, url);
+    elementType.nodes[index].result.comment = newText;
+    updateJson(elementType.nodes[index], index, url);
   };
 
   const handleTextareaChange = (index: number, newText: string) => {
-    setTextareaValues((prevValues) => {
+    setCommentBoxValue((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = newText;
       return newValues;
@@ -80,7 +83,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   };
 
   const highlightAll = () => {
-    messageSender.highlightAllWithType(type, isAllHighlighted);
+    messageSender.highlightAllWithType(elementType, isAllHighlighted);
   };
 
   const handleOptionChange = (option: string, index: number) => {
@@ -96,15 +99,15 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       outcome = "Testelementet er ikkje ein knapp.";
     }
 
-    type.nodes[index].result.correctText = option;
-    type.nodes[index].result.outcome = outcome;
-    updateJson(type.nodes[index], index, url);
+    elementType.nodes[index].result.correctText = option;
+    elementType.nodes[index].result.outcome = outcome;
+    updateJson(elementType.nodes[index], index, url);
   };
 
 
 
   const openCommentSection = (currentIndex: number) => {
-    type.nodes[currentIndex].isCommentVisible = true;
+    elementType.nodes[currentIndex].isCommentVisible = true;
   };
 
 
@@ -116,13 +119,13 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
           <div className={"col-4"}>
             <div className="buttons-text">
-              <br /> {type.name}
+              <br /> {elementType.name}
             </div>
           </div>
 
           <div className={"col-4"}>
             <div className="total-buttons">
-              <br /> {type.nodes.length}
+              <br /> {elementType.nodes.length}
             </div>
           </div>
 
@@ -135,42 +138,42 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         </div>
         {isExpanded && (
           <div className="collapsible-item-children">
-            {type.nodes.map((item, index) => {
+            {elementType.nodes.map((elementObject, index) => {
               return (
                 <CollapsibleItemElement
-                  type={type}
+                  elementType={elementType}
                   key={index}
-                  thisElement={item}
+                  thisElement={elementObject}
                   highlightedElement={currentHighlighted}
                   setHighlightedElement={setCurrentHighlighted}
                   isAllHighlighted={isAllHighlighted}
                   setIsAllHighlighted={setIsAllHighlighted}
                 >
                   <ElementAttributes
-                    attributes={item.attributes}
-                    title={item.title}
-                    htmlString={item.htmlString}
-                    selector={item.selector}
-                    result={item.result}
+                    attributes={elementObject.attributes}
+                    title={elementObject.title}
+                    htmlString={elementObject.htmlString}
+                    selector={elementObject.selector}
+                    result={elementObject.result}
                     isCommentVisible={false} />
 
                   <RadioButtonGroup onOptionChange={(value) => {
                     handleOptionChange(value, index);
                     openCommentSection(index);
-                  }} presetOption={type.nodes[index].result.correctText} index={index} />
+                  }} presetOption={elementType.nodes[index].result.correctText} index={index} />
 
                   <div>
-                    {type.nodes[index].isCommentVisible && (
+                    {elementType.nodes[index].isCommentVisible && (
                       <div className="comment-box">
                         <textarea
                           className="textarea"
                           name="comment"
                           form="usrform"
-                          value={textareaValues[index]}
+                          value={commentBoxValue[index]}
                           onChange={(e) => handleTextareaChange(index, e.target.value)}
                           onBlur={() => {
                             // Execute storeText when the textarea loses focus
-                            storeText(index, textareaValues[index]);
+                            storeText(index, commentBoxValue[index]);
                           }}
                         >
                           Enter text here...
@@ -191,7 +194,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 };
 
 export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> = ({
-  type,
+  elementType,
   thisElement,
   children,
   highlightedElement,
@@ -217,7 +220,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       //} else if (isAllHighlighted && highlightedElement === null) {
     } else if (isAllHighlighted) {
       setIsAllHighlighted(false);
-      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
+      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, elementType);
       //unhighlightAllAndHighligthSingle( );
       setHighlightedElement(thisElement);
     } else if (highlightedElement) {

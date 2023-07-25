@@ -15,19 +15,19 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => 
     console.error('Context is null');
     return null;
   }
-  const { elementResults, setElementResults } = context;
+  const { jsonData } = context;
 
 
 
   const logResult = () => {
-    if (elementResults == null || elementResults.length === 0) {
+    if (jsonData == null || jsonData.length === 0) {
       const errorMsg = "No elements are evaluated yet.";
       console.error(errorMsg);
       setError(errorMsg);
       return;
     }
 
-    for (let result of elementResults) {
+    for (let result of jsonData) {
       try {
         TestUtils.giveIdChromeAndExtensionVersion(result);
       } catch (error) {
@@ -36,7 +36,7 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => 
       console.log(result);
     };
     setError(null);
-    console.log("Result: " + elementResults);
+    console.log("Result: " + jsonData);
   }
 
   return (

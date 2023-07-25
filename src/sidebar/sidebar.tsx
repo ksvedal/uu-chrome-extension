@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createRoot } from "react-dom/client";
 import "../style/sidebar.css";
-import { ElementObject, ElementResult, ElementType } from "./interfaces";
+import { ElementType, JsonDataFormat } from "./interfaces";
 import { RegularButton } from './buttons';
 import { MessageSender } from '../messageObjects/messageSender';
 import { WebsiteScanner } from '../htmlParser/websiteScanner';
@@ -12,14 +12,14 @@ import { MyContext } from './resultItemsContext';
 export const Sidebar: React.FC = () => {
   const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [darkMode, setDarkMode] = useState(prefersDarkMode);
-  const [scanPage, setScanPage] = useState<ElementType[]>([]); // initialize scanPage state as an empty array
+  const [scanPageResult, setScanPageResult] = useState<ElementType[]>([]); 
   const [websiteURL, setWebsiteURL] = useState<string>("");
-  const [isAllHighlighted, setIsAllHighlighted] = useState<boolean>(false); // add this line
-  const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
-  const [elementResults, setElementResults] = useState<ElementResult[]>([]);
-  const [index, setIndex] = useState<number[]>([]);
-  const [thisElement, setThisElement] = useState<ElementObject | null>(null);
-  const [testID, setTestID] = useState<string>("");
+  // const [isAllHighlighted, setIsAllHighlighted] = useState<boolean>(false); 
+  // const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
+  const [jsonData, setJsonData] = useState<JsonDataFormat[]>([]);
+  // const [index, setIndex] = useState<number[]>([]);
+  // const [thisElement, setThisElement] = useState<ElementObject | null>(null);
+  // const [testID, setTestID] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
 
@@ -49,7 +49,7 @@ export const Sidebar: React.FC = () => {
         setError(errorMsg); // update error state with the error message
         return;
       }
-      setScanPage(response); // update the state with the response data
+      setScanPageResult(response); // update the state with the response data
       setError(null); // clear the error message if no error occurs
     });
     _scan.getWebsiteURL((url: string) => {
@@ -62,9 +62,28 @@ export const Sidebar: React.FC = () => {
       setWebsiteURL(url); // update the state with the response data
       setError(null); // clear the error message if no error occurs
     });
+
   };
 
+  // -------------------------------------------------------------------------
+  scanPageResult.forEach(elementType => {
+    console.log('Name: ' + elementType.name)
+    console.log('Selector: ' + elementType.selector)
+    if (elementType.name == 'Buttons') {
+      elementType.nodes.forEach(elementObject => {
+        console.log('Title: ' + elementObject.title)
+      })
+    }
+  })
 
+  scanPageResult.map((item, index) => {
+    console.log('Item: ' + item)
+    console.log('Index: ' + index)
+
+  })
+
+  // console.log('thisElement: ' + thisElement)
+  //-------------------------------------------------------------------------
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -94,21 +113,22 @@ export const Sidebar: React.FC = () => {
         </div>
 
         <div className="col-12">
-          <MyContext.Provider value={{ elementResults, setElementResults }}>
+          <MyContext.Provider value={{ jsonData, setJsonData }}>
             <div className={"whitebox"}>
-              <ResultsHeader url={websiteURL} isScanned={scanPage.length !== 0} />
+              <ResultsHeader url={websiteURL} isScanned={scanPageResult.length !== 0} />
             </div>
             {/*for each element in ScanPage, creates a collapse menu with other nodes*/}
-            {scanPage.map((item, index) =>
-              <CollapsibleItemType key={index}
-                type={item}
-                setIsAllHighlighted={setIsAllHighlighted}
-                setCurrentHighlighted={setCurrentHighlighted}
-                isAllHighlighted={isAllHighlighted}
-                parentIndex={index}
-                thisElement={thisElement}
+            {scanPageResult.map((elementType, index) =>
+              <CollapsibleItemType
+                key={index}
+                elementType={elementType} // Buttons, Links, Images, etc.
+                // setIsAllHighlighted={setIsAllHighlighted}
+                // setCurrentHighlighted={setCurrentHighlighted}
+                // isAllHighlighted={isAllHighlighted}
+                // parentIndex={index}
+                // thisElement={thisElement}
                 url={websiteURL}
-                testID={testID}
+                // testID={testID}
               >
               </CollapsibleItemType>)}
           </MyContext.Provider>

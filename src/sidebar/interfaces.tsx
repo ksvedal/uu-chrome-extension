@@ -22,19 +22,19 @@ export interface CollapsibleArrowProps {
 }
 
 export interface CollapsibleItemTypeInterface {
-  type: ElementType;
-  thisElement: ElementObject | null;
+  elementType: ElementType;
+  // thisElement: ElementObject | null;
   children?: ReactNode;
-  isAllHighlighted: boolean;
-  setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
-  setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>;
-  parentIndex: number;
+  // isAllHighlighted: boolean;
+  // setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
+  // setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>;
+  // parentIndex: number;
   url: string;
-  testID: string;
+  // testID: string;
 }
 
 export interface CollapsibleItemElementInterface {
-  type: ElementType;
+  elementType: ElementType;
   thisElement: ElementObject;
   children?: ReactNode;
   highlightedElement: ElementObject | null;
@@ -74,12 +74,12 @@ export interface ElementObject {
   title: string;
   htmlString: string;
   selector: string;
-  result: ElementResult;
+  result: JsonDataFormat;
   attributes: ElementAttribute[];
   isCommentVisible: boolean;
 }
 
-export interface ElementResult {
+export interface JsonDataFormat {
   htmlString: string;
   correctText: string;
   name: string;
