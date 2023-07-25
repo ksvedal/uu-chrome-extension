@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { CollapsibleObjectInterface } from "../interfaces/interfaces";
-import { MessageSender } from "../messageObjects/messageSender";
-import IsCheckedStatus from "./components/isCheckedStatus";
-import { ToggleButton } from "./components/buttons";
+import { CollapsibleObjectInterface } from "../../interfaces/interfaces";
+import { toggleCheck } from "../sidebarUtils/collapsibleObjectFunctions";
+import IsCheckedStatus from "./isCheckedStatus";
+import { ToggleButton } from "./buttons";
 
-const messageSender = new MessageSender();
 
 export const CollapsibleObject: React.FC<CollapsibleObjectInterface> = ({
     elementType,
@@ -24,29 +23,6 @@ export const CollapsibleObject: React.FC<CollapsibleObjectInterface> = ({
       setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
     }, [highlightedElement, isAllHighlighted]);
   
-  
-    const toggleCheck = () => {
-      //If we press the currently highlighted element, unhighlight it
-      if (highlightedElement === thisElement) {
-        setHighlightedElement(null);
-        messageSender.highlightSingleMessage(thisElement, true);
-        //} else if (isAllHighlighted && highlightedElement === null) {
-      } else if (isAllHighlighted) {
-        setIsAllHighlighted(false);
-        messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, elementType);
-        //unhighlightAllAndHighligthSingle( );
-        setHighlightedElement(thisElement);
-      } else if (highlightedElement) {
-        //Another element is highlighted, unhighlight it and highlight the new one
-        messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
-        setHighlightedElement(thisElement);//Kan kanskje fjerne denne
-      } else {
-        //No element is highlighted, highlight the new one
-        setHighlightedElement(thisElement);
-        messageSender.highlightSingleMessage(thisElement, false);
-      }
-    };
-  
     return (
       <div data-testid="collapsible-type" className=" collapsible-item-child">
         <div className="collapsible-item">
@@ -61,7 +37,14 @@ export const CollapsibleObject: React.FC<CollapsibleObjectInterface> = ({
               </div>
               <div className={"col-4"}>
                 <div className={"float-right"}>
-                  <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
+                  <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={() => toggleCheck(
+                        highlightedElement,
+                        thisElement,
+                        setHighlightedElement,
+                        isAllHighlighted,
+                        setIsAllHighlighted,
+                        elementType)}
+                        text="Jump to" />
                 </div>
               </div>
             </div>

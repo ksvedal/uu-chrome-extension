@@ -1,11 +1,11 @@
 import React, { useContext, useState, useRef } from "react";
 import { CollapsibleTypeInterface, ElementObject, JsonDataFormat } from "../../interfaces/interfaces";
-import { CollapsibleObject } from "../collapsibleObject";
+import { CollapsibleObject } from "./collapsibleObject";
 import { ToggleButton, RadioButtonGroup } from "./buttons";
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
 import { ToastContainer } from 'react-toastify';
-import { toggleCheck, updateJson, handleTextareaChange, storeText, handleOptionChange, openCommentSection } from "../sidebarUtils/collapsibleFunctions";
+import { toggleCheck, updateJson, handleTextareaChange, storeText, handleOptionChange, openCommentSection } from "../sidebarUtils/collapsibleTypeFunctions";
 import 'react-toastify/dist/ReactToastify.css';
 
 
