@@ -1,37 +1,30 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
-import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, JsonDataFormat, ExtendedElementObject } from "./interfaces";
+import React, { useContext, useState, useRef } from "react";
+import { CollapsibleTypeInterface, ElementObject, JsonDataFormat } from "../interfaces/interfaces";
+import { CollapsibleItemElement } from "./collapsibleObject";
 import { ToggleButton, RadioButtonGroup } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import IsCheckedStatus from "./isCheckedStatus";
 
 const messageSender = new MessageSender();
 
 
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ elementType, url }) => {
+export const CollapsibleItemType: React.FC<CollapsibleTypeInterface> = ({ elementType, url }) => {
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAllHighlighted, setIsAllHighlighted] = useState(false);
   const [commentBoxValue, setCommentBoxValue] = useState<string[]>(elementType.nodes.map(node => node.result.comment || ""));
   const [typeElements, setTypeElements] = useState<ElementObject[]>(elementType.nodes);
   const context = useContext(MyContext);
-  //const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
   const typingTimeoutRef = useRef<number | null>(null);
-
-
 
   if (context === null) {
     // handle the case where the context is null
     return null;
   }
   const { jsonData, setJsonData } = context;
-
-  // jsonData.forEach(string => {
-  //   console.log('jsondata name: ' + string.name)
-  // })
 
   const toggleCheck = () => {
     setIsAllHighlighted(!isAllHighlighted);
@@ -104,13 +97,9 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ el
     updateJson(elementType.nodes[index], index, url);
   };
 
-
-
   const openCommentSection = (currentIndex: number) => {
     elementType.nodes[currentIndex].isCommentVisible = true;
   };
-
-
 
   return (
     <div className='collapsible-item'>
@@ -191,78 +180,4 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ el
       </div>
     </div>
   );
-};
-
-export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> = ({
-  elementType,
-  thisElement,
-  children,
-  highlightedElement,
-  isAllHighlighted,
-  setHighlightedElement,
-  setIsAllHighlighted,
-}) => {
-
-  const [isHighlighted, setIsHighlighted] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-
-
-  useEffect(() => {
-    setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
-  }, [highlightedElement, isAllHighlighted]);
-
-
-  const toggleCheck = () => {
-    //If we press the currently highlighted element, unhighlight it
-    if (highlightedElement === thisElement) {
-      setHighlightedElement(null);
-      messageSender.highlightSingleMessage(thisElement, true);
-      //} else if (isAllHighlighted && highlightedElement === null) {
-    } else if (isAllHighlighted) {
-      setIsAllHighlighted(false);
-      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, elementType);
-      //unhighlightAllAndHighligthSingle( );
-      setHighlightedElement(thisElement);
-    } else if (highlightedElement) {
-      //Another element is highlighted, unhighlight it and highlight the new one
-      messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
-      setHighlightedElement(thisElement);//Kan kanskje fjerne denne
-    } else {
-      //No element is highlighted, highlight the new one
-      setHighlightedElement(thisElement);
-      messageSender.highlightSingleMessage(thisElement, false);
-    }
-  };
-
-  return (
-    <div data-testid="collapsible-type" className=" collapsible-item-child">
-      <div className="collapsible-item">
-        <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-          <div className="row">
-            <div className="col-4">
-              <br /> {thisElement.title}
-            </div>
-            <div className="col-4">
-              <br />
-              <IsCheckedStatus text={thisElement.result.correctText}></IsCheckedStatus>
-            </div>
-            <div className={"col-4"}>
-              <div className={"float-right"}>
-                <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div className={"row"}>
-          <div className={"col-12"}>
-            <div className="content-data">
-              {isExpanded && children}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
 };

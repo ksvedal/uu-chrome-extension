@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from "react-dom/client";
 import "../style/sidebar.css";
-import { ElementType, JsonDataFormat } from "./interfaces";
+import { ElementType, JsonDataFormat } from "../interfaces/interfaces";
 import { RegularButton } from './buttons';
 import { MessageSender } from '../messageObjects/messageSender';
 import { WebsiteScanner } from '../htmlParser/websiteScanner';
 import ResultsHeader from './resultsHeader';
-import { CollapsibleItemType } from './collapsibleItem';
+import { CollapsibleItemType } from './collapsibleType';
 import { MyContext } from './resultItemsContext';
 
 export const Sidebar: React.FC = () => {
@@ -14,12 +14,7 @@ export const Sidebar: React.FC = () => {
   const [darkMode, setDarkMode] = useState(prefersDarkMode);
   const [scanPageResult, setScanPageResult] = useState<ElementType[]>([]); 
   const [websiteURL, setWebsiteURL] = useState<string>("");
-  // const [isAllHighlighted, setIsAllHighlighted] = useState<boolean>(false); 
-  // const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
   const [jsonData, setJsonData] = useState<JsonDataFormat[]>([]);
-  // const [index, setIndex] = useState<number[]>([]);
-  // const [thisElement, setThisElement] = useState<ElementObject | null>(null);
-  // const [testID, setTestID] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
 
@@ -65,26 +60,6 @@ export const Sidebar: React.FC = () => {
 
   };
 
-  // -------------------------------------------------------------------------
-  scanPageResult.forEach(elementType => {
-    console.log('Name: ' + elementType.name)
-    console.log('Selector: ' + elementType.selector)
-    if (elementType.name == 'Buttons') {
-      elementType.nodes.forEach(elementObject => {
-        console.log('Title: ' + elementObject.title)
-      })
-    }
-  })
-
-  scanPageResult.map((item, index) => {
-    console.log('Item: ' + item)
-    console.log('Index: ' + index)
-
-  })
-
-  // console.log('thisElement: ' + thisElement)
-  //-------------------------------------------------------------------------
-
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   }
@@ -122,13 +97,7 @@ export const Sidebar: React.FC = () => {
               <CollapsibleItemType
                 key={index}
                 elementType={elementType} // Buttons, Links, Images, etc.
-                // setIsAllHighlighted={setIsAllHighlighted}
-                // setCurrentHighlighted={setCurrentHighlighted}
-                // isAllHighlighted={isAllHighlighted}
-                // parentIndex={index}
-                // thisElement={thisElement}
                 url={websiteURL}
-                // testID={testID}
               >
               </CollapsibleItemType>)}
           </MyContext.Provider>

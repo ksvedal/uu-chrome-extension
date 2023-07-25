@@ -1,4 +1,4 @@
-import { ElementType } from "../sidebar/interfaces";
+import { ElementType } from "../interfaces/interfaces";
 import { ElementSelector, ButtonSelector, ImageSelector, LinkSelector, MenuItems, Headings } from "./elementSelector";
 import { WebUtils } from "./webUtils";
 

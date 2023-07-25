@@ -8,7 +8,7 @@ import {
   Message,
   ScanPageMessage,
   UnhighlightAllAndHighlightSingleMessage,} from "../messageObjects/message";
-import { ElementType } from "../sidebar/interfaces";
+import { ElementType } from "../interfaces/interfaces";
 
 describe('Content Script', () => {
   let pageInteractor: PageInteractor;

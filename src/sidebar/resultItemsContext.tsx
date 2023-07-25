@@ -1,8 +1,8 @@
 import React from 'react';
-import { ElementResult } from './interfaces';
+import { JsonDataFormat } from '../interfaces/interfaces';
 export const MyContext = React.createContext<contextType | null>(null);
 
 type contextType = {
-    jsonData: ElementResult[];
-    setJsonData: React.Dispatch<React.SetStateAction<ElementResult[]>>;
+    jsonData: JsonDataFormat[];
+    setJsonData: React.Dispatch<React.SetStateAction<JsonDataFormat[]>>;
 };

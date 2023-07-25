@@ -21,7 +21,7 @@ export interface CollapsibleArrowProps {
   isExpanded: boolean;
 }
 
-export interface CollapsibleItemTypeInterface {
+export interface CollapsibleTypeInterface {
   elementType: ElementType;
   // thisElement: ElementObject | null;
   children?: ReactNode;
@@ -33,7 +33,7 @@ export interface CollapsibleItemTypeInterface {
   // testID: string;
 }
 
-export interface CollapsibleItemElementInterface {
+export interface CollapsibleObjectInterface {
   elementType: ElementType;
   thisElement: ElementObject;
   children?: ReactNode;

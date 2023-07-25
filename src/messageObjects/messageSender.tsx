@@ -1,4 +1,4 @@
-import { ElementObject, ElementType } from "../sidebar/interfaces";
+import { ElementObject, ElementType } from "../interfaces/interfaces";
 import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage, Message } from "./message";
 
 export class MessageSender {

@@ -1,4 +1,4 @@
-import { ElementObject, ElementType } from "../sidebar/interfaces";
+import { ElementObject, ElementType } from "../interfaces/interfaces";
 
 export interface Message {
     action: string;
