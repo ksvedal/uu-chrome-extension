@@ -2,7 +2,7 @@ import { WebUtils } from '../../htmlParser/webUtils';
 
 describe('WebUtils', () => {
     describe('toType', () => {
-    it('should convert elements to a type object', () => {
+    test('should convert elements to a type object', () => {
         // Prepare the test data
         const elements = document.querySelectorAll<HTMLElement>('.my-element');
         const type = 'myType';
@@ -17,7 +17,7 @@ describe('WebUtils', () => {
         expect(result.nodes.length).toBe(elements.length);
     });
 
-    it('should handle empty input elements', () => {
+    test('should handle empty input elements', () => {
         // Prepare the test data
         const elements: NodeListOf<HTMLElement> = document.querySelectorAll<HTMLElement>('.empty-element');
         const type = 'emptyType';
@@ -32,7 +32,7 @@ describe('WebUtils', () => {
         expect(result.nodes.length).toBe(0);
     });
 
-    it('should handle elements with different classes or types', () => {
+    test('should handle elements with different classes or types', () => {
         // Prepare the test data
         const elements = document.querySelectorAll<HTMLElement>('.different-element');
         const type = 'differentType';
@@ -51,7 +51,7 @@ describe('WebUtils', () => {
     });
 
     describe('toObject', () => {
-    it('should convert an element to an object', () => {
+    test('should convert an element to an object', () => {
         // Prepare the test data
         const element = document.createElement('div');
         element.innerHTML = '<span class="my-class">Hello, world!</span>';
@@ -81,7 +81,7 @@ describe('WebUtils', () => {
         generateSelectorSpy.mockRestore();
     });
 
-    it('should handle elements with different attributes', () => {
+    test('should handle elements with different attributes', () => {
         // Prepare the test data
         const element = document.createElement('div');
         element.innerHTML = '<a href="https://example.com" target="_blank">Link</a>';
@@ -94,7 +94,7 @@ describe('WebUtils', () => {
         // Add additional assertions based on the specific scenario
     });
 
-    it('should handle elements with different tag names', () => {
+    test('should handle elements with different tag names', () => {
         // Prepare the test data
         const element = document.createElement('h1');
         element.textContent = 'Heading';
@@ -111,7 +111,7 @@ describe('WebUtils', () => {
 
     // Rest of the test cases...
     describe('generateSelector', () => {
-    it('should generate an index-based selector for an element', () => {
+    test('should generate an index-based selector for an element', () => {
         // Prepare the test data
         const element = document.createElement('div');
 
@@ -131,7 +131,7 @@ describe('WebUtils', () => {
 
 
     describe('getAttributes', () => {
-        it('should get the attributes of an element', () => {
+        test('should get the attributes of an element', () => {
             // Prepare the test data
             const element = document.createElement('div');
             const wantedAttributes = ["aria-labelledby", "aria-label", "aria-expand", "aria-controls", "class", "type", "focusable"];
@@ -164,7 +164,7 @@ describe('WebUtils', () => {
             
 
     describe('getTitle', () => {
-        it('should get the title of an element', () => {
+        test('should get the title of an element', () => {
         // Prepare the test data
         const element = document.createElement('div');
         element.textContent = 'Hello, world!';
@@ -176,7 +176,7 @@ describe('WebUtils', () => {
         expect(result).toBe('Hello, world!');
         });
 
-        it('should handle elements with no inner_text', () => {
+        test('should handle elements with no inner_text', () => {
         // Prepare the test data
         const element = document.createElement('div');
         element.setAttribute('aria-labelledby', 'label-id');

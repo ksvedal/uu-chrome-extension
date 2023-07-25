@@ -3,121 +3,66 @@
 import { WebsiteScanner } from "../../htmlParser/websiteScanner";
 import { ElementSelector, ButtonSelector, ImageSelector, LinkSelector, MenuItems, Headings } from "../../htmlParser/elementSelector";
 import { ElementType, ElementObject } from "../../sidebar/interfaces";
-import { testElementObject } from "../testData/htmlTestData";
+//import { divElementObject, headingElementObject, menuItemElementObject, imageElementObject, linkElementObject, buttonElementObject} from "../testData/htmlTestData";
 
-// Mock chrome.tabs.query function
+// See end of file for test data
+
 jest.mock('chrome', () => ({
-    tabs: {
-      query: (queryInfo: any, callback: any) => {
-        const fakeTabs = [{ url: "https://example.com" }];
-        callback(fakeTabs);
-      }
+  tabs: {
+    query: (queryInfo: any, callback: any) => {
+      const fakeTabs = [{ url: "https://example.com" }];
+      callback(fakeTabs);
     }
-  }));
+  }
+}));
 
-const mockSelectors: { [key: string]: ElementSelector } = {
-    "Buttons": new ButtonSelector(),
-    "Images": new ImageSelector(),
-    "Links": new LinkSelector(),
-    "Headings": new Headings(),
-    "MenuItems": new MenuItems(),
-};
+jest.mock('../../htmlParser/webUtils', () => ({
+  WebUtils: {
+    toType: jest.fn().mockReturnValue({
+      name: 'Buttons',
+      nodes: [ 
+        buttonElementObject,
+      ],
+      selector: 'ButtonSelector',
+    }),
+    generateSelector: jest.fn().mockReturnValue('MockSelector'),
+    getAttributes: jest.fn().mockReturnValue([{ name: 'mockAttr', value: 'mockValue' }]),
+    getTitle: jest.fn().mockReturnValue('MockTitle'),
+  },
+}));
+
+
 
 describe('WebsiteScanner', () => {
   let websiteScanner: WebsiteScanner;
   
   beforeEach(() => {
-
-    websiteScanner = new WebsiteScanner(mockSelectors);
-    // Mock the getElements functions in mockSelectors
-    const buttonElementNodes = [
-        createMockElementNode("button", "Click me", { type: "submit" }),
-        createMockElementNode("button", "Submit", { type: "button" }),
-      ];
-  
-      const imageElementNodes = [
-        createMockElementNode("img", "", { src: "example.jpg", alt: "Example image" }),
-        createMockElementNode("img", "", { src: "another.jpg", alt: "Another image" }),
-      ];
-  
-      const linkElementNodes = [
-        createMockElementNode("a", "Home", { href: "https://example.com", target: "_self" }),
-        createMockElementNode("a", "About", { href: "https://example.com/about", target: "_blank" }),
-      ];
-  
-      const headingElementNodes = [
-        createMockElementNode("h1", "Welcome to our website"),
-        createMockElementNode("h2", "About Us"),
-      ];
-  
-      const menuItemsElementNodes = [
-        createMockElementNode("div", "Menu Item 1", { role: "menuitem" }),
-        createMockElementNode("div", "Menu Item 2", { role: "menuitem" }),
-      ];
-  
-      // Helper function to create a mock element node
-      function createMockElementNode(tagName: string, textContent: string, attributes: { [key: string]: string } = {}) {
-        const element = document.createElement(tagName);
-        element.textContent = textContent;
-        for (const attr in attributes) {
-          element.setAttribute(attr, attributes[attr]);
-        }
-        return {
-          tagName,
-          textContent,
-          attributes,
-        };
-      }
-      
-    mockSelectors["Buttons"].getElements = jest.fn().mockReturnValue(buttonElementNodes);
-    mockSelectors["Images"].getElements = jest.fn().mockReturnValue(imageElementNodes);
-    mockSelectors["Links"].getElements = jest.fn().mockReturnValue(linkElementNodes);
-    mockSelectors["Headings"].getElements = jest.fn().mockReturnValue(headingElementNodes);
-    mockSelectors["MenuItems"].getElements = jest.fn().mockReturnValue(menuItemsElementNodes);
-  
+    websiteScanner = new WebsiteScanner();
     });
 
-    test('scanPage returns an array of ElementType with non-empty nodes', () => {
-        const scanResult = websiteScanner.scanPage();
-      
-        // Check if all ElementType have non-empty nodes
-        for (const result of scanResult) {
-          expect(result.nodes.length).toBeGreaterThan(0);
-        }
-      });
+  test('scanPage returns an array of ElementType with non-empty nodes', () => {
+      const scanResult = websiteScanner.scanPage();
+    
+      // Check if all ElementType have non-empty nodes
+      for (const result of scanResult) {
+        expect(result.nodes.length).toBeGreaterThan(0);
+      }
+    });
 
-  test('scanPage returns an empty array of ElementType when nothing is detected', () => {
-    websiteScanner = new WebsiteScanner();
-    const expectedResult: ElementType[] = [
-      {
-        name: 'Buttons',
-        nodes: [] as ElementObject[], // An array of ElementObject instances
-        selector: "button:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio']), input[type='submit']:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio']), input[type='button']:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio']), [role='button']:not([role='menuitem']):not([role='menuitemcheckbox']):not([role='menuitemradio'])",
-      },
-      {
-        name: 'Images',
-        nodes: [] as ElementObject[], // An array of ElementObject instances
-        selector: "img:not([role='button'])",
-      },
-      {
-        name: 'Links',
-        nodes: [] as ElementObject[], // An array of ElementObject instances
-        selector: "a:not([role='button'])",
-      },
-      {
-        name: 'Headings',
-        nodes: [] as ElementObject[], // An array of ElementObject instances
-        selector: "h1, h2, h3, h4, h5, h6",
-      },
-      {
-        name: 'MenuItems',
-        nodes: [] as ElementObject[], // An array of ElementObject instances
-        selector: "[role='menuitem'], [role='menuitemcheckbox'], [role='menuitemradio']",
-      },
-    ];
-
-    const scanResult = websiteScanner.scanPage();
-    expect(scanResult).toEqual(expectedResult);
+    test('scanPage returns an empty array of ElementType when nothing is detected', () => {
+      websiteScanner = new WebsiteScanner();
+      console.log(websiteScanner.scanPage());
+    
+      // Define the expected results as an object
+      const expectedResult: { [key: string]: ElementType } = {[
+        buttonsResult,
+        buttonsResult,
+        buttonsResult,
+        buttonsResult,
+        buttonsResult ]
+      };
+      const scanResult = websiteScanner.scanPage();
+      expect(scanResult).toEqual(Object.values(expectedResult));
   });
   
 
@@ -172,3 +117,150 @@ describe('WebsiteScanner', () => {
   });
 
 });
+
+const buttonsResult = {
+  name: 'Buttons',
+  nodes:  [{                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+    title: 'Buttons',
+    htmlString: '<button>Click me</button>',
+    selector: '.button-class',
+    attributes: [ { name: 'type', value: 'button' } ],
+    isCommentVisible: false,
+    result: {
+      testID: 'button-test-id',
+      name: 'ButtonElement',
+      htmlString: '<button>Click me</button>',
+      correctText: 'Click me',
+      comment: 'This is a button element',
+      checked: false,
+      url: 'https://example.com/button',
+      chromeVersion: '94.0.4606.81',
+      chromeExtensionVersion: '1.2.3',
+      outcome: 'success'
+    }
+  }] as ElementObject[],
+  selector: "ButtonSelector",
+}
+
+const divElementObject = {
+  title: "Example Title",
+  htmlString: "<div>Example HTML</div>",
+  selector: ".example-selector",
+  result: {
+    name: "Example Name",
+    correctText: "Example Correct Text",
+    htmlString: "<div>Example Result HTML</div>",
+    comment: "",
+    checked: false,
+    url: "example.com",
+    testID: "example-test-id",
+    chromeVersion: "",
+    chromeExtensionVersion: "",
+    outcome: "Example outcome",
+  },
+  attributes: [],
+  isCommentVisible: false
+};
+
+const buttonElementObject = {
+title: 'Button',
+htmlString: '<button>Click me</button>',
+selector: '.button-class',
+attributes: [{ name: 'type', value: 'button' }],
+isCommentVisible: false,
+result: {
+  testID: 'button-test-id',
+  name: 'ButtonElement',
+  htmlString: '<button>Click me</button>',
+  correctText: 'Click me',
+  comment: 'This is a button element',
+  checked: false,
+  url: 'https://example.com/button',
+  chromeVersion: '94.0.4606.81',
+  chromeExtensionVersion: '1.2.3',
+  outcome: 'success',
+},
+};
+
+
+const imageElementObject = {
+title: 'Image',
+htmlString: '<img src="image.jpg" alt="Mock Image">',
+selector: '.image-class',
+attributes: [{ name: 'width', value: '200' }, { name: 'height', value: '150' }],
+isCommentVisible: false,
+result: {
+  testID: 'image-test-id',
+  name: 'ImageElement',
+  htmlString: '<img src="image.jpg" alt="Mock Image">',
+  correctText: '',
+  comment: 'This is an image element',
+  checked: false,
+  url: 'https://example.com/image',
+  chromeVersion: '94.0.4606.81',
+  chromeExtensionVersion: '1.2.3',
+  outcome: 'success',
+},
+};
+
+const linkElementObject = {
+title: 'Link',
+htmlString: '<a href="https://example.com">Click here</a>',
+selector: '.link-class',
+attributes: [{ name: 'target', value: '_blank' }],
+isCommentVisible: false,
+result: {
+  testID: 'link-test-id',
+  name: 'LinkElement',
+  htmlString: '<a href="https://example.com">Click here</a>',
+  correctText: 'Click here',
+  comment: 'This is a link element',
+  checked: false,
+  url: 'https://example.com/link',
+  chromeVersion: '94.0.4606.81',
+  chromeExtensionVersion: '1.2.3',
+  outcome: 'success',
+},
+};
+
+const headingElementObject = {
+title: 'Heading',
+htmlString: '<h1>Heading 1</h1>',
+selector: '.heading-class',
+attributes: [{ name: 'role', value: 'heading' }],
+isCommentVisible: false,
+result: {
+  testID: 'heading-test-id',
+  name: 'HeadingElement',
+  htmlString: '<h1>Heading 1</h1>',
+  correctText: 'Heading 1',
+  comment: 'This is a heading element',
+  checked: false,
+  url: 'https://example.com/heading',
+  chromeVersion: '94.0.4606.81',
+  chromeExtensionVersion: '1.2.3',
+  outcome: 'success',
+},
+};
+
+const menuItemElementObject = {
+title: 'MenuItem',
+htmlString: '<li>Menu Item 1</li>',
+selector: '.menu-item-class',
+attributes: [{ name: 'data-id', value: 'menu-1' }],
+isCommentVisible: false,
+result: {
+  testID: 'menu-item-test-id',
+  name: 'MenuItemElement',
+  htmlString: '<li>Menu Item 1</li>',
+  correctText: 'Menu Item 1',
+  comment: 'This is a menu item element',
+  checked: false,
+  url: 'https://example.com/menu-item',
+  chromeVersion: '94.0.4606.81',
+  chromeExtensionVersion: '1.2.3',
+  outcome: 'success',
+},
+};
+
+const elementObjectList : ElementObject[] = [divElementObject, headingElementObject, menuItemElementObject, imageElementObject, linkElementObject, buttonElementObject];

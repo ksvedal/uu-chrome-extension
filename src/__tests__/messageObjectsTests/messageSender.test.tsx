@@ -1,7 +1,7 @@
 import { MessageSender } from "../../messageObjects/messageSender";
 import { ElementObject, ElementType } from "../../sidebar/interfaces";
 import { Message, ScanPageMessage } from "../../messageObjects/message";
-import { testElementObject } from "../testData/htmlTestData";
+import { divElementObject } from "../testData/htmlTestData";
 
 // Define a custom type for representing a tab in Chrome
 type Tab = {
@@ -45,7 +45,7 @@ describe("MessageSender", () => {
     messageSender = new MessageSender();
 
     // Create a mock 'element' object that will be used in the tests
-    element = testElementObject;
+    element = divElementObject;
 
     // Mock the chrome.tabs.query function
     chrome.tabs.query = jest.fn((queryInfo: QueryInfo, callback: (tabs: Tab[]) => void) => {
