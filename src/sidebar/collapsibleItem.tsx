@@ -103,7 +103,11 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   return (
     <div className='collapsible-item'>
       <div className='collapsible-item-parent'>
-        <div className={`item-header row ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
+        <div className={`item-header row ${isExpanded ? 'pressed' : ''}`} onClick={() => {
+            // Toggle the expanded state and call the toggleCheck function for the specific index
+            setIsExpanded(!isExpanded);
+          }}
+        >
 
           <div className={"col-4"}>
             <div className="buttons-text">
@@ -225,7 +229,12 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   return (
     <div data-testid="collapsible-type" className=" collapsible-item-child">
       <div className="collapsible-item">
-        <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
+        <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => {
+            // Toggle the expanded state and call the toggleCheck function for the specific index
+            setIsExpanded(!isExpanded);
+            toggleCheck
+          }}
+        >
           <div className="row">
             <div className="col-4">
               <br /> {thisElement.title}
