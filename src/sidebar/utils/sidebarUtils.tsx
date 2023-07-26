@@ -2,10 +2,8 @@ import { WebsiteScanner } from "../../htmlParser/websiteScanner";
 import { ElementType } from "../../interfaces/elementInterfaces";
 import { MessageSender } from "../../messageObjects/messageSender";
 
-
 const _message: MessageSender = new MessageSender();
 const _scan: WebsiteScanner = new WebsiteScanner();
-
 
 export const fetchData = (
     setScanPageResult:React.Dispatch<React.SetStateAction<ElementType[]>>,

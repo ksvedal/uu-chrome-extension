@@ -1,21 +1,17 @@
 import React from "react";
-import { CollapsibleObjectInterface } from "../../interfaces/collapsibleObjectInterfaces";
-import { toggleCheck } from "../utils/objectUtils";
-import IsCheckedStatus from "./isCheckedStatus";
 import { ToggleButton } from "./buttons";
+import { RadioButtonStatus } from "./radioButtonStatus";
+import { CollapsibleObjectInterface } from "../../../interfaces/collapsibleObjectInterfaces";
 
 
 export const CollapsibleObject: React.FC<CollapsibleObjectInterface> = ({
     isExpanded,
     setIsExpanded,
     isHighlighted,
-    elementType,
     thisElement,
     children,
-    highlightedElement,
     isAllHighlighted,
-    setHighlightedElement,
-    setIsAllHighlighted,
+    handleHighlightElement
   }) => {
   
     return (
@@ -28,17 +24,11 @@ export const CollapsibleObject: React.FC<CollapsibleObjectInterface> = ({
               </div>
               <div className="col-4">
                 <br />
-                <IsCheckedStatus text={thisElement.result.correctText}></IsCheckedStatus>
+                <RadioButtonStatus text={thisElement.result.correctText}></RadioButtonStatus>
               </div>
               <div className={"col-4"}>
                 <div className={"float-right"}>
-                  <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={() => toggleCheck(
-                        highlightedElement,
-                        thisElement,
-                        setHighlightedElement,
-                        isAllHighlighted,
-                        setIsAllHighlighted,
-                        elementType)}
+                  <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={handleHighlightElement}
                         text="Jump to" />
                 </div>
               </div>

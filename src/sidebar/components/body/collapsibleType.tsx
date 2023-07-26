@@ -1,10 +1,9 @@
 import React from "react";
-import { CollapsibleTypeInterface } from "../../interfaces/collapsibleTypeInterfaces";
 import { ToggleButton } from "./buttons";
 import { ToastContainer } from 'react-toastify';
-import { toggleCheck } from "../utils/typeUtils";
 import 'react-toastify/dist/ReactToastify.css';
-import { CollapsibleObjectContainer } from "../containers/collapsibleObjectContainer";
+import { CollapsibleTypeInterface } from "../../../interfaces/collapsibleTypeInterfaces";
+import { CollapsibleObjectContainer } from "../../containers/collapsibleObjectContainer";
 
 
 export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
@@ -21,7 +20,8 @@ export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
     url,
     typeElements,
     setTypeElements,
-    setJsonData
+    setJsonData,
+    handleHighlightAll
  }) => {
 
   return (
@@ -43,7 +43,7 @@ export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
 
           <div className={"col-4"}>
             <div className="float-right">
-              <ToggleButton isChecked={isAllHighlighted} onToggle={() => toggleCheck(setIsAllHighlighted, isAllHighlighted, setCurrentHighlighted, elementType)} text="Highlight All" />
+              <ToggleButton isChecked={isAllHighlighted} onToggle={handleHighlightAll} text="Highlight All" />
             </div>
           </div>
 

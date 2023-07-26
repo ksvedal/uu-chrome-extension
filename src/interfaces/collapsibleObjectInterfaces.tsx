@@ -6,13 +6,10 @@ export interface CollapsibleObjectInterface {
     isExpanded: boolean
     setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>
     isHighlighted:boolean
-    elementType: ElementType;
     thisElement: ElementObject;
     children?: ReactNode;
-    highlightedElement: ElementObject | null;
     isAllHighlighted: boolean;
-    setHighlightedElement: React.Dispatch<React.SetStateAction<ElementObject | null>>;
-    setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
+    handleHighlightElement: () => void
   }
   
   export interface CollapsibleObjectContainerInterface {

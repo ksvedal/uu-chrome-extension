@@ -18,6 +18,7 @@ export interface CollapsibleTypeInterface {
     typeElements: ElementObject[]
     setTypeElements: React.Dispatch<React.SetStateAction<ElementObject[]>>
     setJsonData: React.Dispatch<React.SetStateAction<JsonDataFormat[]>>
+    handleHighlightAll: () => void
   }
   
   export interface CollapsibleTypeContainerInterface {

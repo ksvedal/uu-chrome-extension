@@ -1,23 +1,20 @@
 import React from 'react';
 import "../../style/sidepanel.css";
-import { RegularButton } from './buttons';
-import ResultsHeader from '../resultsHeader';
+import { RegularButton } from './body/buttons';
+import ResultsHeader from './header/resultsHeader';
 import { MyContext } from './resultItemsContext';
-import { fetchData, toggleDarkMode } from '../utils/sidebarUtils';
 import { CollapsibleTypeContainer } from '../containers/collapsibleTypeContainer';
 import { SidepanelInterface } from '../../interfaces/sidepanelInterfaces';
 
 export const Sidepanel: React.FC<SidepanelInterface> = ({
   darkMode,
-  setDarkMode,
   scanPageResult,
-  setScanPageResult,
   error,
-  setError,
   websiteURL,
-  setWebsiteURL,
   jsonData,
-  setJsonData
+  setJsonData,
+  handleFetchData,
+  handleToggleDarkMode,
 }) => {
   
 
@@ -28,7 +25,7 @@ export const Sidepanel: React.FC<SidepanelInterface> = ({
           <img src="scan.png" alt="Extension Logo" />
         </div>
         <div className='extension-text'> <p>Button Seeker 2000</p></div>
-        <button className={"dank-toggle-button float-right"} onClick={() => toggleDarkMode(setDarkMode, darkMode)}> moon </button>
+        <button className={"dank-toggle-button float-right"} onClick={handleToggleDarkMode}> <span>{darkMode ? 'sun' : 'moon'}</span> </button>
       </div>
 
       <div className={"row scan-page-field"}>
@@ -39,7 +36,7 @@ export const Sidepanel: React.FC<SidepanelInterface> = ({
             </div>
           </div>
           <div className="col-4">
-            <RegularButton data-testid="scanPage" text="Scan Page" onClick={()=> fetchData(setScanPageResult, setError, setWebsiteURL)} />
+            <RegularButton data-testid="scanPage" text="Scan Page" onClick={handleFetchData} />
           </div>
           {error && <div className="col-12 error-message">{error}</div>}
         </div>
@@ -60,7 +57,6 @@ export const Sidepanel: React.FC<SidepanelInterface> = ({
           </MyContext.Provider>
         </div>
       </div>
-
     </div>
   );
 }

@@ -1,4 +1,4 @@
-export interface RadioButtonGroupProps {
+export interface RadioButtonsProps {
     presetOption: string;
     index: number;
     onOptionChange: (option: string, index: number) => void;

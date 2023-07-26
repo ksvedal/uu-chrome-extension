@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import TabIcon from './tabIcon';
-import { ResultsHeaderInterface } from '../interfaces/resultInterfaces';
-import { MyContext } from './components/resultItemsContext';
-import { TestUtils } from './utils/testUtils';
+import { ResultsHeaderInterface } from '../../../interfaces/resultInterfaces';
+import { MyContext } from '../resultItemsContext';
+import { TestUtils } from '../../utils/testUtils';
 
 const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => {
   const [error, setError] = useState<string | null>(null);
@@ -16,8 +16,6 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => 
     return null;
   }
   const { jsonData } = context;
-
-
 
   const logResult = () => {
     if (jsonData == null || jsonData.length === 0) {

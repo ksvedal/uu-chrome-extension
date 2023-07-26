@@ -4,6 +4,7 @@ import { Sidepanel } from "../components/sidepanel";
 import React from "react";
 import { ElementType } from "../../interfaces/elementInterfaces";
 import { createRoot } from "react-dom/client";
+import { fetchData, toggleDarkMode } from "../utils/sidebarUtils";
 
 
 export const SidepanelContainer: React.FC = () => {
@@ -14,38 +15,38 @@ export const SidepanelContainer: React.FC = () => {
     const [jsonData, setJsonData] = useState<JsonDataFormat[]>([]);
     const [error, setError] = useState<string | null>(null);
 
-
-  let dark: String = "light";
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      setDarkMode(event.matches);
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-    };
-  }, []);
+    useEffect(() => {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const handleChange = (event: MediaQueryListEvent) => {
+        setDarkMode(event.matches);
+      };
+      mediaQuery.addEventListener("change", handleChange);
+      return () => {
+        mediaQuery.removeEventListener("change", handleChange);
+      };
+    }, []);
 
 
-  return (
-    <Sidepanel
-        darkMode={darkMode}
-        setDarkMode={setDarkMode}
-        scanPageResult={scanPageResult}
-        setScanPageResult={setScanPageResult}
-        error={error}
-        setError={setError}
-        websiteURL={websiteURL}
-        setWebsiteURL={setWebsiteURL}
-        jsonData={jsonData}
-        setJsonData={setJsonData}
-    ></Sidepanel>
-  )
+    const handleFetchData = () => {
+      fetchData(setScanPageResult, setError, setWebsiteURL)
+    }
+
+    const handleToggleDarkMode = () => {
+      toggleDarkMode(setDarkMode, darkMode)
+    }
+
+    return (
+      <Sidepanel
+          darkMode={darkMode}
+          scanPageResult={scanPageResult}
+          error={error}
+          websiteURL={websiteURL}
+          jsonData={jsonData}
+          setJsonData={setJsonData}
+          handleFetchData={handleFetchData}
+          handleToggleDarkMode={handleToggleDarkMode}
+      ></Sidepanel>
+    )
 }
 
 //export default Sidebar;

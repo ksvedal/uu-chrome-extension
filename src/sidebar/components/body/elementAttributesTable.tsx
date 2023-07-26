@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ElementAttribute, ElementObject } from '../../interfaces/elementInterfaces';
+import { ElementAttribute, ElementObject } from '../../../interfaces/elementInterfaces';
 
-export const ElementAttributes: React.FC<ElementObject> = ({ attributes, htmlString, }) => {
+export const ElementAttributesTable: React.FC<ElementObject> = ({ attributes }) => {
     // Define your desired attribute names
     const attributeNames = ["aria-labelledby", "aria-label", "title", "Description", "Role", "Focusable"];
-
     const initialAttributes: ElementAttribute[] = attributeNames.map(name => ({ name, value: '' }));
-
     const [attributess, setAttributes] = useState<ElementAttribute[]>(initialAttributes);
 
     useEffect(() => {

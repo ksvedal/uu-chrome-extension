@@ -3,7 +3,7 @@ import { MessageSender } from "../../messageObjects/messageSender";
 
 const messageSender = new MessageSender();
 
-export const toggleCheck = (
+export const highlightElement = (
     highlightedElement: ElementObject | null,
     thisElement: ElementObject,
     setHighlightedElement: React.Dispatch<React.SetStateAction<ElementObject | null>>,
