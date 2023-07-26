@@ -6,8 +6,8 @@ import { ElementType, ElementObject } from "../../sidebar/interfaces";
 import { WebUtils } from "../../htmlParser/webUtils";
 //import { divElementObject, headingElementObject, menuItemElementObject, imageElementObject, linkElementObject, buttonElementObject} from "../testData/htmlTestData";
 
-// See end of file for test data variables
-const toTypeSpy = jest.spyOn(WebUtils, 'toType');
+//Helper function to create a mock element
+
 
 jest.mock('chrome', () => ({
   tabs: {
@@ -36,23 +36,7 @@ const createMockToTypeImplementation = (elementTypeList: ElementType[]) => (
 };
 
 // Mock the webUtils module
-jest.mock('../../htmlParser/webUtils', () => {
-  const elementObjectList: ElementObject[] = [headingElementObject, menuItemElementObject, imageElementObject, linkElementObject, buttonElementObject];
-  const elementTypeList: ElementType[] = elementObjectList.flatMap(createElementObjectElementType);
-
-  return {
-    WebUtils: {
-      toType: jest.fn().mockImplementationOnce(createMockToTypeImplementation(elementTypeList)),
-      generateSelector: jest.fn().mockReturnValue('MockSelector'),
-      getAttributes: jest.fn().mockReturnValue([{ name: 'mockAttr', value: 'mockValue' }]),
-      getTitle: jest.fn().mockReturnValue('MockTitle'),
-    },
-  };
-});
-
-/*
-//Helper function to create a mock element
-function createElementObjectElementType(elementObject: ElementObject | undefined): ElementType[] {
+function createElementTypeFromElementObject(elementObject: ElementObject | undefined): ElementType[] {
   if (!elementObject || !elementObject.title || !elementObject.selector) {
     // Return an empty array when elementObject is not correctly defined.
     return [];
@@ -63,7 +47,34 @@ function createElementObjectElementType(elementObject: ElementObject | undefined
     nodes: [elementObject],
     selector: elementObject.selector,
   }];
-}*/
+}
+
+// Mock the webUtils module
+jest.mock('../../htmlParser/webUtils', () => {
+  const elementObjectList : ElementObject[] = [headingElementObject, menuItemElementObject, imageElementObject, linkElementObject, buttonElementObject];
+  const elementTypeList: ElementType[] = elementObjectList.flatMap(createElementTypeFromElementObject);
+
+  return {
+    WebUtils: {
+      toType: jest.fn((elements, name, selector) => {
+        // Get the first ElementType from the list
+        const elementType = elementTypeList.shift();
+        if (elementType) {
+          // Return the mock value for the first ElementType
+          return elementType;
+        }
+        // If the list is empty, return a default value or throw an error
+        // depending on your use case.
+        return {}; // Default value
+      }),
+      generateSelector: jest.fn().mockReturnValue('MockSelector'),
+      getAttributes: jest.fn().mockReturnValue([{ name: 'mockAttr', value: 'mockValue' }]),
+      getTitle: jest.fn().mockReturnValue('MockTitle'),
+    },
+  };
+});
+
+
 
 describe('WebsiteScanner', () => {
   let websiteScanner: WebsiteScanner;
@@ -311,4 +322,4 @@ result: {
 
 //Lists of elements
 const elementObjectList : ElementObject[] = [headingElementObject, menuItemElementObject, imageElementObject, linkElementObject, buttonElementObject];
-const elementTypeList: ElementType[] = elementObjectList.flatMap(createElementObjectElementType);
+const elementTypeList: ElementType[] = elementObjectList.flatMap(createElementTypeFromElementObject);
