@@ -32,7 +32,7 @@ function renderElementAttributes(attributes: ElementAttribute[]) {
 
 describe("ElementAttributes", () => {
   // Test for when all attributes are given a value
-  it("renders all attributes with correct values when all attributes are provided", () => {
+  test("renders all attributes with correct values when all attributes are provided", () => {
     const attributes = [
       { name: "title", value: "Sample Title" },
       { name: "Role", value: "button" },
@@ -54,7 +54,7 @@ describe("ElementAttributes", () => {
 
 
   // Test for when no values are given (empty table)
-  it("renders attributes with empty values when no attributes are provided", () => {
+  test("renders attributes with empty values when no attributes are provided", () => {
     const attributes: ElementAttribute[] = [];
 
     renderElementAttributes(attributes);
@@ -76,7 +76,7 @@ describe("ElementAttributes", () => {
 
 
   // Test for when not all attributes are provided
-  it("renders with missing attribute values", () => {
+  test("renders with missing attribute values", () => {
     const attributes = [
       { name: "title", value: "Sample Title" },
       // Missing some attributes in the list
@@ -103,7 +103,7 @@ describe("ElementAttributes", () => {
 
 
   // Test for when values are updated
-  it("updates attribute values when attributes prop changes", () => {
+  test("updates attribute values when attributes prop changes", () => {
     const initialAttributes = [
       { name: "title", value: "Initial Title" },
       { name: "Role", value: "initialRole" },
@@ -133,7 +133,7 @@ describe("ElementAttributes", () => {
 
   // Test for AttributeField
   describe("AttributeField", () => {
-    it("renders attribute name and value correctly", () => {
+    test("renders attribute name and value correctly", () => {
       const attributeName = "title";
       const attributeValue = "Sample Title";
 
