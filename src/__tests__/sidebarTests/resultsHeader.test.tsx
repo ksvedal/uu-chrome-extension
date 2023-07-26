@@ -7,7 +7,7 @@ import { successToast, errorToast } from '../../sidebar/toastUtils';
 import { APIError } from '../../client/apiError';
 import '@testing-library/jest-dom/extend-expect'
 import { ElementResult } from "../../sidebar/interfaces";
-import { TestUtils } from '../../sidebar/testUtils';
+import { TestUtils } from '../../sidebar/utils/testUtils';
 
 jest.mock('../../client/testResultsApi');
 jest.mock('../../sidebar/toastUtils', () => ({
