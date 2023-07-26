@@ -3,9 +3,11 @@
 import { WebsiteScanner } from "../../htmlParser/websiteScanner";
 import { ElementSelector, ButtonSelector, ImageSelector, LinkSelector, MenuItems, Headings } from "../../htmlParser/elementSelector";
 import { ElementType, ElementObject } from "../../sidebar/interfaces";
+import { WebUtils } from "../../htmlParser/webUtils";
 //import { divElementObject, headingElementObject, menuItemElementObject, imageElementObject, linkElementObject, buttonElementObject} from "../testData/htmlTestData";
 
-// See end of file for test data
+// See end of file for test data variables
+const toTypeSpy = jest.spyOn(WebUtils, 'toType');
 
 jest.mock('chrome', () => ({
   tabs: {
@@ -16,28 +18,76 @@ jest.mock('chrome', () => ({
   }
 }));
 
-jest.mock('../../htmlParser/webUtils', () => ({
-  WebUtils: {
-    toType: jest.fn().mockReturnValue({
-      name: 'Buttons',
-      nodes: [ 
-        buttonElementObject,
-      ],
-      selector: 'ButtonSelector',
-    }),
-    generateSelector: jest.fn().mockReturnValue('MockSelector'),
-    getAttributes: jest.fn().mockReturnValue([{ name: 'mockAttr', value: 'mockValue' }]),
-    getTitle: jest.fn().mockReturnValue('MockTitle'),
-  },
-}));
+// Define a helper function to generate the mock implementation for toType
+const createMockToTypeImplementation = (elementTypeList: ElementType[]) => (
+  elements: any[],
+  name: string,
+  selector: string
+) => {
+  // Get the first ElementType from the list
+  const elementType = elementTypeList.shift();
+  if (elementType) {
+    // Return the mock value for the first ElementType
+    return elementType;
+  }
+  // If the list is empty, return a default value or throw an error
+  // depending on your use case.
+  return {}; // Default value
+};
 
+// Mock the webUtils module
+jest.mock('../../htmlParser/webUtils', () => {
+  const elementObjectList: ElementObject[] = [headingElementObject, menuItemElementObject, imageElementObject, linkElementObject, buttonElementObject];
+  const elementTypeList: ElementType[] = elementObjectList.flatMap(createElementObjectElementType);
 
+  return {
+    WebUtils: {
+      toType: jest.fn().mockImplementationOnce(createMockToTypeImplementation(elementTypeList)),
+      generateSelector: jest.fn().mockReturnValue('MockSelector'),
+      getAttributes: jest.fn().mockReturnValue([{ name: 'mockAttr', value: 'mockValue' }]),
+      getTitle: jest.fn().mockReturnValue('MockTitle'),
+    },
+  };
+});
+
+/*
+//Helper function to create a mock element
+function createElementObjectElementType(elementObject: ElementObject | undefined): ElementType[] {
+  if (!elementObject || !elementObject.title || !elementObject.selector) {
+    // Return an empty array when elementObject is not correctly defined.
+    return [];
+  }
+
+  return [{
+    name: elementObject.title,
+    nodes: [elementObject],
+    selector: elementObject.selector,
+  }];
+}*/
 
 describe('WebsiteScanner', () => {
   let websiteScanner: WebsiteScanner;
+
+  const mockToType = jest.fn().mockReturnValue({
+    name: 'Button',
+    nodes: elementTypeList,
+    selector: 'ButtonSelector',
+  });
   
   beforeEach(() => {
     websiteScanner = new WebsiteScanner();
+    });
+  
+    test('scanPage returns an array of ElementType with non-empty nodes', () => {
+     
+      const scanResult = websiteScanner.scanPage();
+  
+      // Verify the length of the scanResult array and other relevant details.
+      // For example:
+      expect(scanResult.length).toBe(elementTypeList.length);
+      for (const result of scanResult) {
+        expect(result.nodes.length).toBeGreaterThan(0);
+      }
     });
 
   test('scanPage returns an array of ElementType with non-empty nodes', () => {
@@ -51,18 +101,14 @@ describe('WebsiteScanner', () => {
 
     test('scanPage returns an empty array of ElementType when nothing is detected', () => {
       websiteScanner = new WebsiteScanner();
-      console.log(websiteScanner.scanPage());
-    
-      // Define the expected results as an object
-      const expectedResult: { [key: string]: ElementType } = {[
-        buttonsResult,
-        buttonsResult,
-        buttonsResult,
-        buttonsResult,
-        buttonsResult ]
-      };
+      //The scanner is finding 5 different elements
+      const repeatCount = 5;
+
+      const expectedResult = Array(5).fill(buttonsResult);
+        
       const scanResult = websiteScanner.scanPage();
-      expect(scanResult).toEqual(Object.values(expectedResult));
+      console.log(scanResult);
+      expect(scanResult).toEqual(expectedResult);
   });
   
 
@@ -118,10 +164,10 @@ describe('WebsiteScanner', () => {
 
 });
 
-const buttonsResult = {
-  name: 'Buttons',
+const buttonsResult: ElementType = {
+  name: 'Button',
   nodes:  [{                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-    title: 'Buttons',
+    title: 'Button',
     htmlString: '<button>Click me</button>',
     selector: '.button-class',
     attributes: [ { name: 'type', value: 'button' } ],
@@ -138,11 +184,11 @@ const buttonsResult = {
       chromeExtensionVersion: '1.2.3',
       outcome: 'success'
     }
-  }] as ElementObject[],
+  }],
   selector: "ButtonSelector",
 }
 
-const divElementObject = {
+const divElementObject: ElementObject = {
   title: "Example Title",
   htmlString: "<div>Example HTML</div>",
   selector: ".example-selector",
@@ -162,7 +208,7 @@ const divElementObject = {
   isCommentVisible: false
 };
 
-const buttonElementObject = {
+const buttonElementObject: ElementObject = {
 title: 'Button',
 htmlString: '<button>Click me</button>',
 selector: '.button-class',
@@ -183,7 +229,7 @@ result: {
 };
 
 
-const imageElementObject = {
+const imageElementObject: ElementObject = {
 title: 'Image',
 htmlString: '<img src="image.jpg" alt="Mock Image">',
 selector: '.image-class',
@@ -203,7 +249,7 @@ result: {
 },
 };
 
-const linkElementObject = {
+const linkElementObject: ElementObject  = {
 title: 'Link',
 htmlString: '<a href="https://example.com">Click here</a>',
 selector: '.link-class',
@@ -223,7 +269,7 @@ result: {
 },
 };
 
-const headingElementObject = {
+const headingElementObject: ElementObject  = {
 title: 'Heading',
 htmlString: '<h1>Heading 1</h1>',
 selector: '.heading-class',
@@ -243,7 +289,7 @@ result: {
 },
 };
 
-const menuItemElementObject = {
+const menuItemElementObject: ElementObject  = {
 title: 'MenuItem',
 htmlString: '<li>Menu Item 1</li>',
 selector: '.menu-item-class',
@@ -263,4 +309,6 @@ result: {
 },
 };
 
-const elementObjectList : ElementObject[] = [divElementObject, headingElementObject, menuItemElementObject, imageElementObject, linkElementObject, buttonElementObject];
+//Lists of elements
+const elementObjectList : ElementObject[] = [headingElementObject, menuItemElementObject, imageElementObject, linkElementObject, buttonElementObject];
+const elementTypeList: ElementType[] = elementObjectList.flatMap(createElementObjectElementType);
