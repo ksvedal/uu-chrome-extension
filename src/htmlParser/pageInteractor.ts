@@ -1,4 +1,4 @@
-import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, UnhighlightAllAndHighlightSingleMessage } from "../messageObjects/message";
+import { HighlightAllDashedMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, UnhighlightAllAndHighlightSingleMessage } from "../messageObjects/message";
 
 /**
  * This class is responsible for interacting with the page
@@ -7,7 +7,12 @@ export class PageInteractor {
     private prevElem: HTMLElement | null = null;
     private highlightClass: string = "highlight";
 
-    public highlightAllWithType(message: HighlightAllMessage): void {
+    highlightAllDashed(message: HighlightAllDashedMessage) {
+      
+    }
+    
+    public highlightAllWithType(message: HighlightAllMessage, isDashed?: boolean ): void {
+        isDashed = isDashed || false;
         try {
             const elements = document.querySelectorAll(message.type.selector) as NodeListOf<HTMLElement>;
             if (!elements.length) {
@@ -19,14 +24,14 @@ export class PageInteractor {
                 }
             } else {
                 for (let element of elements) {
-                    this.addStyleToElement(element);
+                    this.addStyleToElement(element, isDashed);
                 }
             }
         } catch (error) {
             console.error(`Error in highlightAllWithType: ${error}`);
         }
     }
-
+    
     public handleHighlightSingle(message: HighlightMessage): void {
         try {
             const element = document.querySelector(message.element.selector) as HTMLElement;
@@ -105,9 +110,14 @@ export class PageInteractor {
         }
     }
 
-    private addStyleToElement(element: HTMLElement): void {
+    private addStyleToElement(element: HTMLElement, isDashed?: Boolean): void {
+        isDashed = isDashed || false;
         if (element) {
-            element.classList.add(this.highlightClass);
+            if (!isDashed) {
+                element.classList.add(this.highlightClass);
+            } else {
+                element.classList.add(this.highlightClass + "-dashed");
+            }
         }
     }
 

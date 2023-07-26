@@ -1,4 +1,4 @@
-import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, Message, ScanPageMessage, UnhighlightAllAndHighlightSingleMessage } from './messageObjects/message';
+import { HighlightAllDashedMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, Message, ScanPageMessage, UnhighlightAllAndHighlightSingleMessage } from './messageObjects/message';
 import { PageInteractor } from './htmlParser/pageInteractor';
 import { WebsiteScanner } from './htmlParser/websiteScanner';
 import { ElementType } from './sidebar/interfaces';
@@ -43,7 +43,7 @@ export function handleMessage(
         break;
       }
       case 'highlightAllElements':{
-        _page.highlightAllWithType((message as HighlightAllMessage));
+        _page.highlightAllWithType((message as HighlightAllMessage), false);
         sendResponse({ message: "Highlighted all with type" })
         break;
       }
@@ -55,6 +55,11 @@ export function handleMessage(
       case 'unhighlightAllAndHighlightSingle':{
         _page.unhighlightAllAndHighlightSingle((message as UnhighlightAllAndHighlightSingleMessage));
         sendResponse({ message: "Unhighlighted all and highlighted single" })
+        break;
+      }
+      case 'highlightAllDashedElements':{
+        _page.highlightAllDashed((message as HighlightAllMessage));
+        sendResponse({ message: "Highlighted all dashed with type" })
         break;
       }
       default:{

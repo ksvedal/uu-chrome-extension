@@ -1,7 +1,8 @@
 import { ElementObject, ElementType } from "../sidebar/interfaces";
-import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage, Message } from "./message";
+import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage, Message, HighlightAllDashedMessage } from "./message";
 
 export class MessageSender {
+  
 
     public scanPageMessage(callback: (response: ElementType[]) => void) {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -94,5 +95,23 @@ export class MessageSender {
             }
         });
         return true;
+    }
+
+    highlightAllDashed(){
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        if (tabs[0]?.id) {
+            console.log("Running with a tab id");
+            chrome.tabs.sendMessage(tabs[0].id, new HighlightAllDashedMessage(), (response) => {
+                if (chrome.runtime.lastError) {
+                    console.error(chrome.runtime.lastError.message);
+                } else {
+                    console.log("Result message: " + response.message);
+                }
+            });
+        } else {
+            console.log("No tab id");
+        }
+    });
+    return true;
     }
 }

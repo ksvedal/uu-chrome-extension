@@ -24,6 +24,7 @@ export class WebsiteScanner {
             console.log('HTML elements' + this.selectors[key].getElements())
             results.push(WebUtils.toType(this.selectors[key].getElements(), key, this.selectors[key].selector));
         }
+        console.log(results.length)
         return results;
     }
 
