@@ -6,13 +6,28 @@ import { HighlightAllDashedMessage, HighlightAllMessage, HighlightAndRemovePrevi
 export class PageInteractor {
     private prevElem: HTMLElement | null = null;
     private highlightClass: string = "highlight";
+    private highlightDashedClass: string = "highlight-dashed";
 
-    highlightAllDashed(message: HighlightAllDashedMessage) {
-      
+
+    highlightAllTypesDashed(message: HighlightAllDashedMessage): void {
+        try {
+            for (let i = 0; i < message.typeSelectors.length; i++) {
+                const elements = document.querySelectorAll(message.typeSelectors[i]) as NodeListOf<HTMLElement>;
+                if (!elements.length) {
+                    console.log(`No elements found for selector "${message.typeSelectors[i]}"`);
+                }
+    
+                for (let element of elements) {
+                    this.addStyleToElement(element, true);
+                }
+            }
+        } catch (error) {
+            console.error(`Error in highlightAllTypesDashed: ${error}`);
+        }
     }
     
-    public highlightAllWithType(message: HighlightAllMessage, isDashed?: boolean ): void {
-        isDashed = isDashed || false;
+    public highlightAllWithType(message: HighlightAllMessage): void {
+
         try {
             const elements = document.querySelectorAll(message.type.selector) as NodeListOf<HTMLElement>;
             if (!elements.length) {
@@ -24,7 +39,7 @@ export class PageInteractor {
                 }
             } else {
                 for (let element of elements) {
-                    this.addStyleToElement(element, isDashed);
+                    this.addStyleToElement(element);
                 }
             }
         } catch (error) {
@@ -116,7 +131,7 @@ export class PageInteractor {
             if (!isDashed) {
                 element.classList.add(this.highlightClass);
             } else {
-                element.classList.add(this.highlightClass + "-dashed");
+                element.classList.add(this.highlightDashedClass);
             }
         }
     }

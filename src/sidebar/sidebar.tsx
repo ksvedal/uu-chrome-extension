@@ -6,7 +6,7 @@ import { RegularButton } from './buttons';
 import { MessageSender } from '../messageObjects/messageSender';
 import { WebsiteScanner } from '../htmlParser/websiteScanner';
 import ResultsHeader from './resultsHeader';
-import { CollapsibleItemType, toggleCheck() } from './collapsibleItem';
+import { CollapsibleItemType } from './collapsibleItem';
 import { MyContext } from './resultItemsContext';
 import { HighlightAllMessage } from '../messageObjects/message';
 
@@ -63,7 +63,7 @@ export const Sidebar: React.FC = () => {
       setWebsiteURL(url); // update the state with the response data
       setError(null); // clear the error message if no error occurs
     });
-    _message.highlightAllDashed();
+    _message.highlightAllTypesDashed();
   };
 
 
