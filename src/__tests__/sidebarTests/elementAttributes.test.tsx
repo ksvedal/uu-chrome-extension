@@ -5,23 +5,23 @@ import { ElementAttributes, AttributeField } from "../../sidebar/elementAttribut
 import { ElementAttribute, ElementResult } from "../../sidebar/interfaces";
 
 const mockElementResult = {
-  htmlString: "",
-  correctText: "",
+  element: "",
+  samsvar: "",
   name: "",
-  comment: "",
-  checked: false,
+  kommentar: "",
+  sjekka: false,
   url: "",
-  testID: "",
-  chromeVersion: null,
-  chromeExtensionVersion: null,
-  outcome: "",
+  testregelId: "",
+  nettlesar: null,
+  utvidelse: null,
+  utfall: "",
 };
 
 function renderElementAttributes(attributes: ElementAttribute[]) {
   render(
     <ElementAttributes
       attributes={attributes}
-      htmlString=""
+      element=""
       title=""
       selector=""
       result={mockElementResult}

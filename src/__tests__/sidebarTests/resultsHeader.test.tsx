@@ -19,16 +19,16 @@ const mockSetElementResults = jest.fn();
 
 // Mocked ElementResult for testing
 const dummyResult: ElementResult = {
-    htmlString: "<p>Test HTML String</p>",
-    correctText: "Test Correct Text",
+    element: "<p>Test HTML String</p>",
+    samsvar: "Test Correct Text",
     name: "Test Name",
-    comment: "Test Comment",
-    checked: true,
+    kommentar: "Test Comment",
+    sjekka: true,
     url: "https://testurl.com",
-    testID: "Test123",
-    chromeVersion: "Version 100.0",
-    chromeExtensionVersion: "Extension 1.0",
-    outcome: "passed"
+    testregelId: "Test123",
+    nettlesar: "Version 100.0",
+    utvidelse: "Extension 1.0",
+    utfall: "passed"
 };
 
 // Cast postTestResults to jest.Mock

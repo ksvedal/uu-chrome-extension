@@ -14,19 +14,19 @@ describe("CollapsibleItemType", () => {
         nodes: [
           {
             title: "Test Element",
-            htmlString: "",
+            element: "",
             selector: "",
             result: {
-              htmlString: "",
-              correctText: "",
+              element: "",
+              samsvar: "",
               name: "",
-              comment: "",
-              checked: false,
+              kommentar: "",
+              sjekka: false,
               url: "",
-              testID: "",
-              chromeVersion: null,
-              chromeExtensionVersion: null,
-              outcome: "",
+              testregelId: "",
+              nettlesar: null,
+              utvidelse: null,
+              utfall: "",
             },
             attributes: [],
             isCommentVisible: false, // Add the isCommentVisible property here
@@ -49,7 +49,7 @@ describe("CollapsibleItemType", () => {
         setCurrentHighlighted={() => {}}
         parentIndex={0}
         url=""
-        testID=""
+        testregelId=""
       />
     );
 

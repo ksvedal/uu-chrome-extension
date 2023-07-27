@@ -65,14 +65,14 @@ describe('WebUtils', () => {
 
         // Perform assertions on the result
         expect(result.title).toBe('Hello, world!');
-        expect(result.htmlString).toBe('<div><span class="my-class">Hello, world!</span></div>');
+        expect(result.element).toBe('<div><span class="my-class">Hello, world!</span></div>');
         expect(result.selector).toBe('.my-selector');
         expect(result.attributes.length).toBe(1);
         expect(result.result.name).toBe('Hello, world!');
-        expect(result.result.htmlString).toBe('<div><span class="my-class">Hello, world!</span></div>');
-        expect(result.result.correctText).toBe("");
-        expect(result.result.comment).toBe('');
-        expect(result.result.checked).toBe(false);
+        expect(result.result.element).toBe('<div><span class="my-class">Hello, world!</span></div>');
+        expect(result.result.samsvar).toBe("");
+        expect(result.result.kommentar).toBe('');
+        expect(result.result.sjekka).toBe(false);
 
         // Verify the private method was called
         expect(generateSelectorSpy).toHaveBeenCalledWith(element);
