@@ -36,36 +36,36 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
       <div>
 
         <div className={"col-4 extra-padding"}>
-            <label className={`radio-button ${selectedOption === 'Yes' ? 'active' : ''}`}>
+            <label className={`radio-button ${selectedOption === 'Ja' ? 'active' : ''}`}>
               <input
                 type="radio"
                 name="option"
-                value="Yes"
-                checked={selectedOption === 'Yes'}
+                value="Ja"
+                checked={selectedOption === 'Ja'}
                 onChange={handleOptionChange}
               />
               <span className="radio-button-text">Yes</span>
             </label>
         </div>
         <div className={"col-4 extra-padding"}>
-            <label className={`radio-button ${selectedOption === 'No' ? 'active' : ''}`}>
+            <label className={`radio-button ${selectedOption === 'Nei' ? 'active' : ''}`}>
               <input
                 type="radio"
                 name="option"
-                value="No"
-                checked={selectedOption === 'No'}
+                value="Nei"
+                checked={selectedOption === 'Nei'}
                 onChange={handleOptionChange}
               />
               <span className="radio-button-text">No</span>
             </label>
         </div>
         <div className={"col-4 extra-padding"}>
-            <label className={`radio-button ${selectedOption === 'The element is not a button' ? 'active' : ''}`}>
+            <label className={`radio-button ${selectedOption === 'Ikkje forekomst' ? 'active' : ''}`}>
               <input
                 type="radio"
-                name="The element is not a button"
-                value="The element is not a button"
-                checked={selectedOption === 'The element is not a button'}
+                name="Ikkje forekomst"
+                value="Ikkje forekomst"
+                checked={selectedOption === 'Ikkje forekomst'}
                 onChange={handleOptionChange}
               />
               <span className="radio-button-text">Not a button</span>

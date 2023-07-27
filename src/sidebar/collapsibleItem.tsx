@@ -77,13 +77,13 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   const handleOptionChange = (option: string, index: number) => {
     let utfall = "";
 
-    if (option === "Yes") {
+    if (option === "Ja") {
       utfall =
         "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer knappen.";
-    } else if (option === "No") {
+    } else if (option === "Nei") {
       utfall =
         "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer ikkje knappen.";
-    } else if (option === "The element is not a button") {
+    } else if (option === "Ikkje forekomst") {
       utfall = "Testelementet er ikkje ein knapp.";
     }
 
