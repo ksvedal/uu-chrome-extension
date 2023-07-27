@@ -31,7 +31,7 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
   return (
     <div>
         <div className={"row"}>
-            <p> Does the button's text identify its function?</p>
+            <p> Identifiserer ledeteksten funksjonen til knappen?</p>
         </div>
       <div>
 
@@ -44,7 +44,7 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
                 checked={selectedOption === 'Ja'}
                 onChange={handleOptionChange}
               />
-              <span className="radio-button-text">Yes</span>
+              <span className="radio-button-text">Ja</span>
             </label>
         </div>
         <div className={"col-4 extra-padding"}>
@@ -56,7 +56,7 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
                 checked={selectedOption === 'Nei'}
                 onChange={handleOptionChange}
               />
-              <span className="radio-button-text">No</span>
+              <span className="radio-button-text">Nei</span>
             </label>
         </div>
         <div className={"col-4 extra-padding"}>
@@ -68,7 +68,7 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
                 checked={selectedOption === 'Ikkje forekomst'}
                 onChange={handleOptionChange}
               />
-              <span className="radio-button-text">Not a button</span>
+              <span className="radio-button-text">Elementet er ikkje ein knapp</span>
             </label>
         </div>
     </div>
