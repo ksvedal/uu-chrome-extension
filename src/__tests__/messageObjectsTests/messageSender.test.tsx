@@ -54,7 +54,7 @@ describe("MessageSender", () => {
         element: "<div>Example Result HTML</div>",
         kommentar: "",
         sjekka: false,
-        url: "example.com",
+        side: "example.com",
         testregelId: "example-test-id",
         nettlesar: "",
         utvidelse: "",

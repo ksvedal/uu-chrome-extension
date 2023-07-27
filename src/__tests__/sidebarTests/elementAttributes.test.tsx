@@ -10,7 +10,7 @@ const mockElementResult = {
   name: "",
   kommentar: "",
   sjekka: false,
-  url: "",
+  side: "",
   testregelId: "",
   nettlesar: null,
   utvidelse: null,

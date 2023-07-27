@@ -80,16 +80,16 @@ export interface ElementObject {
 }
 
 export interface ElementResult {
-  element: string;
-  samsvar: string;
-  name: string;
-  kommentar: string;
-  sjekka: boolean;
-  url: string;
   testregelId: string;
   nettlesar: string | null;
   utvidelse: string | null;
+  side: string;
+  element: string;
+  samsvar: string;
   utfall: string;
+  kommentar: string;
+  name: string;
+  sjekka: boolean;
 }
 export interface ElementAttribute {
   name: string;

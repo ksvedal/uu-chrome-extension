@@ -24,7 +24,7 @@ const dummyResult: ElementResult = {
     name: "Test Name",
     kommentar: "Test Comment",
     sjekka: true,
-    url: "https://testurl.com",
+    side: "https://testurl.com",
     testregelId: "Test123",
     nettlesar: "Version 100.0",
     utvidelse: "Extension 1.0",

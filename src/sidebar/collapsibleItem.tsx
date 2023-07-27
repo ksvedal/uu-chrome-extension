@@ -37,10 +37,10 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     highlightAll();
   };
 
-  const updateJson = (elementObject: ElementObject, index: number, url: string) => {
+  const updateJson = (elementObject: ElementObject, index: number, side: string) => {
     let newNodes = [...type.nodes];  // copy the array
     newNodes[index] = elementObject;  // replace the element
-    newNodes[index].result.url = url;
+    newNodes[index].result.side = side;
     setTypeElements(newNodes);  // update the state
     let elementResults: ElementResult[] = newNodes.map(node => node.result).flat();
     setElementResults(elementResults);
