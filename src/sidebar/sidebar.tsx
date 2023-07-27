@@ -19,7 +19,7 @@ export const Sidebar: React.FC = () => {
   const [elementResults, setElementResults] = useState<ElementResult[]>([]);
   const [index, setIndex] = useState<number[]>([]);
   const [thisElement, setThisElement] = useState<ElementObject | null>(null);
-  const [testID, settestID] = useState<string>("");
+  const [testID, setTestID] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
 
