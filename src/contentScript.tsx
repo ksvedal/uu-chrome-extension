@@ -1,4 +1,4 @@
-import { HighlightAllDashedMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, Message, ScanPageMessage, UnhighlightAllAndHighlightSingleMessage } from './messageObjects/message';
+import { HighlightAllDashedMessage as HighlightAllTypesDashedMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, Message, ScanPageMessage, UnhighlightAllAndHighlightSingleMessage } from './messageObjects/message';
 import { PageInteractor } from './htmlParser/pageInteractor';
 import { WebsiteScanner } from './htmlParser/websiteScanner';
 import { ElementType } from './sidebar/interfaces';
@@ -8,9 +8,14 @@ chrome.runtime.onMessage.addListener(handleMessage);
 const styleElement: HTMLStyleElement = document.createElement('style');
 // Add CSS rules to the style element
 styleElement.textContent = `
-    .highlight {
+    .highlight-selected {
         border: 5px solid #FF0000 !important;
     }
+
+    .highlight-dashed {
+        border: 5px dashed #333333 !important;
+    }
+
 `;
 // Append the style element to the head of the documentto
 document.head.append(styleElement);
@@ -57,9 +62,9 @@ export function handleMessage(
         sendResponse({ message: "Unhighlighted all and highlighted single" })
         break;
       }
-      case 'highlightAllTypesDashed':{
-        _page.highlightAllTypesDashed((message as HighlightAllDashedMessage));
-        sendResponse({ message: "Highlighted all dashed with type" })
+      case 'highlightAllElementsDashed':{
+        _page.highlightAllTypesDashed();
+        sendResponse({ message: "Highlighted all types dashed" })
         break;
       }
       default:{

@@ -97,7 +97,7 @@ export class MessageSender {
         return true;
     }
 
-    highlightAllTypesDashed(){
+    public highlightAllTypesDashed(){
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         if (tabs[0]?.id) {
             console.log("Running with a tab id");

@@ -37,8 +37,7 @@ export class HighlightAllMessage implements Message {
 }
 
 export class HighlightAllDashedMessage implements Message {
-    action: string = "highlightAllDashedElements";
-    typeSelectors: string[] = ["Buttons", "Links", "Headings", "MenuItems"];    
+    action: string = "highlightAllElementsDashed";  
 }
 
 export class ScanPageMessage implements Message {

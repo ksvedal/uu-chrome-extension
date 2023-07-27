@@ -53,7 +53,7 @@ test('test handleHighlightSingle', () => {
 
   // Assertions
   expect(document.querySelector).toHaveBeenCalledWith(mockElementObject.selector);
-  expect(mockElem.classList.add).toHaveBeenCalledWith('highlight');
+  expect(mockElem.classList.add).toHaveBeenCalledWith('highlight-selected');
 });
 
 test('test highlightAllWithType', () => {
@@ -85,8 +85,8 @@ test('test highlightAllWithType', () => {
   // Assertions
   expect(document.querySelectorAll).toHaveBeenCalledWith(mockElementType.selector);
   mockElements.forEach((mockElement) => {
-    expect(mockElement.classList.add).toHaveBeenCalledWith('highlight');
-    expect(mockElement.classList.remove).not.toHaveBeenCalled();
+    expect(mockElement.classList.add).toHaveBeenCalledWith('highlight-selected');
+    expect(mockElement.classList.remove).toHaveBeenCalled();
   });
 
   // Reset mock
@@ -105,7 +105,7 @@ test('test highlightAllWithType', () => {
   expect(document.querySelectorAll).toHaveBeenCalledWith(mockElementType.selector);
   mockElements.forEach((mockElement) => {
     expect(mockElement.classList.add).not.toHaveBeenCalled();
-    expect(mockElement.classList.remove).toHaveBeenCalledWith('highlight');
+    expect(mockElement.classList.remove).toHaveBeenCalledWith('highlight-selected');
   });
 });
 
@@ -179,8 +179,8 @@ test('test highlightAndRemovePrevious', () => {
   // Assertions
   expect(document.querySelector).toHaveBeenCalledWith(mockPreviousElementObject.selector);
   expect(document.querySelector).toHaveBeenCalledWith(mockNewElementObject.selector);
-  expect(mockElem.classList.remove).toHaveBeenCalledWith('highlight');
-  expect(mockElem.classList.add).toHaveBeenCalledWith('highlight');
+  expect(mockElem.classList.remove).toHaveBeenCalledWith('highlight-selected');
+  expect(mockElem.classList.add).toHaveBeenCalledWith('highlight-selected');
   expect(mockElem.focus).toHaveBeenCalled();
   expect(mockElem.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' });
 });
@@ -247,12 +247,12 @@ test('test unhighlightAllAndHighlightSingle', () => {
     expect(document.querySelectorAll).toHaveBeenCalledWith(
       mockElementType.selector
     );
-    expect(mockElements[0].classList.remove).toHaveBeenCalledWith('highlight');
+    expect(mockElements[0].classList.remove).toHaveBeenCalledWith('highlight-selected');
   
     expect(document.querySelector).toHaveBeenCalledWith(
       mockElementObject.selector
     );
-    expect(mockSingleElement.classList.add).toHaveBeenCalledWith('highlight');
+    expect(mockSingleElement.classList.add).toHaveBeenCalledWith('highlight-selected');
     expect(mockSingleElement.focus).toHaveBeenCalled();
     expect(mockSingleElement.scrollIntoView).toHaveBeenCalledWith({
       behavior: 'smooth',
@@ -281,8 +281,8 @@ test('test focusAndScroll', () => {
   
     // Assertions
     expect(document.querySelector).toHaveBeenCalledWith(mockElementSelector);
-    expect(mockElement.classList.remove).not.toHaveBeenCalledWith('highlight');
-    expect(mockElement.classList.add).toHaveBeenCalledWith('highlight');
+    expect(mockElement.classList.remove).not.toHaveBeenCalledWith('highlight-selected');
+    expect(mockElement.classList.add).toHaveBeenCalledWith('highlight-selected');
     expect(mockElement.focus).toHaveBeenCalled();
     expect(mockElement.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' });
   });
@@ -290,7 +290,7 @@ test('test focusAndScroll', () => {
 
 test('test addStyleToElement', () => {
   const mockElement: MockProxy<HTMLElement> = mock<HTMLElement>();
-  const highlightClass = 'highlight';
+  const highlightClass = 'highlight-selcted';
 
   mockElement.classList.add = jest.fn();
 
@@ -305,7 +305,7 @@ test('test addStyleToElement', () => {
 
 test('test removeStyleFromElement', () => {
     const mockElement: MockProxy<HTMLElement> = mock<HTMLElement>();
-    const highlightClass = 'highlight';
+    const highlightClass = 'highlight-selcted';
   
     mockElement.classList.remove = jest.fn();
   

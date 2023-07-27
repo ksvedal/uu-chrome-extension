@@ -8,7 +8,7 @@ import { WebsiteScanner } from '../htmlParser/websiteScanner';
 import ResultsHeader from './resultsHeader';
 import { CollapsibleItemType } from './collapsibleItem';
 import { MyContext } from './resultItemsContext';
-import { HighlightAllMessage } from '../messageObjects/message';
+
 
 export const Sidebar: React.FC = () => {
   const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
