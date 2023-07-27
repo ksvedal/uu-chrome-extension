@@ -196,43 +196,39 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
 }) => {
 
   const [isHighlighted, setIsHighlighted] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+const [isExpanded, setIsExpanded] = useState(false);
 
+useEffect(() => {
+  setIsHighlighted(thisElement === highlightedElement || isAllHighlighted);
+  setIsExpanded(thisElement === highlightedElement);
+}, [highlightedElement, isAllHighlighted, thisElement]);
 
-  useEffect(() => {
-    setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
-  }, [highlightedElement, isAllHighlighted]);
-
-
-  const toggleCheck = () => {
-    //If we press the currently highlighted element, unhighlight it
-    if (highlightedElement === thisElement) {
+const toggleCheck = () => {
+  // If the clicked object is already expanded, collapse it
+  if (isExpanded) {
+    setIsExpanded(false);
+    setIsHighlighted(false);
+    setHighlightedElement(null);
+    messageSender.highlightSingleMessage(thisElement, true);
+  } else {
+    // If another item is already expanded, collapse it before expanding the clicked item
+    if (highlightedElement) {
       setHighlightedElement(null);
-      messageSender.highlightSingleMessage(thisElement, true);
-      //} else if (isAllHighlighted && highlightedElement === null) {
-    } else if (isAllHighlighted) {
-      setIsAllHighlighted(false);
-      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
-      //unhighlightAllAndHighligthSingle( );
-      setHighlightedElement(thisElement);
-    } else if (highlightedElement) {
-      //Another element is highlighted, unhighlight it and highlight the new one
-      messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
-      setHighlightedElement(thisElement);//Kan kanskje fjerne denne
-    } else {
-      //No element is highlighted, highlight the new one
-      setHighlightedElement(thisElement);
-      messageSender.highlightSingleMessage(thisElement, false);
+      messageSender.highlightSingleMessage(highlightedElement, true);
     }
-  };
 
+    // Expand the clicked element and highlight it
+    setIsExpanded(true);
+    setIsHighlighted(true);
+    setHighlightedElement(thisElement);
+    messageSender.highlightSingleMessage(thisElement, false);
+  }
+};
   return (
     <div data-testid="collapsible-type" className=" collapsible-item-child">
       <div className="collapsible-item">
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => {
-            // Toggle the expanded state and call the toggleCheck function for the specific index
-            setIsExpanded(!isExpanded);
-            toggleCheck
+            toggleCheck()
           }}
         >
           <div className="row">
