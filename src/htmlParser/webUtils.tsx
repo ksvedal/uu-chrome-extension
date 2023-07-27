@@ -18,6 +18,8 @@ export class WebUtils {
             let selector = this.generateSelector(element);
             let title = this.getTitle(element);
             let mainObjectAttributes = this.getAttributes(element);
+            let correctText = (title == "") ? "Automaticly evaluated as No" : "Automaticly evaluated as Yes";
+            let outcome = (title == "") ? "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer ikkje knappen." : "Knapp er ikke kopla til ein ledetekst i koden.";
             let newObject: ElementObject = {
                 title: title ? title : '',
                 htmlString: pretty(element.outerHTML),
@@ -25,8 +27,10 @@ export class WebUtils {
                 attributes: mainObjectAttributes,
                 isCommentVisible: false,
 
-                result: { testID: "", name: title, htmlString: pretty(element.outerHTML), correctText: "", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome: "" },
+                result: { testID: "", name: title, htmlString: pretty(element.outerHTML), correctText: correctText, comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome: outcome },
             };
+            console.log("Title er ikke tom fordi title er : " + title);
+            console.log("Og da blir correctText: " + correctText);
             console.log(newObject);
             return newObject;
         } catch (error) {
@@ -62,7 +66,7 @@ export class WebUtils {
         try {
             let attributeList: ElementAttribute[] = [];
             const attributes = element.attributes;
-            const wantedAttributes = ["aria-labelledby", "aria-label", "aria-expand", "aria-controls", "class", "type", "focusable"];
+            const wantedAttributes = ["aria-labelledby", "aria-label", "aria-expand", "aria-controls", "class", "type", "focusable", "role"];
             for (let i = 0; i < attributes.length; i++) {
                 if (wantedAttributes.includes(attributes[i].name) && attributes[i].value.length > 0) {
                     attributeList.push({ name: attributes[i].name, value: attributes[i].value });
