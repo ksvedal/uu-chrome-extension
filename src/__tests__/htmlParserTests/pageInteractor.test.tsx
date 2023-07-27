@@ -23,9 +23,7 @@ test('test handleHighlightSingle', () => {
     result: {
       element: "<div>Mock HTML String</div>",
       samsvar: "Mock Correct Text",
-      name: "Mock Name",
       kommentar: "Mock Comment",
-      sjekka: false,
       side: "http://mockurl.com",
       testregelId: "MocktestregelId",
       nettlesar: "Mock Chrome Version",
@@ -117,9 +115,7 @@ test('test highlightAndRemovePrevious', () => {
     result: {
       element: "<div>Mock Previous HTML String</div>",
       samsvar: "Mock Previous Correct Text",
-      name: "Mock Previous Name",
       kommentar: "Mock Previous Comment",
-      sjekka: false,
       side: "http://mockpreviousurl.com",
       testregelId: "MockPrevioustestregelId",
       nettlesar: "Mock Previous Chrome Version",
@@ -142,9 +138,7 @@ test('test highlightAndRemovePrevious', () => {
     result: {
       element: "<div>Mock New HTML String</div>",
       samsvar: "Mock New Correct Text",
-      name: "Mock New Name",
       kommentar: "Mock New Comment",
-      sjekka: false,
       side: "http://mocknewurl.com",
       testregelId: "MockNewtestregelId",
       nettlesar: "Mock New Chrome Version",
@@ -199,9 +193,7 @@ test('test unhighlightAllAndHighlightSingle', () => {
       result: {
         element: '<div>Mock HTML String</div>',
         samsvar: 'Mock Correct Text',
-        name: 'Mock Name',
         kommentar: 'Mock Comment',
-        sjekka: false,
         side: 'http://mockurl.com',
         testregelId: 'MocktestregelId',
         nettlesar: 'Mock Chrome Version',

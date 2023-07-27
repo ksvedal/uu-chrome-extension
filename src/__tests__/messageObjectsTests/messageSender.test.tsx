@@ -49,11 +49,9 @@ describe("MessageSender", () => {
       element: "<div>Example HTML</div>",
       selector: ".example-selector",
       result: {
-        name: "Example Name",
         samsvar: "Example Correct Text",
         element: "<div>Example Result HTML</div>",
         kommentar: "",
-        sjekka: false,
         side: "example.com",
         testregelId: "example-test-id",
         nettlesar: "",

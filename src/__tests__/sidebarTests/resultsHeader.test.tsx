@@ -21,9 +21,7 @@ const mockSetElementResults = jest.fn();
 const dummyResult: ElementResult = {
     element: "<p>Test HTML String</p>",
     samsvar: "Test Correct Text",
-    name: "Test Name",
     kommentar: "Test Comment",
-    sjekka: true,
     side: "https://testurl.com",
     testregelId: "Test123",
     nettlesar: "Version 100.0",

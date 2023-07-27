@@ -88,8 +88,6 @@ export interface ElementResult {
   samsvar: string;
   utfall: string;
   kommentar: string;
-  name: string;
-  sjekka: boolean;
 }
 export interface ElementAttribute {
   name: string;
