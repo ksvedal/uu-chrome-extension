@@ -225,7 +225,7 @@ const toggleCheck = () => {
   }
 };
   return (
-    <div data-testId="collapsible-type" className=" collapsible-item-child">
+    <div data-testid="collapsible-type" className=" collapsible-item-child">
       <div className="collapsible-item">
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => {
             toggleCheck()
