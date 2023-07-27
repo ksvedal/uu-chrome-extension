@@ -19,7 +19,7 @@ export const Sidebar: React.FC = () => {
   const [elementResults, setElementResults] = useState<ElementResult[]>([]);
   const [index, setIndex] = useState<number[]>([]);
   const [thisElement, setThisElement] = useState<ElementObject | null>(null);
-  const [testregelId, settestregelId] = useState<string>("");
+  const [testID, settestID] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
 
@@ -88,7 +88,7 @@ export const Sidebar: React.FC = () => {
             </div>
           </div>
           <div className="col-4">
-            <RegularButton data-testregelId="scanPage" text="Scan Page" onClick={fetchData} />
+            <RegularButton data-testID="scanPage" text="Scan Page" onClick={fetchData} />
           </div>
           {error && <div className="col-12 error-message">{error}</div>}
         </div>
@@ -108,7 +108,7 @@ export const Sidebar: React.FC = () => {
                 parentIndex={index}
                 thisElement={thisElement}
                 url={websiteURL}
-                testregelId={testregelId}
+                testID={testID}
               >
               </CollapsibleItemType>)}
           </MyContext.Provider>

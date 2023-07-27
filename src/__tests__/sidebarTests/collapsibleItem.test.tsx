@@ -49,7 +49,7 @@ describe("CollapsibleItemType", () => {
         setCurrentHighlighted={() => {}}
         parentIndex={0}
         url=""
-        testregelId=""
+        testID=""
       />
     );
 

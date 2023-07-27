@@ -30,7 +30,7 @@ export interface CollapsibleItemTypeInterface {
   setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>;
   parentIndex: number;
   url: string;
-  testregelId: string;
+  testID: string;
 }
 
 export interface CollapsibleItemElementInterface {
