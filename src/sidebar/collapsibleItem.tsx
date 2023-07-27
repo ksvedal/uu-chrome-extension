@@ -17,7 +17,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAllHighlighted, setIsAllHighlighted] = useState(false);
-  const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.comment || ""));
+  const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.kommentar || ""));
   const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
   const context = useContext(MyContext);
   //const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
@@ -37,17 +37,17 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     highlightAll();
   };
 
-  const updateJson = (elementObject: ElementObject, index: number, url: string) => {
+  const updateJson = (elementObject: ElementObject, index: number, side: string) => {
     let newNodes = [...type.nodes];  // copy the array
     newNodes[index] = elementObject;  // replace the element
-    newNodes[index].result.url = url;
+    newNodes[index].result.side = side;
     setTypeElements(newNodes);  // update the state
     let elementResults: ElementResult[] = newNodes.map(node => node.result).flat();
     setElementResults(elementResults);
   };
 
   const storeText = (index: number, newText: string) => {
-    type.nodes[index].result.comment = newText;
+    type.nodes[index].result.kommentar = newText;
     updateJson(type.nodes[index], index, url);
   };
 
@@ -75,20 +75,20 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   };
 
   const handleOptionChange = (option: string, index: number) => {
-    let outcome = "";
+    let utfall = "";
 
-    if (option === "Yes") {
-      outcome =
+    if (option === "Ja") {
+      utfall =
         "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer knappen.";
-    } else if (option === "No") {
-      outcome =
+    } else if (option === "Nei") {
+      utfall =
         "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer ikkje knappen.";
-    } else if (option === "The element is not a button") {
-      outcome = "Testelementet er ikkje ein knapp.";
+    } else if (option === "Ikkje forekomst") {
+      utfall = "Testelementet er ikkje ein knapp.";
     }
 
-    type.nodes[index].result.correctText = option;
-    type.nodes[index].result.outcome = outcome;
+    type.nodes[index].result.samsvar = option;
+    type.nodes[index].result.utfall = utfall;
     updateJson(type.nodes[index], index, url);
   };
 
@@ -144,7 +144,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                   <ElementAttributes
                     attributes={item.attributes}
                     title={item.title}
-                    htmlString={item.htmlString}
+                    element={item.element}
                     selector={item.selector}
                     result={item.result}
                     isCommentVisible={false} />
@@ -152,7 +152,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                   <RadioButtonGroup onOptionChange={(value) => {
                     handleOptionChange(value, index);
                     openCommentSection(index);
-                  }} presetOption={type.nodes[index].result.correctText} index={index} />
+                  }} presetOption={type.nodes[index].result.samsvar} index={index} />
 
                   <div>
                     {type.nodes[index].isCommentVisible && (
@@ -237,7 +237,7 @@ const toggleCheck = () => {
             </div>
             <div className="col-4">
               <br />
-              <IsCheckedStatus text={thisElement.result.correctText}></IsCheckedStatus>
+              <IsCheckedStatus text={thisElement.result.samsvar}></IsCheckedStatus>
             </div>
             <div className={"col-4"}>
               <div className={"float-right"}>
