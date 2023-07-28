@@ -1,5 +1,5 @@
 import { ElementObject, ElementType } from "../sidebar/interfaces";
-import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage, Message, HighlightAllDashedMessage } from "./message";
+import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage, HighlightAllDashedMessage } from "./message";
 
 export class MessageSender {
   

@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult, ExtendedElementObject } from "./interfaces";
+import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult } from "./interfaces";
 import { ToggleButton, RadioButtonGroup } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
-import { v4 as uuidv4 } from 'uuid';
-import { ToastContainer, toast, Flip, Slide, Zoom } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IsCheckedStatus from "./isCheckedStatus";
 import { successToast } from "./toastUtils";
@@ -13,7 +12,7 @@ import { successToast } from "./toastUtils";
 const messageSender = new MessageSender();
 
 
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, parentIndex, url }) => {
+export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, url }) => {
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAllHighlighted, setIsAllHighlighted] = useState(false);
@@ -208,7 +207,11 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
       //} else if (isAllHighlighted && highlightedElement === null) {
     } else if (isAllHighlighted) {
       setIsAllHighlighted(false);
-      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
+      if (type.selector === "Button"){
+        messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
+      } else {
+        messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
+      }
       //unhighlightAllAndHighligthSingle( );
       setHighlightedElement(thisElement);
     } else if (highlightedElement) {

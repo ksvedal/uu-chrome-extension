@@ -86,7 +86,7 @@ test('test highlightAllWithType', () => {
   expect(document.querySelectorAll).toHaveBeenCalledWith(mockElementType.selector);
   mockElements.forEach((mockElement) => {
     expect(mockElement.classList.add).toHaveBeenCalledWith('highlight-selected');
-    expect(mockElement.classList.remove).toHaveBeenCalled();
+    expect(mockElement.classList.remove).not.toHaveBeenCalled();
   });
 
   // Reset mock
@@ -290,7 +290,7 @@ test('test focusAndScroll', () => {
 
 test('test addStyleToElement', () => {
   const mockElement: MockProxy<HTMLElement> = mock<HTMLElement>();
-  const highlightClass = 'highlight-selcted';
+  const highlightClass = 'highlight-selected';
 
   mockElement.classList.add = jest.fn();
 
@@ -305,7 +305,7 @@ test('test addStyleToElement', () => {
 
 test('test removeStyleFromElement', () => {
     const mockElement: MockProxy<HTMLElement> = mock<HTMLElement>();
-    const highlightClass = 'highlight-selcted';
+    const highlightClass = 'highlight-selected';
   
     mockElement.classList.remove = jest.fn();
   

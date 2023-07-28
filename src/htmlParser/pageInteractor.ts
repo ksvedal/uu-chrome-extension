@@ -1,5 +1,5 @@
-import { HighlightAllDashedMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, UnhighlightAllAndHighlightSingleMessage } from "../messageObjects/message";
-import { ButtonSelector, ElementSelector, Headings, ImageSelector, LinkSelector, MenuItems } from "./elementSelector";
+import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, UnhighlightAllAndHighlightSingleMessage } from "../messageObjects/message";
+import { ButtonSelector} from "./elementSelector";
 
 /**
  * This class is responsible for interacting with the page
@@ -8,26 +8,18 @@ export class PageInteractor {
     private prevElem: HTMLElement | null = null;
     private highlightClass: string = "highlight-selected";
     private highlightDashedClass: string = "highlight-dashed";
-    private selectors: { [key: string]: ElementSelector } = {
-        "Buttons": new ButtonSelector(),
-        "Images": new ImageSelector(),
-        "Links": new LinkSelector(),
-        "Headings": new Headings(),
-        "MenuItems": new MenuItems()
-    };
+    private defaultDashedHighligtedSelector = new ButtonSelector();
     
 
     highlightAllTypesDashed(): void {
-        try {
-            for (let key in this.selectors) { 
-                const elements = document.querySelectorAll(this.selectors[key].selector) as NodeListOf<HTMLElement>;
-                if (!elements.length) {
-                    console.log(`No elements found for selector "${this.selectors[key].selector}"`);
-                } else {
-    
-                    for (let element of elements) {
-                        this.addStyleToElement(element, true);
-                    }
+        try { 
+            const elements = document.querySelectorAll(this.defaultDashedHighligtedSelector.selector) as NodeListOf<HTMLElement>;
+            if (!elements.length) {
+                console.log(`No elements found for selector "${this.defaultDashedHighligtedSelector.selector}"`);
+            } else {
+                
+                for (let element of elements) {
+                    this.addStyleToElement(element, true);
                 }
             }
         } catch (error) {
@@ -48,7 +40,6 @@ export class PageInteractor {
                 }
             } else {
                 for (let element of elements) {
-                    this.removeStyleFromElement(element);
                     this.addStyleToElement(element);
                 }
             }
@@ -81,7 +72,6 @@ export class PageInteractor {
                 throw new Error(`No previous element found for selector "${message.previousElement.selector}"`);
             }
             this.removeStyleFromElement(previousElement);
-            this.addStyleToElement(previousElement, true);
 
             const newElement = document.querySelector(message.newElement.selector) as HTMLElement;
             if (!newElement) {
@@ -104,7 +94,6 @@ export class PageInteractor {
             }
             if (this.prevElem) {
                 this.removeStyleFromElement(this.prevElem);
-                this.addStyleToElement(this.prevElem, true);
             }
             this.addStyleToElement(elem);
             elem.focus();
@@ -123,7 +112,6 @@ export class PageInteractor {
             }
             for (let element of elements) {
                 this.removeStyleFromElement(element);
-                this.addStyleToElement(element, true);
             }
             const element = document.querySelector(message.element.selector) as HTMLElement;
             if (!element) {
@@ -146,15 +134,12 @@ export class PageInteractor {
                 
             } else {
                 element.classList.add(this.highlightDashedClass);
-                
-                //element.classList.add("grey-overlay");
             }
         }
     }
 
     private removeStyleFromElement(element: HTMLElement): void {
         if (element) {
-            element.classList.remove(this.highlightDashedClass);
             element.classList.remove(this.highlightClass);
         }
     }
