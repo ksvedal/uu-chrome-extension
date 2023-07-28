@@ -101,8 +101,8 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
 
   return (
-    <div className='collapsible-item'>
-      <div className='collapsible-item-parent'>
+    <div>
+      <div className='collapsible-level-1'>
         <div className={`item-header row ${isExpanded ? 'pressed' : ''}`} onClick={() => {
             // Toggle the expanded state and call the toggleCheck function for the specific index
             setIsExpanded(!isExpanded);
@@ -129,7 +129,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
         </div>
         {isExpanded && (
-          <div className="collapsible-item-children">
+          <div className="collapsible-level-1-content">
             {type.nodes.map((item, index) => {
               return (
                 <CollapsibleItemElement
@@ -225,31 +225,25 @@ const toggleCheck = () => {
   }
 };
   return (
-    <div data-testid="collapsible-type" className=" collapsible-item-child">
-      <div className="collapsible-item">
+      <div data-testid="collapsible-type" className={`collapsible-item`}>
+      <div className={`collapsible-level-2 ${isExpanded ? 'pressed' : ''}`}>
         <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => {
             toggleCheck()
           }}
         >
           <div className="row">
-            <div className="col-4">
-              <br /> {thisElement.title}
+            <div className="col-8 extra-padding-vertical">
+              [{thisElement.title}]
             </div>
-            <div className="col-4">
-              <br />
+            <div className="col-4 extra-padding-vertical">
               <IsCheckedStatus text={thisElement.result.correctText}></IsCheckedStatus>
-            </div>
-            <div className={"col-4"}>
-              <div className={"float-right"}>
-                <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
-              </div>
             </div>
           </div>
 
         </div>
         <div className={"row"}>
           <div className={"col-12"}>
-            <div className="content-data">
+            <div className={`content-data animatedY ${isExpanded ? 'pressed' : ''}`}>
               {isExpanded && children}
             </div>
           </div>
@@ -257,5 +251,4 @@ const toggleCheck = () => {
       </div>
     </div>
   );
-
 };
