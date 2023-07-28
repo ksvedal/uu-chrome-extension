@@ -6,7 +6,7 @@ import { ButtonSelector} from "./elementSelector";
  */
 export class PageInteractor {
     private prevElem: HTMLElement | null = null;
-    private highlightClass: string = "highlight-selected";
+    private highlightSelectedClass: string = "highlight-selected";
     private highlightDashedClass: string = "highlight-dashed";
     private defaultDashedHighligtedSelector = new ButtonSelector();
     
@@ -19,7 +19,7 @@ export class PageInteractor {
             } else {
                 
                 for (let element of elements) {
-                    this.addStyleToElement(element, true);
+                    this.addStyleToElement(element, this.highlightDashedClass);
                 }
             }
         } catch (error) {
@@ -126,11 +126,11 @@ export class PageInteractor {
         }
     }
 
-    private addStyleToElement(element: HTMLElement, isDashed?: Boolean): void {
-        isDashed = isDashed || false;
+    private addStyleToElement(element: HTMLElement, highlightClass?: String): void {
+        highlightClass = highlightClass || this.highlightSelectedClass;
         if (element) {
-            if (!isDashed) {
-                element.classList.add(this.highlightClass);
+            if (highlightClass === this.highlightSelectedClass) {
+                element.classList.add(this.highlightSelectedClass);
                 
             } else {
                 element.classList.add(this.highlightDashedClass);
@@ -140,7 +140,7 @@ export class PageInteractor {
 
     private removeStyleFromElement(element: HTMLElement): void {
         if (element) {
-            element.classList.remove(this.highlightClass);
+            element.classList.remove(this.highlightSelectedClass);
         }
     }
 }
