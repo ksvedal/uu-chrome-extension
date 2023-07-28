@@ -24,8 +24,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   //const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
   const typingTimeoutRef = useRef<number | null>(null);
 
-
-
   if (context === null) {
     // handle the case where the context is null
     return null;

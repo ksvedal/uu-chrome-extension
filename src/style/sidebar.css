@@ -212,7 +212,7 @@ body {
 ---------------------------------------------- */
 .header-field {
   background-color: var(--secondary-color);
-  color: var(--purple);
+  color: var(--orange);
   font-weight: bold;
   display: flex;
   padding: var(--big-padding);
@@ -238,7 +238,7 @@ body {
   margin-inline-end: 0;
 }
 
-.dank-toggle-button {
+.dark-toggle-button {
   margin: var(--medium-padding);
   padding: var(--medium-padding);
   border-radius: var(--radius);
@@ -252,7 +252,7 @@ body {
   font-size: var(--very-small-font);
 }
 
-.dank-toggle-button:hover {
+.dark-toggle-button:hover {
   cursor: pointer;
 }
 
@@ -296,10 +296,10 @@ body {
   padding: var(--medium-padding);
   font-weight: bolder;
   font-size: var(--medium-font);
-  background-color: var(--quartiary-color);
+  background-color: var(--light-purple);
   box-shadow: var(--big-shadow);
   border-radius: var(--radius);
-  border: var(--big-border) var(--border-color-quartiary);
+  border: 2px solid var(--purple);
 }
 
 .headline .headline-button {
