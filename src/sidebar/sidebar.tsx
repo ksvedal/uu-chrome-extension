@@ -90,7 +90,7 @@ export const Sidebar: React.FC = () => {
             </div>
           </div>
           <div className="col-4">
-            <RegularButton data-testid="scanPage" text="Scan Page" onClick={fetchData} />
+            <RegularButton data-testID="scanPage" text="Scan Page" onClick={fetchData} />
           </div>
           {error && <div className="col-12 error-message">{error}</div>}
         </div>

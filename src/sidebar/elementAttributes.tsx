@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ElementAttribute, ElementObject } from './interfaces';
 
-export const ElementAttributes: React.FC<ElementObject> = ({ attributes, htmlString, }) => {
+export const ElementAttributes: React.FC<ElementObject> = ({ attributes, element, }) => {
     // Define your desired attribute names
     const attributeNames = ["aria-labelledby", "aria-label", "title", "Description", "Role", "Focusable"];
 

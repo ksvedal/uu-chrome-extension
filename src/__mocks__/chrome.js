@@ -13,9 +13,9 @@ const chromeMock = {
       addListener: jest.fn(),
     },
     getManifest: jest.fn().mockReturnValue({ version: '1.0.0' }),
-    notifications: {
-      create: jest.fn(),
-    },
+  },
+  notifications: {
+    create: jest.fn(),
   },
 };
 
