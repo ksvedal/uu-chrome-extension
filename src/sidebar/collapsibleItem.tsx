@@ -4,8 +4,8 @@ import { ToggleButton, RadioButtonGroup } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
-import { v4 as uuidv4 } from 'uuid';
-import { ToastContainer, toast, Flip, Slide, Zoom } from 'react-toastify';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IsCheckedStatus from "./isCheckedStatus";
 import { successToast } from "./toastUtils";
@@ -101,14 +101,14 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       <div>
         <Accordion id={"collapsible-level-1"}>
           <AccordionSummary
-              expandIcon={ "*" }
+              expandIcon={ <ExpandLessIcon /> }
           >
             <Grid container>
               <Grid item xs={4}>
-                {type.name}
+                <div className={"big-font"}> {type.name}</div>
               </Grid>
               <Grid item xs={4}>
-                {type.nodes.length}
+                <div className={"big-font"}> {type.nodes.length} </div>
               </Grid>
               <Grid item xs={4}>
                 <div className="float-right">
@@ -217,7 +217,7 @@ const toggleCheck = () => {
             TransitionProps={{ unmountOnExit: true }}
           >
           <AccordionSummary
-              expandIcon={ "^" }
+              expandIcon={<ExpandLessIcon />}
               onClick={() => {
                 toggleCheck()
               }}

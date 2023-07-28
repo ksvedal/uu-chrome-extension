@@ -10,10 +10,10 @@
   --tertiary-color: #ececec;
   --quartiary-color: #fbf1c7;
 
-  --purple: rgba(149, 34, 125, 0.84);
-  --light-purple: rgba(149, 34, 125, 0.51);
-  --orange: rgba(125, 129, 219, 0.85);
-  --light-orange: rgba(125, 129, 219, 0.55);
+  --purple: #fbf1c7;
+  --light-purple: #fffae2;
+  --orange: #26394f;
+  --light-orange: #26394f;
 
   --text-color: #ffffff;
   --text-color-inverse: #000000;
@@ -183,12 +183,19 @@ body {
   float: right;
 }
 
+/* Font */
+.big-font {
+  font-size: var(--big-font);
+  font-weight: bolder;
+  padding: var(--big-padding);
+}
+
 /* Buttons */
 .toggle-button {
   width: auto;
   border-radius: var(--radius);
   box-shadow: var(--big-shadow);
-  background: var(--purple);
+  background: var(--orange);
   color: var(--text-color);
   font-size: var(--very-small-font);
   border: none;
@@ -211,6 +218,7 @@ body {
   padding: var(--big-padding);
   align-items: center;
   text-align: center;
+  width: 100%;
 }
 
 .header-field .extension-text p {
@@ -236,9 +244,9 @@ body {
   border-radius: var(--radius);
   border: none;
   float: right;
-  background: var(--primary-color);
-  color: var(--text-color-inverse);
-  box-shadow: var(--big-shadow);
+  background: var(--secondary-color);
+  color: var(--orange);
+  box-shadow: none;
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
   font-size: var(--very-small-font);
@@ -267,7 +275,7 @@ body {
   padding: var(--medium-padding);
   border-radius: var(--radius);
   border: none;
-  background: var(--purple);
+  background: var(--orange);
   color: var(--text-color);
   box-shadow: var(--big-shadow);
   font-family: "Open Sans", sans-serif;
@@ -326,7 +334,7 @@ body {
   margin-top: var(--small-space);
   margin-bottom: var(--small-space);
   border-radius: var(--radius);
-  border: solid 2px var(--secondary-color);
+  border: dotted 2px var(--secondary-color);
   background-color: var(--secondary-color);
   box-shadow: var(--big-shadow);
 }
@@ -360,10 +368,10 @@ body {
   margin-top: var(--small-space);
   margin-bottom: var(--small-space);
   border-radius: var(--radius);
-  border: solid 1px var(--purple);
+  border: solid 2px var(--purple);
   background-color: var(--light-purple);
   box-shadow: var(--big-shadow);
-  color: var(--text-color);
+  color: var(--text-color-inverse);
 }
 
 .yesColor {
