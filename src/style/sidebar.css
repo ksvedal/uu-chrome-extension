@@ -10,10 +10,10 @@
   --tertiary-color: #ececec;
   --quartiary-color: #fbf1c7;
 
-  --purple: #b16286;
-  --light-purple: #b16286;
-  --orange: #076678;
-  --light-orange: #458588;
+  --purple: rgba(149, 34, 125, 0.84);
+  --light-purple: rgba(149, 34, 125, 0.51);
+  --orange: rgba(125, 129, 219, 0.85);
+  --light-orange: rgba(125, 129, 219, 0.55);
 
   --text-color: #ffffff;
   --text-color-inverse: #000000;
@@ -34,14 +34,14 @@
   --very-small-font: 0.8rem;
   --small-font: 0.9rem;
   --medium-font: 1rem;
-  --big-font: 1.2rem;
+  --big-font: 1.1rem;
 
   --small-border: 0.16rem solid;
   --big-border: 0.18rem solid;
   --small-shadow: -1px 1px 2px var(--shadow-color);
-  --big-shadow: 1px 1px 1px 0px var(--shadow-color);
+  --big-shadow: 2px 2px 2px 1px var(--shadow-color);
   --big-shadow-inset: inset 1px 1px 1px 0px var(--shadow-color);
-  --radius: 4px;
+  --radius: 3px;
 
   --small-space: 0.5rem;
   --medium-space: 1rem;
@@ -321,17 +321,14 @@ body {
 }
 
 /* Collapsible content ---------------------------------------------- */
-.collapsible-level-1 {
+#collapsible-level-1 {
+  height: auto;
   margin-top: var(--small-space);
+  margin-bottom: var(--small-space);
   border-radius: var(--radius);
+  border: solid 2px var(--secondary-color);
   background-color: var(--secondary-color);
-  padding-left: var(--small-padding);
-  padding-right: var(--small-padding);
   box-shadow: var(--big-shadow);
-  transition: box-shadow 0.02s ease-in-out;
-  font-size: var(--big-font);
-  font-weight: bolder;
-  border: var(--border);
 }
 
 .collapsible-level-1:hover {
@@ -351,18 +348,6 @@ body {
   cursor: default;
 }
 
-.collapsible-level-1-content .item-header {
-  display: block;
-  padding-left: var(--small-padding);
-  border-radius: var(--radius);
-  background-color: var(--primary-color);
-  margin-left: var(--small-space);
-  margin-right: var(--small-space);
-  font-size: var(--small-font);
-  border: var(--big-border) var(--border-color-tertiary);
-  cursor: pointer;
-}
-
 .collapsible-level-1-content .buttons-text {
   font-size: var(--small-font);
   margin: 0;
@@ -370,39 +355,15 @@ body {
 }
 
 /* Collapsible-level-2 */
-.collapsible-level-2 {
+#collapsible-level-2 {
   height: auto;
-}
-
-.collapsible-level-2.pressed {
-  box-shadow: var(--big-shadow-inset);
-  background-color: var(--quartiary-color);
-  border: 0;
+  margin-top: var(--small-space);
+  margin-bottom: var(--small-space);
   border-radius: var(--radius);
-  color: var(--text-color-inverse);
-  margin: 0 var(--small-space) var(--small-space);
-  transition: transform 1s ease-in-out; /* Change the duration as needed */
-  cursor: default;
-  height: auto;
-}
-
-.animatedY {
-  transform-origin: top;
-  transform: scaleY(0.01); /* Start at small height */
-  transition: transform 1s ease-in-out; /* Change the duration as needed */
-  overflow: hidden;
-}
-
-.animatedY.pressed {
-  transform: scaleY(1);
-}
-
-.collapsible-level-2.pressed .item-header {
-  background-color: transparent;
-  border: 0;
-  border-radius: 0;
-  cursor: pointer;
-  font-size: var(--big-font);
+  border: solid 1px var(--purple);
+  background-color: var(--light-purple);
+  box-shadow: var(--big-shadow);
+  color: var(--text-color);
 }
 
 .yesColor {

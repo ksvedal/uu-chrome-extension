@@ -9,6 +9,7 @@ import { ToastContainer, toast, Flip, Slide, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IsCheckedStatus from "./isCheckedStatus";
 import { successToast } from "./toastUtils";
+import {Accordion, AccordionDetails, AccordionSummary, Grid, Typography} from "@mui/material";
 
 const messageSender = new MessageSender();
 
@@ -92,96 +93,82 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     updateJson(type.nodes[index], index, url);
   };
 
-
-
   const openCommentSection = (currentIndex: number) => {
     type.nodes[currentIndex].isCommentVisible = true;
   };
 
-
-
   return (
-    <div>
-      <div className='collapsible-level-1'>
-        <div className={`item-header row ${isExpanded ? 'pressed' : ''}`} onClick={() => {
-            // Toggle the expanded state and call the toggleCheck function for the specific index
-            setIsExpanded(!isExpanded);
-          }}
-        >
-
-          <div className={"col-4"}>
-            <div className="buttons-text">
-              <br /> {type.name}
-            </div>
-          </div>
-
-          <div className={"col-4"}>
-            <div className="total-buttons">
-              <br /> {type.nodes.length}
-            </div>
-          </div>
-
-          <div className={"col-4"}>
-            <div className="float-right">
-              <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
-            </div>
-          </div>
-
-        </div>
-        {isExpanded && (
-          <div className="collapsible-level-1-content">
+      <div>
+        <Accordion id={"collapsible-level-1"}>
+          <AccordionSummary
+              expandIcon={ "*" }
+          >
+            <Grid container>
+              <Grid item xs={4}>
+                {type.name}
+              </Grid>
+              <Grid item xs={4}>
+                {type.nodes.length}
+              </Grid>
+              <Grid item xs={4}>
+                <div className="float-right">
+                  <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
+                </div>
+              </Grid>
+            </Grid>
+          </AccordionSummary>
+          <AccordionDetails>
             {type.nodes.map((item, index) => {
               return (
-                <CollapsibleItemElement
-                  type={type}
-                  key={index}
-                  thisElement={item}
-                  highlightedElement={currentHighlighted}
-                  setHighlightedElement={setCurrentHighlighted}
-                  isAllHighlighted={isAllHighlighted}
-                  setIsAllHighlighted={setIsAllHighlighted}
-                >
-                  <ElementAttributes
-                    attributes={item.attributes}
-                    title={item.title}
-                    htmlString={item.htmlString}
-                    selector={item.selector}
-                    result={item.result}
-                    isCommentVisible={false} />
+                  <CollapsibleItemElement
+                      type={type}
+                      key={index}
+                      thisElement={item}
+                      highlightedElement={currentHighlighted}
+                      setHighlightedElement={setCurrentHighlighted}
+                      isAllHighlighted={isAllHighlighted}
+                      setIsAllHighlighted={setIsAllHighlighted}
+                  >
+                    <ElementAttributes
+                        attributes={item.attributes}
+                        title={item.title}
+                        htmlString={item.htmlString}
+                        selector={item.selector}
+                        result={item.result}
+                        isCommentVisible={false} />
 
-                  <RadioButtonGroup onOptionChange={(value) => {
-                    handleOptionChange(value, index);
-                    openCommentSection(index);
-                  }} presetOption={type.nodes[index].result.correctText} index={index} />
+                    <RadioButtonGroup onOptionChange={(value) => {
+                      handleOptionChange(value, index);
+                      openCommentSection(index);
+                    }} presetOption={type.nodes[index].result.correctText} index={index} />
 
-                  <div>
-                    {type.nodes[index].isCommentVisible && (
-                      <div className="comment-box">
-                        <textarea
-                          className="textarea"
-                          name="comment"
-                          form="usrform"
-                          value={textareaValues[index]}
-                          onChange={(e) => handleTextareaChange(index, e.target.value)}
-                          onBlur={() => {
-                            // Execute storeText when the textarea loses focus
-                            storeText(index, textareaValues[index]);
-                          }}
-                        >
-                          Enter text here...
-                        </textarea>
-                      </div>
-                    )}
+                    <div>
+                      {type.nodes[index].isCommentVisible && (
+                          <div className="comment-box">
+                    <textarea
+                        className="textarea"
+                        name="comment"
+                        form="usrform"
+                        value={textareaValues[index]}
+                        onChange={(e) => handleTextareaChange(index, e.target.value)}
+                        onBlur={() => {
+                          // Execute storeText when the textarea loses focus
+                          storeText(index, textareaValues[index]);
+                        }}
+                    >
+                      Enter text here...
+                    </textarea>
+                          </div>
+                      )}
 
-                  </div>
-                </CollapsibleItemElement>
+                    </div>
+                  </CollapsibleItemElement>
               );
             })}
             <ToastContainer />
-          </div>
-        )}
+          </AccordionDetails>
+        </Accordion>
       </div>
-    </div>
   );
 };
 
@@ -225,30 +212,33 @@ const toggleCheck = () => {
   }
 };
   return (
-      <div data-testid="collapsible-type" className={`collapsible-item`}>
-      <div className={`collapsible-level-2 ${isExpanded ? 'pressed' : ''}`}>
-        <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => {
-            toggleCheck()
-          }}
-        >
-          <div className="row">
-            <div className="col-8 extra-padding-vertical">
-              [{thisElement.title}]
-            </div>
-            <div className="col-4 extra-padding-vertical">
-              <IsCheckedStatus text={thisElement.result.correctText}></IsCheckedStatus>
-            </div>
-          </div>
-
-        </div>
-        <div className={"row"}>
-          <div className={"col-12"}>
-            <div className={`content-data animatedY ${isExpanded ? 'pressed' : ''}`}>
-              {isExpanded && children}
-            </div>
-          </div>
-        </div>
+      <div data-testid="collapsible-type">
+        <Accordion id={"collapsible-level-2"}
+            TransitionProps={{ unmountOnExit: true }}
+          >
+          <AccordionSummary
+              expandIcon={ "^" }
+              onClick={() => {
+                toggleCheck()
+              }}
+          >
+            <Grid container>
+              <Grid item xs={8}>
+                [{thisElement.title}]
+              </Grid>
+              <Grid item xs={4}>
+                <IsCheckedStatus text={thisElement.result.correctText}></IsCheckedStatus>
+              </Grid>
+            </Grid>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container>
+              <Grid item xs={12}>
+                {children}
+              </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
       </div>
-    </div>
   );
 };
