@@ -9,6 +9,7 @@ import ResultsHeader from './resultsHeader';
 import { CollapsibleItemType } from './collapsibleItem';
 import { MyContext } from './resultItemsContext';
 
+
 export const Sidebar: React.FC = () => {
   const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [darkMode, setDarkMode] = useState(prefersDarkMode);
@@ -62,6 +63,7 @@ export const Sidebar: React.FC = () => {
       setWebsiteURL(url); // update the state with the response data
       setError(null); // clear the error message if no error occurs
     });
+    _message.highlightAllTypesDashed();
   };
 
 
