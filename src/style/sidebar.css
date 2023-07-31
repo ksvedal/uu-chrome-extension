@@ -59,10 +59,10 @@
   --tertiary-color: #383b3e;
   --quartiary-color: #232427;
 
-  --purple: #ffe797;
-  --light-purple: #fff1cc;
-  --orange: #29bccb;
-  --light-orange: #7fc0c9;
+  --purple: #4b3244;
+  --light-purple: #564c53;
+  --orange: #fadf75;
+  --light-orange: #ffeca0;
 
   --text-color: #030303;
   --text-color-inverse: #d9d9d9;
@@ -104,6 +104,10 @@ body {
   min-height: 100vh;
 }
 
+/*
+Responsiveness.
+12 columns that get 100% width when the size is small enough.
+*/
 * {
   box-sizing: border-box;
 }
@@ -202,11 +206,11 @@ body {
 }
 
 .toggle-button.pressed {
-  background: var(--orange);
+  background: var(--purple);
   box-shadow: var(--big-shadow-inset);
   border-color: var(--border-color-purple);
+  color: var(--text-color-inverse);
 }
-
 
 /* Header Field
 ---------------------------------------------- */
@@ -337,11 +341,13 @@ body {
   border: dotted 2px var(--secondary-color);
   background-color: var(--secondary-color);
   box-shadow: var(--big-shadow);
+  color: var(--text-color-inverse);
 }
 
 .collapsible-level-1:hover {
   cursor: pointer;
   box-shadow: var(--big-shadow);
+  border: dotted 2px var(--purple);
 }
 
 .total-buttons {
@@ -385,7 +391,7 @@ body {
 }
 
 .notButtonColor {
-  color: var(--alert-color);
+  color: var(--orange);
   font-weight: bold;
   text-shadow: var(--big-shadow);
 }
