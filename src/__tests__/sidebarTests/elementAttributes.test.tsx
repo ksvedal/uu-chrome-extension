@@ -1,8 +1,9 @@
 import React from "react";
-import { act, cleanup, render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import { ElementAttributes, AttributeField } from "../../sidebar/elementAttributes";
-import { ElementAttribute, ElementResult } from "../../sidebar/interfaces";
+import { ElementAttribute } from "../../interfaces/elementInterfaces";
+import { AttributeField, ElementAttributesTable } from "../../sidebar/components/body/elementAttributesTable";
+
 
 const mockElementResult = {
   htmlString: "",
@@ -19,7 +20,7 @@ const mockElementResult = {
 
 function renderElementAttributes(attributes: ElementAttribute[]) {
   render(
-    <ElementAttributes
+    <ElementAttributesTable
       attributes={attributes}
       htmlString=""
       title=""

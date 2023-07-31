@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ElementResult } from '../interfaces';
+import { JsonDataFormat } from '../../interfaces/resultInterfaces';
 
 export class TestUtils {
 
-  public static giveIdChromeAndExtensionVersion = (resultElement: ElementResult) => {
+  public static giveIdChromeAndExtensionVersion = (resultElement: JsonDataFormat) => {
     resultElement.testID = TestUtils.generateTestID();
     resultElement.chromeVersion = TestUtils.getChromeVersion();
     resultElement.chromeExtensionVersion = TestUtils.getChromeExtensionVersion();

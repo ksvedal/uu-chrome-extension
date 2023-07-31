@@ -1,4 +1,4 @@
-import { ElementAttribute, ElementObject, ElementType, ElementResult } from "../sidebar/interfaces";
+import { ElementAttribute, ElementObject, ElementType } from "../interfaces/elementInterfaces";
 import pretty from 'pretty';
 
 export class WebUtils {

@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react';
 import TabIcon from './tabIcon';
-import { ResultsHeaderInterface } from './interfaces';
-import { MyContext } from './resultItemsContext';
-import { TestUtils } from './testUtils';
-import { postTestResults } from '../client/testResultsApi';
-import { errorToast, successToast } from './toastUtils';
-import { APIError } from '../client/apiError';
-
+import { ResultsHeaderInterface } from '../../../interfaces/resultInterfaces';
+import { MyContext } from '../resultItemsContext';
+import { TestUtils } from '../../utils/testUtils';
+import { postTestResults } from '../../../client/testResultsApi';
+import { APIError } from '../../../client/apiError';
+import { successToast, errorToast } from '../../utils/toastUtils';
 
 const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => {
   const [actionResponse, setActionResponse] = useState<{ message: string, error: boolean } | null>(null);
@@ -19,19 +18,17 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => 
     console.error('Context is null');
     return null;
   }
-  const { elementResults, setElementResults } = context;
-
-
+  const { jsonData } = context;
 
   const logResult = async () => {
-    if (elementResults == null || elementResults.length === 0) {
+    if (jsonData == null || jsonData.length === 0) {
       const errorMsg = "No elements are evaluated yet.";
       console.error(errorMsg);
       setActionResponse({ "message": errorMsg, "error": true });
       return;
     }
 
-    for (let result of elementResults) {
+    for (let result of jsonData) {
       try {
         TestUtils.giveIdChromeAndExtensionVersion(result);
       } catch (error) {
@@ -39,9 +36,10 @@ const ResultsHeader: React.FC<ResultsHeaderInterface> = ({ url, isScanned }) => 
       }
       console.log(result);
     };
+
     try {
       //Currently using both toast and actionResponse, might only need one
-      const message: string = await postTestResults(elementResults).then(data => data);
+      const message: string = await postTestResults(jsonData).then(data => data);
       setActionResponse({ "message": message, "error": false });
       successToast(message);
     } catch (error) {

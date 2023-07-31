@@ -1,7 +1,7 @@
-import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, Message, ScanPageMessage, UnhighlightAllAndHighlightSingleMessage } from './messageObjects/message';
+import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, UnhighlightAllAndHighlightSingleMessage } from './messageObjects/message';
 import { PageInteractor } from './htmlParser/pageInteractor';
 import { WebsiteScanner } from './htmlParser/websiteScanner';
-import { ElementType } from './sidebar/interfaces';
+import { ElementType } from './interfaces/elementInterfaces';
 
 chrome.runtime.onMessage.addListener(handleMessage);
 //This is used in page_interactor to add and remove the style

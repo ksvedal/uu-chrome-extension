@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
-import { MyContext } from '../../sidebar/resultItemsContext';
-import ResultsHeader from '../../sidebar/resultsHeader';
 import { postTestResults as mockedPostTestResults } from '../../client/testResultsApi';
-import { successToast, errorToast } from '../../sidebar/toastUtils';
 import { APIError } from '../../client/apiError';
 import '@testing-library/jest-dom/extend-expect'
-import { ElementResult } from "../../sidebar/interfaces";
 import { TestUtils } from '../../sidebar/utils/testUtils';
+import { JsonDataFormat } from '../../interfaces/resultInterfaces';
+import { errorToast, successToast } from '../../sidebar/utils/toastUtils';
+import ResultsHeader from '../../sidebar/components/header/resultsHeader';
+import { MyContext } from '../../sidebar/components/resultItemsContext';
 
 jest.mock('../../client/testResultsApi');
 jest.mock('../../sidebar/toastUtils', () => ({
@@ -18,7 +18,7 @@ jest.mock('../../sidebar/toastUtils', () => ({
 const mockSetElementResults = jest.fn();
 
 // Mocked ElementResult for testing
-const dummyResult: ElementResult = {
+const dummyResult: JsonDataFormat = {
     htmlString: "<p>Test HTML String</p>",
     correctText: "Test Correct Text",
     name: "Test Name",
@@ -55,7 +55,7 @@ describe('<ResultsHeader />', () => {
     postTestResults.mockRejectedValue(mockError);
 
     render(
-      <MyContext.Provider value={{ elementResults: [dummyResult], setElementResults: mockSetElementResults }}>
+      <MyContext.Provider value={{ jsonData: [dummyResult], setJsonData: mockSetElementResults }}>
         <ResultsHeader url="https://test.com" isScanned={true} />
       </MyContext.Provider>
     );
@@ -74,7 +74,7 @@ describe('<ResultsHeader />', () => {
     postTestResults.mockResolvedValue('Success Message');
 
     render(
-      <MyContext.Provider value={{ elementResults: [dummyResult], setElementResults: mockSetElementResults }}>
+      <MyContext.Provider value={{ jsonData: [dummyResult], setJsonData: mockSetElementResults }}>
         <ResultsHeader url="https://test.com" isScanned={true} />
       </MyContext.Provider>
     );
@@ -94,7 +94,7 @@ describe('<ResultsHeader />', () => {
     console.error = jest.fn();
   
     render(
-      <MyContext.Provider value={{ elementResults: [], setElementResults: mockSetElementResults }}>
+      <MyContext.Provider value={{ jsonData: [], setJsonData: mockSetElementResults }}>
         <ResultsHeader url="https://test.com" isScanned={true} />
       </MyContext.Provider>
     );
@@ -125,7 +125,7 @@ describe('<ResultsHeader />', () => {
     consoleError.mockImplementation(() => {});
   
     render(
-      <MyContext.Provider value={{ elementResults: [], setElementResults: mockSetElementResults }}>
+      <MyContext.Provider value={{ jsonData: [], setJsonData: mockSetElementResults }}>
         <ResultsHeader url="https://test.com" isScanned={true} />
       </MyContext.Provider>
     );
@@ -150,7 +150,7 @@ describe('<ResultsHeader />', () => {
         });
     
         render(
-        <MyContext.Provider value={{ elementResults: [dummyResult], setElementResults: mockSetElementResults }}>
+        <MyContext.Provider value={{ jsonData: [dummyResult], setJsonData: mockSetElementResults }}>
             <ResultsHeader url="https://test.com" isScanned={true} />
         </MyContext.Provider>
         );
@@ -169,7 +169,7 @@ describe('<ResultsHeader />', () => {
         postTestResults.mockRejectedValue(mockError);
     
         render(
-        <MyContext.Provider value={{ elementResults: [dummyResult], setElementResults: mockSetElementResults }}>
+        <MyContext.Provider value={{ jsonData: [dummyResult], setJsonData: mockSetElementResults }}>
             <ResultsHeader url="https://test.com" isScanned={true} />
         </MyContext.Provider>
         );
@@ -187,7 +187,7 @@ describe('<ResultsHeader />', () => {
         postTestResults.mockResolvedValue('Success Message');
       
         render(
-          <MyContext.Provider value={{ elementResults: [dummyResult], setElementResults: mockSetElementResults }}>
+          <MyContext.Provider value={{ jsonData: [dummyResult], setJsonData: mockSetElementResults }}>
             <ResultsHeader url="https://test.com" isScanned={true} />
           </MyContext.Provider>
         );

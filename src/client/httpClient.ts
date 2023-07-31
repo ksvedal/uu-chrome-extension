@@ -1,4 +1,4 @@
-import { ElementResult } from "../sidebar/interfaces";
+import { JsonDataFormat } from "../interfaces/resultInterfaces";
 import { APIError } from "./apiError";
 
 // src/api/httpClient.ts
@@ -30,7 +30,7 @@ async function fetchResource(path: string, config: RequestInit) {
     }
 }
 
-export async function post(path: string, body: ElementResult[]) {
+export async function post(path: string, body: JsonDataFormat[]) {
     const config: RequestInit = {
         method: 'POST',
         headers,

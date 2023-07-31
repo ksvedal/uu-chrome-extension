@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { CollapsibleArrowButton, RadioButtonGroup, RegularButton, ToggleButton } from '../../sidebar/buttons'; 
+import { CollapsibleArrowButton, RegularButton, ToggleButton } from '../../sidebar/components/body/buttons'; 
+import { RadioButtons } from '../../sidebar/components/body/radioButtons';
 
 // ------------------------- ToggleButton component -------------------------------------
 test('ToggleButton renders correctly', () => {
@@ -80,7 +81,7 @@ test('RadioButtonGroup selects the correct option and calls onOptionChange', () 
     });
   
     const { getByLabelText } = render(
-      <RadioButtonGroup
+      <RadioButtons
         onOptionChange={mockOnOptionChange}
         index={0}
         presetOption={selectedOption}

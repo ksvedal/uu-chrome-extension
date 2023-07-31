@@ -10,7 +10,7 @@ export async function setSidePanelOptions(tabId, info, tab) {
   if (typeof chrome !== 'undefined' && chrome.sidePanel) {
     await chrome.sidePanel.setOptions({
       tabId,
-      path: 'sidebar.html',
+      path: 'sidepanel.html',
       enabled: true
     });
   }

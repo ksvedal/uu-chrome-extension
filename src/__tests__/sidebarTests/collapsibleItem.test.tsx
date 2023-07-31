@@ -1,8 +1,8 @@
 // Import necessary dependencies and libraries
 import React from "react";
 import { render } from "@testing-library/react";
-import { CollapsibleItemType } from "../../sidebar/collapsibleItem";
 import '@testing-library/jest-dom/extend-expect';
+import { CollapsibleTypeContainer } from "../../sidebar/containers/collapsibleTypeContainer";
 
 // Describe the test suite for the 'CollapsibleItemType' component
 describe("CollapsibleItemType", () => {
@@ -41,15 +41,15 @@ describe("CollapsibleItemType", () => {
 
     // Render the 'CollapsibleItemType' component with the mock props
     const { container } = render(
-      <CollapsibleItemType
-        type={type}
-        thisElement={null}
-        isAllHighlighted={false}
-        setIsAllHighlighted={() => {}}
-        setCurrentHighlighted={() => {}}
-        parentIndex={0}
+      <CollapsibleTypeContainer
+        elementType={type}
+        // thisElement={null}
+        // isAllHighlighted={false}
+        // setIsAllHighlighted={() => {}}
+        // setCurrentHighlighted={() => {}}
+        // parentIndex={0}
         url=""
-        testID=""
+        // testID=""
       />
     );
 
@@ -63,8 +63,3 @@ describe("CollapsibleItemType", () => {
     expect(container).toMatchSnapshot();
   });
 });
-
-
-
-
-
