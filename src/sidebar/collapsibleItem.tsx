@@ -184,59 +184,52 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
 const [isExpanded, setIsExpanded] = useState(false);
 
 useEffect(() => {
-  setIsHighlighted(thisElement === highlightedElement || isAllHighlighted);
   setIsExpanded(thisElement === highlightedElement);
-}, [highlightedElement, isAllHighlighted, thisElement]);
+}, [highlightedElement, thisElement]);
 
 const toggleCheck = () => {
-  // If the clicked object is already expanded, collapse it
   if (isExpanded) {
+    // If the clicked element is already expanded, unhighlight it
     setIsExpanded(false);
-    setIsHighlighted(false);
     setHighlightedElement(null);
     messageSender.highlightSingleMessage(thisElement, true);
   } else {
-    // If another item is already expanded, collapse it before expanding the clicked item
+    // Unhighlight the previous element, if any
     if (highlightedElement) {
-      setHighlightedElement(null);
       messageSender.highlightSingleMessage(highlightedElement, true);
     }
-
-    // Expand the clicked element and highlight it
+    // Highlight the clicked element and expand it
     setIsExpanded(true);
-    setIsHighlighted(true);
     setHighlightedElement(thisElement);
     messageSender.highlightSingleMessage(thisElement, false);
   }
 };
-  return (
-      <div data-testid="collapsible-type">
-        <Accordion id={"collapsible-level-2"}
-            TransitionProps={{ unmountOnExit: true }}
-          >
-          <AccordionSummary
-              expandIcon={<ExpandLessIcon />}
-              onClick={() => {
-                toggleCheck()
-              }}
-          >
-            <Grid container>
-              <Grid item xs={8}>
-                [{thisElement.title}]
-              </Grid>
-              <Grid item xs={4}>
-                <IsCheckedStatus text={thisElement.result.samsvar}></IsCheckedStatus>
-              </Grid>
-            </Grid>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Grid container>
-              <Grid item xs={12}>
-                {children}
-              </Grid>
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
-      </div>
-  );
+
+return (
+  <div data-testid="collapsible-type">
+    <Accordion
+      id={"collapsible-level-2"}
+      TransitionProps={{ unmountOnExit: true }}
+      expanded={isExpanded}
+    >
+      <AccordionSummary expandIcon={<ExpandLessIcon />} onClick={toggleCheck}>
+        <Grid container>
+          <Grid item xs={8}>
+            [{thisElement.title}]
+          </Grid>
+          <Grid item xs={4}>
+            <IsCheckedStatus text={thisElement.result.kommentar}></IsCheckedStatus>
+          </Grid>
+        </Grid>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Grid container>
+          <Grid item xs={12}>
+            {children}
+          </Grid>
+        </Grid>
+      </AccordionDetails>
+    </Accordion>
+  </div>
+);
 };
