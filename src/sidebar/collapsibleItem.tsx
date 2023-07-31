@@ -97,7 +97,11 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
 
   return (
       <div>
-        <Accordion id={"collapsible-level-1"}>
+        <Accordion id={"collapsible-level-1"}
+                   TransitionProps={{ unmountOnExit: false,
+                     timeout: { enter: 200, exit: 100 } }}
+        >
+
           <AccordionSummary
               expandIcon={ <ExpandLessIcon /> }
           >
@@ -209,7 +213,10 @@ return (
   <div data-testid="collapsible-type">
     <Accordion
       id={"collapsible-level-2"}
-      TransitionProps={{ unmountOnExit: true }}
+      TransitionProps={{ unmountOnExit: true,
+        timeout: {
+        enter: 200,
+          exit: 190 } }}
       expanded={isExpanded}
     >
       <AccordionSummary expandIcon={<ExpandLessIcon />} onClick={toggleCheck}>
