@@ -64,7 +64,6 @@ export const Sidebar: React.FC = () => {
       setWebsiteURL(url); // update the state with the response data
       setError(null); // clear the error message if no error occurs
     });
-    _message.highlightAllTypesDashed();
   };
 
 
