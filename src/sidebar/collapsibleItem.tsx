@@ -4,10 +4,12 @@ import { ToggleButton, RadioButtonGroup } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
-import { ToastContainer} from 'react-toastify';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IsCheckedStatus from "./isCheckedStatus";
 import { successToast } from "./toastUtils";
+import {Accordion, AccordionDetails, AccordionSummary, Grid, Typography} from "@mui/material";
 
 const messageSender = new MessageSender();
 
@@ -21,8 +23,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   const context = useContext(MyContext);
   //const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
   const typingTimeoutRef = useRef<number | null>(null);
-
-
 
   if (context === null) {
     // handle the case where the context is null
@@ -83,7 +83,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       utfall =
         "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer ikkje knappen.";
     } else if (option === "Ikkje forekomst") {
-      utfall = "Testelementet er ikkje ein knapp.";
+      utfall = "Ikkje ein knapp.";
     }
 
     type.nodes[index].result.samsvar = option;
@@ -91,44 +91,31 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     updateJson(type.nodes[index], index, url);
   };
 
-
-
   const openCommentSection = (currentIndex: number) => {
     type.nodes[currentIndex].isCommentVisible = true;
   };
 
-
-
   return (
-    <div className='collapsible-item'>
-      <div className='collapsible-item-parent'>
-        <div className={`item-header row ${isExpanded ? 'pressed' : ''}`} onClick={() => {
-            // Toggle the expanded state and call the toggleCheck function for the specific index
-            setIsExpanded(!isExpanded);
-          }}
-        >
-
-          <div className={"col-4"}>
-            <div className="buttons-text">
-              <br /> {type.name}
-            </div>
-          </div>
-
-          <div className={"col-4"}>
-            <div className="total-buttons">
-              <br /> {type.nodes.length}
-            </div>
-          </div>
-
-          <div className={"col-4"}>
-            <div className="float-right">
-              <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
-            </div>
-          </div>
-
-        </div>
-        {isExpanded && (
-          <div className="collapsible-item-children">
+      <div>
+        <Accordion id={"collapsible-level-1"}>
+          <AccordionSummary
+              expandIcon={ <ExpandLessIcon /> }
+          >
+            <Grid container>
+              <Grid item xs={4}>
+                <div className={"big-font"}> {type.name}</div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className={"big-font"}> {type.nodes.length} </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className="float-right">
+                  <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
+                </div>
+              </Grid>
+            </Grid>
+          </AccordionSummary>
+          <AccordionDetails>
             {type.nodes.map((item, index) => {
               return (
                 <CollapsibleItemElement
@@ -153,34 +140,33 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                     openCommentSection(index);
                   }} presetOption={type.nodes[index].result.samsvar} index={index} />
 
-                  <div>
-                    {type.nodes[index].isCommentVisible && (
-                      <div className="comment-box">
-                        <textarea
-                          className="textarea"
-                          name="comment"
-                          form="usrform"
-                          value={textareaValues[index]}
-                          onChange={(e) => handleTextareaChange(index, e.target.value)}
-                          onBlur={() => {
-                            // Execute storeText when the textarea loses focus
-                            storeText(index, textareaValues[index]);
-                          }}
-                        >
-                          Enter text here...
-                        </textarea>
-                      </div>
-                    )}
+                    <div>
+                      {type.nodes[index].isCommentVisible && (
+                          <div className="comment-box">
+                    <textarea
+                        className="textarea"
+                        name="comment"
+                        form="usrform"
+                        value={textareaValues[index]}
+                        onChange={(e) => handleTextareaChange(index, e.target.value)}
+                        onBlur={() => {
+                          // Execute storeText when the textarea loses focus
+                          storeText(index, textareaValues[index]);
+                        }}
+                    >
+                      Enter text here...
+                    </textarea>
+                          </div>
+                      )}
 
-                  </div>
-                </CollapsibleItemElement>
+                    </div>
+                  </CollapsibleItemElement>
               );
             })}
             <ToastContainer />
-          </div>
-        )}
+          </AccordionDetails>
+        </Accordion>
       </div>
-    </div>
   );
 };
 
@@ -224,37 +210,33 @@ const toggleCheck = () => {
   }
 };
   return (
-    <div data-testid="collapsible-type" className=" collapsible-item-child">
-      <div className="collapsible-item">
-        <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => {
-            toggleCheck()
-          }}
-        >
-          <div className="row">
-            <div className="col-4">
-              <br /> {thisElement.title}
-            </div>
-            <div className="col-4">
-              <br />
-              <IsCheckedStatus text={thisElement.result.samsvar}></IsCheckedStatus>
-            </div>
-            <div className={"col-4"}>
-              <div className={"float-right"}>
-                <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div className={"row"}>
-          <div className={"col-12"}>
-            <div className="content-data">
-              {isExpanded && children}
-            </div>
-          </div>
-        </div>
+      <div data-testid="collapsible-type">
+        <Accordion id={"collapsible-level-2"}
+            TransitionProps={{ unmountOnExit: true }}
+          >
+          <AccordionSummary
+              expandIcon={<ExpandLessIcon />}
+              onClick={() => {
+                toggleCheck()
+              }}
+          >
+            <Grid container>
+              <Grid item xs={8}>
+                [{thisElement.title}]
+              </Grid>
+              <Grid item xs={4}>
+                <IsCheckedStatus text={thisElement.result.samsvar}></IsCheckedStatus>
+              </Grid>
+            </Grid>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container>
+              <Grid item xs={12}>
+                {children}
+              </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
       </div>
-    </div>
   );
-
 };
