@@ -6,23 +6,23 @@ import { AttributeField, ElementAttributesTable } from "../../sidebar/components
 
 
 const mockElementResult = {
-  htmlString: "",
-  correctText: "",
+  element: "",
+  samsvar: "",
   name: "",
-  comment: "",
-  checked: false,
-  url: "",
-  testID: "",
-  chromeVersion: null,
-  chromeExtensionVersion: null,
-  outcome: "",
+  kommentar: "",
+  sjekka: false,
+  side: "",
+  testregelId: "",
+  nettlesar: null,
+  utvidelse: null,
+  utfall: "",
 };
 
 function renderElementAttributes(attributes: ElementAttribute[]) {
   render(
     <ElementAttributesTable
       attributes={attributes}
-      htmlString=""
+      element=""
       title=""
       selector=""
       result={mockElementResult}

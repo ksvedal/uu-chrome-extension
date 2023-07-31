@@ -1,7 +1,13 @@
 import chromeMock from '../__mocks__/chrome';
 import { setSidePanelBehaviour, setSidePanelOptions, createNotification } from '../openSidepanel';
 
-global.chrome = chromeMock;
+global.chrome = {
+  ...chromeMock,
+  runtime: {
+    ...chromeMock.runtime,
+    getManifest: jest.fn().mockReturnValue({ version: '1.0.0' }),
+  },
+};
 
 describe('openSidepanel', () => {
   afterEach(() => {
@@ -35,7 +41,7 @@ describe('openSidepanel', () => {
 
     createNotification({ reason: 'update', previousVersion });
 
-    expect(chrome.runtime.notifications.create).toHaveBeenCalledWith('updateNotification', {
+    expect(chrome.notifications.create).toHaveBeenCalledWith('updateNotification', {
         type: 'basic',
         iconUrl: '../scan.png',
         title: 'Extension Updated',

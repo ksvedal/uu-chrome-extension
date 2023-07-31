@@ -8,9 +8,15 @@ chrome.runtime.onMessage.addListener(handleMessage);
 const styleElement: HTMLStyleElement = document.createElement('style');
 // Add CSS rules to the style element
 styleElement.textContent = `
-    .highlight {
-        border: 5px solid #FF0000 !important;
+    .highlight-dashed {
+      border: 3px dashed #79a6d2 !important;
+      z-index: 1 !important;
     }
+    .highlight-selected {
+      border: 5px solid #FF0000 !important;
+      z-index: 2 !important;
+    }
+
 `;
 // Append the style element to the head of the documentto
 document.head.append(styleElement);
@@ -55,6 +61,11 @@ export function handleMessage(
       case 'unhighlightAllAndHighlightSingle':{
         _page.unhighlightAllAndHighlightSingle((message as UnhighlightAllAndHighlightSingleMessage));
         sendResponse({ message: "Unhighlighted all and highlighted single" })
+        break;
+      }
+      case 'highlightAllElementsDashed':{
+        _page.highlightAllTypesDashed();
+        sendResponse({ message: "Highlighted all types dashed" })
         break;
       }
       default:{

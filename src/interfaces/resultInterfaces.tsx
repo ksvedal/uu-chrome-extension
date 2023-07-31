@@ -4,14 +4,12 @@ export interface ResultsHeaderInterface {
 }
 
 export interface JsonDataFormat {
-  htmlString: string;
-  correctText: string;
-  name: string;
-  comment: string;
-  checked: boolean;
-  url: string;
-  testID: string;
-  chromeVersion: string | null;
-  chromeExtensionVersion: string | null;
-  outcome: string;
+ testregelId: string;
+  nettlesar: string | null;
+  utvidelse: string | null;
+  side: string;
+  element: string;
+  samsvar: string;
+  utfall: string;
+  kommentar: string;
 }

@@ -24,7 +24,7 @@ export const CollapsibleObject: React.FC<CollapsibleObjectInterface> = ({
               </div>
               <div className="col-4">
                 <br />
-                <RadioButtonStatus text={thisElement.result.correctText}></RadioButtonStatus>
+                <RadioButtonStatus text={thisElement.result.samsvar}></RadioButtonStatus>
               </div>
               <div className={"col-4"}>
                 <div className={"float-right"}>

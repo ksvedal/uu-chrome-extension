@@ -4,9 +4,9 @@ import { JsonDataFormat } from '../../interfaces/resultInterfaces';
 export class TestUtils {
 
   public static giveIdChromeAndExtensionVersion = (resultElement: JsonDataFormat) => {
-    resultElement.testID = TestUtils.generateTestID();
-    resultElement.chromeVersion = TestUtils.getChromeVersion();
-    resultElement.chromeExtensionVersion = TestUtils.getChromeExtensionVersion();
+    resultElement.testregelId = TestUtils.generateTestID();
+    resultElement.nettlesar = TestUtils.getChromeVersion();
+    resultElement.utvidelse = TestUtils.getExtensionVersion();
 
   }
 
@@ -25,12 +25,12 @@ export class TestUtils {
     }
   };
 
-  private static getChromeExtensionVersion = () => {
+  private static getExtensionVersion = () => {
     try {
       const manifest = chrome.runtime.getManifest();
       return manifest.version;
     } catch (error) {
-      console.error(`Error in getChromeExtensionVersion: ${error}`);
+      console.error(`Error in getExtensionVersion: ${error}`);
       return null;
     }
   };

@@ -1,3 +1,8 @@
+setSidePanelBehaviour();
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => setSidePanelOptions(tabId));
+chrome.runtime.onInstalled.addListener((details) => createNotification(details));
+
+
 export function setSidePanelBehaviour() {
   if (typeof chrome !== 'undefined' && chrome.sidePanel) {
     chrome.sidePanel
@@ -6,7 +11,7 @@ export function setSidePanelBehaviour() {
   }
 }
 
-export async function setSidePanelOptions(tabId, info, tab) {
+export async function setSidePanelOptions(tabId) {
   if (typeof chrome !== 'undefined' && chrome.sidePanel) {
     await chrome.sidePanel.setOptions({
       tabId,
@@ -16,13 +21,12 @@ export async function setSidePanelOptions(tabId, info, tab) {
   }
 }
 
-export function createNotification(details) {
+  export function createNotification(details) {
   if (details.reason === 'update' && typeof chrome !== 'undefined' && chrome.runtime) {
     const currentVersion = chrome.runtime.getManifest().version;
     const previousVersion = details.previousVersion;
     if (currentVersion !== previousVersion) {
-      console.log(`Updated from ${previousVersion} to ${currentVersion}`);
-      chrome.runtime.notifications.create('updateNotification', {
+      chrome.notifications.create('updateNotification', {
         type: 'basic',
         iconUrl: '../scan.png',
         title: 'Extension Updated', 

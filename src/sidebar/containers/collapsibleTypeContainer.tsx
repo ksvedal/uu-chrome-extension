@@ -11,7 +11,7 @@ export const CollapsibleTypeContainer: React.FC<CollapsibleTypeContainerInterfac
     const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAllHighlighted, setIsAllHighlighted] = useState(false);
-    const [commentBoxValue, setCommentBoxValue] = useState<string[]>(elementType.nodes.map(node => node.result.comment || ""));
+    const [commentBoxValue, setCommentBoxValue] = useState<string[]>(elementType.nodes.map(node => node.result.kommentar || ""));
     const [typeElements, setTypeElements] = useState<ElementObject[]>(elementType.nodes);
     const context = useContext(MyContext);
     const typingTimeoutRef = useRef<number | null>(null);

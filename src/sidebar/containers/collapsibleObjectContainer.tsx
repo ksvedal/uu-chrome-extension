@@ -54,7 +54,7 @@ export const CollapsibleObjectContainer: React.FC<CollapsibleObjectContainerInte
             <ElementAttributesTable
                 attributes={thisElement.attributes}
                 title={thisElement.title}
-                htmlString={thisElement.htmlString}
+                element={thisElement.element}
                 selector={thisElement.selector}
                 result={thisElement.result}
                 isCommentVisible={false} />
@@ -63,7 +63,7 @@ export const CollapsibleObjectContainer: React.FC<CollapsibleObjectContainerInte
                 onOptionChange={(value) => {
                     handleOptionChange(value, index, url, elementType, typeElements, setTypeElements, setJsonData);
                     openCommentSection(index, elementType);}}
-                presetOption={elementType.nodes[index].result.correctText}
+                presetOption={elementType.nodes[index].result.samsvar}
                 index={index} />
 
             <div>

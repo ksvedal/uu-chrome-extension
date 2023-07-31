@@ -11,20 +11,21 @@ export const handleOptionChange = (
     setTypeElements: React.Dispatch<React.SetStateAction<ElementObject[]>>,
     setJsonData: React.Dispatch<React.SetStateAction<JsonDataFormat[]>>,
     ) => {
-    let outcome = "";
+    let utfall = "";
 
-    if (option === "Yes") {
-      outcome =
+    if (option === "Ja") {
+      utfall =
         "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer knappen.";
-    } else if (option === "No") {
-      outcome =
+    } else if (option === "Nei") {
+      utfall =
         "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer ikkje knappen.";
-    } else if (option === "The element is not a button") {
-      outcome = "Testelementet er ikkje ein knapp.";
+    } else if (option === "Ikkje forekomst") {
+      utfall = "Testelementet er ikkje ein knapp.";
     }
+  
 
-    elementType.nodes[index].result.correctText = option;
-    elementType.nodes[index].result.outcome = outcome;
+    elementType.nodes[index].result.samsvar = option;
+    elementType.nodes[index].result.utfall = utfall;
     updateJson(elementType.nodes[index], index, url, typeElements, setTypeElements, setJsonData);
 };
 
@@ -42,7 +43,7 @@ export const updateJson = (
     ) => {
     let newNodes = typeElements;  // copy the array
     newNodes[index] = elementObject;  // replace the element
-    newNodes[index].result.url = url;
+    newNodes[index].result.side = url;
     setTypeElements(newNodes);  // update the state
     let jsonData: JsonDataFormat[] = newNodes.map(node => node.result).flat();
     setJsonData(jsonData);
@@ -96,5 +97,5 @@ export const storeText = (
     newText: string,
     elementType: ElementType,
     ) => {
-    elementType.nodes[index].result.comment = newText;
+    elementType.nodes[index].result.kommentar = newText;
 };

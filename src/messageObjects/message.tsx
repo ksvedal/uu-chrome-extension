@@ -36,6 +36,10 @@ export class HighlightAllMessage implements Message {
     action: string = "highlightAllElements";
 }
 
+export class HighlightAllDashedMessage implements Message {
+    action: string = "highlightAllElementsDashed";  
+}
+
 export class ScanPageMessage implements Message {
     action: string = "scanPage";
 }

@@ -1,13 +1,34 @@
 import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, UnhighlightAllAndHighlightSingleMessage } from "../messageObjects/message";
+import { ButtonSelector} from "./elementSelector";
 
 /**
  * This class is responsible for interacting with the page
  */
 export class PageInteractor {
     private prevElem: HTMLElement | null = null;
-    private highlightClass: string = "highlight";
+    private highlightSelectedClass: string = "highlight-selected";
+    private highlightDashedClass: string = "highlight-dashed";
+    private defaultDashedHighligtedSelector = new ButtonSelector();
+    
 
+    highlightAllTypesDashed(): void {
+        try { 
+            const elements = document.querySelectorAll(this.defaultDashedHighligtedSelector.selector) as NodeListOf<HTMLElement>;
+            if (!elements.length) {
+                console.log(`No elements found for selector "${this.defaultDashedHighligtedSelector.selector}"`);
+            } else {
+                
+                for (let element of elements) {
+                    this.addStyleToElement(element, this.highlightDashedClass);
+                }
+            }
+        } catch (error) {
+            console.error(`Error in highlightAllTypesDashed: ${error}`);
+        }
+    }
+    
     public highlightAllWithType(message: HighlightAllMessage): void {
+
         try {
             const elements = document.querySelectorAll(message.type.selector) as NodeListOf<HTMLElement>;
             if (!elements.length) {
@@ -26,7 +47,7 @@ export class PageInteractor {
             console.error(`Error in highlightAllWithType: ${error}`);
         }
     }
-
+    
     public handleHighlightSingle(message: HighlightMessage): void {
         try {
             const element = document.querySelector(message.element.selector) as HTMLElement;
@@ -105,15 +126,21 @@ export class PageInteractor {
         }
     }
 
-    private addStyleToElement(element: HTMLElement): void {
+    private addStyleToElement(element: HTMLElement, highlightClass?: String): void {
+        highlightClass = highlightClass || this.highlightSelectedClass;
         if (element) {
-            element.classList.add(this.highlightClass);
+            if (highlightClass === this.highlightSelectedClass) {
+                element.classList.add(this.highlightSelectedClass);
+                
+            } else {
+                element.classList.add(this.highlightDashedClass);
+            }
         }
     }
 
     private removeStyleFromElement(element: HTMLElement): void {
         if (element) {
-            element.classList.remove(this.highlightClass);
+            element.classList.remove(this.highlightSelectedClass);
         }
     }
 }

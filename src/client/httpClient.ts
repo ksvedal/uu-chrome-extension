@@ -1,28 +1,34 @@
 import { JsonDataFormat } from "../interfaces/resultInterfaces";
 import { APIError } from "./apiError";
 
-// src/api/httpClient.ts
 const baseUrl = "http://localhost:8080";
-
 const headers = {
     'Content-Type': 'application/json'
 };
 
-async function fetchResource(path: string, config: RequestInit) {
+export async function fetchResource(path: string, config: RequestInit): Promise<any> {
     try {
         const response = await fetch(`${baseUrl}${path}`, config);
-        const data = await response.json();
 
-        if (!response.ok) {
-            throw new APIError("Request failed", data, response.status);
+        let data: any;
+        try {
+            data = await response.json();
+        } catch (error) {
+            console.error("Could not parse response body as JSON");
         }
 
+        if (!response.ok) {
+            //evt. data.error, usikker på hvem som gir best svar, og hvor data.error kommer fra
+            throw new APIError(response.statusText, data, response.status);
+        }
         return data;
     } catch (error) {
         if (error instanceof Error) {
-            const customError = error.message === "Failed to fetch"
-                ? new APIError("There was a problem connecting to the server", null, 0)
-                : new APIError(error.message, null, 0);
+            console.log("An error occurred during the fetch operation");
+            const customError = error instanceof APIError ? error : new APIError(error.message, null, 0);
+            if (customError.message == "Failed to fetch") {
+                customError.message = "There was a problem connecting to the server";
+            }
             throw customError;
         }
 
