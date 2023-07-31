@@ -14,7 +14,7 @@ export const RadioButtons: React.FC<RadioButtonsProps> = ({ onOptionChange , ind
     return (
       <div>
           <div className={"row"}>
-              <p> Does the button's text identify its function?</p>
+              <p>Identifiserer ledeteksten funksjonen til knappen?</p>
           </div>
         <div>
   
@@ -51,7 +51,7 @@ export const RadioButtons: React.FC<RadioButtonsProps> = ({ onOptionChange , ind
                   checked={selectedOption === 'Ikkje forekomst'}
                   onChange={handleOptionChange}
                 />
-                <span className="radio-button-text">Elementet er ikkje ein knapp</span>
+                <span className="radio-button-text">Ikkje ein knapp</span>
               </label>
           </div>
       </div>

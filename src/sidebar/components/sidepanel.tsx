@@ -5,6 +5,8 @@ import ResultsHeader from './header/resultsHeader';
 import { MyContext } from './resultItemsContext';
 import { CollapsibleTypeContainer } from '../containers/collapsibleTypeContainer';
 import { SidepanelInterface } from '../../interfaces/sidepanelInterfaces';
+import Brightness6Icon from '@mui/icons-material/Brightness6';
+
 
 export const Sidepanel: React.FC<SidepanelInterface> = ({
   darkMode,
@@ -25,7 +27,7 @@ export const Sidepanel: React.FC<SidepanelInterface> = ({
           <img src="scan.png" alt="Extension Logo" />
         </div>
         <div className='extension-text'> <p>Button Seeker 2000</p></div>
-        <button className={"dank-toggle-button float-right"} onClick={handleToggleDarkMode}> <span>{darkMode ? 'sun' : 'moon'}</span> </button>
+        <button className={"dank-toggle-button float-right"} onClick={handleToggleDarkMode}> {<Brightness6Icon />} </button>
       </div>
 
       <div className={"row scan-page-field"}>

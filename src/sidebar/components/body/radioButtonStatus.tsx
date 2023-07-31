@@ -6,7 +6,7 @@ interface Props {
 
 export const RadioButtonStatus: React.FC<Props> = ({ text }) => {
   return (
-    <div className={`${(text === "Ja") ? 'yesColor' : (text === "Nei") ? "noColor": (text === "Elementet er ikkje en knapp") ? "notButtonColor": ""}`}>
+    <div className={`${(text === "Ja") ? 'yesColor' : (text === "Nei") ? "noColor": (text === "Ikkje en knapp") ? "notButtonColor": ""}`}>
         {text}
     </div>
   );

@@ -4,11 +4,12 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CollapsibleTypeInterface } from "../../../interfaces/collapsibleTypeInterfaces";
 import { CollapsibleObjectContainer } from "../../containers/collapsibleObjectContainer";
-
+import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@mui/material";
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
-    isExpanded,
-    setIsExpanded,
+    // isExpanded,
+    // setIsExpanded,
     elementType,
     isAllHighlighted,
     setIsAllHighlighted,
@@ -25,31 +26,27 @@ export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
  }) => {
 
   return (
-    <div className='collapsible-item'>
-      <div className='collapsible-item-parent'>
-        <div className={`item-header row ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
+    <div>
+      <Accordion id={"collapsible-level-1"}>
+          <AccordionSummary
+              expandIcon={ <ExpandLessIcon /> }
+          >
+            <Grid container>
+              <Grid item xs={4}>
+                <div className={"big-font"}> {elementType.name}</div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className={"big-font"}> {elementType.nodes.length} </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className="float-right">
+                  <ToggleButton isChecked={isAllHighlighted} onToggle={handleHighlightAll} text="Highlight All" />
+                </div>
+              </Grid>
+            </Grid>
+          </AccordionSummary>
+          <AccordionDetails>
 
-          <div className={"col-4"}>
-            <div className="buttons-text">
-              <br /> {elementType.name}
-            </div>
-          </div>
-
-          <div className={"col-4"}>
-            <div className="total-buttons">
-              <br /> {elementType.nodes.length}
-            </div>
-          </div>
-
-          <div className={"col-4"}>
-            <div className="float-right">
-              <ToggleButton isChecked={isAllHighlighted} onToggle={handleHighlightAll} text="Highlight All" />
-            </div>
-          </div>
-
-        </div>
-        {isExpanded && (
-          <div className="collapsible-item-children">
             {elementType.nodes.map((elementObject, index) => {
               return (
                 <CollapsibleObjectContainer
@@ -72,9 +69,8 @@ export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
               );
             })}
             <ToastContainer />
-          </div>
-        )}
-      </div>
+          </AccordionDetails>
+        </Accordion>
     </div>
   );
 };
