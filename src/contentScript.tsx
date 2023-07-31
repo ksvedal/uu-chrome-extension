@@ -2,24 +2,9 @@ import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessag
 import { PageInteractor } from './htmlParser/pageInteractor';
 import { WebsiteScanner } from './htmlParser/websiteScanner';
 import { ElementType } from './sidebar/interfaces';
+import './style/contentScriptHighlightStyle.css';
 
 chrome.runtime.onMessage.addListener(handleMessage);
-//This is used in page_interactor to add and remove the style
-const styleElement: HTMLStyleElement = document.createElement('style');
-// Add CSS rules to the style element
-styleElement.textContent = `
-    .highlight-dashed {
-      border: 3px dashed #79a6d2 !important;
-      z-index: 1 !important;
-    }
-    .highlight-selected {
-      border: 5px solid #FF0000 !important;
-      z-index: 2 !important;
-    }
-
-`;
-// Append the style element to the head of the documentto
-document.head.append(styleElement);
 
 /**
  * handles the message from popup.tsx
