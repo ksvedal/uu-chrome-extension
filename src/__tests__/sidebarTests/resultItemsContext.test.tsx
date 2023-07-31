@@ -17,7 +17,6 @@ describe('Result Items Context', () => {
         side: "http://test.com",
         testregelId: "test1",
         nettlesar: "91.0.4472.124",
-        utvidelse: "1.0.0",
         utfall: "Passed",
     };
 

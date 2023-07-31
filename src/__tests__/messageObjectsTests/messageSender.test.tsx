@@ -55,7 +55,6 @@ describe("MessageSender", () => {
         side: "example.com",
         testregelId: "example-test-id",
         nettlesar: "",
-        utvidelse: "",
         utfall: "Example utfall",
       },
       attributes: [],

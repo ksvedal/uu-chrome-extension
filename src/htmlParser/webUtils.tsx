@@ -25,7 +25,7 @@ export class WebUtils {
                 attributes: mainObjectAttributes,
                 isCommentVisible: false,
 
-                result: { testregelId: "", nettlesar: "", utvidelse: "", side: "", element: pretty(element.outerHTML), samsvar: "", utfall: "", kommentar: "" },
+                result: { testregelId: "", nettlesar: "", side: "", element: pretty(element.outerHTML), samsvar: "", utfall: "", kommentar: "" },
             };
             console.log(newObject);
             return newObject;
@@ -39,7 +39,7 @@ export class WebUtils {
                 attributes: [],
                 isCommentVisible: false,
 
-                result: { testregelId: "", nettlesar: "", utvidelse: "", side: "", element: "", samsvar: "Error creating object", utfall: "", kommentar: ""},
+                result: { testregelId: "", nettlesar: "", side: "", element: "", samsvar: "Error creating object", utfall: "", kommentar: ""},
             };
         }
     }
