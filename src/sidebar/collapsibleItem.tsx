@@ -218,7 +218,7 @@ return (
             [{thisElement.title}]
           </Grid>
           <Grid item xs={4}>
-            <IsCheckedStatus text={thisElement.result.kommentar}></IsCheckedStatus>
+            <IsCheckedStatus text={thisElement.result.samsvar}></IsCheckedStatus>
           </Grid>
         </Grid>
       </AccordionSummary>
