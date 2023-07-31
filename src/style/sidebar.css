@@ -382,18 +382,12 @@ Responsiveness.
 
 .yesColor {
   color: var(--good-color);
-  font-weight: bolder;
+  font-weight: bold;
 }
 
 .noColor {
   color: var(--danger-color);
   font-weight: bold;
-}
-
-.notButtonColor {
-  color: var(--orange);
-  font-weight: bold;
-  text-shadow: var(--big-shadow);
 }
 
 /* Content data */

@@ -19,18 +19,16 @@ test('test handleHighlightSingle', () => {
   const mockElementObject: ElementObject = {
     selector: ".class-selector",
     title: "Mock Title",
-    htmlString: "<div>Mock HTML String</div>",
+    element: "<div>Mock HTML String</div>",
     result: {
-      htmlString: "<div>Mock HTML String</div>",
-      correctText: "Mock Correct Text",
-      name: "Mock Name",
-      comment: "Mock Comment",
-      checked: false,
-      url: "http://mockurl.com",
-      testID: "MockTestID",
-      chromeVersion: "Mock Chrome Version",
-      chromeExtensionVersion: "Mock Chrome Extension Version",
-      outcome: "Mock outcome",
+      element: "<div>Mock HTML String</div>",
+      samsvar: "Mock Correct Text",
+      kommentar: "Mock Comment",
+      side: "http://mockurl.com",
+      testregelId: "MocktestregelId",
+      nettlesar: "Mock Chrome Version",
+      utvidelse: "Mock Chrome Extension Version",
+      utfall: "Mock utfall",
     },
     attributes: [
       {
@@ -53,7 +51,7 @@ test('test handleHighlightSingle', () => {
 
   // Assertions
   expect(document.querySelector).toHaveBeenCalledWith(mockElementObject.selector);
-  expect(mockElem.classList.add).toHaveBeenCalledWith('highlight');
+  expect(mockElem.classList.add).toHaveBeenCalledWith('highlight-selected');
 });
 
 test('test highlightAllWithType', () => {
@@ -85,7 +83,7 @@ test('test highlightAllWithType', () => {
   // Assertions
   expect(document.querySelectorAll).toHaveBeenCalledWith(mockElementType.selector);
   mockElements.forEach((mockElement) => {
-    expect(mockElement.classList.add).toHaveBeenCalledWith('highlight');
+    expect(mockElement.classList.add).toHaveBeenCalledWith('highlight-selected');
     expect(mockElement.classList.remove).not.toHaveBeenCalled();
   });
 
@@ -105,7 +103,7 @@ test('test highlightAllWithType', () => {
   expect(document.querySelectorAll).toHaveBeenCalledWith(mockElementType.selector);
   mockElements.forEach((mockElement) => {
     expect(mockElement.classList.add).not.toHaveBeenCalled();
-    expect(mockElement.classList.remove).toHaveBeenCalledWith('highlight');
+    expect(mockElement.classList.remove).toHaveBeenCalledWith('highlight-selected');
   });
 });
 
@@ -113,18 +111,16 @@ test('test highlightAndRemovePrevious', () => {
   const mockPreviousElementObject: ElementObject = {
     selector: ".previous-selector",
     title: "Mock Previous Title",
-    htmlString: "<div>Mock Previous HTML String</div>",
+    element: "<div>Mock Previous HTML String</div>",
     result: {
-      htmlString: "<div>Mock Previous HTML String</div>",
-      correctText: "Mock Previous Correct Text",
-      name: "Mock Previous Name",
-      comment: "Mock Previous Comment",
-      checked: false,
-      url: "http://mockpreviousurl.com",
-      testID: "MockPreviousTestID",
-      chromeVersion: "Mock Previous Chrome Version",
-      chromeExtensionVersion: "Mock Previous Chrome Extension Version",
-      outcome: "Mock outcome",
+      element: "<div>Mock Previous HTML String</div>",
+      samsvar: "Mock Previous Correct Text",
+      kommentar: "Mock Previous Comment",
+      side: "http://mockpreviousurl.com",
+      testregelId: "MockPrevioustestregelId",
+      nettlesar: "Mock Previous Chrome Version",
+      utvidelse: "Mock Previous Chrome Extension Version",
+      utfall: "Mock utfall",
     },
     attributes: [
       {
@@ -138,18 +134,16 @@ test('test highlightAndRemovePrevious', () => {
   const mockNewElementObject: ElementObject = {
     selector: ".new-selector",
     title: "Mock New Title",
-    htmlString: "<div>Mock New HTML String</div>",
+    element: "<div>Mock New HTML String</div>",
     result: {
-      htmlString: "<div>Mock New HTML String</div>",
-      correctText: "Mock New Correct Text",
-      name: "Mock New Name",
-      comment: "Mock New Comment",
-      checked: false,
-      url: "http://mocknewurl.com",
-      testID: "MockNewTestID",
-      chromeVersion: "Mock New Chrome Version",
-      chromeExtensionVersion: "Mock New Chrome Extension Version",
-      outcome: "Mock outcome",
+      element: "<div>Mock New HTML String</div>",
+      samsvar: "Mock New Correct Text",
+      kommentar: "Mock New Comment",
+      side: "http://mocknewurl.com",
+      testregelId: "MockNewtestregelId",
+      nettlesar: "Mock New Chrome Version",
+      utvidelse: "Mock New Chrome Extension Version",
+      utfall: "Mock utfall",
     },
     attributes: [
       {
@@ -179,8 +173,8 @@ test('test highlightAndRemovePrevious', () => {
   // Assertions
   expect(document.querySelector).toHaveBeenCalledWith(mockPreviousElementObject.selector);
   expect(document.querySelector).toHaveBeenCalledWith(mockNewElementObject.selector);
-  expect(mockElem.classList.remove).toHaveBeenCalledWith('highlight');
-  expect(mockElem.classList.add).toHaveBeenCalledWith('highlight');
+  expect(mockElem.classList.remove).toHaveBeenCalledWith('highlight-selected');
+  expect(mockElem.classList.add).toHaveBeenCalledWith('highlight-selected');
   expect(mockElem.focus).toHaveBeenCalled();
   expect(mockElem.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' });
 });
@@ -195,18 +189,16 @@ test('test unhighlightAllAndHighlightSingle', () => {
     const mockElementObject: ElementObject = {
       selector: '.highlight',
       title: 'Mock Title',
-      htmlString: '<div>Mock HTML String</div>',
+      element: '<div>Mock HTML String</div>',
       result: {
-        htmlString: '<div>Mock HTML String</div>',
-        correctText: 'Mock Correct Text',
-        name: 'Mock Name',
-        comment: 'Mock Comment',
-        checked: false,
-        url: 'http://mockurl.com',
-        testID: 'MockTestID',
-        chromeVersion: 'Mock Chrome Version',
-        chromeExtensionVersion: 'Mock Chrome Extension Version',
-        outcome: "Mock outcome"
+        element: '<div>Mock HTML String</div>',
+        samsvar: 'Mock Correct Text',
+        kommentar: 'Mock Comment',
+        side: 'http://mockurl.com',
+        testregelId: 'MocktestregelId',
+        nettlesar: 'Mock Chrome Version',
+        utvidelse: 'Mock Chrome Extension Version',
+        utfall: "Mock utfall"
       },
       attributes: [
         {
@@ -247,12 +239,12 @@ test('test unhighlightAllAndHighlightSingle', () => {
     expect(document.querySelectorAll).toHaveBeenCalledWith(
       mockElementType.selector
     );
-    expect(mockElements[0].classList.remove).toHaveBeenCalledWith('highlight');
+    expect(mockElements[0].classList.remove).toHaveBeenCalledWith('highlight-selected');
   
     expect(document.querySelector).toHaveBeenCalledWith(
       mockElementObject.selector
     );
-    expect(mockSingleElement.classList.add).toHaveBeenCalledWith('highlight');
+    expect(mockSingleElement.classList.add).toHaveBeenCalledWith('highlight-selected');
     expect(mockSingleElement.focus).toHaveBeenCalled();
     expect(mockSingleElement.scrollIntoView).toHaveBeenCalledWith({
       behavior: 'smooth',
@@ -281,8 +273,8 @@ test('test focusAndScroll', () => {
   
     // Assertions
     expect(document.querySelector).toHaveBeenCalledWith(mockElementSelector);
-    expect(mockElement.classList.remove).not.toHaveBeenCalledWith('highlight');
-    expect(mockElement.classList.add).toHaveBeenCalledWith('highlight');
+    expect(mockElement.classList.remove).not.toHaveBeenCalledWith('highlight-selected');
+    expect(mockElement.classList.add).toHaveBeenCalledWith('highlight-selected');
     expect(mockElement.focus).toHaveBeenCalled();
     expect(mockElement.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' });
   });
@@ -290,7 +282,7 @@ test('test focusAndScroll', () => {
 
 test('test addStyleToElement', () => {
   const mockElement: MockProxy<HTMLElement> = mock<HTMLElement>();
-  const highlightClass = 'highlight';
+  const highlightClass = 'highlight-selected';
 
   mockElement.classList.add = jest.fn();
 
@@ -305,7 +297,7 @@ test('test addStyleToElement', () => {
 
 test('test removeStyleFromElement', () => {
     const mockElement: MockProxy<HTMLElement> = mock<HTMLElement>();
-    const highlightClass = 'highlight';
+    const highlightClass = 'highlight-selected';
   
     mockElement.classList.remove = jest.fn();
   

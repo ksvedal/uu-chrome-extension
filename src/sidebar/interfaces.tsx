@@ -44,7 +44,7 @@ export interface CollapsibleItemElementInterface {
   /* updateJson: (elementObject: ElementObject, index: number, url: string) => void;
   index: number;
   url: string;
-  testID: string; */
+  testregelId: string; */
 }
 
 export interface ResultsHeaderInterface {
@@ -72,7 +72,7 @@ export interface ElementType {
  */
 export interface ElementObject {
   title: string;
-  htmlString: string;
+  element: string;
   selector: string;
   result: ElementResult;
   attributes: ElementAttribute[];
@@ -80,16 +80,14 @@ export interface ElementObject {
 }
 
 export interface ElementResult {
-  htmlString: string;
-  correctText: string;
-  name: string;
-  comment: string;
-  checked: boolean;
-  url: string;
-  testID: string;
-  chromeVersion: string | null;
-  chromeExtensionVersion: string | null;
-  outcome: string;
+  testregelId: string;
+  nettlesar: string | null;
+  utvidelse: string | null;
+  side: string;
+  element: string;
+  samsvar: string;
+  utfall: string;
+  kommentar: string;
 }
 export interface ElementAttribute {
   name: string;

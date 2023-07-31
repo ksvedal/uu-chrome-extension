@@ -74,7 +74,7 @@ test('RegularButton calls onClick when clicked', () => {
 
 // ------------------------- RadioButtonGroup component -------------------------------------
 test('RadioButtonGroup selects the correct option and calls onOptionChange', () => {
-    let selectedOption = 'Yes';
+    let selectedOption = 'Ja';
     const mockOnOptionChange = jest.fn((option) => {
       selectedOption = option;
     });
@@ -87,9 +87,9 @@ test('RadioButtonGroup selects the correct option and calls onOptionChange', () 
       />
     );
   
-    const yesRadioButton = getByLabelText('Yes');
-    const noRadioButton = getByLabelText('No');
-    const notAButtonRadioButton = getByLabelText('Not a button');
+    const yesRadioButton = getByLabelText('Ja');
+    const noRadioButton = getByLabelText('Nei');
+    const notAButtonRadioButton = getByLabelText('Ikkje ein knapp');
   
     expect(yesRadioButton).toBeChecked();
     expect(noRadioButton).not.toBeChecked();
@@ -98,12 +98,12 @@ test('RadioButtonGroup selects the correct option and calls onOptionChange', () 
     fireEvent.click(noRadioButton);
   
     expect(mockOnOptionChange).toHaveBeenCalledTimes(1);
-    expect(selectedOption).toBe('No');
+    expect(selectedOption).toBe('Nei');
     expect(noRadioButton).toBeChecked();
   
     fireEvent.click(notAButtonRadioButton);
   
     expect(mockOnOptionChange).toHaveBeenCalledTimes(2);
-    expect(selectedOption).toBe('The element is not a button');
+    expect(selectedOption).toBe('Ikkje forekomst');
     expect(notAButtonRadioButton).toBeChecked();
   });

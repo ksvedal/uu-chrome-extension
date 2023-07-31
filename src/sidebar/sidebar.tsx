@@ -10,6 +10,7 @@ import { CollapsibleItemType } from './collapsibleItem';
 import { MyContext } from './resultItemsContext';
 import Brightness6Icon from '@mui/icons-material/Brightness6';
 
+
 export const Sidebar: React.FC = () => {
   const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [darkMode, setDarkMode] = useState(prefersDarkMode);
@@ -63,6 +64,7 @@ export const Sidebar: React.FC = () => {
       setWebsiteURL(url); // update the state with the response data
       setError(null); // clear the error message if no error occurs
     });
+    _message.highlightAllTypesDashed();
   };
 
 
@@ -89,7 +91,7 @@ export const Sidebar: React.FC = () => {
             </div>
           </div>
           <div className="col-4">
-            <RegularButton data-testid="scanPage" text="Scan Page" onClick={fetchData} />
+            <RegularButton data-testID="scanPage" text="Scan Page" onClick={fetchData} />
           </div>
           {error && <div className="col-12 error-message">{error}</div>}
         </div>

@@ -31,44 +31,44 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
   return (
     <div>
         <div className={"row"}>
-            <p> Does the button's text identify its function?</p>
+            <p> Identifiserer ledeteksten funksjonen til knappen?</p>
         </div>
       <div>
 
         <div className={"col-4 extra-padding"}>
-            <label className={`radio-button ${selectedOption === 'Yes' ? 'active' : ''}`}>
+            <label className={`radio-button ${selectedOption === 'Ja' ? 'active' : ''}`}>
               <input
                 type="radio"
                 name="option"
-                value="Yes"
-                checked={selectedOption === 'Yes'}
+                value="Ja"
+                checked={selectedOption === 'Ja'}
                 onChange={handleOptionChange}
               />
-              <span className="radio-button-text">Yes</span>
+              <span className="radio-button-text">Ja</span>
             </label>
         </div>
         <div className={"col-4 extra-padding"}>
-            <label className={`radio-button ${selectedOption === 'No' ? 'active' : ''}`}>
+            <label className={`radio-button ${selectedOption === 'Nei' ? 'active' : ''}`}>
               <input
                 type="radio"
                 name="option"
-                value="No"
-                checked={selectedOption === 'No'}
+                value="Nei"
+                checked={selectedOption === 'Nei'}
                 onChange={handleOptionChange}
               />
-              <span className="radio-button-text">No</span>
+              <span className="radio-button-text">Nei</span>
             </label>
         </div>
         <div className={"col-4 extra-padding"}>
-            <label className={`radio-button ${selectedOption === 'The element is not a button' ? 'active' : ''}`}>
+            <label className={`radio-button ${selectedOption === 'Ikkje forekomst' ? 'active' : ''}`}>
               <input
                 type="radio"
-                name="The element is not a button"
-                value="The element is not a button"
-                checked={selectedOption === 'The element is not a button'}
+                name="Ikkje forekomst"
+                value="Ikkje forekomst"
+                checked={selectedOption === 'Ikkje forekomst'}
                 onChange={handleOptionChange}
               />
-              <span className="radio-button-text">Not a button</span>
+              <span className="radio-button-text">Ikkje ein knapp</span>
             </label>
         </div>
     </div>
