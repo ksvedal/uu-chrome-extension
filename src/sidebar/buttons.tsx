@@ -68,7 +68,7 @@ export const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({ onOptionChan
                 checked={selectedOption === 'Ikkje forekomst'}
                 onChange={handleOptionChange}
               />
-              <span className="radio-button-text">Elementet er ikkje ein knapp</span>
+              <span className="radio-button-text">Ikkje ein knapp</span>
             </label>
         </div>
     </div>

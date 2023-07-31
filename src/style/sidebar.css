@@ -5,15 +5,15 @@
 
 /* Variables */
 :root {
-  --primary-color: #f6f6f6;
+  --primary-color: #f8f8f8;
   --secondary-color: #ffffff;
-  --tertiary-color: #edeef0;
-  --quartiary-color: #fff0e2;
+  --tertiary-color: #ececec;
+  --quartiary-color: #fbf1c7;
 
-  --purple: #94227D;
-  --light-purple: #9a618f;
-  --orange: #ffa046;
-  --light-orange: #ffc691;
+  --purple: #fbf1c7;
+  --light-purple: #fffae2;
+  --orange: #26394f;
+  --light-orange: #26394f;
 
   --text-color: #ffffff;
   --text-color-inverse: #000000;
@@ -23,7 +23,7 @@
   --border-color-tertiary: var(--tertiary-color);
   --border-color-quartiary: var(--quartiary-color);
   --border-color-orange: var(--light-orange);
-  --border-color-purple: var(--light-purple);
+  --border-color-purple: var(--purple);
 
   --shadow-color: rgba(0, 0, 0, 0.1);
 
@@ -34,14 +34,14 @@
   --very-small-font: 0.8rem;
   --small-font: 0.9rem;
   --medium-font: 1rem;
-  --big-font: 1.2rem;
+  --big-font: 1.1rem;
 
-  --small-border: 1px solid;
+  --small-border: 0.16rem solid;
   --big-border: 0.18rem solid;
   --small-shadow: -1px 1px 2px var(--shadow-color);
-  --big-shadow: 1px 1px 1px 0px var(--shadow-color);
+  --big-shadow: 2px 2px 2px 1px var(--shadow-color);
   --big-shadow-inset: inset 1px 1px 1px 0px var(--shadow-color);
-  --radius: 4px;
+  --radius: 3px;
 
   --small-space: 0.5rem;
   --medium-space: 1rem;
@@ -59,10 +59,10 @@
   --tertiary-color: #383b3e;
   --quartiary-color: #232427;
 
-  --purple: #ffe797;
-  --light-purple: #fff1cc;
-  --orange: #29bccb;
-  --light-orange: #7fc0c9;
+  --purple: #4b3244;
+  --light-purple: #564c53;
+  --orange: #fadf75;
+  --light-orange: #ffeca0;
 
   --text-color: #030303;
   --text-color-inverse: #d9d9d9;
@@ -104,6 +104,10 @@ body {
   min-height: 100vh;
 }
 
+/*
+Responsiveness.
+12 columns that get 100% width when the size is small enough.
+*/
 * {
   box-sizing: border-box;
 }
@@ -183,23 +187,42 @@ body {
   float: right;
 }
 
-.whitebox {
-  background-color: var(--secondary-color);
+/* Font */
+.big-font {
+  font-size: var(--big-font);
+  font-weight: bolder;
+  padding: var(--big-padding);
+}
+
+/* Buttons */
+.toggle-button {
+  width: auto;
   border-radius: var(--radius);
-  overflow-wrap: break-word;
   box-shadow: var(--big-shadow);
+  background: var(--orange);
+  color: var(--text-color);
+  font-size: var(--very-small-font);
+  border: none;
+}
+
+.toggle-button.pressed {
+  background: var(--purple);
+  box-shadow: var(--big-shadow-inset);
+  border-color: var(--border-color-purple);
+  color: var(--text-color-inverse);
 }
 
 /* Header Field
 ---------------------------------------------- */
 .header-field {
   background-color: var(--secondary-color);
-  color: var(--purple);
-  font-weight: bolder;
+  color: var(--orange);
+  font-weight: bold;
   display: flex;
   padding: var(--big-padding);
   align-items: center;
   text-align: center;
+  width: 100%;
 }
 
 .header-field .extension-text p {
@@ -215,25 +238,25 @@ body {
   width: 60px;
   margin-block-start: 1em;
   margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
 }
 
-.dank-toggle-button {
+.dark-toggle-button {
   margin: var(--medium-padding);
   padding: var(--medium-padding);
   border-radius: var(--radius);
   border: none;
   float: right;
-  background: var(--primary-color);
-  color: var(--text-color-inverse);
-  box-shadow: var(--big-shadow);
+  background: var(--secondary-color);
+  color: var(--orange);
+  box-shadow: none;
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
   font-size: var(--very-small-font);
 }
 
-.dank-toggle-button:hover {
+.dark-toggle-button:hover {
   cursor: pointer;
 }
 
@@ -256,7 +279,7 @@ body {
   padding: var(--medium-padding);
   border-radius: var(--radius);
   border: none;
-  background: var(--purple);
+  background: var(--orange);
   color: var(--text-color);
   box-shadow: var(--big-shadow);
   font-family: "Open Sans", sans-serif;
@@ -277,10 +300,10 @@ body {
   padding: var(--medium-padding);
   font-weight: bolder;
   font-size: var(--medium-font);
-  background-color: var(--quartiary-color);
+  background-color: var(--light-purple);
   box-shadow: var(--big-shadow);
   border-radius: var(--radius);
-  border: var(--big-border) var(--border-color-quartiary);
+  border: 2px solid var(--purple);
 }
 
 .headline .headline-button {
@@ -310,28 +333,21 @@ body {
 }
 
 /* Collapsible content ---------------------------------------------- */
-
-/* Parent collapsible */
-.collapsible-item-parent {
+#collapsible-level-1 {
+  height: auto;
   margin-top: var(--small-space);
+  margin-bottom: var(--small-space);
   border-radius: var(--radius);
+  border: dotted 2px var(--secondary-color);
   background-color: var(--secondary-color);
-  padding-left: var(--small-padding);
-  padding-right: var(--small-padding);
   box-shadow: var(--big-shadow);
-  transition: box-shadow 0.02s ease-in-out;
-  font-size: var(--medium-font);
-  border: var(--border);
+  color: var(--text-color-inverse);
 }
 
-.collapsible-item-parent .toggle-button {
-  width: auto;
-  border-radius: var(--radius);
+.collapsible-level-1:hover {
+  cursor: pointer;
   box-shadow: var(--big-shadow);
-  background: var(--purple);
-  color: var(--text-color);
-  font-size: var(--very-small-font);
-  border: none;
+  border: dotted 2px var(--purple);
 }
 
 .total-buttons {
@@ -339,102 +355,43 @@ body {
   padding: 0;
 }
 
-/* Parent collapsible on hover */
-.collapsible-item-parent:hover {
-  cursor: pointer;
-  box-shadow: var(--big-shadow);
-}
-
-.collapsible-item-parent .item-header .toggle-button:hover {
-  cursor: pointer;
-}
-
-/* Parent collapsible on click */
-.collapsible-item-parent .item-header .toggle-button.pressed {
-  background: var(--orange);
-  box-shadow: var(--big-shadow-inset);
-  border-color: var(--border-color-purple);
-}
-
 /* Child collapsible */
-.collapsible-item-children {
+.collapsible-level-1-content {
   margin: 0;
   padding: 0;
+  cursor: default;
 }
 
-.collapsible-item-children .item-header {
-  display: block;
-  padding-left: var(--small-padding);
-  border-radius: var(--radius);
-  box-shadow: var(--big-shadow);
-  background-color: var(--primary-color);
-  margin-left: var(--small-space);
-  margin-right: var(--small-space);
-  font-size: var(--small-font);
-  border: var(--big-border) var(--border-color-tertiary);
-}
-
-.collapsible-item-children .buttons-text {
+.collapsible-level-1-content .buttons-text {
   font-size: var(--small-font);
   margin: 0;
   padding: 0;
 }
 
-.collapsible-item-children .item-header .toggle-button {
-  padding: var(--medium-padding);
+/* Collapsible-level-2 */
+#collapsible-level-2 {
+  height: auto;
+  margin-top: var(--small-space);
+  margin-bottom: var(--small-space);
   border-radius: var(--radius);
-  border: none;
-  background: var(--purple);
-  color: var(--text-color);
-  font-family: "Open Sans", sans-serif;
-  font-weight: bold;
-  font-size: var(--very-small-font);
-}
-
-.collapsible-item-child .item-header .toggle-button:hover {
-  cursor: pointer;
-  background: var(--light-purple);
-}
-
-/* Child collapsible on hover */
-.collapsible-item-child .item-header:hover {
-  cursor: pointer;
+  border: solid 2px var(--purple);
+  background-color: var(--light-purple);
   box-shadow: var(--big-shadow);
-  border-color: var(--border-color-purple)
-}
-
-/* Child collapsible on click */
-.collapsible-item-child .item-header.pressed {
-  box-shadow: var(--big-shadow-inset);
-  background-color: var(--quartiary-color);
-  border: var(--big-border) var(--border-color-purple);
   color: var(--text-color-inverse);
 }
 
-.collapsible-item-child .item-header .toggle-button.pressed {
-  background: var(--orange);
-}
-
-/*Child collapsible checkedStatus*/
 .yesColor {
   color: var(--good-color);
-  font-weight: bolder;
+  font-weight: bold;
 }
 
 .noColor {
   color: var(--danger-color);
-  /*   font-weight: bold;
- */
-}
-
-.notButtonColor {
-  color: var(--orange);
   font-weight: bold;
-  text-shadow: var(--big-shadow);
 }
 
 /* Content data */
-.collapsible-item-child .content-data {
+.content-data {
   margin: 0;
 }
 
@@ -442,12 +399,12 @@ body {
   height: var(--small-space);
   padding: var(--medium-padding);
   border-collapse: collapse;
-  border: var(--small-border) var(--border-color-tertiary);
+  border: var(--small-border) var(--light-orange);
   border-radius: var(--radius);
   table-layout: fixed;
   cursor: text;
   background-color: var(--light-orange);
-  color: #0c0c0c;
+  color: var(--text-color);
   box-shadow: var(--small-shadow);
   font-size: var(--very-small-font);
   text-align: left;
@@ -479,18 +436,22 @@ body {
   padding-right: 0.11rem;
 }
 
+.extra-padding-vertical {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 /* Comment box */
-.collapsible-item-child .comment-box {
+.comment-box {
   border-radius: var(--radius);
   width: 100%;
   display: hidden;
   padding-left: 0.11rem;
   padding-right: 0.11rem;
   margin: var(--medium-space) 0;
-  background-color: var(--secondary-color);
 }
 
-.collapsible-item-child .comment-box .textarea {
+.comment-box .textarea {
   border-radius: var(--radius);
   border: none;
   padding: var(--medium-padding);
@@ -507,45 +468,45 @@ body {
 }
 
 /* Radioboxes */
-.collapsible-item-child .radio-button {
+.radio-button {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 0;
 }
 
-.collapsible-item-child .radio-button label {
+.radio-button label {
   display: inline-block;
   cursor: pointer;
 }
 
-.collapsible-item-child .radio-button {
+.radio-button {
   padding: var(--medium-padding);
   border: none;
   border-radius: var(--radius);
   box-shadow: var(--big-shadow);
   text-align: center;
-  background: var(--light-purple);
-  color: var(--text-color);
+  background: var(--primary-color);
+  color: var(--text-color-inverse);
   font-size: var(--very-small-font);
   cursor: pointer;
   margin-bottom: var(--small-padding);
 }
 
-.collapsible-item-child .radio-button input[type="radio"] {
+.radio-button input[type="radio"] {
   display: none;
 }
 
 /* Radiobox on hover */
-.collapsible-item-child .radio-button:hover {
+.radio-button:hover {
   cursor: pointer;
   box-shadow: var(--big-shadow-inset);
 }
 
 /* Radiobox selected */
-.collapsible-item-child .radio-button.active {
+.radio-button.active {
   background-color: var(--orange);
-  color: #0c0c0c;
+  color: var(--text-color);
 }
 
 #the-toasht {

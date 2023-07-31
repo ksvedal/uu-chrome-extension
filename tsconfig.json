@@ -3,7 +3,7 @@
         "strict": true,
         "target": "es6",
         "moduleResolution": "bundler",
-        "module": "ES6",
+        "module": "esnext",
         "esModuleInterop": true,
         "sourceMap": false,
         "rootDir": "src",
