@@ -1,3 +1,5 @@
+import { post } from '../src/client/httpClient'
+
 setSidePanelBehaviour();
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => setSidePanelOptions(tabId));
 chrome.runtime.onInstalled.addListener((details) => createNotification(details));
@@ -39,22 +41,18 @@ export async function setSidePanelOptions(tabId) {
 //------------------------------------------------------------------------------------------------
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.url) {
-    fetch('http://localhost:8080/computedProperties', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ url: message.url }),
-    })
-    .then((response) => response.json())
-    .then((result) => { 
-      sendResponse(result)
-    })
-    .catch((error) => {
-      console.error('Error:', error.message);
-      sendResponse({ error: error.message });
-    });
+      const endpoint = '/computedProperties';
+      const dataToSend = { url: message.url };
 
-    return true
+      post(endpoint, dataToSend)
+          .then((result) => {
+              sendResponse(result);
+          })
+          .catch((error) => {
+              console.error('Error:', error.message);
+              sendResponse({ error: error.message });
+          });
+
+      return true;
   }
-});       
+});

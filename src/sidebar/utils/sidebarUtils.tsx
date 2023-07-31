@@ -7,7 +7,7 @@ const _scan: WebsiteScanner = new WebsiteScanner();
 
 export const retrieveComputedProperties = (websiteURL: string) => {
   console.log('sidebarUtils URL: ' + websiteURL)
-  chrome.runtime.sendMessage({url: websiteURL}, (response: JSON) => {
+  chrome.runtime.sendMessage({path: '/computedProperties', url: websiteURL}, (response: JSON) => {
     console.log('Response from background:', response)
   })
 }

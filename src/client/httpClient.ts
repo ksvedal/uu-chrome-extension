@@ -45,4 +45,4 @@ export async function post(path: string, body: JsonDataFormat[]) {
     return fetchResource(path, config);
 }
 export default {
-};
+}; 
