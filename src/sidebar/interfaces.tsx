@@ -82,7 +82,6 @@ export interface ElementObject {
 export interface ElementResult {
   testregelId: string;
   nettlesar: string | null;
-  utvidelse: string | null;
   side: string;
   element: string;
   samsvar: string;

@@ -27,7 +27,6 @@ test('test handleHighlightSingle', () => {
       side: "http://mockurl.com",
       testregelId: "MocktestregelId",
       nettlesar: "Mock Chrome Version",
-      utvidelse: "Mock Chrome Extension Version",
       utfall: "Mock utfall",
     },
     attributes: [
@@ -119,7 +118,6 @@ test('test highlightAndRemovePrevious', () => {
       side: "http://mockpreviousurl.com",
       testregelId: "MockPrevioustestregelId",
       nettlesar: "Mock Previous Chrome Version",
-      utvidelse: "Mock Previous Chrome Extension Version",
       utfall: "Mock utfall",
     },
     attributes: [
@@ -142,7 +140,6 @@ test('test highlightAndRemovePrevious', () => {
       side: "http://mocknewurl.com",
       testregelId: "MockNewtestregelId",
       nettlesar: "Mock New Chrome Version",
-      utvidelse: "Mock New Chrome Extension Version",
       utfall: "Mock utfall",
     },
     attributes: [
@@ -197,7 +194,6 @@ test('test unhighlightAllAndHighlightSingle', () => {
         side: 'http://mockurl.com',
         testregelId: 'MocktestregelId',
         nettlesar: 'Mock Chrome Version',
-        utvidelse: 'Mock Chrome Extension Version',
         utfall: "Mock utfall"
       },
       attributes: [
