@@ -25,7 +25,6 @@ const dummyResult: ElementResult = {
     side: "https://testurl.com",
     testregelId: "Test123",
     nettlesar: "Version 100.0",
-    utvidelse: "Extension 1.0",
     utfall: "passed"
 };
 

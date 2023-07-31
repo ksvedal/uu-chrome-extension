@@ -11,16 +11,13 @@ describe('Result Items Context', () => {
 
     // Prepare a new ElementResult that will be added when the button is clicked
     const newElementResult: ElementResult = {
-        htmlString: "<div>Test Element</div>",
-        correctText: "Test Element",
-        name: "div",
-        comment: "Test comment",
-        checked: false,
-        url: "http://test.com",
-        testID: "test1",
-        chromeVersion: "91.0.4472.124",
-        chromeExtensionVersion: "1.0.0",
-        outcome: "Passed",
+        element: "<div>Test Element</div>",
+        samsvar: "Test Element",
+        kommentar: "Test comment",
+        side: "http://test.com",
+        testregelId: "test1",
+        nettlesar: "91.0.4472.124",
+        utfall: "Passed",
     };
 
     // TestComponent that consumes context and has a button to change its value
