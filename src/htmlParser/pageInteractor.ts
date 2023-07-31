@@ -8,6 +8,9 @@ export class PageInteractor {
     private prevElem: HTMLElement | null = null;
     private highlightSelectedClass: string = "highlight-selected";
     private highlightDashedClass: string = "highlight-dashed";
+    private commonLabelClass: string = "label";
+    private selectedLabelClass: string = "label-selected";
+    private dashedLabelClass: string = "label-dashed";
     private defaultDashedHighligtedSelector = new ButtonSelector();
     
 
@@ -127,20 +130,68 @@ export class PageInteractor {
     }
 
     private addStyleToElement(element: HTMLElement, highlightClass?: String): void {
-        highlightClass = highlightClass || this.highlightSelectedClass;
+        highlightClass = highlightClass ?? this.highlightSelectedClass;
         if (element) {
             if (highlightClass === this.highlightSelectedClass) {
                 element.classList.add(this.highlightSelectedClass);
-                
+                this.addLabelToELement(element, this.selectedLabelClass);
             } else {
                 element.classList.add(this.highlightDashedClass);
+                this.addLabelToELement(element, this.dashedLabelClass);
             }
+
         }
     }
 
     private removeStyleFromElement(element: HTMLElement): void {
         if (element) {
             element.classList.remove(this.highlightSelectedClass);
+            this.removeLabelFromElement(element, this.selectedLabelClass);
         }
     }
+
+    private addLabelToELement(element: HTMLElement, labelClass? : string): void {
+        labelClass = labelClass ?? this.selectedLabelClass;
+        // Create a new DOM element to manipulate the 'element' string
+        const tempElement = document.createElement("div");
+        tempElement.innerHTML = element.innerHTML;
+
+        // Create the span element with the label
+        const labelSpan = document.createElement("label");
+        labelSpan.textContent = this.getTagName(element);
+        labelSpan.classList.add(labelClass);
+        labelSpan.classList.add(this.commonLabelClass); 
+
+        // Append the span element to the 'tempElement'
+        tempElement.appendChild(labelSpan);
+
+        // Update the 'element' attribute in the mockElementObject
+        element.innerHTML = tempElement.innerHTML;
+    }
+
+    private removeLabelFromElement(element: HTMLElement, labelClass?: string): void {
+        labelClass = labelClass ?? this.selectedLabelClass;
+        const labelsToRemove = element.getElementsByClassName(labelClass);
+      
+        // Remove all elements with the specified label class
+        while (labelsToRemove.length > 0) {
+          labelsToRemove[0].remove();
+        }
+      }
+    
+      private getTagName(element: HTMLElement): string {
+        if (!element || !element.outerHTML) {
+          // Handle the case when the element is undefined or has no outerHTML
+          return '';
+        }
+      
+        const openingTagRegex = /^<\w+/;
+        const match = element.outerHTML.match(openingTagRegex);
+      
+        if (match) {
+          return match[0] + '>'; // Return the first opening tag without attributes
+        }
+      
+        return '';
+      }
 }

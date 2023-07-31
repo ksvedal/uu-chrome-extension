@@ -11,10 +11,37 @@ styleElement.textContent = `
     .highlight-dashed {
       border: 3px dashed #79a6d2 !important;
       z-index: 1 !important;
+      position: relative;
+      display: inline-block;
     }
     .highlight-selected {
-      border: 5px solid #FF0000 !important;
+      border: 3px solid #FF0000 !important;
       z-index: 2 !important;
+      position: relative;
+      display: inline-block; 
+    }
+    
+    /* Common styles for both label classes */
+    .label {
+      position: absolute;
+      left: 0px;
+      top: -14px;
+      background-color: #79a6d2; /* Set the default background color for the label */
+      color: #000000; /* Set the text color for the label */
+      font-size: 10px; /* Customize the font size */
+      z-index: 10; /* We don't need to use !important here */
+      cursor: pointer; /* Make the label a hand cursor */
+      box-sizing: content-box;
+    }
+    
+    /* Styles for dashed border label */
+    .label-dashed {
+      background-color: #79a6d2; /* Set the background color for the label */
+    }
+    
+    /* Styles for selected border label */
+    .label-selected {
+      background-color: #FF0000; /* Set the background color for the label */
     }
 
 `;
