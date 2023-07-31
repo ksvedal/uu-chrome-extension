@@ -31,3 +31,26 @@ export function createNotification(details) {
     }
   }
 }
+
+//------------------------------------------------------------------------------------------------
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.url) {
+    fetch('http://localhost:8080/computedProperties', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url: message.url }),
+    })
+    .then((response) => response.json())
+    .then((result) => { 
+      sendResponse(result)
+    })
+    .catch((error) => {
+      console.error('Error:', error.message);
+      sendResponse({ error: error.message });
+    });
+
+    return true
+  }
+});       
