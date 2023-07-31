@@ -1,5 +1,3 @@
-//Might not work with typescript yet :(
-
 chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
   .catch((error) => console.error(error));
@@ -29,3 +27,26 @@ chrome.runtime.onInstalled.addListener((details) => {
       }
   }
 });
+
+//------------------------------------------------------------------------------------------------
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.url) {
+    fetch('http://localhost:8080/computedProperties', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url: message.url }),
+    })
+    .then((response) => response.json())
+    .then((result) => { 
+      sendResponse(result)
+    })
+    .catch((error) => {
+      console.error('Error:', error.message);
+      sendResponse({ error: error.message });
+    });
+
+    return true
+  }
+});       

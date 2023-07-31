@@ -5,6 +5,13 @@ import { MessageSender } from "../../messageObjects/messageSender";
 const _message: MessageSender = new MessageSender();
 const _scan: WebsiteScanner = new WebsiteScanner();
 
+export const retrieveComputedProperties = (websiteURL: string) => {
+  console.log('sidebarUtils URL: ' + websiteURL)
+  chrome.runtime.sendMessage({url: websiteURL}, (response: JSON) => {
+    console.log('Response from background:', response)
+  })
+}
+
 export const fetchData = (
     setScanPageResult:React.Dispatch<React.SetStateAction<ElementType[]>>,
     setError: React.Dispatch<React.SetStateAction<string | null>>,
@@ -29,6 +36,7 @@ export const fetchData = (
       }
       setWebsiteURL(url); // update the state with the response data
       setError(null); // clear the error message if no error occurs
+      retrieveComputedProperties(url)
     });
 
   };
