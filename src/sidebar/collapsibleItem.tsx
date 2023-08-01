@@ -21,7 +21,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.kommentar || ""));
   const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
   const context = useContext(MyContext);
-  //const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
   const typingTimeoutRef = useRef<number | null>(null);
 
   if (context === null) {
@@ -184,7 +183,7 @@ export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> =
   setIsAllHighlighted,
 }) => {
 
-  const [isHighlighted, setIsHighlighted] = useState(false);
+const [isHighlighted, setIsHighlighted] = useState(false);
 const [isExpanded, setIsExpanded] = useState(false);
 
 useEffect(() => {
@@ -196,16 +195,25 @@ const toggleCheck = () => {
     // If the clicked element is already expanded, unhighlight it
     setIsExpanded(false);
     setHighlightedElement(null);
-    messageSender.highlightSingleMessage(thisElement, true);
-  } else {
-    // Unhighlight the previous element, if any
-    if (highlightedElement) {
-      messageSender.highlightSingleMessage(highlightedElement, true);
+    if (!isAllHighlighted) {
+      messageSender.highlightSingleMessage(thisElement, true);
     }
-    // Highlight the clicked element and expand it
+  } else {
+    // Unhighlight all elements, if all are highlighted
+    if (isAllHighlighted) {
+      setIsAllHighlighted(false);
+      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
+    // Highlight the clicked element and unhighlight the previous one
+    } else if (highlightedElement) { 
+      messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
+    // Highlight the clicked element
+    } else {
+      messageSender.highlightSingleMessage(thisElement, false);
+    }
+    // Update the state
     setIsExpanded(true);
     setHighlightedElement(thisElement);
-    messageSender.highlightSingleMessage(thisElement, false);
+    
   }
 };
 
