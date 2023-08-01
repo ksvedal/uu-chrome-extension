@@ -29,15 +29,12 @@ export class UnhighlightAllAndHighlightSingleMessage implements Message {
 }
 
 export class HighlightAllMessage implements Message {
-    constructor(public type: ElementType, public isChecked: boolean) {
+    constructor(public type: ElementType, public isHighlighted: boolean, public hasDashedHighlighting?: boolean) {
+        this.hasDashedHighlighting = hasDashedHighlighting ?? false;
         this.type = type;
-        this.isChecked = isChecked;
+        this.isHighlighted = isHighlighted;
     }
     action: string = "highlightAllElements";
-}
-
-export class HighlightAllDashedMessage implements Message {
-    action: string = "highlightAllElementsDashed";  
 }
 
 export class ScanPageMessage implements Message {

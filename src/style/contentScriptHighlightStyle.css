@@ -28,11 +28,13 @@
   
   /* Styles for dashed border label */
   .label-dashed {
-    background-color: #79a6d2; /* Set the background color for the label */
+    background-color: #79a6d2 !important;/* Set the background color for the label */
+    z-index: 1 !important;
   }
   
   /* Styles for selected border label */
   .label-selected {
-    background-color: #FF0000; /* Set the background color for the label */
+    background-color: #FF0000 !important; /* Set the background color for the label */
+    z-index: 2 !important;
   }
   
