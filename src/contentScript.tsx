@@ -28,7 +28,7 @@ export function handleMessage(
         sendResponse(result);
         break;
       }
-      case 'highlightSingleElement':{
+      case 'highlightElement':{
         _page.handleHighlightSingle((message as HighlightMessage));
         sendResponse({ message: "HighlightSingle response" });
         break;
@@ -38,16 +38,17 @@ export function handleMessage(
         sendResponse({ message: "Highlighted all with type" })
         break;
       }
-      case 'highlightSingleAndRemovePreviousElement':{
+      case 'highlightAndRemovePrevious':{
         _page.highlightAndRemovePrevious((message as HighlightAndRemovePreviousMessage));
         sendResponse({ message: "Highlighted and removed previous" })
         break;
       }
-      case 'unhighlightAllAndHighlightSingleElement':{
+      case 'unhighlightAllAndHighlightSingle':{
         _page.unhighlightAllAndHighlightSingle((message as UnhighlightAllAndHighlightSingleMessage));
         sendResponse({ message: "Unhighlighted all and highlighted single" })
         break;
       }
+      
       default:{
         sendResponse({ message: "Unknown action" });
         break;

@@ -9,7 +9,7 @@ export class HighlightMessage implements Message {
         this.element = element;
         this.isChecked = isChecked;
     }
-    action: string = "highlightSingleElement";
+    action: string = "highlightElement";
 }
 
 export class HighlightAndRemovePreviousMessage implements Message {
