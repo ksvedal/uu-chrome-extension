@@ -21,6 +21,8 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.kommentar || ""));
   const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
   const context = useContext(MyContext);
+
+
   //const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
   const typingTimeoutRef = useRef<number | null>(null);
 
@@ -196,16 +198,23 @@ const toggleCheck = () => {
     // If the clicked element is already expanded, unhighlight it
     setIsExpanded(false);
     setHighlightedElement(null);
-    messageSender.highlightSingleMessage(thisElement, true);
+    if (!isAllHighlighted) {
+      messageSender.highlightSingleMessage(thisElement, true);
+    }
   } else {
-    // Unhighlight the previous element, if any
-    if (highlightedElement) {
-      messageSender.highlightSingleMessage(highlightedElement, true);
+    // Unhighlight all elements, if all are highlighted
+    if (isAllHighlighted) {
+      setIsAllHighlighted(false);
+      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
+    } else if (highlightedElement) { 
+      messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
+    } else {
+      messageSender.highlightSingleMessage(thisElement, false);
     }
     // Highlight the clicked element and expand it
     setIsExpanded(true);
     setHighlightedElement(thisElement);
-    messageSender.highlightSingleMessage(thisElement, false);
+    
   }
 };
 
