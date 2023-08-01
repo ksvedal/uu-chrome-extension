@@ -21,14 +21,14 @@
     background-color: #79a6d2; /* Set the default background color for the label */
     color: #000000; /* Set the text color for the label */
     font-size: 10px; /* Customize the font size */
-    z-index: 10; /* We don't need to use !important here */
+    z-index: 1; /* We don't need to use !important here */
     cursor: pointer; /* Make the label a hand cursor */
     box-sizing: content-box;
   }
   
   /* Styles for dashed border label */
   .label-dashed {
-    background-color: #79a6d2 !important;/* Set the background color for the label */
+    background-color: #79a6d2 !important; /* Set the background color for the label */
     z-index: 1 !important;
   }
   
