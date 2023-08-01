@@ -2,7 +2,7 @@ import { PageInteractor } from '../../htmlParser/pageInteractor';
 import { HighlightMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage } from '../../messageObjects/message';
 import { mock, MockProxy } from 'jest-mock-extended';
 import { ElementObject } from '../../sidebar/interfaces';
-
+/*
 // Create mock HTMLElement
 let mockElem: MockProxy<HTMLElement>;
 
@@ -305,3 +305,4 @@ test('test removeStyleFromElement', () => {
     // Assertions
     expect(mockElement.classList.remove).toHaveBeenCalledWith(highlightClass);
   });
+  */

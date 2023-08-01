@@ -48,11 +48,7 @@ export function handleMessage(
         sendResponse({ message: "Unhighlighted all and highlighted single" })
         break;
       }
-      case 'highlightAllElementsDashed':{
-        _page.highlightAllTypesDashed();
-        sendResponse({ message: "Highlighted all types dashed" })
-        break;
-      }
+      
       default:{
         sendResponse({ message: "Unknown action" });
         break;

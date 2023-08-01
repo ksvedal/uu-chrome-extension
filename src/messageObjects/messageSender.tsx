@@ -1,5 +1,5 @@
 import { ElementObject, ElementType } from "../sidebar/interfaces";
-import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage, HighlightAllDashedMessage } from "./message";
+import { HighlightMessage, ScanPageMessage, HighlightAllMessage, HighlightAndRemovePreviousMessage, UnhighlightAllAndHighlightSingleMessage} from "./message";
 
 export class MessageSender {
   
@@ -61,11 +61,12 @@ export class MessageSender {
         return true;
     }
 
-    public highlightAllWithType(element: ElementType, isChecked: boolean) {
+    public highlightAllWithType(elementType: ElementType, isChecked: boolean, hasDashedHighlighting?: boolean) {
+      hasDashedHighlighting = hasDashedHighlighting ?? false;
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             if (tabs[0]?.id) {
                 console.log("Running with a tab id");
-                chrome.tabs.sendMessage(tabs[0].id, new HighlightAllMessage(element, isChecked), (response) => {
+                chrome.tabs.sendMessage(tabs[0].id, new HighlightAllMessage(elementType, isChecked, hasDashedHighlighting), (response) => {
                     if (chrome.runtime.lastError) {
                         console.error(chrome.runtime.lastError.message);
                     } else {
@@ -97,21 +98,4 @@ export class MessageSender {
         return true;
     }
 
-    public highlightAllTypesDashed(){
-      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        if (tabs[0]?.id) {
-            console.log("Running with a tab id");
-            chrome.tabs.sendMessage(tabs[0].id, new HighlightAllDashedMessage(), (response) => {
-                if (chrome.runtime.lastError) {
-                    console.error(chrome.runtime.lastError.message);
-                } else {
-                    console.log("Result message: " + response.message);
-                }
-            });
-        } else {
-            console.log("No tab id");
-        }
-    });
-    return true;
-    }
 }

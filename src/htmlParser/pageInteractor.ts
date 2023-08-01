@@ -4,6 +4,8 @@ import { ButtonSelector} from "./elementSelector";
 /**
  * This class is responsible for interacting with the page
  */
+
+
 export class PageInteractor {
     private prevElem: HTMLElement | null = null;
     private highlightSelectedClass: string = "highlight-selected";
@@ -34,16 +36,23 @@ export class PageInteractor {
 
         try {
             const elements = document.querySelectorAll(message.type.selector) as NodeListOf<HTMLElement>;
+            let currentHighlightClass: string;
             if (!elements.length) {
                 throw new Error(`No elements found for selector "${message.type.selector}"`);
             }
-            if (message.isChecked) {
+            if (message.hasDashedHighlighting === true) {
+                currentHighlightClass = this.highlightDashedClass;
+            } else {
+                currentHighlightClass = this.highlightSelectedClass;
+            }
+            
+            if (message.isHighlighted) {
                 for (let element of elements) {
-                    this.removeStyleFromElement(element);
+                    this.removeStyleFromElement(element, currentHighlightClass);
                 }
             } else {
                 for (let element of elements) {
-                    this.addStyleToElement(element);
+                    this.addStyleToElement(element, currentHighlightClass);
                 }
             }
         } catch (error) {
@@ -58,10 +67,12 @@ export class PageInteractor {
                 throw new Error(`No element found for selector "${message.element.selector}"`);
             }
             if (message.isChecked) {
-                this.removeStyleFromElement(element);
+                this.removeStyleFromElement(element, this.highlightSelectedClass);
             } else {
-                this.addStyleToElement(element);
-                this.focusAndScroll(message.element.selector);
+                this.addStyleToElement(element, this.highlightSelectedClass);
+                element.focus();
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                this.prevElem = element;
             }
         } catch (error) {
             console.error(`Error in handleHighlightSingle: ${error}`);
@@ -80,7 +91,7 @@ export class PageInteractor {
             if (!newElement) {
                 throw new Error(`No new element found for selector "${message.newElement.selector}"`);
             }
-            this.addStyleToElement(newElement);
+            this.addStyleToElement(newElement, this.highlightSelectedClass);
             newElement.focus();
             newElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             this.prevElem = newElement;
@@ -143,10 +154,17 @@ export class PageInteractor {
         }
     }
 
-    private removeStyleFromElement(element: HTMLElement): void {
+    private removeStyleFromElement(element: HTMLElement, highlightClass?: String): void {
+        highlightClass = highlightClass ?? this.highlightSelectedClass;
         if (element) {
-            element.classList.remove(this.highlightSelectedClass);
-            this.removeLabelFromElement(element, this.selectedLabelClass);
+            if (highlightClass === this.highlightSelectedClass) {
+                element.classList.remove(this.highlightSelectedClass);
+                this.removeLabelFromElement(element, this.selectedLabelClass);
+            } else {
+                element.classList.remove(this.highlightDashedClass);
+                this.removeLabelFromElement(element, this.dashedLabelClass);
+            }
+            
         }
     }
 

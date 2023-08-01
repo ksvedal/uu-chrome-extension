@@ -29,11 +29,20 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   }
   const { elementResults, setElementResults } = context;
 
-  const toggleCheck = () => {
+  const toggleHighlightAllCheck = () => {
     setIsAllHighlighted(!isAllHighlighted);
     setCurrentHighlighted(null);
     highlightAll();
   };
+
+  const toggleCollapseAndDashedHighlightCheck = () => {
+    //Removes singlehighlight if expanded and highlight exists
+    if (isExpanded && currentHighlighted) {
+      messageSender.highlightSingleMessage(currentHighlighted, true)
+    }
+    setIsExpanded(!isExpanded);
+    highlightAll(true);
+  }
 
   const updateJson = (elementObject: ElementObject, index: number, side: string) => {
     let newNodes = [...type.nodes];  // copy the array
@@ -68,8 +77,13 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     }, 3000) as any; // Cast the setTimeout return value to any
   };
 
-  const highlightAll = () => {
-    messageSender.highlightAllWithType(type, isAllHighlighted);
+  const highlightAll = (isDashed?: Boolean) => {
+    const isDashedBool = isDashed ?? false;
+    if (isDashedBool) {
+      messageSender.highlightAllWithType(type, isExpanded, true);
+    } else {
+      messageSender.highlightAllWithType(type, isAllHighlighted, false);
+    }
   };
 
   const handleOptionChange = (option: string, index: number) => {
@@ -99,6 +113,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         <Accordion id={"collapsible-level-1"}
                    TransitionProps={{ unmountOnExit: false,
                      timeout: { enter: 200, exit: 100 } }}
+                     onChange={toggleCollapseAndDashedHighlightCheck}
         >
 
           <AccordionSummary
@@ -113,7 +128,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
               </Grid>
               <Grid item xs={4}>
                 <div className="float-right">
-                  <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
+                  <ToggleButton isChecked={isAllHighlighted} onToggle={toggleHighlightAllCheck} text="Highlight All" />
                 </div>
               </Grid>
             </Grid>
