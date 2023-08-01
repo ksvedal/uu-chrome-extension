@@ -7,7 +7,8 @@ import { CollapsibleObjectContainer } from "../../containers/collapsibleObjectCo
 import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@mui/material";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
-export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
+//export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
+  export const CollapsibleType: React.FC<CollapsibleTypeInterface & { computedProperties: JSON | null }> = ({
     // isExpanded,
     // setIsExpanded,
     elementType,
@@ -22,7 +23,8 @@ export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
     typeElements,
     setTypeElements,
     setJsonData,
-    handleHighlightAll
+    handleHighlightAll,
+    computedProperties,
  }) => {
 
   return (
@@ -64,6 +66,7 @@ export const CollapsibleType: React.FC<CollapsibleTypeInterface> = ({
                   typeElements={typeElements}
                   setTypeElements={setTypeElements}
                   setJsonData={setJsonData}
+                  computedProperties={computedProperties}
                 >
                 </CollapsibleObjectContainer>
               );

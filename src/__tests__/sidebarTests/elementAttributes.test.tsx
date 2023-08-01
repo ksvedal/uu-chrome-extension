@@ -27,6 +27,7 @@ function renderElementAttributes(attributes: ElementAttribute[]) {
       selector=""
       result={mockElementResult}
       isCommentVisible={false}
+      computedProperties={null}
     />
   );
 }

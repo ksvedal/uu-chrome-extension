@@ -14,6 +14,7 @@ export const SidepanelContainer: React.FC = () => {
     const [websiteURL, setWebsiteURL] = useState<string>("");
     const [jsonData, setJsonData] = useState<JsonDataFormat[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [computedProperties, setComputedProperties] = useState<JSON | null>(null);
 
     useEffect(() => {
       const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -28,7 +29,7 @@ export const SidepanelContainer: React.FC = () => {
 
 
     const handleFetchData = () => {
-      fetchData(setScanPageResult, setError, setWebsiteURL)
+      fetchData(setScanPageResult, setError, setWebsiteURL, setComputedProperties)
     }
 
     const handleToggleDarkMode = () => {
@@ -45,6 +46,7 @@ export const SidepanelContainer: React.FC = () => {
           setJsonData={setJsonData}
           handleFetchData={handleFetchData}
           handleToggleDarkMode={handleToggleDarkMode}
+          computedProperties={computedProperties}
       ></Sidepanel>
     )
 }

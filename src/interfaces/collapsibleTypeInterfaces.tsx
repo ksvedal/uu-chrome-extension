@@ -19,6 +19,7 @@ export interface CollapsibleTypeInterface {
     setTypeElements: React.Dispatch<React.SetStateAction<ElementObject[]>>
     setJsonData: React.Dispatch<React.SetStateAction<JsonDataFormat[]>>
     handleHighlightAll: () => void
+    computedProperties?: JSON | null;
   }
   
   export interface CollapsibleTypeContainerInterface {

@@ -10,4 +10,6 @@ export interface SidepanelInterface {
     setJsonData: React.Dispatch<React.SetStateAction<JsonDataFormat[]>>
     handleFetchData: () => void
     handleToggleDarkMode: () => void
+    computedProperties: JSON | null;
+
 }

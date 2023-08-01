@@ -7,7 +7,8 @@ import { highlightAll, resetHighlight } from "../utils/typeUtils";
 import { CollapsibleType } from "../components/body/collapsibleType";
 
 
-export const CollapsibleTypeContainer: React.FC<CollapsibleTypeContainerInterface> = ({elementType, url}) => {
+//export const CollapsibleTypeContainer: React.FC<CollapsibleTypeContainerInterface> = ({elementType, url}) => {
+export const CollapsibleTypeContainer: React.FC<CollapsibleTypeContainerInterface & { computedProperties: JSON | null }> = ({elementType, url, computedProperties}) => {
     const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAllHighlighted, setIsAllHighlighted] = useState(false);
@@ -46,6 +47,7 @@ export const CollapsibleTypeContainer: React.FC<CollapsibleTypeContainerInterfac
             setTypeElements={setTypeElements}
             setJsonData={setJsonData}
             handleHighlightAll={handleHiglightAll}
+            computedProperties={computedProperties}
         >
         </CollapsibleType>
     )

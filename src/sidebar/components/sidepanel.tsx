@@ -17,6 +17,7 @@ export const Sidepanel: React.FC<SidepanelInterface> = ({
   setJsonData,
   handleFetchData,
   handleToggleDarkMode,
+  computedProperties,
 }) => {
   
 
@@ -54,6 +55,7 @@ export const Sidepanel: React.FC<SidepanelInterface> = ({
                 key={index}
                 elementType={elementType} // Buttons, Links, Images, etc.
                 url={websiteURL}
+                computedProperties={computedProperties}
               >
               </CollapsibleTypeContainer>)}
           </MyContext.Provider>

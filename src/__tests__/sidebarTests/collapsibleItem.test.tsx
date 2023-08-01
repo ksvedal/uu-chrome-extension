@@ -49,6 +49,7 @@ describe("CollapsibleItemType", () => {
         // setCurrentHighlighted={() => {}}
         // parentIndex={0}
         url=""
+        computedProperties={null}
         // testID=""
       />
     );

@@ -6,7 +6,8 @@ import { CollapsibleObject } from "../components/body/collapsibleObject";
 import { ElementAttributesTable } from "../components/body/elementAttributesTable";
 import { RadioButtons } from "../components/body/radioButtons";
 
-export const CollapsibleObjectContainer: React.FC<CollapsibleObjectContainerInterface> = ({
+//export const CollapsibleObjectContainer: React.FC<CollapsibleObjectContainerInterface> = ({
+export const CollapsibleObjectContainer: React.FC<CollapsibleObjectContainerInterface & { computedProperties: JSON | null }> = ({
     elementType,
     thisElement,
     highlightedElement,
@@ -20,7 +21,8 @@ export const CollapsibleObjectContainer: React.FC<CollapsibleObjectContainerInte
     typeElements,
     setTypeElements,
     setJsonData,
-    index
+    index,
+    computedProperties
 }) => {
 
     const [isHighlighted, setIsHighlighted] = useState(false);
@@ -57,7 +59,9 @@ export const CollapsibleObjectContainer: React.FC<CollapsibleObjectContainerInte
                 element={thisElement.element}
                 selector={thisElement.selector}
                 result={thisElement.result}
-                isCommentVisible={false} />
+                isCommentVisible={false}
+                computedProperties={computedProperties}
+            />
 
             <RadioButtons 
                 onOptionChange={(value) => {
