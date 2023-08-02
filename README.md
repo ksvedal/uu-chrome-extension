@@ -40,24 +40,32 @@ To set up the extension, follow these steps:
 
 <img src="./images/extension_not_scanned.png" alt="Extension screenshot: click on icon" style="margin: 15px">
 
-2. Click on "Scan Page". You will see a header displaying the logo and URL of the respective page. There are collapsible categories for Buttons, Images, Links, Headings, and MenuItems. Each category has a "Highlight All" button that you can click to highlight all elements belonging to that category. Clicking the "Highlight All" button again will remove the highlighting. The number of items in each category is also displayed.
+2. Click on "Scan Page".  
 
-<div width="660px" display="flex" flex-direction="row">
-    <img src="./images/extension_screenshot_2.jpg" alt="Extension screenshot: click on scan page" width="300" style="margin: 15px" display="flex">
-    <img src="./images/extension_screenshot_3.jpg" alt="Extension screenshot: preview of scan results" width="300" style="margin: 15px" display="flex">
-</div>
+<img src="./images/extension_screenshot_press_button.png" alt="Extension screenshot: click on icon" style="margin: 15px">
 
-3. You can expand one or multiple categories to display all the elements within that category. The expandable items will have a corresponding "Jump to" button that highlights the element and scrolls to it. Clicking the "Jump to" button again will remove the highlighting. Additionally, you have the option to leave a comment related to the element.
+3. You will now see a header displaying the logo and URL of the respective page.
+There are collapsible categories for Buttons, Images, Links, Headings, and MenuItems. The total number of elements in within this category is also displayed.
+Each category has a "Highlight All" button that you can click to highlight all elements belonging to that category with a distinct color. Clicking the "Highlight All" button again will remove the highlighting.
 
-<img src="./images/extension_screenshot_5.jpg" alt="Extension screenshot: jump to button feature" width="300" style="margin: 15px">
+<img src="./images/extension_screenshot_scan_pressed.png" alt="Extension screenshot: click on icon" style="margin: 15px">
 
-4. If you expand an element, a table will appear showing the element's attributes and their associated values, along with the HTML for that element.
+4. These categories can be clicked and expanded. This will reveal all elements of this category and also mark them on the site with their tag.
 
-<img src="./images/extension_screenshot_6.jpg" alt="Extension screenshot: HTML preview feature" width="300" style="margin: 15px">
+<img src="./images/extension_screenshot_category_expanded.png" alt="Extension screenshot: click on icon" style="margin: 15px">
 
-5. If you wish to inspect the data in another tab, you can click on "Print results".
+5. You can also expand each element, marking the single element on the site (1) and jump to it if possible. This will reveal a table (2) showing the elements attributes and associated values.
+   You can then select between tree different radio buttons (3) if the element label identifies its function, and complies with the standard.
 
-<img src="./images/extension_screenshot_7.jpg" alt="Extension screenshot: click on print results" width="300" style="margin: 15px">
+<img src="./images/extension_screenshot_button_expanded.png" alt="Extension screenshot: HTML preview feature" style="margin: 15px">
+
+6. Pressing one of these buttons expands a comment field that also lets the user comment the reason for their choice or elaborate
+
+<img src="./images/extension_screenshot_button_commented.png" alt="Extension screenshot: HTML preview feature" style="margin: 15px">
+
+7. If you wish to inspect the data in another tab, you can click on "Print results".
+
+<img src="./images/extension_screenshot_print_results.png" alt="Extension screenshot: HTML preview feature" style="margin: 15px">
 
 ## Troubleshooting
 
