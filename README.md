@@ -101,14 +101,14 @@ Each category has a "Highlight All" button that you can click to highlight all e
 
 ## Architecture
 
-![Extension architecture](/images/extension_architecture.jpg)
+<img src="images/extension_architecture.jpg" alt="Extension architecture" style="margin: 15px">
 
 The extension architecture diagram depicts the arrangement of the extension. Each square represents a component and its associated methods, while the lines illustrate the collaboration between the components. The purple boxes signify the components that are visible to users.
 Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between cotentscript.tsx and sidebar.tsx occurs through callback functions.
 
 ## File Structure
 
-<img src="./images/extension_screenshot_structure.png" alt="Extension structure" style="margin: 15px">
+<img src="images/extension_screenshot_structure_1.png" alt="Extension structure" style="margin: 15px">
 
 ## Troubleshooting
 
