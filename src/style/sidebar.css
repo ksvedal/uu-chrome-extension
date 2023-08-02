@@ -41,7 +41,7 @@
   --small-shadow: -1px 1px 2px var(--shadow-color);
   --big-shadow: 2px 2px 2px 1px var(--shadow-color);
   --big-shadow-inset: inset 1px 1px 1px 0px var(--shadow-color);
-  --radius: 3px;
+  --radius: 4px;
 
   --small-space: 0.5rem;
   --medium-space: 1rem;

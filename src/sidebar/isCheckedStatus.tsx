@@ -6,7 +6,7 @@ interface Props {
 
 const IsCheckedStatus: React.FC<Props> = ({ text }) => {
   return (
-    <div className={`${(text === "Ja") ? 'yesColor' : (text === "Nei") ? "noColor": (text === "Ikkje ein knapp") ? "notButtonColor": ""}`}>
+    <div className={`${(text === "Yes") ? 'yesColor' : (text === "No") ? "noColor": (text === "Not a button") ? "notButtonColor": ""}`}>
         {text}
     </div>
   );

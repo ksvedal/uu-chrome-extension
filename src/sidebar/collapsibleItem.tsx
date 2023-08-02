@@ -73,7 +73,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     // Set a new timeout to execute storeText after 2 seconds
     typingTimeoutRef.current = setTimeout(() => {
       storeText(index, newText);
-      successToast(`'${newText}' lagret `);
+      successToast(`'${newText}' Saved `);
     }, 3000) as any; // Cast the setTimeout return value to any
   };
 
@@ -185,81 +185,93 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
           </AccordionDetails>
         </Accordion>
       </div>
-  );
-};
+    );
+  };
 
-export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> = ({
-  type,
-  thisElement,
-  children,
-  highlightedElement,
-  isAllHighlighted,
-  setHighlightedElement,
-  setIsAllHighlighted,
-}) => {
+  export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> = ({
+    type,
+    thisElement,
+    children,
+    highlightedElement,
+    isAllHighlighted,
+    setHighlightedElement,
+    setIsAllHighlighted,
+  }) => {
 
-const [isHighlighted, setIsHighlighted] = useState(false);
-const [isExpanded, setIsExpanded] = useState(false);
+  const [isHighlighted, setIsHighlighted] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
-useEffect(() => {
-  setIsExpanded(thisElement === highlightedElement);
-}, [highlightedElement, thisElement]);
+  useEffect(() => {
+    setIsExpanded(thisElement === highlightedElement);
+  }, [highlightedElement, thisElement]);
 
-const toggleCheck = () => {
-  if (isExpanded) {
+  const toggleCheck = () => {
+    if (isExpanded) {
     // If the clicked element is already expanded, unhighlight it
-    setIsExpanded(false);
-    setHighlightedElement(null);
-    if (!isAllHighlighted) {
-      messageSender.highlightSingleMessage(thisElement, true);
+      setIsExpanded(false);
+      setHighlightedElement(null);
+        if (!isAllHighlighted) {
+          messageSender.highlightSingleMessage(thisElement, true);
+        }
+      } else {
+      // Unhighlight all elements, if all are highlighted
+      if (isAllHighlighted) {
+        setIsAllHighlighted(false);
+        messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
+      // Highlight the clicked element and unhighlight the previous one
+      } else if (highlightedElement) {
+        messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
+      // Highlight the clicked element
+      } else {
+        messageSender.highlightSingleMessage(thisElement, false);
+      }
+        // Update the state
+      setIsExpanded(true);
+      setHighlightedElement(thisElement);
     }
-  } else {
-    // Unhighlight all elements, if all are highlighted
-    if (isAllHighlighted) {
-      setIsAllHighlighted(false);
-      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
-    // Highlight the clicked element and unhighlight the previous one
-    } else if (highlightedElement) { 
-      messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
-    // Highlight the clicked element
-    } else {
-      messageSender.highlightSingleMessage(thisElement, false);
-    }
-    // Update the state
-    setIsExpanded(true);
-    setHighlightedElement(thisElement);
-    
-  }
-};
+  };
 
-return (
-  <div data-testid="collapsible-type">
-    <Accordion
-      id={"collapsible-level-2"}
-      TransitionProps={{ unmountOnExit: true,
-        timeout: {
-        enter: 200,
-          exit: 190 } }}
-      expanded={isExpanded}
-    >
-      <AccordionSummary expandIcon={<ExpandLessIcon />} onClick={toggleCheck}>
-        <Grid container>
-          <Grid item xs={8}>
-            [{thisElement.title}]
-          </Grid>
-          <Grid item xs={4}>
-            <IsCheckedStatus text={thisElement.result.samsvar}></IsCheckedStatus>
-          </Grid>
-        </Grid>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Grid container>
-          <Grid item xs={12}>
-            {children}
-          </Grid>
-        </Grid>
-      </AccordionDetails>
-    </Accordion>
-  </div>
-);
+  return (
+      <div data-testid="collapsible-type">
+          <Accordion
+              id={"collapsible-level-2"}
+              TransitionProps={{ unmountOnExit: true,
+                timeout: {
+                  enter: 200,
+                  exit: 190 } }}
+              expanded={isExpanded}
+          >
+            <AccordionSummary expandIcon={<ExpandLessIcon />} onClick={toggleCheck}>
+              <Grid container>
+                <Grid item xs={8}>
+                  [{thisElement.title}]
+                </Grid>
+                <Grid item xs={4}>
+                  <IsCheckedStatus text={
+                    (() => {
+                      // Translates samsvar to english.
+                      if (thisElement.result.samsvar === "Ja") {
+                        return "Yes";
+                      } else if (thisElement.result.samsvar === "Nei") {
+                        return "No";
+                      } else if (thisElement.result.samsvar === "Ikkje forekomst") {
+                        return "Not relevant";
+                      } else {
+                        return thisElement.result.samsvar;
+                      }
+                    })()
+                  }></IsCheckedStatus>
+                </Grid>
+              </Grid>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container>
+                <Grid item xs={12}>
+                  {children}
+                </Grid>
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
+        </div>
+    );
 };
