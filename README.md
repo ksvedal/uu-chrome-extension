@@ -59,13 +59,18 @@ Each category has a "Highlight All" button that you can click to highlight all e
 
 <img src="./images/extension_screenshot_button_expanded.png" alt="Extension screenshot: HTML preview feature" style="margin: 15px">
 
-6. Pressing one of these buttons expands a comment field that also lets the user comment the reason for their choice or elaborate
+6. Pressing one of these buttons expands a comment field (1) that also lets the user comment the reason for their choice or elaborate.
+   The selected radio button value also gets displayed and color coded next to the element title (2).
 
 <img src="./images/extension_screenshot_button_commented.png" alt="Extension screenshot: HTML preview feature" style="margin: 15px">
 
-7. If you wish to inspect the data in another tab, you can click on "Print results".
+7. If you wish to retrieve the site data along with your verdict and comments for each button, click on "Print results".
 
 <img src="./images/extension_screenshot_print_results.png" alt="Extension screenshot: HTML preview feature" style="margin: 15px">
+
+8. There is also a dark mode toggle next to the application title at the very top. The application automatically applies system theme settings when it is started.
+
+<img src="./images/extension_screenshot_dark_mode.png" alt="Extension screenshot: HTML preview feature" style="margin: 15px">
 
 ## Troubleshooting
 
