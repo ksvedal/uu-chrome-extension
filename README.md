@@ -189,7 +189,7 @@ It is also possible to connect a backend to this project if the user wishes to s
 Link to related backend:
 https://github.com/theaueland/uu-extension-backend
 
-### Documentation Summary
+### Documentation Summary of backend repository
 (As of 02 Aug 2023)
 
 This is a restful server processing incoming HTTP requests from the chrome extension. It is responsible for storing the results from a semi-automatic test completed in the extension, and sent to the backend as JSON data.
@@ -199,7 +199,7 @@ The extension can also use this backend to fetch the data which is being display
 The backend is divided into the modules server and WCAG. WCAG is then divided into the modules accessibility and database, as shown in the figure.
 
 #### Structure and architecture
-<img src="images/backend_architecture.png" alt="Backend structure" width="49%" style="margin: 15px"> <img src="images/backend_tree.png" alt="Backend structure" width="49%" style="margin: 15px">
+<img src="images/backend_tree.png" alt="Backend structure" width="49%" style="margin: 15px"> <img src="images/backend_architecture.png" alt="Backend structure" width="49%" style="margin: 15px"> 
 
 #### The server
 
