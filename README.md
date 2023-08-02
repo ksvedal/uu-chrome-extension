@@ -14,22 +14,21 @@ Developers can use this extension to assess whether buttons are designed in a wa
 The extension allows developers to verify whether images and non-text items have appropriate alternative text. Providing accurate alternative text enables users with visual impairments to understand the meaning conveyed by these elements.
 
 ## Table of Contents
-- [Universal Design Analyzer Extension](#universal-design-analyzer-extension)
-    1. [About](#about)
-    2. [Summary](#summary)
-    3. [Target Audience](#target-audience)
-    4. [Scripts and Dependencies](#scripts-and-dependencies)
+   - 1. [About](#about)
+   - 2. [Summary](#summary)
+   - 3. [Target Audience](#target-audience)
+   - 4. [Scripts and Dependencies](#scripts-and-dependencies)
         - [Main Dependencies](#main-dependencies)
         - [Development Dependencies](#development-dependencies)
         - [Scripts](#scripts)
-    5. [Setup](#setup)
-    6. [User Manual](#user-manual)
-    7. [Architecture and Structure](#architecture-and-structure)
+   - 5. [Setup](#setup)
+   - 6. [User Manual](#user-manual)
+   - 7. [Architecture and Structure](#architecture-and-structure)
         - [Architecture Diagram](#architecture-diagram)
         - [File Structure Tree](#file-structure-tree)
-    8. [Troubleshooting](#troubleshooting)
-    9. [Backend](#Backend)
-   10. [Contributors](#contributors)
+   - 8. [Troubleshooting](#troubleshooting)
+   - 9. [Backend](#Backend)
+   - 10. [Contributors](#contributors)
 
 ## Summary
 This tool simplifies the semi-automatic analysis of buttons and other crucial elements within HTML pages. With its intuitive interface and comprehensive functionality, this extension empowers developers to efficiently navigate through buttons and evaluate their properties. By using the extension, developers can assess the intuitiveness and user-friendliness of buttons, ensuring an enhanced user experience. Additionally, they can verify whether images and non-text elements have appropriate alternative text, improving accessibility for users with visual impairments. 
