@@ -15,6 +15,33 @@ The extension allows developers to verify whether images and non-text items have
 This extension is created for developers who wish to partially automate tests on their websites. It's specifically designed for developers who already have some experience in web development, including HTML, CSS, and JavaScript. Having prior knowledge of accessibility guidelines (such as WCAG) and a basic understanding of UX design principles is beneficial. Additionally, being proficient in using accessibility evaluation tools and staying updated with the latest industry trends can further enhance the advantages of using this extension. 
 Knowledge of the various methods to code a button will also prove useful, as this extension aims to distinguish between well-designed buttons and poorly-designed ones.
 
+## Scripts and dependencies
+
+### Main Dependencies:
+- **@emotion/styled**: `^11.11.0` - A library that allows you to style applications using tagged template literals.
+- **@mui/icons-material**: `^5.14.1` & **@mui/material**: `^5.14.2` - Material-UI components and icons.
+- **axios**: `^1.4.0` - Promise-based HTTP client.
+- **chrome**: `^0.1.0` - Chrome integration.
+- **find-chrome-version**: `^2.2.0` - Utility to find Chrome version.
+- **pretty**: `^2.0.0` - Code formatting.
+- **React & ReactDOM**: `^18.2.0` - The core libraries for building user interfaces.
+- **React Router DOM**: `^6.14.0` - A collection of navigational components.
+- **react-select**: `^5.7.3` - Select control for React.
+- **react-syntax-highlighter**: `^15.5.0` - Syntax highlighting component.
+- **react-toastify**: `^9.1.3` - React toast notifications.
+- **uuid**: `^9.0.0` - Universal Unique Identifiers library.
+
+### Development Dependencies:
+- **Babel, TypeScript, Jest & related packages**: Various versions - For building and testing.
+- **Webpack & related packages**: Various versions - For bundling.
+
+### Scripts:
+- **`watch`**: Runs the webpack in watch mode with development configuration.
+- **`build`**: Builds the app for production using the webpack production configuration.
+- **`clean`**: Removes the `dist` folder.
+- **`test`**: Runs the Jest test suite.
+- **`style`**: Formats the TypeScript files in the `src` directory using Prettier.
+- 
 ## Setup
 
 To set up the extension, follow these steps:
@@ -131,3 +158,24 @@ The Universal Design Analyzer Extension is a powerful tool that simplifies the s
 By using the extension, developers can assess the intuitiveness and user-friendliness of buttons, ensuring an enhanced user experience. Additionally, they can verify whether images and non-text elements have appropriate alternative text, improving accessibility for users with visual impairments.
 The extension's capabilities go beyond mere analysis. It allows developers to save evaluation results for future reference, streamlining the development and testing process. The ability to highlight and jump to specific elements within the page, along with leaving comments related to those elements, enhances collaboration and communication among team members.
 By automating aspects of the analysis process, the Universal Design Analyzer Extension helps developers streamline their workflow, saving valuable time and effort. With its focus on adherence to accessibility guidelines and user-friendly design, this extension empowers developers to create inclusive and accessible web experiences.
+
+
+## Contributors
+
+Contributions to this project:
+
+**Andreas Conradi Nitschke** - [andreascnits](https://github.com/andreascnits)
+
+**Audun Kristian Oklevik** - [AudunKristian](https://github.com/AudunKristian)
+
+**Brage Navarsete** - [BrageAsperandenNavarsete](https://github.com/BrageAsperandenNavarsete)
+
+**Eiril Solveig Ugulen** - [Eiril](https://github.com/Eiril)
+
+**Kae Saito** - [kaechin](https://github.com/kaechin)
+
+**Kristian Birkeli** - [krigubir](https://github.com/krigubir)
+
+**Kristoffer Svedal** - [ksvedal](https://github.com/ksvedal)
+
+**Thea Ueland** - [theaueland](https://github.com/theaueland)
