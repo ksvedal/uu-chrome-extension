@@ -38,7 +38,7 @@ To set up the extension, follow these steps:
 
 1. Click on the UU Extension. A side panel titled "Button Seeker" will appear.
 
-<img src="./images/extension_screenshot_1.jpg" alt="Extension screenshot: click on icon" width="300" style="margin: 15px">
+<img src="./images/extension_not_scanned.png" alt="Extension screenshot: click on icon" style="margin: 15px">
 
 2. Click on "Scan Page". You will see a header displaying the logo and URL of the respective page. There are collapsible categories for Buttons, Images, Links, Headings, and MenuItems. Each category has a "Highlight All" button that you can click to highlight all elements belonging to that category. Clicking the "Highlight All" button again will remove the highlighting. The number of items in each category is also displayed.
 
