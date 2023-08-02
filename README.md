@@ -27,7 +27,7 @@ The extension allows developers to verify whether images and non-text items have
         - [Architecture Diagram](#architecture-diagram)
         - [File Structure Tree](#file-structure-tree)
    - [Troubleshooting](#troubleshooting)
-   - [Backend](#Backend)
+   - [Backend](#backend)
    - [Contributors](#contributors)
 
 ## Summary
@@ -188,6 +188,38 @@ It is also possible to connect a backend to this project if the user wishes to s
 
 Link to related backend:
 https://github.com/theaueland/uu-extension-backend
+
+### Documentation Summary
+(As of 02 Aug 2023)
+
+This is a restful server processing incoming HTTP requests from the chrome extension. It is responsible for storing the results from a semi-automatic test completed in the extension, and sent to the backend as JSON data.
+
+The extension can also use this backend to fetch the data which is being displayed in the extension's side panel to the user conducting the semi-automatic test. This functionality is not fully completed yet, but it is intended to replace our current approach where we are getting this data manually from the html data.
+
+The backend is divided into the modules server and WCAG. WCAG is then divided into the modules accessibility and database, as shown in the figure.
+
+#### Structure and architecture
+<img src="images/backend_architecture.png" alt="Backend structure" style="margin: 15px">
+<img src="images/backend_tree.png" alt="Backend structure" style="margin: 15px">
+
+#### The server
+
+The server is currently only serving at localhost on port 8080, unless another port is specified as a process environment variable. The server is set up to process the following HTTP requests:
+- **GET 127.0.0.1:8080/buttons**
+    - Getting all test results for buttons
+    - Not implemented yet, currently only replying with a message
+- **POST 127.0.0.1:8080/storage/saveButtons**
+    - Saving the test result in a database
+    - The data should be sent in the request body as JSON data
+    - The request handler for this request will validate the JSON data before trying to save the data
+- **GET 127.0.0.1:8080/storage/deleteAllButtons**
+    - Deleting all rows in the database table used for saving the test results for buttons
+    - This should not be in the deployment of the application, but it has been useful while developing when there is no important data in the database that should not be deleted
+
+#### WCAG
+
+The module WCAG is responsible for everything related to the semi-automatic test happening in the backend. While the server module is responsible for handling all incoming requests, and sending a response back to the client. This module is responsible for all of the interaction with the database and getting the computed properties from the accessibility tree, by querying the DOM of a specific website. This functionality is being implemented in the accessibility module in the backend because it proved to be challenging to get it to work in the frontend.
+
 
 ## Contributors
 
