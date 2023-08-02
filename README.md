@@ -72,6 +72,17 @@ Each category has a "Highlight All" button that you can click to highlight all e
 
 <img src="./images/extension_screenshot_dark_mode.png" alt="Extension screenshot: HTML preview feature" style="margin: 15px">
 
+## Architecture
+
+![Extension architecture](/images/extension_architecture.jpg)
+
+The extension architecture diagram depicts the arrangement of the extension. Each square represents a component and its associated methods, while the lines illustrate the collaboration between the components. The purple boxes signify the components that are visible to users.
+Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between cotentscript.tsx and sidebar.tsx occurs through callback functions.
+
+## File Structure
+
+<img src="./images/extension_screenshot_structure.png" alt="Extension structure" style="margin: 15px">
+
 ## Troubleshooting
 
 If you encounter any issues while using the Universal Design Analyzer Extension, please refer to the troubleshooting steps below:
@@ -113,14 +124,6 @@ If you encounter any issues while using the Universal Design Analyzer Extension,
 * Verify that you are using the latest version of the Universal Design Analyzer Extension. Check for any updates in the extension's repository.
 * Review the extension's documentation and ensure that you are following the recommended guidelines for analyzing buttons and other elements.
 * If you suspect a bug or incorrect behavior in the extension, consider reporting the issue at the extension's repository: https://github.com/ksvedal/uu-chrome-extension
-
-## Extension architecture
-
-![Extension architecture](/images/extension_architecture.jpg)
-
-The extension architecture diagram depicts the arrangement of the extension. Each square represents a component and its associated methods, while the lines illustrate the collaboration between the components. The purple boxes signify the components that are visible to users.
-Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between cotentscript.tsx and sidebar.tsx occurs through callback functions.
-
 
 ## Conclusion 
 
