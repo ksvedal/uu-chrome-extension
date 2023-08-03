@@ -1,19 +1,10 @@
-import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, Message, ScanPageMessage, UnhighlightAllAndHighlightSingleMessage } from './messageObjects/message';
+import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, UnhighlightAllAndHighlightSingleMessage } from './messageObjects/message';
 import { PageInteractor } from './htmlParser/pageInteractor';
 import { WebsiteScanner } from './htmlParser/websiteScanner';
 import { ElementType } from './sidebar/interfaces';
+import './style/contentScriptHighlightStyle.css';
 
 chrome.runtime.onMessage.addListener(handleMessage);
-//This is used in page_interactor to add and remove the style
-const styleElement: HTMLStyleElement = document.createElement('style');
-// Add CSS rules to the style element
-styleElement.textContent = `
-    .highlight {
-        border: 5px solid #FF0000 !important;
-    }
-`;
-// Append the style element to the head of the documentto
-document.head.append(styleElement);
 
 /**
  * handles the message from popup.tsx
@@ -57,6 +48,7 @@ export function handleMessage(
         sendResponse({ message: "Unhighlighted all and highlighted single" })
         break;
       }
+      
       default:{
         sendResponse({ message: "Unknown action" });
         break;

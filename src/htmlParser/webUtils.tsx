@@ -1,4 +1,4 @@
-import { ElementAttribute, ElementObject, ElementType, ElementResult } from "../sidebar/interfaces";
+import { ElementAttribute, ElementObject, ElementType} from "../sidebar/interfaces";
 import pretty from 'pretty';
 
 export class WebUtils {
@@ -20,12 +20,12 @@ export class WebUtils {
             let mainObjectAttributes = this.getAttributes(element);
             let newObject: ElementObject = {
                 title: title ? title : '',
-                htmlString: pretty(element.outerHTML),
+                element: pretty(element.outerHTML),
                 selector: selector,
                 attributes: mainObjectAttributes,
                 isCommentVisible: false,
 
-                result: { testID: "", name: title, htmlString: pretty(element.outerHTML), correctText: "", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome: "" },
+                result: { testregelId: "", nettlesar: "", side: "", element: pretty(element.outerHTML), samsvar: "", utfall: "", kommentar: "" },
             };
             console.log(newObject);
             return newObject;
@@ -34,12 +34,12 @@ export class WebUtils {
             // Optionally, report the error to a logging service
             return {
                 title: 'Error creating object',
-                htmlString: 'Error creating object',
+                element: 'Error creating object',
                 selector: 'Error creating object',
                 attributes: [],
                 isCommentVisible: false,
 
-                result: { testID: "", name: "Error creating object", htmlString: "", correctText: "Error creating object", comment: "", checked: false, url: "", chromeVersion: "", chromeExtensionVersion: "", outcome: "" },
+                result: { testregelId: "", nettlesar: "", side: "", element: "", samsvar: "Error creating object", utfall: "", kommentar: ""},
             };
         }
     }

@@ -1,28 +1,27 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult, ExtendedElementObject } from "./interfaces";
+import { CollapsibleItemElementInterface, CollapsibleItemTypeInterface, ElementObject, ElementResult } from "./interfaces";
 import { ToggleButton, RadioButtonGroup } from "./buttons";
 import { MessageSender } from "../messageObjects/messageSender";
 import { ElementAttributes } from "./elementAttributes";
 import { MyContext } from "./resultItemsContext";
-import { v4 as uuidv4 } from 'uuid';
-import { ToastContainer, toast, Flip, Slide, Zoom } from 'react-toastify';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IsCheckedStatus from "./isCheckedStatus";
+import { successToast } from "./toastUtils";
+import {Accordion, AccordionDetails, AccordionSummary, Grid, Typography} from "@mui/material";
 
 const messageSender = new MessageSender();
 
 
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, thisElement, parentIndex, url }) => {
+export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, url }) => {
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAllHighlighted, setIsAllHighlighted] = useState(false);
-  const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.comment || ""));
+  const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.kommentar || ""));
   const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
   const context = useContext(MyContext);
-  //const [openCommentIndex, setOpenCommentIndex] = useState<number | null>(null);
   const typingTimeoutRef = useRef<number | null>(null);
-
-
 
   if (context === null) {
     // handle the case where the context is null
@@ -30,23 +29,32 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   }
   const { elementResults, setElementResults } = context;
 
-  const toggleCheck = () => {
+  const toggleHighlightAllCheck = () => {
     setIsAllHighlighted(!isAllHighlighted);
     setCurrentHighlighted(null);
     highlightAll();
   };
 
-  const updateJson = (elementObject: ElementObject, index: number, url: string) => {
+  const toggleCollapseAndDashedHighlightCheck = () => {
+    //Removes singlehighlight if expanded and highlight exists
+    if (isExpanded && currentHighlighted) {
+      messageSender.highlightSingleMessage(currentHighlighted, true)
+    }
+    setIsExpanded(!isExpanded);
+    highlightAll(true);
+  }
+
+  const updateJson = (elementObject: ElementObject, index: number, side: string) => {
     let newNodes = [...type.nodes];  // copy the array
     newNodes[index] = elementObject;  // replace the element
-    newNodes[index].result.url = url;
+    newNodes[index].result.side = side;
     setTypeElements(newNodes);  // update the state
     let elementResults: ElementResult[] = newNodes.map(node => node.result).flat();
     setElementResults(elementResults);
   };
 
   const storeText = (index: number, newText: string) => {
-    type.nodes[index].result.comment = newText;
+    type.nodes[index].result.kommentar = newText;
     updateJson(type.nodes[index], index, url);
   };
 
@@ -65,76 +73,67 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     // Set a new timeout to execute storeText after 2 seconds
     typingTimeoutRef.current = setTimeout(() => {
       storeText(index, newText);
-      toast.success(`'${newText}' lagret `, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        progress: undefined,
-        closeButton: false,
-        transition: Slide,
-        toastId: "the-toasht",
-        icon: false
-      })
+      successToast(`'${newText}' Saved `);
     }, 3000) as any; // Cast the setTimeout return value to any
   };
 
-  const highlightAll = () => {
-    messageSender.highlightAllWithType(type, isAllHighlighted);
+  const highlightAll = (isDashed?: Boolean) => {
+    const isDashedBool = isDashed ?? false;
+    if (isDashedBool) {
+      messageSender.highlightAllWithType(type, isExpanded, true);
+    } else {
+      messageSender.highlightAllWithType(type, isAllHighlighted, false);
+    }
   };
 
   const handleOptionChange = (option: string, index: number) => {
-    let outcome = "";
+    let utfall = "";
 
-    if (option === "Yes") {
-      outcome =
+    if (option === "Ja") {
+      utfall =
         "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer knappen.";
-    } else if (option === "No") {
-      outcome =
+    } else if (option === "Nei") {
+      utfall =
         "Knapp er kopla til ein ledetekst i koden. Ledeteksten identifiserer ikkje knappen.";
-    } else if (option === "The element is not a button") {
-      outcome = "Testelementet er ikkje ein knapp.";
+    } else if (option === "Ikkje forekomst") {
+      utfall = "Ikkje ein knapp.";
     }
 
-    type.nodes[index].result.correctText = option;
-    type.nodes[index].result.outcome = outcome;
+    type.nodes[index].result.samsvar = option;
+    type.nodes[index].result.utfall = utfall;
     updateJson(type.nodes[index], index, url);
   };
-
-
 
   const openCommentSection = (currentIndex: number) => {
     type.nodes[currentIndex].isCommentVisible = true;
   };
 
-
-
   return (
-    <div className='collapsible-item'>
-      <div className='collapsible-item-parent'>
-        <div className={`item-header row ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
+      <div>
+        <Accordion id={"collapsible-level-1"}
+                   TransitionProps={{ unmountOnExit: false,
+                     timeout: { enter: 200, exit: 100 } }}
+                     onChange={toggleCollapseAndDashedHighlightCheck}
+        >
 
-          <div className={"col-4"}>
-            <div className="buttons-text">
-              <br /> {type.name}
-            </div>
-          </div>
-
-          <div className={"col-4"}>
-            <div className="total-buttons">
-              <br /> {type.nodes.length}
-            </div>
-          </div>
-
-          <div className={"col-4"}>
-            <div className="float-right">
-              <ToggleButton isChecked={isAllHighlighted} onToggle={toggleCheck} text="Highlight All" />
-            </div>
-          </div>
-
-        </div>
-        {isExpanded && (
-          <div className="collapsible-item-children">
+          <AccordionSummary
+              expandIcon={ <ExpandLessIcon /> }
+          >
+            <Grid container>
+              <Grid item xs={4}>
+                <div className={"big-font"}> {type.name}</div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className={"big-font"}> {type.nodes.length} </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className="float-right">
+                  <ToggleButton isChecked={isAllHighlighted} onToggle={toggleHighlightAllCheck} text="Highlight All" />
+                </div>
+              </Grid>
+            </Grid>
+          </AccordionSummary>
+          <AccordionDetails>
             {type.nodes.map((item, index) => {
               return (
                 <CollapsibleItemElement
@@ -149,7 +148,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                   <ElementAttributes
                     attributes={item.attributes}
                     title={item.title}
-                    htmlString={item.htmlString}
+                    element={item.element}
                     selector={item.selector}
                     result={item.result}
                     isCommentVisible={false} />
@@ -157,109 +156,122 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                   <RadioButtonGroup onOptionChange={(value) => {
                     handleOptionChange(value, index);
                     openCommentSection(index);
-                  }} presetOption={type.nodes[index].result.correctText} index={index} />
+                  }} presetOption={type.nodes[index].result.samsvar} index={index} />
 
-                  <div>
-                    {type.nodes[index].isCommentVisible && (
-                      <div className="comment-box">
-                        <textarea
-                          className="textarea"
-                          name="comment"
-                          form="usrform"
-                          value={textareaValues[index]}
-                          onChange={(e) => handleTextareaChange(index, e.target.value)}
-                          onBlur={() => {
-                            // Execute storeText when the textarea loses focus
-                            storeText(index, textareaValues[index]);
-                          }}
-                        >
-                          Enter text here...
-                        </textarea>
-                      </div>
-                    )}
+                    <div>
+                      {type.nodes[index].isCommentVisible && (
+                          <div className="comment-box">
+                    <textarea
+                        className="textarea"
+                        name="comment"
+                        form="usrform"
+                        value={textareaValues[index]}
+                        onChange={(e) => handleTextareaChange(index, e.target.value)}
+                        onBlur={() => {
+                          // Execute storeText when the textarea loses focus
+                          storeText(index, textareaValues[index]);
+                        }}
+                    >
+                      Enter text here...
+                    </textarea>
+                          </div>
+                      )}
 
-                  </div>
-                </CollapsibleItemElement>
+                    </div>
+                  </CollapsibleItemElement>
               );
             })}
             <ToastContainer />
-          </div>
-        )}
+          </AccordionDetails>
+        </Accordion>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> = ({
-  type,
-  thisElement,
-  children,
-  highlightedElement,
-  isAllHighlighted,
-  setHighlightedElement,
-  setIsAllHighlighted,
-}) => {
+  export const CollapsibleItemElement: React.FC<CollapsibleItemElementInterface> = ({
+    type,
+    thisElement,
+    children,
+    highlightedElement,
+    isAllHighlighted,
+    setHighlightedElement,
+    setIsAllHighlighted,
+  }) => {
 
   const [isHighlighted, setIsHighlighted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-
   useEffect(() => {
-    setIsHighlighted((thisElement === highlightedElement) || isAllHighlighted);
-  }, [highlightedElement, isAllHighlighted]);
-
+    setIsExpanded(thisElement === highlightedElement);
+  }, [highlightedElement, thisElement]);
 
   const toggleCheck = () => {
-    //If we press the currently highlighted element, unhighlight it
-    if (highlightedElement === thisElement) {
+    if (isExpanded) {
+    // If the clicked element is already expanded, unhighlight it
+      setIsExpanded(false);
       setHighlightedElement(null);
-      messageSender.highlightSingleMessage(thisElement, true);
-      //} else if (isAllHighlighted && highlightedElement === null) {
-    } else if (isAllHighlighted) {
-      setIsAllHighlighted(false);
-      messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
-      //unhighlightAllAndHighligthSingle( );
+        if (!isAllHighlighted) {
+          messageSender.highlightSingleMessage(thisElement, true);
+        }
+      } else {
+      // Unhighlight all elements, if all are highlighted
+      if (isAllHighlighted) {
+        setIsAllHighlighted(false);
+        messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
+      // Highlight the clicked element and unhighlight the previous one
+      } else if (highlightedElement) {
+        messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
+      // Highlight the clicked element
+      } else {
+        messageSender.highlightSingleMessage(thisElement, false);
+      }
+        // Update the state
+      setIsExpanded(true);
       setHighlightedElement(thisElement);
-    } else if (highlightedElement) {
-      //Another element is highlighted, unhighlight it and highlight the new one
-      messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
-      setHighlightedElement(thisElement);//Kan kanskje fjerne denne
-    } else {
-      //No element is highlighted, highlight the new one
-      setHighlightedElement(thisElement);
-      messageSender.highlightSingleMessage(thisElement, false);
     }
   };
 
   return (
-    <div data-testid="collapsible-type" className=" collapsible-item-child">
-      <div className="collapsible-item">
-        <div className={`item-header ${isExpanded ? 'pressed' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
-          <div className="row">
-            <div className="col-4">
-              <br /> {thisElement.title}
-            </div>
-            <div className="col-4">
-              <br />
-              <IsCheckedStatus text={thisElement.result.correctText}></IsCheckedStatus>
-            </div>
-            <div className={"col-4"}>
-              <div className={"float-right"}>
-                <ToggleButton isChecked={isHighlighted || isAllHighlighted} onToggle={toggleCheck} text="Jump to" />
-              </div>
-            </div>
-          </div>
-
+      <div data-testid="collapsible-type">
+          <Accordion
+              id={"collapsible-level-2"}
+              TransitionProps={{ unmountOnExit: true,
+                timeout: {
+                  enter: 200,
+                  exit: 190 } }}
+              expanded={isExpanded}
+          >
+            <AccordionSummary expandIcon={<ExpandLessIcon />} onClick={toggleCheck}>
+              <Grid container>
+                <Grid item xs={8}>
+                  [{thisElement.title}]
+                </Grid>
+                <Grid item xs={4}>
+                  <IsCheckedStatus text={
+                    (() => {
+                      // Translates samsvar to english.
+                      if (thisElement.result.samsvar === "Ja") {
+                        return "Yes";
+                      } else if (thisElement.result.samsvar === "Nei") {
+                        return "No";
+                      } else if (thisElement.result.samsvar === "Ikkje forekomst") {
+                        return "Not relevant";
+                      } else {
+                        return thisElement.result.samsvar;
+                      }
+                    })()
+                  }></IsCheckedStatus>
+                </Grid>
+              </Grid>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container>
+                <Grid item xs={12}>
+                  {children}
+                </Grid>
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
         </div>
-        <div className={"row"}>
-          <div className={"col-12"}>
-            <div className="content-data">
-              {isExpanded && children}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
+    );
 };

@@ -4,10 +4,8 @@ import { ElementResult } from './interfaces';
 export class TestUtils {
 
   public static giveIdChromeAndExtensionVersion = (resultElement: ElementResult) => {
-    resultElement.testID = TestUtils.generateTestID();
-    resultElement.chromeVersion = TestUtils.getChromeVersion();
-    resultElement.chromeExtensionVersion = TestUtils.getChromeExtensionVersion();
-
+    resultElement.testregelId = TestUtils.generateTestID();
+    resultElement.nettlesar = TestUtils.getChromeAndExtension();
   }
 
   private static generateTestID = () => {
@@ -15,22 +13,15 @@ export class TestUtils {
     return `ID$${uuid}`;
   };
 
-  private static getChromeVersion = () => {
+  private static getChromeAndExtension = () => {
     try {
       const raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9.]+)/);
-      return raw ? raw[2] : null;
+      const chromeVersion = raw ? raw[2] : null;
+      const manifest = chrome.runtime.getManifest();
+      const extensionVersion = manifest.version;
+      return `Chrome - ${chromeVersion} - UU Extension - ${extensionVersion}`;
     } catch (error) {
       console.error(`Error in getChromeVersion: ${error}`);
-      return null;
-    }
-  };
-
-  private static getChromeExtensionVersion = () => {
-    try {
-      const manifest = chrome.runtime.getManifest();
-      return manifest.version;
-    } catch (error) {
-      console.error(`Error in getChromeExtensionVersion: ${error}`);
       return null;
     }
   };

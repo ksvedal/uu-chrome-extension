@@ -46,22 +46,19 @@ describe("MessageSender", () => {
     // Create a mock 'element' object that will be used in the tests
     element = {
       title: "Example Title",
-      htmlString: "<div>Example HTML</div>",
+      element: "<div>Example HTML</div>",
       selector: ".example-selector",
       result: {
-        name: "Example Name",
-        correctText: "Example Correct Text",
-        htmlString: "<div>Example Result HTML</div>",
-        comment: "",
-        checked: false,
-        url: "example.com",
-        testID: "example-test-id",
-        chromeVersion: "",
-        chromeExtensionVersion: "",
-        outcome: "Example outcome",
+        samsvar: "Example Correct Text",
+        element: "<div>Example Result HTML</div>",
+        kommentar: "",
+        side: "example.com",
+        testregelId: "example-test-id",
+        nettlesar: "",
+        utfall: "Example utfall",
       },
       attributes: [],
-      isCommentVisible: false,
+      isCommentVisible: false
     };
 
     // Mock the chrome.tabs.query function

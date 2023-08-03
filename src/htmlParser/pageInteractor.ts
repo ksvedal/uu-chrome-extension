@@ -1,32 +1,62 @@
 import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, UnhighlightAllAndHighlightSingleMessage } from "../messageObjects/message";
+import { ButtonSelector} from "./elementSelector";
 
 /**
  * This class is responsible for interacting with the page
  */
 export class PageInteractor {
     private prevElem: HTMLElement | null = null;
-    private highlightClass: string = "highlight";
+    private highlightSelectedClass: string = "highlight-selected";
+    private highlightDashedClass: string = "highlight-dashed";
+    private commonLabelClass: string = "label";
+    private selectedLabelClass: string = "label-selected";
+    private dashedLabelClass: string = "label-dashed";
+    private defaultDashedHighligtedSelector = new ButtonSelector();
 
+    highlightAllTypesDashed(): void {
+        try { 
+            const elements = document.querySelectorAll(this.defaultDashedHighligtedSelector.selector) as NodeListOf<HTMLElement>;
+            if (!elements.length) {
+                console.log(`No elements found for selector "${this.defaultDashedHighligtedSelector.selector}"`);
+            } else {
+                
+                for (let element of elements) {
+                    this.addStyleToElement(element, this.highlightDashedClass);
+                }
+            }
+        } catch (error) {
+            console.error(`Error in highlightAllTypesDashed: ${error}`);
+        }
+    }
+    
     public highlightAllWithType(message: HighlightAllMessage): void {
+
         try {
             const elements = document.querySelectorAll(message.type.selector) as NodeListOf<HTMLElement>;
+            let currentHighlightClass: string;
             if (!elements.length) {
                 throw new Error(`No elements found for selector "${message.type.selector}"`);
             }
-            if (message.isChecked) {
+            if (message.hasDashedHighlighting === true) {
+                currentHighlightClass = this.highlightDashedClass;
+            } else {
+                currentHighlightClass = this.highlightSelectedClass;
+            }
+            
+            if (message.isHighlighted) {
                 for (let element of elements) {
-                    this.removeStyleFromElement(element);
+                    this.removeStyleFromElement(element, currentHighlightClass);
                 }
             } else {
                 for (let element of elements) {
-                    this.addStyleToElement(element);
+                    this.addStyleToElement(element, currentHighlightClass);
                 }
             }
         } catch (error) {
             console.error(`Error in highlightAllWithType: ${error}`);
         }
     }
-
+    
     public handleHighlightSingle(message: HighlightMessage): void {
         try {
             const element = document.querySelector(message.element.selector) as HTMLElement;
@@ -34,10 +64,12 @@ export class PageInteractor {
                 throw new Error(`No element found for selector "${message.element.selector}"`);
             }
             if (message.isChecked) {
-                this.removeStyleFromElement(element);
+                this.removeStyleFromElement(element, this.highlightSelectedClass);
             } else {
-                this.addStyleToElement(element);
-                this.focusAndScroll(message.element.selector);
+                this.addStyleToElement(element, this.highlightSelectedClass);
+                element.focus();
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                this.prevElem = element;
             }
         } catch (error) {
             console.error(`Error in handleHighlightSingle: ${error}`);
@@ -56,7 +88,7 @@ export class PageInteractor {
             if (!newElement) {
                 throw new Error(`No new element found for selector "${message.newElement.selector}"`);
             }
-            this.addStyleToElement(newElement);
+            this.addStyleToElement(newElement, this.highlightSelectedClass);
             newElement.focus();
             newElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             this.prevElem = newElement;
@@ -105,15 +137,76 @@ export class PageInteractor {
         }
     }
 
-    private addStyleToElement(element: HTMLElement): void {
+    private addStyleToElement(element: HTMLElement, highlightClass?: String): void {
+        highlightClass = highlightClass ?? this.highlightSelectedClass;
         if (element) {
-            element.classList.add(this.highlightClass);
+            if (highlightClass === this.highlightSelectedClass) {
+                element.classList.add(this.highlightSelectedClass);
+                this.addLabelToELement(element, this.selectedLabelClass);
+            } else {
+                element.classList.add(this.highlightDashedClass);
+                this.addLabelToELement(element, this.dashedLabelClass);
+            }
+
         }
     }
 
-    private removeStyleFromElement(element: HTMLElement): void {
+    private removeStyleFromElement(element: HTMLElement, highlightClass?: String): void {
+        highlightClass = highlightClass ?? this.highlightSelectedClass;
         if (element) {
-            element.classList.remove(this.highlightClass);
+            if (highlightClass === this.highlightSelectedClass) {
+                element.classList.remove(this.highlightSelectedClass);
+                this.removeLabelFromElement(element, this.selectedLabelClass);
+            } else {
+                element.classList.remove(this.highlightDashedClass);
+                this.removeLabelFromElement(element, this.dashedLabelClass);
+            }
+            
         }
     }
+
+    private addLabelToELement(element: HTMLElement, labelClass? : string): void {
+        labelClass = labelClass ?? this.selectedLabelClass;
+        // Create a new DOM element to manipulate the 'element' string
+        const tempElement = document.createElement("div");
+        tempElement.innerHTML = element.innerHTML;
+
+        // Create the span element with the label
+        const labelSpan = document.createElement("label");
+        labelSpan.textContent = this.getTagName(element);
+        labelSpan.classList.add(labelClass);
+        labelSpan.classList.add(this.commonLabelClass); 
+
+        // Append the span element to the 'tempElement'
+        tempElement.appendChild(labelSpan);
+
+        // Update the 'element' attribute in the mockElementObject
+        element.innerHTML = tempElement.innerHTML;
+    }
+
+    private removeLabelFromElement(element: HTMLElement, labelClass?: string): void {
+        labelClass = labelClass ?? this.selectedLabelClass;
+        const labelsToRemove = element.getElementsByClassName(labelClass);
+      
+        // Remove all elements with the specified label class
+        while (labelsToRemove.length > 0) {
+          labelsToRemove[0].remove();
+        }
+      }
+    
+      private getTagName(element: HTMLElement): string {
+        if (!element || !element.outerHTML) {
+          // Handle the case when the element is undefined or has no outerHTML
+          return '';
+        }
+      
+        const openingTagRegex = /^<\w+/;
+        const match = element.outerHTML.match(openingTagRegex);
+      
+        if (match) {
+          return match[0] + '>'; // Return the first opening tag without attributes
+        }
+      
+        return '';
+      }
 }

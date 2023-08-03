@@ -8,6 +8,8 @@ import { WebsiteScanner } from '../htmlParser/websiteScanner';
 import ResultsHeader from './resultsHeader';
 import { CollapsibleItemType } from './collapsibleItem';
 import { MyContext } from './resultItemsContext';
+import Brightness6Icon from '@mui/icons-material/Brightness6';
+
 
 export const Sidebar: React.FC = () => {
   const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -76,8 +78,8 @@ export const Sidebar: React.FC = () => {
         <div className='extension-logo'>
           <img src="scan.png" alt="Extension Logo" />
         </div>
-        <div className='extension-text'> <p>Button Seeker 2000</p></div>
-        <button className={"dank-toggle-button float-right"} onClick={toggleDarkMode}> moon </button>
+        <div className='extension-text'> <p>Button Seeker 3000</p></div>
+        <button className={"dark-toggle-button"} onClick={toggleDarkMode}> {<Brightness6Icon />} </button>
       </div>
 
       <div className={"row scan-page-field"}>
@@ -88,7 +90,7 @@ export const Sidebar: React.FC = () => {
             </div>
           </div>
           <div className="col-4">
-            <RegularButton data-testid="scanPage" text="Scan Page" onClick={fetchData} />
+            <RegularButton data-testID="scanPage" text="Scan Page" onClick={fetchData} />
           </div>
           {error && <div className="col-12 error-message">{error}</div>}
         </div>

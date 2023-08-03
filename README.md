@@ -3,17 +3,50 @@
 
 ## About
 
-The Universal Design Analyzer Extension is a powerful tool designed to help developers analyze websites and test various properties against the Web Content Accessibility Guidelines (WCAG) requirements. It focuses on evaluating two crucial properties:
+The Universal Design Analyzer Extension is a specialized tool that assists developers in analyzing websites to ensure adherence to the Web Content Accessibility Guidelines (WCAG). Primarily focused on two key areas—intuitive button design and the provision of alternative text for non-text content—this extension simplifies the semi-automatic evaluation of HTML elements. Developers can efficiently assess the user-friendliness of buttons and verify the alternative text for images, enhancing user experience and improving accessibility. Its capabilities extend beyond analysis by allowing the saving of evaluation results, highlighting specific elements on the page, and facilitating collaboration through comments. By automating aspects of the testing process, it streamlines the workflow, saving time and reinforcing the commitment to inclusive and accessible web design. Targeted at developers with experience in web development, accessibility guidelines, and UX design, this extension is a powerful ally in creating websites that are both intuitive and accessible.
 
-### Intuitive and User-Friendly Buttons
-Developers can use this extension to assess whether buttons are designed in a way that makes them easy to understand and use for users. By verifying the intuitiveness of buttons, developers can enhance user experience and improve accessibility.
+## Table of Contents
+   - [About](#about)
+   - [Scripts and Dependencies](#scripts-and-dependencies)
+        - [Main Dependencies](#main-dependencies)
+        - [Development Dependencies](#development-dependencies)
+        - [Scripts](#scripts)
+   - [Setup](#setup)
+   - [User Manual](#user-manual)
+   - [Architecture and Structure](#architecture-and-structure)
+        - [Architecture Diagram](#architecture-diagram)
+        - [File Structure Tree](#file-structure-tree)
+   - [Troubleshooting](#troubleshooting)
+   - [Backend](#backend)
+   - [Contributors](#contributors)
 
-### Alternative Text for Non-Text Content
-The extension allows developers to verify whether images and non-text items have appropriate alternative text. Providing accurate alternative text enables users with visual impairments to understand the meaning conveyed by these elements.
+## Scripts and dependencies
 
-## Target audience
-This extension is created for developers who wish to partially automate tests on their websites. It's specifically designed for developers who already have some experience in web development, including HTML, CSS, and JavaScript. Having prior knowledge of accessibility guidelines (such as WCAG) and a basic understanding of UX design principles is beneficial. Additionally, being proficient in using accessibility evaluation tools and staying updated with the latest industry trends can further enhance the advantages of using this extension. 
-Knowledge of the various methods to code a button will also prove useful, as this extension aims to distinguish between well-designed buttons and poorly-designed ones.
+### Main Dependencies:
+- **@emotion/styled**: `^11.11.0` - A library that allows you to style applications using tagged template literals.
+- **@mui/icons-material**: `^5.14.1` & **@mui/material**: `^5.14.2` - Material-UI components and icons.
+- **axios**: `^1.4.0` - Promise-based HTTP client.
+- **chrome**: `^0.1.0` - Chrome integration.
+- **find-chrome-version**: `^2.2.0` - Utility to find Chrome version.
+- **pretty**: `^2.0.0` - Code formatting.
+- **React & ReactDOM**: `^18.2.0` - The core libraries for building user interfaces.
+- **React Router DOM**: `^6.14.0` - A collection of navigational components.
+- **react-select**: `^5.7.3` - Select control for React.
+- **react-syntax-highlighter**: `^15.5.0` - Syntax highlighting component.
+- **react-toastify**: `^9.1.3` - React toast notifications.
+- **uuid**: `^9.0.0` - Universal Unique Identifiers library.
+
+### Development Dependencies:
+- **Babel, TypeScript, Jest & related packages**: Various versions - For building and testing.
+- **Webpack & related packages**: Various versions - For bundling.
+
+### Scripts:
+- **`watch`**: Runs the webpack in watch mode with development configuration.
+- **`build`**: Builds the app for production using the webpack production configuration.
+- **`clean`**: Removes the `dist` folder.
+- **`test`**: Runs the Jest test suite.
+- **`style`**: Formats the TypeScript files in the `src` directory using Prettier.
+
 
 ## Setup
 
@@ -38,26 +71,55 @@ To set up the extension, follow these steps:
 
 1. Click on the UU Extension. A side panel titled "Button Seeker" will appear.
 
-<img src="./images/extension_screenshot_1.jpg" alt="Extension screenshot: click on icon" width="300" style="margin: 15px">
+<img src="./images/extension_not_scanned.png" alt="Extension screenshot: Not scanned" style="margin: 15px">
 
-2. Click on "Scan Page". You will see a header displaying the logo and URL of the respective page. There are collapsible categories for Buttons, Images, Links, Headings, and MenuItems. Each category has a "Highlight All" button that you can click to highlight all elements belonging to that category. Clicking the "Highlight All" button again will remove the highlighting. The number of items in each category is also displayed.
+2. Click on "Scan Page".  
 
-<div width="660px" display="flex" flex-direction="row">
-    <img src="./images/extension_screenshot_2.jpg" alt="Extension screenshot: click on scan page" width="300" style="margin: 15px" display="flex">
-    <img src="./images/extension_screenshot_3.jpg" alt="Extension screenshot: preview of scan results" width="300" style="margin: 15px" display="flex">
-</div>
+<img src="./images/extension_screenshot_press_button.png" alt="Extension screenshot: Click on scan" style="margin: 15px">
 
-3. You can expand one or multiple categories to display all the elements within that category. The expandable items will have a corresponding "Jump to" button that highlights the element and scrolls to it. Clicking the "Jump to" button again will remove the highlighting. Additionally, you have the option to leave a comment related to the element.
+3. You will now see a header displaying the logo and URL of the respective page.
+There are collapsible categories for Buttons, Images, Links, Headings, and MenuItems. The total number of elements in within this category is also displayed.
+Each category has a "Highlight All" button that you can click to highlight all elements belonging to that category with a distinct color. Clicking the "Highlight All" button again will remove the highlighting.
 
-<img src="./images/extension_screenshot_5.jpg" alt="Extension screenshot: jump to button feature" width="300" style="margin: 15px">
+<img src="./images/extension_screenshot_scan_pressed.png" alt="Extension screenshot: Categories of elements" style="margin: 15px">
 
-4. If you expand an element, a table will appear showing the element's attributes and their associated values, along with the HTML for that element.
+4. These categories can be clicked and expanded. This will reveal all elements of this category and also mark them on the site with their tag.
 
-<img src="./images/extension_screenshot_6.jpg" alt="Extension screenshot: HTML preview feature" width="300" style="margin: 15px">
+<img src="./images/extension_screenshot_category_expanded.png" alt="Extension screenshot: Category expanded" style="margin: 15px">
 
-5. If you wish to inspect the data in another tab, you can click on "Print results".
+5. You can also expand each element, marking the single element on the site (1) and jump to it if possible. This will reveal a table (2) showing the elements attributes and associated values.
+   You can then select between three different radio buttons (3) if the element label identifies its function, and complies with the standard.
 
-<img src="./images/extension_screenshot_7.jpg" alt="Extension screenshot: click on print results" width="300" style="margin: 15px">
+<img src="./images/extension_screenshot_button_expanded.png" alt="Extension screenshot: HTML preview feature" style="margin: 15px">
+
+6. Pressing one of these buttons expands a comment field (1) that also lets the user comment the reason for their choice or elaborate.
+   The selected radio button value also gets displayed and color coded next to the element title (2).
+
+<img src="./images/extension_screenshot_button_commented.png" alt="Extension screenshot: Commented element" style="margin: 15px">
+
+7. If you wish to retrieve the site data along with your verdict and comments for each button, click on "Print results".
+
+<img src="./images/extension_screenshot_print_results.png" alt="Extension screenshot: How to print results" style="margin: 15px">
+
+8. There is also a dark mode toggle next to the application title at the very top. The application automatically applies system theme settings when it is started.
+
+<img src="./images/extension_screenshot_dark_mode.png" alt="Extension screenshot: Dark mode explanation" style="margin: 15px">
+
+## Architecture and structure
+
+The extension architecture diagram depicts the arrangement of the extension. Each square represents a component and its associated methods, while the lines illustrate the collaboration between the components. The purple boxes signify the components that are visible to users.
+Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between contentscript.tsx and sidebar.tsx occurs through callback functions.
+
+### Architecture diagram
+
+<img src="images/extension_architecture.jpg" alt="Extension architecture" style="margin: 15px">
+
+### File structure tree
+Including Source files, Test files, Component files.
+
+Excluding Configuration files.
+
+<img src="images/extension_screenshot_structure_1.png" alt="Extension structure" style="margin: 15px">
 
 ## Troubleshooting
 
@@ -101,17 +163,60 @@ If you encounter any issues while using the Universal Design Analyzer Extension,
 * Review the extension's documentation and ensure that you are following the recommended guidelines for analyzing buttons and other elements.
 * If you suspect a bug or incorrect behavior in the extension, consider reporting the issue at the extension's repository: https://github.com/ksvedal/uu-chrome-extension
 
-## Extension architecture
+## Backend
 
-![Extension architecture](/images/extension_architecture.jpg)
+It is also possible to connect a backend to this project if the user wishes to save their work automatically and/or more systematically.
 
-The extension architecture diagram depicts the arrangement of the extension. Each square represents a component and its associated methods, while the lines illustrate the collaboration between the components. The purple boxes signify the components that are visible to users.
-Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between cotentscript.tsx and sidebar.tsx occurs through callback functions.
+Link to related backend:
+https://github.com/theaueland/uu-extension-backend
+
+### Documentation Summary of backend repository
+(As of 02 Aug 2023)
+
+This is a restful server processing incoming HTTP requests from the chrome extension. It is responsible for storing the results from a semi-automatic test completed in the extension, and sent to the backend as JSON data.
+
+The extension can also use this backend to fetch the data which is being displayed in the extension's side panel to the user conducting the semi-automatic test. This functionality is not fully completed yet, but it is intended to replace our current approach where we are getting this data manually from the html data.
+
+The backend is divided into the modules server and WCAG. WCAG is then divided into the modules accessibility and database, as shown in the figure.
+
+#### Structure and architecture
+<img src="images/backend_tree.png" alt="Backend structure" width="49%" style="margin: 15px"> <img src="images/backend_architecture.png" alt="Backend structure" width="49%" style="margin: 15px"> 
+
+#### The server
+
+The server is currently only serving at localhost on port 8080, unless another port is specified as a process environment variable. The server is set up to process the following HTTP requests:
+- **GET 127.0.0.1:8080/buttons**
+    - Getting all test results for buttons
+    - Not implemented yet, currently only replying with a message
+- **POST 127.0.0.1:8080/storage/saveButtons**
+    - Saving the test result in a database
+    - The data should be sent in the request body as JSON data
+    - The request handler for this request will validate the JSON data before trying to save the data
+- **GET 127.0.0.1:8080/storage/deleteAllButtons**
+    - Deleting all rows in the database table used for saving the test results for buttons
+    - This should not be in the deployment of the application, but it has been useful while developing when there is no important data in the database that should not be deleted
+
+#### WCAG
+
+The module WCAG is responsible for everything related to the semi-automatic test happening in the backend. While the server module is responsible for handling all incoming requests, and sending a response back to the client. This module is responsible for all of the interaction with the database and getting the computed properties from the accessibility tree, by querying the DOM of a specific website. This functionality is being implemented in the accessibility module in the backend because it proved to be challenging to get it to work in the frontend.
 
 
-## Conclusion 
+## Contributors
 
-The Universal Design Analyzer Extension is a powerful tool that simplifies the semi-automatic analysis of buttons and other crucial elements within HTML pages. With its intuitive interface and comprehensive functionality, this extension empowers developers to efficiently navigate through buttons and evaluate their properties.
-By using the extension, developers can assess the intuitiveness and user-friendliness of buttons, ensuring an enhanced user experience. Additionally, they can verify whether images and non-text elements have appropriate alternative text, improving accessibility for users with visual impairments.
-The extension's capabilities go beyond mere analysis. It allows developers to save evaluation results for future reference, streamlining the development and testing process. The ability to highlight and jump to specific elements within the page, along with leaving comments related to those elements, enhances collaboration and communication among team members.
-By automating aspects of the analysis process, the Universal Design Analyzer Extension helps developers streamline their workflow, saving valuable time and effort. With its focus on adherence to accessibility guidelines and user-friendly design, this extension empowers developers to create inclusive and accessible web experiences.
+Contributions to this project:
+
+**Andreas Conradi Nitschke** - [andreascnits](https://github.com/andreascnits)
+
+**Audun Kristian Oklevik** - [AudunKristian](https://github.com/AudunKristian)
+
+**Brage Navarsete** - [BrageAsperandenNavarsete](https://github.com/BrageAsperandenNavarsete)
+
+**Eiril Solveig Ugulen** - [Eiril](https://github.com/Eiril)
+
+**Kae Saito** - [kaechin](https://github.com/kaechin)
+
+**Kristian Birkeli** - [krigubir](https://github.com/krigubir)
+
+**Kristoffer Svedal** - [ksvedal](https://github.com/ksvedal)
+
+**Thea Ueland** - [theaueland](https://github.com/theaueland)
