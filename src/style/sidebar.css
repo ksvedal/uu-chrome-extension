@@ -41,7 +41,7 @@
   --small-shadow: -1px 1px 2px var(--shadow-color);
   --big-shadow: 2px 2px 2px 1px var(--shadow-color);
   --big-shadow-inset: inset 1px 1px 1px 0px var(--shadow-color);
-  --radius: 3px;
+  --radius: 4px;
 
   --small-space: 0.5rem;
   --medium-space: 1rem;
@@ -59,8 +59,8 @@
   --tertiary-color: #383b3e;
   --quartiary-color: #232427;
 
-  --purple: #4b3244;
-  --light-purple: #564c53;
+  --purple: #171f25;
+  --light-purple: #152b3b;
   --orange: #fadf75;
   --light-orange: #ffeca0;
 

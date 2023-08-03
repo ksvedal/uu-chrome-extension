@@ -4,8 +4,6 @@ import { ButtonSelector} from "./elementSelector";
 /**
  * This class is responsible for interacting with the page
  */
-
-
 export class PageInteractor {
     private prevElem: HTMLElement | null = null;
     private highlightSelectedClass: string = "highlight-selected";
@@ -14,7 +12,6 @@ export class PageInteractor {
     private selectedLabelClass: string = "label-selected";
     private dashedLabelClass: string = "label-dashed";
     private defaultDashedHighligtedSelector = new ButtonSelector();
-    
 
     highlightAllTypesDashed(): void {
         try { 
