@@ -78,7 +78,7 @@ export const Sidebar: React.FC = () => {
         <div className='extension-logo'>
           <img src="scan.png" alt="Extension Logo" />
         </div>
-        <div className='extension-text'> <p>Button Seeker 2001</p></div>
+        <div className='extension-text'> <p>Button Seeker 3000</p></div>
         <button className={"dark-toggle-button"} onClick={toggleDarkMode}> {<Brightness6Icon />} </button>
       </div>
 
