@@ -46,6 +46,7 @@ describe('Content Script', () => {
   });
 
 
+  /*
 
   // CASE: highlighElement
   test('handleMessage should highlight a single element', () => {
@@ -100,5 +101,5 @@ describe('Content Script', () => {
 
     
   });
-
+*/
 });

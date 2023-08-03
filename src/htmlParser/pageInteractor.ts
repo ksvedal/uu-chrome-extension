@@ -1,18 +1,24 @@
 import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, UnhighlightAllAndHighlightSingleMessage } from "../messageObjects/message";
-import { ButtonSelector} from "./elementSelector";
+import { ButtonSelector, ElementSelector, Headings, ImageSelector, LinkSelector, MenuItems} from "./elementSelector";
 
 /**
  * This class is responsible for interacting with the page
  */
 export class PageInteractor {
     private prevElem: HTMLElement | null = null;
-    private highlightSelectedClass: string = "highlight-selected";
-    private highlightDashedClass: string = "highlight-dashed";
+    private highlightSelectedClassType1: string = "highlight-selected-1";
+    private highlightDashedClassType1: string = "highlight-dashed-1";
+    private highlightSelectedClassType2: string = "highlight-selected-2";
+    private highlightDashedClassType2: string = "highlight-dashed-2";
+    private highlightSelectedClassType3: string = "highlight-selected-3";
+    private highlightDashedClassType3: string = "highlight-dashed-3";
+    private highlightSelectedClassType4: string = "highlight-selected-4";
+    private highlightDashedClassType4: string = "highlight-dashed-4";
     private commonLabelClass: string = "label";
     private selectedLabelClass: string = "label-selected";
     private dashedLabelClass: string = "label-dashed";
-    private defaultDashedHighligtedSelector = new ButtonSelector();
-
+    
+    /*
     private elementTypeHighlightMap: Record<string, string> = {
         // Define mappings of element types to their corresponding highlight classes
         'type1': 'highlight-type1',
@@ -21,7 +27,15 @@ export class PageInteractor {
         'type4': 'highlight-type4',
         // ... Add more mappings as needed
     };
+    */
 
+    private elementTypeHighlightMap = {
+        "Buttons": "highlight-selected-1",
+        "Images": "highlight-selected-2",
+        "Links": "highlight-selected-3",
+        "Headings": "highlight-selected-4",
+        "MenuItems": "highlight-selected-1", // You can customize this mapping as needed
+    };
 
     
     public highlightAllWithType(message: HighlightAllMessage): void {
@@ -32,8 +46,9 @@ export class PageInteractor {
             if (!elements.length) {
                 throw new Error(`No elements found for selector "${message.type.selector}"`);
             }
+            const key = message.type.selector;
             if (message.hasDashedHighlighting === true) {
-                currentHighlightClass = this.highlightDashedClass;
+                currentHighlightClass = this.elementTypeHighlightMap.get;
             } else {
                 currentHighlightClass = this.highlightSelectedClass;
             }
