@@ -13,21 +13,16 @@ export class PageInteractor {
     private dashedLabelClass: string = "label-dashed";
     private defaultDashedHighligtedSelector = new ButtonSelector();
 
-    highlightAllTypesDashed(): void {
-        try { 
-            const elements = document.querySelectorAll(this.defaultDashedHighligtedSelector.selector) as NodeListOf<HTMLElement>;
-            if (!elements.length) {
-                console.log(`No elements found for selector "${this.defaultDashedHighligtedSelector.selector}"`);
-            } else {
-                
-                for (let element of elements) {
-                    this.addStyleToElement(element, this.highlightDashedClass);
-                }
-            }
-        } catch (error) {
-            console.error(`Error in highlightAllTypesDashed: ${error}`);
-        }
-    }
+    private elementTypeHighlightMap: Record<string, string> = {
+        // Define mappings of element types to their corresponding highlight classes
+        'type1': 'highlight-type1',
+        'type2': 'highlight-type2',
+        'type3': 'highlight-type3',
+        'type4': 'highlight-type4',
+        // ... Add more mappings as needed
+    };
+
+
     
     public highlightAllWithType(message: HighlightAllMessage): void {
 
@@ -97,23 +92,6 @@ export class PageInteractor {
         }
     }
 
-    private focusAndScroll(target: string) {
-        try {
-            let elem: HTMLElement = document.querySelector(target) as HTMLElement;
-            if (!elem) {
-                throw new Error(`No element found for selector "${target}"`);
-            }
-            if (this.prevElem) {
-                this.removeStyleFromElement(this.prevElem);
-            }
-            this.addStyleToElement(elem);
-            elem.focus();
-            elem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            this.prevElem = elem;
-        } catch (error) {
-            console.error(`Error in focusAndScroll: ${error}`);
-        }
-    }
 
     public unhighlightAllAndHighlightSingle(message: UnhighlightAllAndHighlightSingleMessage): void {
         try {
