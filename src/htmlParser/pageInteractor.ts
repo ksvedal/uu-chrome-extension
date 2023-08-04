@@ -12,16 +12,6 @@ export class PageInteractor {
     private selectedLabelClass: string = "label-selected";
     private dashedLabelClass: string = "label-dashed";
     
-    /*
-    private elementTypeHighlightMap: Record<string, string> = {
-        // Define mappings of element types to their corresponding highlight classes
-        'type1': 'highlight-type1',
-        'type2': 'highlight-type2',
-        'type3': 'highlight-type3',
-        'type4': 'highlight-type4',
-        // ... Add more mappings as needed
-    };
-    */
 
     private elementTypeHighlightMap: { [key: string]: string } = {
         "Buttons": "highlight-selected-1",
