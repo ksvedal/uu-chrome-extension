@@ -198,7 +198,7 @@ The server is currently only serving at localhost on port 8080, unless another p
 
 #### WCAG
 
-The module WCAG is responsible for everything related to the semi-automatic test happening in the backend. While the server module is responsible for handling all incoming requests, and sending a response back to the client. This module is responsible for all of the interaction with the database and getting the computed properties from the accessibility tree, by querying the DOM of a specific website. This functionality is being implemented in the accessibility module in the backend because it proved to be challenging to get it to work in the frontend.
+The module WCAG is responsible for everything related to the semi-automatic test happening in the backend. While the server module is responsible for handling all incoming requests, and sending a response back to the client. This WCAG module is responsible for all of the interaction with the database and getting the computed properties from the accessibility tree. This accessibility module is implemented in the backend because it proved to be challenging to get it to work in the frontend, and it is only available in a dev branch, as it is still in development.
 
 
 ## Contributors
