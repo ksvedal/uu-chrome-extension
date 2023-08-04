@@ -211,7 +211,7 @@ The application can always be improved, and in this section we provide a list of
 - **Shadow-Root**: The tool currently cant find elements hidden under a shadow-root/Shadow DOM. Example:
   helsenorge.no; wont find the buttons in the header.
 - **The element properties table and Computed properties**: Currently the table that shows element attributes is hardcoded to only look for aria-labelledby, aria-label, title, Description, Role, Focusable. The last three has never worked and we dont think the tool actually looks for the right values here. A (potentially) better solution would be to get information from what the browser calculates but that is harder than it sounds like.
-  - In the development branch we tried using computed properties, but connecting the accessibility tree to the DOM tree was a challenge. We got closer to a solution but it is dependent on chrome functionality that does not yet exist and the solution does not work. We will leave the branch to linger if there is a need for inspiration but it is not recommended to 
+  - In the development branch we tried using computed properties, but connecting the accessibility tree to the DOM tree was a challenge. We got closer to a solution but it is dependent on chrome functionality that does not yet exist and the solution does not work. We will leave the branch to linger if there is a need for inspiration but it is not recommended to use this as a base for further development.
 
 ### Bugs and warnings
 - Three warnings upon building:
@@ -230,8 +230,7 @@ The application can always be improved, and in this section we provide a list of
   - fetchData
   - messageSender and message components
 - The code has been cleaned and refactored a bit, but this is still something that can be improved a lot.
-- Additional functionality!
-  - 
+- **Additional functionality!** Adding additional functionality is also an option. E.G. Adding checks for other WCAG standards like contrast, motion, navgation etc., and maybe optional automatic evaluation of elements to give the tester pointers when working.
 
 ## Contributors
 
