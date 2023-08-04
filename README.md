@@ -5,6 +5,8 @@
 
 The Universal Design Analyzer Extension is a specialized tool that assists developers in analyzing websites to ensure adherence to the Web Content Accessibility Guidelines (WCAG). Primarily focused on two key areas—intuitive button design and the provision of alternative text for non-text content—this extension simplifies the semi-automatic evaluation of HTML elements. Developers can efficiently assess the user-friendliness of buttons and verify the alternative text for images, enhancing user experience and improving accessibility. Its capabilities extend beyond analysis by allowing the saving of evaluation results, highlighting specific elements on the page, and facilitating collaboration through comments. By automating aspects of the testing process, it streamlines the workflow, saving time and reinforcing the commitment to inclusive and accessible web design. Targeted at developers with experience in web development, accessibility guidelines, and UX design, this extension is a powerful ally in creating websites that are both intuitive and accessible.
 
+This project is one of two tasks issued by the [Norwegian Digitalisation Agency](https://www.digdir.no/) for a group of 8 students in the timeframe between 12 June to 04 Aug 2023
+
 ## Table of Contents
    - [About](#about)
    - [Scripts and Dependencies](#scripts-and-dependencies)
@@ -18,6 +20,7 @@ The Universal Design Analyzer Extension is a specialized tool that assists devel
         - [File Structure Tree](#file-structure-tree)
    - [Troubleshooting](#troubleshooting)
    - [Backend](#backend)
+   - [Future work](#future-work)
    - [Contributors](#contributors)
 
 ## Scripts and dependencies
@@ -198,8 +201,42 @@ The server is currently only serving at localhost on port 8080, unless another p
 
 #### WCAG
 
-The module WCAG is responsible for everything related to the semi-automatic test happening in the backend. While the server module is responsible for handling all incoming requests, and sending a response back to the client. This module is responsible for all of the interaction with the database and getting the computed properties from the accessibility tree, by querying the DOM of a specific website. This functionality is being implemented in the accessibility module in the backend because it proved to be challenging to get it to work in the frontend.
+The module WCAG is responsible for everything related to the semi-automatic test happening in the backend. While the server module is responsible for handling all incoming requests, and sending a response back to the client. This WCAG module is responsible for all of the interaction with the database and getting the computed properties from the accessibility tree. This accessibility module is implemented in the backend because it proved to be challenging to get it to work in the frontend, and it is only available in a dev branch, as it is still in development.
 
+## Development branch
+The development branch is meant as an experiment-branch for the pursuit of using computed properties (more infomation available in the report, see "Discussion on the use of computed properties"). 
+Additionally, the developement branch has an enhanced file structure and refactoring of the code (which is potentially easier to maintain). Though it does not have all the latest functionality available on main.
+
+## Future work
+The application can always be improved, and in this section we provide a list of known limitations, bugs and suggested improvements:
+
+### Known limitations
+- The highlighter marks buttons that are hidden behind menues, but the user will not be able to see them         before they open the menu manually.
+- Will not detect buttons that are created dynamically. User needs to scan again.
+- **Hidden buttons**: Some buttons rent shown before something happens on the website, but will still get detected   by the extension.
+- **Shadow-Root**: The tool currently cant find elements hidden under a shadow-root/Shadow DOM. Example:
+  helsenorge.no; wont find the buttons in the header.
+- **The element properties table and Computed properties**: Currently the table that shows element attributes is hardcoded to only look for aria-labelledby, aria-label, title, Description, Role, Focusable. The last three has never worked and we dont think the tool actually looks for the right values here. A (potentially) better solution would be to get information from what the browser calculates but that is harder than it sounds like.
+  - In the development branch we tried using computed properties, but connecting the accessibility tree to the DOM tree was a challenge. We got closer to a solution but it is dependent on chrome functionality that does not yet exist and the solution does not work. We will leave the branch to linger if there is a need for inspiration but it is not recommended to use this as a base for further development.
+
+### Bugs and warnings
+- Three warnings upon building:
+   - Asset exceeding size limit: vendor.js
+   - Assets exceeding size limit: content_script, sidebar
+   - Recommendation: Use lazy loading to improve performance
+- Bug where if you open sidepanel and change tab, the sidepanel will persist on the new tab.
+- User gets warning about backend/database when trying to print json data even if they do not intend to          use backend.
+
+### Suggested improvements
+- **Unit Tests** are only about 60% done. Suggestion to complete testing and maybe add integration test.
+  - testUtils
+  - TabIcon
+  - contentScript
+  - websiteScanner
+  - fetchData
+  - messageSender and message components
+- The code has been cleaned and refactored a bit, but this is still something that can be improved a lot.
+- **Additional functionality!** Adding additional functionality is also an option. E.G. Adding checks for other WCAG standards like contrast, motion, navgation etc., and maybe optional automatic evaluation of elements to give the tester pointers when working.
 
 ## Contributors
 
