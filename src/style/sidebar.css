@@ -49,10 +49,9 @@
 
   --small-padding: 0.6rem;
   --medium-padding: 0.7rem;
-  --big-padding: 1rem;
+  --big-padding: 1.5rem;
 
   /* highlighting colours to use for elementType headers*/
-  --dashed-blue-color:  #4287f5;
   --red-color: #FF0000;
   --dark-blue-color: #02047e;
   --green-color: #27ae60;

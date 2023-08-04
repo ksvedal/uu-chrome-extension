@@ -1,5 +1,5 @@
 :root {
-  --dashed-blue-color:  #4287f5;
+  --dashed-blue-color:  #79a6d2; /* #79a6d2, agood colour alternative to use with white text */
   --red-color: #FF0000;
   --dark-blue-color: #02047e;
   --green-color: #27ae60;
@@ -58,7 +58,7 @@
   left: 0px;
   top: -14px;
   background-color: var(--dashed-blue-color);
-  color: white;
+  color: black;
   font-size: 10px;
   z-index: 1;
   cursor: pointer;
