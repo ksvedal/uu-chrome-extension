@@ -205,7 +205,11 @@ The module WCAG is responsible for everything related to the semi-automatic test
 The application can always be improved, and in this section we provide a list of known limitations, bugs and suggested improvements:
 
 ### Known limitations
-asdasdadssa
+- The highlighter marks buttons that are hidden behind menues, but the user will not be able to see them         before they open the menu manually.
+- Will not detect buttons that are created dynamically. User needs to scan again.
+- Hidden buttons: Some buttons rent shown before something happens on the website, but will still get detected   by the extension.
+- Shadow-Root: The tool currently cant find elements hidden under a shadow-root/Shadow DOM. Example:
+  helsenorge.no; wont find the buttons in the header.
 
 ### Bugs and warnings
 - Three warnings upon building:
@@ -213,7 +217,6 @@ asdasdadssa
    - Assets exceeding size limit: content_script, sidebar
    - Recommendation: Use lazy loading to improve performance
 - Bug where if you open sidepanel and change tab, the sidepanel will persist on the new tab.
-
 
 ### Suggested improvements
 - Unit Tests are only about 60% done. Suggestion to complete testing and maybe add integration test.
