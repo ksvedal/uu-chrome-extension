@@ -154,12 +154,12 @@ export class PageInteractor {
     private removeStyleFromElement(element: HTMLElement, highlightClass?: String): void {
         highlightClass = highlightClass ?? this.highlightSelectedClass;
         if (element) {
-            if (highlightClass === this.highlightDashedClass) {
-                element.classList.remove(this.highlightDashedClass);
-                this.removeLabelFromElement(element, this.dashedLabelClass);
-            } else {
+            if (highlightClass === this.highlightSelectedClass) {
                 element.classList.remove(this.highlightSelectedClass);
                 this.removeLabelFromElement(element, this.selectedLabelClass);
+            } else {
+                element.classList.remove(this.highlightDashedClass);
+                this.removeLabelFromElement(element, this.dashedLabelClass);
             }
             
         }

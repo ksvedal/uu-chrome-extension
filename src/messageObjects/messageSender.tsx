@@ -23,11 +23,11 @@ export class MessageSender {
       
       
 
-      public highlightSingleMessage(element: ElementObject, isChecked: boolean) {
+      public highlightSingleMessage(element: ElementObject, elementTypeName: string, isChecked: boolean) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
           if (tabs[0]?.id) {
             console.log("Running with a tab id");
-            chrome.tabs.sendMessage(tabs[0].id, new HighlightMessage(element, isChecked), (response) => {
+            chrome.tabs.sendMessage(tabs[0].id, new HighlightMessage(element, elementTypeName, isChecked), (response) => {
               if (chrome.runtime.lastError) {
                 console.error(chrome.runtime.lastError.message);
               } else if (response && response.message) {
@@ -43,11 +43,11 @@ export class MessageSender {
       
       
 
-    public highlightAndRemovePreviousMessage(newElement: ElementObject, previousElement: ElementObject) {
+    public highlightAndRemovePreviousMessage(newElement: ElementObject, newElementTypeName: string, previousElement: ElementObject, previousElementTypeName: string) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             if (tabs[0]?.id) {
                 console.log("Running with a tab id");
-                chrome.tabs.sendMessage(tabs[0].id, new HighlightAndRemovePreviousMessage(newElement, previousElement), (response) => {
+                chrome.tabs.sendMessage(tabs[0].id, new HighlightAndRemovePreviousMessage(newElement, newElementTypeName, previousElement, previousElementTypeName), (response) => {
                     if (chrome.runtime.lastError) {
                         console.error(chrome.runtime.lastError.message);
                     } else {
@@ -80,11 +80,11 @@ export class MessageSender {
         return true;
     }
 
-    public unhighlightAllAndHighlightSingleMessage(element: ElementObject, elementType: ElementType) {
+    public unhighlightAllAndHighlightSingleMessage(element: ElementObject, elementTypeName: string, elementType: ElementType) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             if (tabs[0]?.id) {
                 console.log("Running with a tab id");
-                chrome.tabs.sendMessage(tabs[0].id, new UnhighlightAllAndHighlightSingleMessage(element, elementType), (response) => {
+                chrome.tabs.sendMessage(tabs[0].id, new UnhighlightAllAndHighlightSingleMessage(element, elementTypeName, elementType), (response) => {
                     if (chrome.runtime.lastError) {
                         console.error(chrome.runtime.lastError.message);
                     } else {

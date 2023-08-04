@@ -23,6 +23,7 @@ export const Sidebar: React.FC = () => {
   const [thisElement, setThisElement] = useState<ElementObject | null>(null);
   const [testID, setTestID] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const [currentHighlightedTypeName, setCurrentHighlightedTypeName] = useState<string>("");
 
 
   const _message: MessageSender = new MessageSender();
@@ -106,6 +107,8 @@ export const Sidebar: React.FC = () => {
                 type={item}
                 setIsAllHighlighted={setIsAllHighlighted}
                 setCurrentHighlighted={setCurrentHighlighted}
+                setCurrentHighligtedTypeName={setCurrentHighlightedTypeName}
+                currentHighlightedTypeName={currentHighlightedTypeName}
                 isAllHighlighted={isAllHighlighted}
                 parentIndex={index}
                 thisElement={thisElement}
