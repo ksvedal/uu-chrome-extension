@@ -34,7 +34,7 @@ export class PageInteractor {
         "Images": "highlight-selected-2",
         "Links": "highlight-selected-3",
         "Headings": "highlight-selected-4",
-        "MenuItems": "highlight-selected-1", // You can customize this mapping as needed
+        "MenuItems": "highlight-selected-5", // You can customize this mapping as needed
     };
 
     
