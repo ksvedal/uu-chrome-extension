@@ -5,6 +5,8 @@
 
 The Universal Design Analyzer Extension is a specialized tool that assists developers in analyzing websites to ensure adherence to the Web Content Accessibility Guidelines (WCAG). Primarily focused on two key areas—intuitive button design and the provision of alternative text for non-text content—this extension simplifies the semi-automatic evaluation of HTML elements. Developers can efficiently assess the user-friendliness of buttons and verify the alternative text for images, enhancing user experience and improving accessibility. Its capabilities extend beyond analysis by allowing the saving of evaluation results, highlighting specific elements on the page, and facilitating collaboration through comments. By automating aspects of the testing process, it streamlines the workflow, saving time and reinforcing the commitment to inclusive and accessible web design. Targeted at developers with experience in web development, accessibility guidelines, and UX design, this extension is a powerful ally in creating websites that are both intuitive and accessible.
 
+This project is one of two tasks issued by the [Norwegian Digitalisation Agency](https://www.digdir.no/) for a group of 8 students in the timeframe between 12 June to 04 Aug 2023
+
 ## Table of Contents
    - [About](#about)
    - [Scripts and Dependencies](#scripts-and-dependencies)
