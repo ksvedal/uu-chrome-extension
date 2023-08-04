@@ -20,6 +20,8 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   const [isAllHighlighted, setIsAllHighlighted] = useState(false);
   const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.kommentar || ""));
   const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
+  const [currentHighlightedTypeName, setCurrentHighlightedTypeName] = useState<string>("");
+
   const context = useContext(MyContext);
   const typingTimeoutRef = useRef<number | null>(null);
 
@@ -32,13 +34,14 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   const toggleHighlightAllCheck = () => {
     setIsAllHighlighted(!isAllHighlighted);
     setCurrentHighlighted(null);
+    setCurrentHighlightedTypeName("");
     highlightAll();
   };
 
   const toggleCollapseAndDashedHighlightCheck = () => {
     //Removes singlehighlight if expanded and highlight exists
     if (isExpanded && currentHighlighted) {
-      messageSender.highlightSingleMessage(currentHighlighted, true)
+      messageSender.highlightSingleMessage(currentHighlighted, type.name, true)
     }
     setIsExpanded(!isExpanded);
     highlightAll(true);
@@ -144,6 +147,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                   setHighlightedElement={setCurrentHighlighted}
                   isAllHighlighted={isAllHighlighted}
                   setIsAllHighlighted={setIsAllHighlighted}
+                  highlightedElementTypeName={currentHighlightedTypeName}
                 >
                   <ElementAttributes
                     attributes={item.attributes}
@@ -193,6 +197,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     thisElement,
     children,
     highlightedElement,
+    highlightedElementTypeName,
     isAllHighlighted,
     setHighlightedElement,
     setIsAllHighlighted,
@@ -211,19 +216,19 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
       setIsExpanded(false);
       setHighlightedElement(null);
         if (!isAllHighlighted) {
-          messageSender.highlightSingleMessage(thisElement, true);
+          messageSender.highlightSingleMessage(thisElement, type.name, true);
         }
       } else {
       // Unhighlight all elements, if all are highlighted
       if (isAllHighlighted) {
         setIsAllHighlighted(false);
-        messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type);
+        messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type.name, type);
       // Highlight the clicked element and unhighlight the previous one
       } else if (highlightedElement) {
-        messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement);
+        messageSender.highlightAndRemovePreviousMessage(thisElement, type.name, highlightedElement, highlightedElementTypeName);
       // Highlight the clicked element
       } else {
-        messageSender.highlightSingleMessage(thisElement, false);
+        messageSender.highlightSingleMessage(thisElement, type.name, false);
       }
         // Update the state
       setIsExpanded(true);

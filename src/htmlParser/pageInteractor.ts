@@ -6,14 +6,8 @@ import { ButtonSelector, ElementSelector, Headings, ImageSelector, LinkSelector,
  */
 export class PageInteractor {
     private prevElem: HTMLElement | null = null;
-    private highlightSelectedClassType1: string = "highlight-selected-1";
-    private highlightDashedClassType1: string = "highlight-dashed-1";
-    private highlightSelectedClassType2: string = "highlight-selected-2";
-    private highlightDashedClassType2: string = "highlight-dashed-2";
-    private highlightSelectedClassType3: string = "highlight-selected-3";
-    private highlightDashedClassType3: string = "highlight-dashed-3";
-    private highlightSelectedClassType4: string = "highlight-selected-4";
-    private highlightDashedClassType4: string = "highlight-dashed-4";
+    private highlightSelectedClass: string = "highlight-selected-1";
+    private highlightDashedClass: string = "highlight-dashed";
     private commonLabelClass: string = "label";
     private selectedLabelClass: string = "label-selected";
     private dashedLabelClass: string = "label-dashed";
@@ -29,7 +23,7 @@ export class PageInteractor {
     };
     */
 
-    private elementTypeHighlightMap = {
+    private elementTypeHighlightMap: { [key: string]: string } = {
         "Buttons": "highlight-selected-1",
         "Images": "highlight-selected-2",
         "Links": "highlight-selected-3",
@@ -37,6 +31,13 @@ export class PageInteractor {
         "MenuItems": "highlight-selected-5", // You can customize this mapping as needed
     };
 
+    private elementTypeLabelMap: { [key: string]: string } = {
+        "Buttons": "label-selected-1",
+        "Images": "label-selected-2",
+        "Links": "label-selected-3",
+        "Headings": "label-selected-4",
+        "MenuItems": "label-selected-5", 
+    }
     
     public highlightAllWithType(message: HighlightAllMessage): void {
 
@@ -46,9 +47,9 @@ export class PageInteractor {
             if (!elements.length) {
                 throw new Error(`No elements found for selector "${message.type.selector}"`);
             }
-            const key = message.type.selector;
+            this.updateLabelAndHighlightClasses(message.type.name);
             if (message.hasDashedHighlighting === true) {
-                currentHighlightClass = this.elementTypeHighlightMap.get;
+                currentHighlightClass = this.highlightDashedClass;
             } else {
                 currentHighlightClass = this.highlightSelectedClass;
             }
@@ -73,6 +74,7 @@ export class PageInteractor {
             if (!element) {
                 throw new Error(`No element found for selector "${message.element.selector}"`);
             }
+            this.updateLabelAndHighlightClasses(message.element.selector);
             if (message.isChecked) {
                 this.removeStyleFromElement(element, this.highlightSelectedClass);
             } else {
@@ -92,8 +94,10 @@ export class PageInteractor {
             if (!previousElement) {
                 throw new Error(`No previous element found for selector "${message.previousElement.selector}"`);
             }
+            this.updateLabelAndHighlightClasses(message.previousElement.selector);
             this.removeStyleFromElement(previousElement);
 
+            this.updateLabelAndHighlightClasses(message.newElement.selector);
             const newElement = document.querySelector(message.newElement.selector) as HTMLElement;
             if (!newElement) {
                 throw new Error(`No new element found for selector "${message.newElement.selector}"`);
@@ -114,13 +118,16 @@ export class PageInteractor {
             if (!elements.length) {
                 throw new Error(`No elements found for selector "${message.elementType.selector}"`);
             }
+            this.updateLabelAndHighlightClasses(message.elementType.selector);
             for (let element of elements) {
                 this.removeStyleFromElement(element);
             }
+
             const element = document.querySelector(message.element.selector) as HTMLElement;
             if (!element) {
                 throw new Error(`No element found for selector "${message.element.selector}"`);
             }
+            this.updateLabelAndHighlightClasses(message.element.selector);
             this.addStyleToElement(element);
             element.focus();
             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -133,12 +140,12 @@ export class PageInteractor {
     private addStyleToElement(element: HTMLElement, highlightClass?: String): void {
         highlightClass = highlightClass ?? this.highlightSelectedClass;
         if (element) {
-            if (highlightClass === this.highlightSelectedClass) {
-                element.classList.add(this.highlightSelectedClass);
-                this.addLabelToELement(element, this.selectedLabelClass);
-            } else {
+            if (highlightClass === this.highlightDashedClass) {
                 element.classList.add(this.highlightDashedClass);
                 this.addLabelToELement(element, this.dashedLabelClass);
+            } else {
+                element.classList.add(this.highlightSelectedClass);
+                this.addLabelToELement(element, this.selectedLabelClass);
             }
 
         }
@@ -147,12 +154,12 @@ export class PageInteractor {
     private removeStyleFromElement(element: HTMLElement, highlightClass?: String): void {
         highlightClass = highlightClass ?? this.highlightSelectedClass;
         if (element) {
-            if (highlightClass === this.highlightSelectedClass) {
-                element.classList.remove(this.highlightSelectedClass);
-                this.removeLabelFromElement(element, this.selectedLabelClass);
-            } else {
+            if (highlightClass === this.highlightDashedClass) {
                 element.classList.remove(this.highlightDashedClass);
                 this.removeLabelFromElement(element, this.dashedLabelClass);
+            } else {
+                element.classList.remove(this.highlightSelectedClass);
+                this.removeLabelFromElement(element, this.selectedLabelClass);
             }
             
         }
@@ -201,5 +208,13 @@ export class PageInteractor {
         }
       
         return '';
+      }
+
+      private updateLabelAndHighlightClasses(selector: string) {
+        console.log("selector: " + selector);
+        this.highlightSelectedClass = this.elementTypeHighlightMap[selector] ?? "highlight-selected-1";
+        this.selectedLabelClass = this.elementTypeLabelMap[selector] ?? "label-selected-1";
+        console.log("highlightSelectedClass: " + this.highlightSelectedClass);
+        console.log("selectedLabelClass: " + this.selectedLabelClass);
       }
 }

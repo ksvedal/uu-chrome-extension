@@ -6,29 +6,36 @@
   display: inline-block;
 }
 
-/* Highlight selected styles for different types */
 .highlight-selected-1 {
+  border: 3px solid #FF0000 !important;
+  z-index: 2 !important;
+  position: relative;
+  display: inline-block;
+}
+
+/* Highlight selected styles for different types */
+.highlight-selected-2 {
   border: 3px solid #FFCC00 !important;
   z-index: 2 !important;
   position: relative;
   display: inline-block;
 }
 
-.highlight-selected-2 {
+.highlight-selected-3 {
   border: 3px solid #00CCFF !important;
   z-index: 2 !important;
   position: relative;
   display: inline-block;
 }
 
-.highlight-selected-3 {
+.highlight-selected-4 {
   border: 3px solid #66FF66 !important;
   z-index: 2 !important;
   position: relative;
   display: inline-block;
 }
 
-.highlight-selected-4 {
+.highlight-selected-5 {
   border: 3px solid #FF99CC !important;
   z-index: 2 !important;
   position: relative;
@@ -56,7 +63,33 @@
 }
 
 /* Styles for selected border label */
-.label-selected {
+.label-selected-1 {
   background-color: #FF0000 !important; /* Set the background color for the label */
   z-index: 2 !important;
 }
+
+/* Label class for the first highlighted selection */
+.label-selected-2 {
+  background-color: #FFCC00 !important; /* Set the background color for the label */
+  z-index: 2 !important;
+}
+
+/* Label class for the second highlighted selection */
+.label-selected-3 {
+  background-color: #00CCFF !important; /* Set the background color for the label */
+  z-index: 2 !important;
+}
+
+/* Label class for the third highlighted selection */
+.label-selected-4 {
+  background-color: #66FF66 !important; /* Set the background color for the label */
+  z-index: 2 !important;
+}
+
+/* Label class for the fourth highlighted selection */
+.label-selected-5 {
+  background-color: #FF99CC !important; /* Set the background color for the label */
+  z-index: 2 !important;
+}
+
+
