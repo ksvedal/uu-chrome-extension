@@ -207,9 +207,11 @@ The application can always be improved, and in this section we provide a list of
 ### Known limitations
 - The highlighter marks buttons that are hidden behind menues, but the user will not be able to see them         before they open the menu manually.
 - Will not detect buttons that are created dynamically. User needs to scan again.
-- Hidden buttons: Some buttons rent shown before something happens on the website, but will still get detected   by the extension.
-- Shadow-Root: The tool currently cant find elements hidden under a shadow-root/Shadow DOM. Example:
+- **Hidden buttons**: Some buttons rent shown before something happens on the website, but will still get detected   by the extension.
+- **Shadow-Root**: The tool currently cant find elements hidden under a shadow-root/Shadow DOM. Example:
   helsenorge.no; wont find the buttons in the header.
+- **The element properties table and Computed properties**: Currently the table that shows element attributes is hardcoded to only look for aria-labelledby, aria-label, title, Description, Role, Focusable. The last three has never worked and we dont think the tool actually looks for the right values here. A (potentially) better solution would be to get information from what the browser calculates but that is harder than it sounds like.
+  - In the development branch we tried using computed properties, but connecting the accessibility tree to the DOM tree was a challenge. We got closer to a solution but it is dependent on chrome functionality that does not yet exist and the solution does not work. We will leave the branch to linger if there is a need for inspiration but it is not recommended to 
 
 ### Bugs and warnings
 - Three warnings upon building:
@@ -217,9 +219,10 @@ The application can always be improved, and in this section we provide a list of
    - Assets exceeding size limit: content_script, sidebar
    - Recommendation: Use lazy loading to improve performance
 - Bug where if you open sidepanel and change tab, the sidepanel will persist on the new tab.
+- User gets warning about backend/database when trying to print json data even if they do not intend to          use backend.
 
 ### Suggested improvements
-- Unit Tests are only about 60% done. Suggestion to complete testing and maybe add integration test.
+- **Unit Tests** are only about 60% done. Suggestion to complete testing and maybe add integration test.
   - testUtils
   - TabIcon
   - contentScript
@@ -227,6 +230,8 @@ The application can always be improved, and in this section we provide a list of
   - fetchData
   - messageSender and message components
 - The code has been cleaned and refactored a bit, but this is still something that can be improved a lot.
+- Additional functionality!
+  - 
 
 ## Contributors
 
