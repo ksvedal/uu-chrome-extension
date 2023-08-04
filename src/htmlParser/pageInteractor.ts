@@ -74,7 +74,7 @@ export class PageInteractor {
             if (!element) {
                 throw new Error(`No element found for selector "${message.element.selector}"`);
             }
-            this.updateLabelAndHighlightClasses(message.element.selector);
+            this.updateLabelAndHighlightClasses(message.elementTypeName);
             if (message.isChecked) {
                 this.removeStyleFromElement(element, this.highlightSelectedClass);
             } else {
@@ -94,10 +94,9 @@ export class PageInteractor {
             if (!previousElement) {
                 throw new Error(`No previous element found for selector "${message.previousElement.selector}"`);
             }
-            this.updateLabelAndHighlightClasses(message.previousElement.selector);
+            this.updateLabelAndHighlightClasses(message.typeNameOfElements);
             this.removeStyleFromElement(previousElement);
 
-            this.updateLabelAndHighlightClasses(message.newElement.selector);
             const newElement = document.querySelector(message.newElement.selector) as HTMLElement;
             if (!newElement) {
                 throw new Error(`No new element found for selector "${message.newElement.selector}"`);
@@ -118,7 +117,7 @@ export class PageInteractor {
             if (!elements.length) {
                 throw new Error(`No elements found for selector "${message.elementType.selector}"`);
             }
-            this.updateLabelAndHighlightClasses(message.elementType.selector);
+            this.updateLabelAndHighlightClasses(message.elementType.name);
             for (let element of elements) {
                 this.removeStyleFromElement(element);
             }
@@ -210,10 +209,10 @@ export class PageInteractor {
         return '';
       }
 
-      private updateLabelAndHighlightClasses(selector: string) {
-        console.log("selector: " + selector);
-        this.highlightSelectedClass = this.elementTypeHighlightMap[selector] ?? "highlight-selected-1";
-        this.selectedLabelClass = this.elementTypeLabelMap[selector] ?? "label-selected-1";
+      private updateLabelAndHighlightClasses(elementTypeName: string) {
+        console.log("elementTypeName: " + elementTypeName);
+        this.highlightSelectedClass = this.elementTypeHighlightMap[elementTypeName] ?? "highlight-selected-1";
+        this.selectedLabelClass = this.elementTypeLabelMap[elementTypeName] ?? "label-selected-1";
         console.log("highlightSelectedClass: " + this.highlightSelectedClass);
         console.log("selectedLabelClass: " + this.selectedLabelClass);
       }

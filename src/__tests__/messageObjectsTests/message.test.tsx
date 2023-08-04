@@ -30,14 +30,14 @@ describe("Messages", () => {
       const newElement = { /* mock new element object */ };
       const newElementTypeName = "";
       const previousElement = { /* mock previous element object */ };
-      const previousElementTypeName = "";
+      const typeNamesOfElements = "";
 
       // Create the highlight and remove previous message
       const highlightAndRemovePreviousMessage = new HighlightAndRemovePreviousMessage(
         newElement as any,
-        newElementTypeName as any,
+        
         previousElement as any,
-        previousElementTypeName as any
+        typeNamesOfElements as any
       );
 
       // Perform assertions on the message properties

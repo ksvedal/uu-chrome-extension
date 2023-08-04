@@ -225,7 +225,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
         messageSender.unhighlightAllAndHighlightSingleMessage(thisElement, type.name, type);
       // Highlight the clicked element and unhighlight the previous one
       } else if (highlightedElement) {
-        messageSender.highlightAndRemovePreviousMessage(thisElement, type.name, highlightedElement, highlightedElementTypeName);
+        messageSender.highlightAndRemovePreviousMessage(thisElement, highlightedElement, type.name);
       // Highlight the clicked element
       } else {
         messageSender.highlightSingleMessage(thisElement, type.name, false);

@@ -14,11 +14,10 @@ export class HighlightMessage implements Message {
 }
 
 export class HighlightAndRemovePreviousMessage implements Message {
-    constructor(public newElement: ElementObject, public newElementTypeName: string, public previousElement: ElementObject, public previousElementTypeName: string) {
+    constructor(public newElement: ElementObject, public previousElement: ElementObject, public typeNameOfElements: string) {
         this.newElement = newElement;
-        this.newElementTypeName = newElementTypeName;
+        this.typeNameOfElements = typeNameOfElements;
         this.previousElement = previousElement;
-        this.previousElementTypeName = previousElementTypeName;
     }
     action: string = "highlightAndRemovePrevious";
 }
