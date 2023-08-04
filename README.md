@@ -203,6 +203,10 @@ The server is currently only serving at localhost on port 8080, unless another p
 
 The module WCAG is responsible for everything related to the semi-automatic test happening in the backend. While the server module is responsible for handling all incoming requests, and sending a response back to the client. This WCAG module is responsible for all of the interaction with the database and getting the computed properties from the accessibility tree. This accessibility module is implemented in the backend because it proved to be challenging to get it to work in the frontend, and it is only available in a dev branch, as it is still in development.
 
+## Development branch
+The development branch is meant as an experiment-branch for the pursuit of using computed properties (more infomation available in the report, see "Discussion on the use of computed properties"). 
+Additionally, the developement branch has an enhanced file structure and refactoring of the code (which is potentially easier to maintain). Though it does not have all the latest functionality available on main.
+
 ## Future work
 The application can always be improved, and in this section we provide a list of known limitations, bugs and suggested improvements:
 
