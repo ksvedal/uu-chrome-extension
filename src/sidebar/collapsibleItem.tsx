@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IsCheckedStatus from "./isCheckedStatus";
 import { successToast } from "./toastUtils";
+import CircleIcon from '@mui/icons-material/Circle';
 import {Accordion, AccordionDetails, AccordionSummary, Grid, Typography} from "@mui/material";
 import { purple } from "@mui/material/colors";
 
@@ -125,13 +126,17 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
           >
             <Grid container>
               <Grid item xs={4}>
-                <div className={"big-font " + typeColourClass + "-type-parent border-parent"}> {type.name}</div>
+                <div className={"big-font row"}>
+                  <div className={"col-4 " + typeColourClass + "-type-parent border-parent"}>
+                    <CircleIcon />
+                  </div> <div className={"col-4"}> {type.name} </div>
+                </div>
               </Grid>
               <Grid item xs={4}>
                 <div className={"big-font"}> {type.nodes.length} </div>
               </Grid>
               <Grid item xs={4}>
-                <div className="float-right">
+                <div className="float-right extra-padding extra-padding-vertical">
                   <ToggleButton isChecked={isAllHighlighted} onToggle={toggleHighlightAllCheck} text="Highlight All" />
                 </div>
               </Grid>

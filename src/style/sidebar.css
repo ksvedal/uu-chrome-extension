@@ -53,10 +53,10 @@
 
   /* highlighting colours to use for elementType headers*/
   --red-color: #FF0000;
-  --dark-blue-color: #02047e;
+  --dark-blue-color: #1051a6;
   --green-color: #27ae60;
   --purple-color: #9b59b6;
-  --dark-orange-color: #e67e22;
+  --dark-orange-color: #e88e3e;
 }
 
 .dark {
@@ -310,6 +310,7 @@ Responsiveness.
   box-shadow: var(--big-shadow);
   border-radius: var(--radius);
   border: 2px solid var(--purple);
+  word-break: break-all;
 }
 
 .headline .headline-button {
@@ -322,6 +323,7 @@ Responsiveness.
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
   font-size: var(--very-small-font);
+  word-break: normal;
 }
 
 .headline .headline-button:hover {
@@ -533,28 +535,23 @@ Responsiveness.
   font-weight: bold;
 }
 
-/* Borders to display highlighting colours of elementTypes */
+/* Text to display highlighting colours of elementTypes */
 .red-type-parent {
-  border: 5px solid var(--red-color);
+  color: var(--red-color);
 }
 
 .dark-blue-type-parent {
-  border: 5px solid var(--dark-blue-color);
+  color: var(--dark-blue-color);
 } 
 
 .green-type-parent {
-  border: 5px solid var(--green-color);
+  color: var(--green-color);
 }
 
 .purple-type-parent {
-  border: 5px solid var(--purple-color);
+  color: var(--purple-color);
 }
 
 .dark-orange-type-parent {
-  border: 5px solid var(--dark-orange-color);
-}
-
-.border-parent {
-  border-radius: 5px;
-  width: 135px ;
+  color: var(--dark-orange-color);
 }
