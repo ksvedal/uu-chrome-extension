@@ -26,7 +26,6 @@ export interface CollapsibleItemTypeInterface {
   thisElement: ElementObject | null;
   children?: ReactNode;
   isAllHighlighted: boolean;
-
   setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentHighlighted: React.Dispatch<React.SetStateAction<ElementObject | null>>;
   parentIndex: number;
@@ -39,7 +38,6 @@ export interface CollapsibleItemElementInterface {
   thisElement: ElementObject;
   children?: ReactNode;
   highlightedElement: ElementObject | null;
-  highlightedElementTypeName: string;
   isAllHighlighted: boolean;
   setHighlightedElement: React.Dispatch<React.SetStateAction<ElementObject | null>>;
   setIsAllHighlighted: React.Dispatch<React.SetStateAction<boolean>>;

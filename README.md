@@ -108,10 +108,10 @@ Each category has a "Highlight All" button that you can click to highlight all e
 
 <img src="./images/extension_screenshot_dark_mode.png" alt="Extension screenshot: Dark mode explanation" style="margin: 15px">
 
-## Architecture and structure
+## Architecture and structure (Outdated)
 
 The extension architecture diagram depicts the arrangement of the extension. Each square represents a component and its associated methods, while the lines illustrate the collaboration between the components. The purple boxes signify the components that are visible to users.
-Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between contentscript.tsx and sidebar.tsx occurs through callback functions.
+Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between contentscript.tsx and sidebar.tsx occurs through callback functions. The image is outdated, so only some of the classes are covered.
 
 ### Architecture diagram
 

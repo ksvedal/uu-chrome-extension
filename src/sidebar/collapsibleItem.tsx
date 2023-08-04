@@ -10,20 +10,22 @@ import 'react-toastify/dist/ReactToastify.css';
 import IsCheckedStatus from "./isCheckedStatus";
 import { successToast } from "./toastUtils";
 import {Accordion, AccordionDetails, AccordionSummary, Grid, Typography} from "@mui/material";
+import { purple } from "@mui/material/colors";
 
 const messageSender = new MessageSender();
 
 
-export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, url }) => {
+export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ type, url, parentIndex }) => {
   const [currentHighlighted, setCurrentHighlighted] = useState<ElementObject | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAllHighlighted, setIsAllHighlighted] = useState(false);
   const [textareaValues, setTextareaValues] = useState<string[]>(type.nodes.map(node => node.result.kommentar || ""));
   const [typeElements, setTypeElements] = useState<ElementObject[]>(type.nodes);
-  const [currentHighlightedTypeName, setCurrentHighlightedTypeName] = useState<string>("");
 
   const context = useContext(MyContext);
   const typingTimeoutRef = useRef<number | null>(null);
+  const colourClasses = ["red", "dark-blue", "green", "purple", "dark-orange"];
+  const typeColourClass = colourClasses[parentIndex];
 
   if (context === null) {
     // handle the case where the context is null
@@ -34,7 +36,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
   const toggleHighlightAllCheck = () => {
     setIsAllHighlighted(!isAllHighlighted);
     setCurrentHighlighted(null);
-    setCurrentHighlightedTypeName("");
     highlightAll();
   };
 
@@ -124,7 +125,7 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
           >
             <Grid container>
               <Grid item xs={4}>
-                <div className={"big-font"}> {type.name}</div>
+                <div className={"big-font " + typeColourClass + "-type-parent border-parent"}> {type.name}</div>
               </Grid>
               <Grid item xs={4}>
                 <div className={"big-font"}> {type.nodes.length} </div>
@@ -147,7 +148,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
                   setHighlightedElement={setCurrentHighlighted}
                   isAllHighlighted={isAllHighlighted}
                   setIsAllHighlighted={setIsAllHighlighted}
-                  highlightedElementTypeName={currentHighlightedTypeName}
                 >
                   <ElementAttributes
                     attributes={item.attributes}
@@ -197,7 +197,6 @@ export const CollapsibleItemType: React.FC<CollapsibleItemTypeInterface> = ({ ty
     thisElement,
     children,
     highlightedElement,
-    highlightedElementTypeName,
     isAllHighlighted,
     setHighlightedElement,
     setIsAllHighlighted,

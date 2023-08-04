@@ -51,6 +51,13 @@
   --medium-padding: 0.7rem;
   --big-padding: 1rem;
 
+  /* highlighting colours to use for elementType headers*/
+  --dashed-blue-color:  #4287f5;
+  --red-color: #FF0000;
+  --dark-blue-color: #02047e;
+  --green-color: #27ae60;
+  --purple-color: #9b59b6;
+  --dark-orange-color: #e67e22;
 }
 
 .dark {
@@ -525,4 +532,30 @@ Responsiveness.
 .complete-message {
   color: var(--good-color);
   font-weight: bold;
+}
+
+/* Borders to display highlighting colours of elementTypes */
+.red-type-parent {
+  border: 5px solid var(--red-color);
+}
+
+.dark-blue-type-parent {
+  border: 5px solid var(--dark-blue-color);
+} 
+
+.green-type-parent {
+  border: 5px solid var(--green-color);
+}
+
+.purple-type-parent {
+  border: 5px solid var(--purple-color);
+}
+
+.dark-orange-type-parent {
+  border: 5px solid var(--dark-orange-color);
+}
+
+.border-parent {
+  border-radius: 5px;
+  width: 135px ;
 }

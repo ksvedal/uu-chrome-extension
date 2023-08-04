@@ -116,7 +116,7 @@ export class PageInteractor {
             if (!element) {
                 throw new Error(`No element found for selector "${message.element.selector}"`);
             }
-            this.updateLabelAndHighlightClasses(message.element.selector);
+            this.updateLabelAndHighlightClasses(message.elementTypeName);
             this.addStyleToElement(element);
             element.focus();
             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
