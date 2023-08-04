@@ -5,24 +5,27 @@ export interface Message {
 }
 
 export class HighlightMessage implements Message {
-    constructor(public element: ElementObject, public isChecked: boolean) {
+    constructor(public element: ElementObject, public elementTypeName: string, public isChecked: boolean) {
         this.element = element;
+        this.elementTypeName = elementTypeName;
         this.isChecked = isChecked;
     }
     action: string = "highlightElement";
 }
 
 export class HighlightAndRemovePreviousMessage implements Message {
-    constructor(public newElement: ElementObject, public previousElement: ElementObject) {
+    constructor(public newElement: ElementObject, public previousElement: ElementObject, public typeNameOfElements: string) {
         this.newElement = newElement;
+        this.typeNameOfElements = typeNameOfElements;
         this.previousElement = previousElement;
     }
     action: string = "highlightAndRemovePrevious";
 }
 
 export class UnhighlightAllAndHighlightSingleMessage implements Message {
-    constructor(public element: ElementObject, public elementType: ElementType) {
+    constructor(public element: ElementObject, public elementTypeName: string, public elementType: ElementType) {
         this.element = element;
+        this.elementTypeName = elementTypeName;
         this.elementType = elementType;
     }
     action: string = "unhighlightAllAndHighlightSingle";

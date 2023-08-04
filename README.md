@@ -111,9 +111,10 @@ Each category has a "Highlight All" button that you can click to highlight all e
 ## Architecture and structure
 
 The extension architecture diagram depicts the arrangement of the extension. Each square represents a component and its associated methods, while the lines illustrate the collaboration between the components. The purple boxes signify the components that are visible to users.
-Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between contentscript.tsx and sidebar.tsx occurs through callback functions.
+Within the diagram, the sidebar component encompasses the resultheader, including a tabIcon and a collapsible item. The messageSender class facilitates communication between the sidebar and the contentScript, enabling user interaction with the web page. The interaction between contentscript.tsx and sidebar.tsx occurs through callback functions. The concept diagram is outdated, so only some of the classes are covered.
 
-### Architecture diagram
+### Concept diagram
+(Outdated)
 
 <img src="images/extension_architecture.jpg" alt="Extension architecture" style="margin: 15px">
 
@@ -226,6 +227,8 @@ The application can always be improved, and in this section we provide a list of
    - Recommendation: Use lazy loading to improve performance
 - Bug where if you open sidepanel and change tab, the sidepanel will persist on the new tab.
 - User gets warning about backend/database when trying to print json data even if they do not intend to          use backend.
+- Bug where if you highlight elements, then reopen the sidepanel and scan the page again, some elements will have extra tags in the title. This is because the highlighting function is editing the html, and this is not changed back when the sidepanel is closed and reopened. 
+- Bug that the label often is not displayed if the element is behind other elements. Happens especially with the image elements.
 
 ### Suggested improvements
 - **Unit Tests** are only about 60% done. Suggestion to complete testing and maybe add integration test.
@@ -235,7 +238,10 @@ The application can always be improved, and in this section we provide a list of
   - websiteScanner
   - fetchData
   - messageSender and message components
+  - Currently many of the tests are not working, but can be fixed with some effort. The files have changed over time, and the tests have not been updated to reflect these changes. Some of the      tests that are not working are commented out, because they need to be updated to work with the current code.
 - The code has been cleaned and refactored a bit, but this is still something that can be improved a lot.
+
+
 - **Additional functionality!** Adding additional functionality is also an option. E.G. Adding checks for other WCAG standards like contrast, motion, navgation etc., and maybe optional automatic evaluation of elements to give the tester pointers when working.
 
 ## Contributors

@@ -1,40 +1,102 @@
+:root {
+  --dashed-blue-color:  #79a6d2; /* #79a6d2, agood colour alternative to use with white text */
+  --red-color: #FF0000;
+  --dark-blue-color: #266bc5;
+  --green-color: #27ae60;
+  --purple-color: #9b59b6;
+  --dark-orange-color: #e08b41;
+}
+
+/* Highlight dashed style */
 .highlight-dashed {
-    border: 3px dashed #79a6d2 !important;
-    z-index: 1 !important;
-    position: relative;
-    display: inline-block;
-  }
-  
-  .highlight-selected {
-    border: 3px solid #FF0000 !important;
-    z-index: 2 !important;
-    position: relative;
-    display: inline-block; 
-  }
-  
-  /* Common styles for both label classes */
-  .label {
-    all: unset;
-    position: absolute;
-    left: 0px;
-    top: -14px;
-    background-color: #79a6d2; /* Set the default background color for the label */
-    color: #000000; /* Set the text color for the label */
-    font-size: 10px; /* Customize the font size */
-    z-index: 1; /* We don't need to use !important here */
-    cursor: pointer; /* Make the label a hand cursor */
-    box-sizing: content-box;
-  }
-  
-  /* Styles for dashed border label */
-  .label-dashed {
-    background-color: #79a6d2 !important; /* Set the background color for the label */
-    z-index: 1 !important;
-  }
-  
-  /* Styles for selected border label */
-  .label-selected {
-    background-color: #FF0000 !important; /* Set the background color for the label */
-    z-index: 2 !important;
-  }
-  
+  border: 3px dashed var(--dashed-blue-color) !important;
+  z-index: 1 !important;
+  position: relative;
+  display: inline-block;
+}
+
+/* Highlight selected styles for different types */
+.highlight-selected-1 {
+  border: 3px solid var(--red-color) !important;
+  z-index: 2 !important;
+  position: relative;
+  display: inline-block;
+}
+
+.highlight-selected-2 {
+  border: 3px solid var(--dark-blue-color) !important;
+  z-index: 2 !important;
+  position: relative;
+  display: inline-block;
+}
+
+.highlight-selected-3 {
+  border: 3px solid var(--green-color) !important;
+  z-index: 2 !important;
+  position: relative;
+  display: inline-block;
+}
+
+.highlight-selected-4 {
+  border: 3px solid var(--purple-color) !important;
+  z-index: 2 !important;
+  position: relative;
+  display: inline-block;
+}
+
+.highlight-selected-5 {
+  border: 3px solid var(--dark-orange-color) !important;
+  z-index: 2 !important;
+  position: relative;
+  display: inline-block;
+}
+
+/* Common styles for both label classes */
+.label {
+  all: unset;
+  position: absolute;
+  left: 0px;
+  top: -14px;
+  background-color: var(--dashed-blue-color);
+  color: black;
+  font-size: 10px;
+  z-index: 1;
+  cursor: pointer;
+  box-sizing: content-box;
+}
+
+/* Styles for dashed border label */
+.label-dashed {
+  background-color: var(--dashed-blue-color) !important;
+  z-index: 1 !important;
+}
+
+/* Styles for selected border label */
+.label-selected-1 {
+  background-color: var(--red-color) !important;
+  z-index: 2 !important;
+}
+
+/* Label class for the first highlighted selection */
+.label-selected-2 {
+  background-color: var(--dark-blue-color) !important;
+  z-index: 2 !important;
+}
+
+/* Label class for the second highlighted selection */
+.label-selected-3 {
+  background-color: var(--green-color) !important;
+  z-index: 2 !important;
+}
+
+/* Label class for the third highlighted selection */
+.label-selected-4 {
+  background-color: var(--purple-color) !important;
+  z-index: 2 !important;
+}
+
+/* Label class for the fourth highlighted selection */
+.label-selected-5 {
+  background-color: var(--dark-orange-color) !important;
+  z-index: 2 !important;
+}

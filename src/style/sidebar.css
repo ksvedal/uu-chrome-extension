@@ -49,8 +49,14 @@
 
   --small-padding: 0.6rem;
   --medium-padding: 0.7rem;
-  --big-padding: 1rem;
+  --big-padding: 1.5rem;
 
+  /* highlighting colours to use for elementType headers*/
+  --red-color: #FF0000;
+  --dark-blue-color: #1051a6;
+  --green-color: #27ae60;
+  --purple-color: #9b59b6;
+  --dark-orange-color: #e88e3e;
 }
 
 .dark {
@@ -304,6 +310,7 @@ Responsiveness.
   box-shadow: var(--big-shadow);
   border-radius: var(--radius);
   border: 2px solid var(--purple);
+  word-break: break-all;
 }
 
 .headline .headline-button {
@@ -316,6 +323,7 @@ Responsiveness.
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
   font-size: var(--very-small-font);
+  word-break: normal;
 }
 
 .headline .headline-button:hover {
@@ -525,4 +533,25 @@ Responsiveness.
 .complete-message {
   color: var(--good-color);
   font-weight: bold;
+}
+
+/* Text to display highlighting colours of elementTypes */
+.red-type-parent {
+  color: var(--red-color);
+}
+
+.dark-blue-type-parent {
+  color: var(--dark-blue-color);
+} 
+
+.green-type-parent {
+  color: var(--green-color);
+}
+
+.purple-type-parent {
+  color: var(--purple-color);
+}
+
+.dark-orange-type-parent {
+  color: var(--dark-orange-color);
 }

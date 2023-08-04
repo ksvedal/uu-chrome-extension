@@ -1,32 +1,32 @@
 import { HighlightAllMessage, HighlightAndRemovePreviousMessage, HighlightMessage, UnhighlightAllAndHighlightSingleMessage } from "../messageObjects/message";
-import { ButtonSelector} from "./elementSelector";
+import { ButtonSelector, ElementSelector, Headings, ImageSelector, LinkSelector, MenuItems} from "./elementSelector";
 
 /**
  * This class is responsible for interacting with the page
  */
 export class PageInteractor {
     private prevElem: HTMLElement | null = null;
-    private highlightSelectedClass: string = "highlight-selected";
+    private highlightSelectedClass: string = "highlight-selected-1";
     private highlightDashedClass: string = "highlight-dashed";
     private commonLabelClass: string = "label";
     private selectedLabelClass: string = "label-selected";
     private dashedLabelClass: string = "label-dashed";
-    private defaultDashedHighligtedSelector = new ButtonSelector();
+    
 
-    highlightAllTypesDashed(): void {
-        try { 
-            const elements = document.querySelectorAll(this.defaultDashedHighligtedSelector.selector) as NodeListOf<HTMLElement>;
-            if (!elements.length) {
-                console.log(`No elements found for selector "${this.defaultDashedHighligtedSelector.selector}"`);
-            } else {
-                
-                for (let element of elements) {
-                    this.addStyleToElement(element, this.highlightDashedClass);
-                }
-            }
-        } catch (error) {
-            console.error(`Error in highlightAllTypesDashed: ${error}`);
-        }
+    private elementTypeHighlightMap: { [key: string]: string } = {
+        "Buttons": "highlight-selected-1",
+        "Images": "highlight-selected-2",
+        "Links": "highlight-selected-3",
+        "Headings": "highlight-selected-4",
+        "MenuItems": "highlight-selected-5", // You can customize this mapping as needed
+    };
+
+    private elementTypeLabelMap: { [key: string]: string } = {
+        "Buttons": "label-selected-1",
+        "Images": "label-selected-2",
+        "Links": "label-selected-3",
+        "Headings": "label-selected-4",
+        "MenuItems": "label-selected-5", 
     }
     
     public highlightAllWithType(message: HighlightAllMessage): void {
@@ -37,6 +37,7 @@ export class PageInteractor {
             if (!elements.length) {
                 throw new Error(`No elements found for selector "${message.type.selector}"`);
             }
+            this.updateLabelAndHighlightClasses(message.type.name);
             if (message.hasDashedHighlighting === true) {
                 currentHighlightClass = this.highlightDashedClass;
             } else {
@@ -63,6 +64,7 @@ export class PageInteractor {
             if (!element) {
                 throw new Error(`No element found for selector "${message.element.selector}"`);
             }
+            this.updateLabelAndHighlightClasses(message.elementTypeName);
             if (message.isChecked) {
                 this.removeStyleFromElement(element, this.highlightSelectedClass);
             } else {
@@ -82,6 +84,7 @@ export class PageInteractor {
             if (!previousElement) {
                 throw new Error(`No previous element found for selector "${message.previousElement.selector}"`);
             }
+            this.updateLabelAndHighlightClasses(message.typeNameOfElements);
             this.removeStyleFromElement(previousElement);
 
             const newElement = document.querySelector(message.newElement.selector) as HTMLElement;
@@ -97,23 +100,6 @@ export class PageInteractor {
         }
     }
 
-    private focusAndScroll(target: string) {
-        try {
-            let elem: HTMLElement = document.querySelector(target) as HTMLElement;
-            if (!elem) {
-                throw new Error(`No element found for selector "${target}"`);
-            }
-            if (this.prevElem) {
-                this.removeStyleFromElement(this.prevElem);
-            }
-            this.addStyleToElement(elem);
-            elem.focus();
-            elem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            this.prevElem = elem;
-        } catch (error) {
-            console.error(`Error in focusAndScroll: ${error}`);
-        }
-    }
 
     public unhighlightAllAndHighlightSingle(message: UnhighlightAllAndHighlightSingleMessage): void {
         try {
@@ -121,13 +107,16 @@ export class PageInteractor {
             if (!elements.length) {
                 throw new Error(`No elements found for selector "${message.elementType.selector}"`);
             }
+            this.updateLabelAndHighlightClasses(message.elementType.name);
             for (let element of elements) {
                 this.removeStyleFromElement(element);
             }
+
             const element = document.querySelector(message.element.selector) as HTMLElement;
             if (!element) {
                 throw new Error(`No element found for selector "${message.element.selector}"`);
             }
+            this.updateLabelAndHighlightClasses(message.elementTypeName);
             this.addStyleToElement(element);
             element.focus();
             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -140,12 +129,12 @@ export class PageInteractor {
     private addStyleToElement(element: HTMLElement, highlightClass?: String): void {
         highlightClass = highlightClass ?? this.highlightSelectedClass;
         if (element) {
-            if (highlightClass === this.highlightSelectedClass) {
-                element.classList.add(this.highlightSelectedClass);
-                this.addLabelToELement(element, this.selectedLabelClass);
-            } else {
+            if (highlightClass === this.highlightDashedClass) {
                 element.classList.add(this.highlightDashedClass);
                 this.addLabelToELement(element, this.dashedLabelClass);
+            } else {
+                element.classList.add(this.highlightSelectedClass);
+                this.addLabelToELement(element, this.selectedLabelClass);
             }
 
         }
@@ -154,12 +143,12 @@ export class PageInteractor {
     private removeStyleFromElement(element: HTMLElement, highlightClass?: String): void {
         highlightClass = highlightClass ?? this.highlightSelectedClass;
         if (element) {
-            if (highlightClass === this.highlightSelectedClass) {
-                element.classList.remove(this.highlightSelectedClass);
-                this.removeLabelFromElement(element, this.selectedLabelClass);
-            } else {
+            if (highlightClass === this.highlightDashedClass) {
                 element.classList.remove(this.highlightDashedClass);
                 this.removeLabelFromElement(element, this.dashedLabelClass);
+            } else {
+                element.classList.remove(this.highlightSelectedClass);
+                this.removeLabelFromElement(element, this.selectedLabelClass);
             }
             
         }
@@ -208,5 +197,13 @@ export class PageInteractor {
         }
       
         return '';
+      }
+
+      private updateLabelAndHighlightClasses(elementTypeName: string) {
+        console.log("elementTypeName: " + elementTypeName);
+        this.highlightSelectedClass = this.elementTypeHighlightMap[elementTypeName] ?? "highlight-selected-1";
+        this.selectedLabelClass = this.elementTypeLabelMap[elementTypeName] ?? "label-selected-1";
+        console.log("highlightSelectedClass: " + this.highlightSelectedClass);
+        console.log("selectedLabelClass: " + this.selectedLabelClass);
       }
 }
