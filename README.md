@@ -18,6 +18,7 @@ The Universal Design Analyzer Extension is a specialized tool that assists devel
         - [File Structure Tree](#file-structure-tree)
    - [Troubleshooting](#troubleshooting)
    - [Backend](#backend)
+   - [Future work](#future-work)
    - [Contributors](#contributors)
 
 ## Scripts and dependencies
@@ -200,6 +201,29 @@ The server is currently only serving at localhost on port 8080, unless another p
 
 The module WCAG is responsible for everything related to the semi-automatic test happening in the backend. While the server module is responsible for handling all incoming requests, and sending a response back to the client. This module is responsible for all of the interaction with the database and getting the computed properties from the accessibility tree, by querying the DOM of a specific website. This functionality is being implemented in the accessibility module in the backend because it proved to be challenging to get it to work in the frontend.
 
+## Future work
+The application can always be improved, and in this section we provide a list of known limitations, bugs and suggested improvements:
+
+### Known limitations
+asdasdadssa
+
+### Bugs and warnings
+- Three warnings upon building:
+   - Asset exceeding size limit: vendor.js
+   - Assets exceeding size limit: content_script, sidebar
+   - Recommendation: Use lazy loading to improve performance
+- Bug where if you open sidepanel and change tab, the sidepanel will persist on the new tab.
+
+
+### Suggested improvements
+- Unit Tests are only about 60% done. Suggestion to complete testing and maybe add integration test.
+  - testUtils
+  - TabIcon
+  - contentScript
+  - websiteScanner
+  - fetchData
+  - messageSender and message components
+- The code has been cleaned and refactored a bit, but this is still something that can be improved a lot.
 
 ## Contributors
 
