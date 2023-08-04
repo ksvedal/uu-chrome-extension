@@ -82,29 +82,29 @@ describe("Messages", () => {
     it("should create a highlight all message", () => {
       // Prepare the test data
       const type = "someElementType";
-      const isChecked = true;
+      const isHighlighted = true;
 
       // Create the highlight all message
-      const highlightAllMessage = new HighlightAllMessage(type as any, isChecked);
+      const highlightAllMessage = new HighlightAllMessage(type as any, isHighlighted);
 
       // Perform assertions on the message properties
       expect(highlightAllMessage.action).toBe("highlightAllElements");
       expect(highlightAllMessage.type).toBe(type);
-      expect(highlightAllMessage.isChecked).toBe(isChecked);
+      expect(highlightAllMessage.isHighlighted).toBe(isHighlighted);
     });
 
     it("should handle invalid type", () => {
       // Prepare the test data
       const type = undefined;
-      const isChecked = true;
+      const isHighlighted = true;
 
       // Create the highlight all message
-      const highlightAllMessage = new HighlightAllMessage(type as any, isChecked);
+      const highlightAllMessage = new HighlightAllMessage(type as any, isHighlighted);
 
       // Perform assertions on the message properties
       expect(highlightAllMessage.action).toBe("highlightAllElements");
       expect(highlightAllMessage.type).toBeUndefined();
-      expect(highlightAllMessage.isChecked).toBe(isChecked);
+      expect(highlightAllMessage.isHighlighted).toBe(isHighlighted);
     });
   });
 

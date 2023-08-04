@@ -1,31 +1,37 @@
-//Might not work with typescript yet :(
+setSidePanelBehaviour();
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => setSidePanelOptions(tabId));
+chrome.runtime.onInstalled.addListener((details) => createNotification(details));
 
-chrome.sidePanel
-  .setPanelBehavior({ openPanelOnActionClick: true })
-  .catch((error) => console.error(error));
 
-chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
+export function setSidePanelBehaviour() {
+  if (typeof chrome !== 'undefined' && chrome.sidePanel) {
+    chrome.sidePanel
+      .setPanelBehavior({ openPanelOnActionClick: true })
+      .catch((error) => console.error(error));
+  }
+}
+
+export async function setSidePanelOptions(tabId) {
+  if (typeof chrome !== 'undefined' && chrome.sidePanel) {
     await chrome.sidePanel.setOptions({
       tabId,
       path: 'sidebar.html',
       enabled: true
     });
-});
-
-chrome.runtime.onInstalled.addListener((details) => {
-  if (details.reason === 'update') {
-      const currentVersion = chrome.runtime.getManifest().version;
-      const previousVersion = details.previousVersion;
-      if (currentVersion !== previousVersion) {
-          // Notify user about the update or show changelog
-          console.log(`Updated from ${previousVersion} to ${currentVersion}`);
-          // Create a notification
-          chrome.notifications.create('updateNotification', {
-              type: 'basic',
-              iconUrl: '../scan.png', // replace with your notification icon
-              title: 'Extension Updated', 
-              message: `Updated from ${previousVersion} to ${currentVersion}`
-          });
-      }
   }
-});
+}
+
+  export function createNotification(details) {
+  if (details.reason === 'update' && typeof chrome !== 'undefined' && chrome.runtime) {
+    const currentVersion = chrome.runtime.getManifest().version;
+    const previousVersion = details.previousVersion;
+    if (currentVersion !== previousVersion) {
+      chrome.notifications.create('updateNotification', {
+        type: 'basic',
+        iconUrl: '../scan.png',
+        title: 'Extension Updated', 
+        message: `Updated from ${previousVersion} to ${currentVersion}`
+      });
+    }
+  }
+}   
